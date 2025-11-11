@@ -1,0 +1,68 @@
+name: schulupparent
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations: 
+    sdk: flutter
+  flutter_svg: ^2.0.16
+  cached_network_image: ^3.4.1
+  get: ^4.6.6
+  shared_preferences: ^2.3.4
+  connectivity_plus: ^6.1.1
+  flutter_chat_ui: ^1.6.15
+  flutter_chat_types: ^3.6.2  
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+    
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^5.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets: 
+    - assets/
+    - assets/images/
+  fonts: 
+    - family: Rubik
+      fonts: 
+        - asset: assets/fonts/Rubik-BoldItalic.ttf
+          weight: 700
+        - asset: assets/fonts/Rubik-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Rubik-Regular.ttf
+          weight: 400
+    - family: Inter
+      fonts: 
+        - asset: assets/fonts/Inter_18pt-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Inter_18pt-ExtraLight.ttf
+          weight: 200
+ 
+
