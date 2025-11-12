@@ -1,0 +1,89 @@
+// TODO Implement this library.
+import 'package:flutter/material.dart';
+import '../../core/app_export.dart';
+import '../../theme/custom_button_style.dart';
+import '../../widgets/custom_elevated_button.dart';
+import 'controller/reports_report_card_modal_one_controller.dart';
+
+// ignore_for_file: must_be_immutable
+class ReportsReportCardModalOneBottomsheet extends StatelessWidget {
+  ReportsReportCardModalOneBottomsheet(this.controller, {Key? key})
+    : super(key: key);
+
+  ReportsReportCardModalOneController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.maxFinite,
+      padding: EdgeInsets.symmetric(horizontal: 24.h, vertical: 20.h),
+      decoration: AppDecoration.grayC13.copyWith(
+        borderRadius: BorderRadiusStyle.customBorderTL14,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(width: 52.h, child: Divider(color: appTheme.gray20001)),
+          SizedBox(height: 18.h),
+          SizedBox(
+            width: double.maxFinite,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "msg_select_a_report".tr,
+                  style: theme.textTheme.titleSmall,
+                ),
+                CustomImageView(
+                  imagePath: ImageConstant.imgClose,
+                  height: 24.h,
+                  width: 24.h,
+                  margin: EdgeInsets.only(left: 78.h),
+                  onTap: () {
+                    onTapImgCloseone();
+                  },
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 28.h),
+          Text("lbl_daily".tr, style: CustomTextStyles.bodyMediumOnPrimary),
+          SizedBox(height: 10.h),
+          CustomElevatedButton(
+            text: "lbl_weekly".tr,
+            margin: EdgeInsets.only(left: 62.h, right: 60.h),
+          ),
+          SizedBox(height: 10.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomImageView(
+                imagePath: ImageConstant.imgIconsTinyLock,
+                height: 16.h,
+                width: 16.h,
+              ),
+              Text(
+                "lbl_termly".tr,
+                style: CustomTextStyles.bodyMediumOnPrimary,
+              ),
+            ],
+          ),
+          SizedBox(height: 30.h),
+          CustomElevatedButton(
+            height: 64.h,
+            text: "lbl_confirm".tr,
+            buttonStyle: CustomButtonStyles.fillPrimary,
+            buttonTextStyle: theme.textTheme.titleMedium!,
+          ),
+          SizedBox(height: 20.h),
+        ],
+      ),
+    );
+  }
+
+  /// Navigates to the previous screen.
+  onTapImgCloseone() {
+    Get.back();
+  }
+}

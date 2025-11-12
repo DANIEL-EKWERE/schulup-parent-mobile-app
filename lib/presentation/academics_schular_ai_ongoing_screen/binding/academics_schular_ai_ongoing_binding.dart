@@ -1,0 +1,14 @@
+// TODO Implement this library.
+import '../../../core/app_export.dart';
+import '../controller/academics_schular_ai_ongoing_controller.dart';
+
+/// A binding class for the AcademicsSchularAiOngoingScreen.
+///
+/// This class ensures that the AcademicsSchularAiOngoingController is created when the
+/// AcademicsSchularAiOngoingScreen is first loaded.
+class AcademicsSchularAiOngoingBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => AcademicsSchularAiOngoingController());
+  }
+}
