@@ -189,7 +189,6 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -220,10 +219,10 @@ class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
               children: [
                 // Assignment Tab Content
                 _buildAssignmentTab(),
-                
+
                 // CBT Test Tab Content
                 _buildCBTTestTab(),
-                
+
                 // Lesson Tab Content
                 _buildLessonTab(),
               ],
@@ -295,15 +294,16 @@ class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
                       height: 38,
                       child: Container(
                         alignment: Alignment.center,
-                        decoration: controller.tabIndex.value == 0
-                            ? BoxDecoration(
-                                color: theme.colorScheme.onPrimary,
-                                borderRadius: BorderRadius.circular(18.h),
-                              )
-                            : BoxDecoration(
-                                color: appTheme.whiteA700,
-                                borderRadius: BorderRadius.circular(18.h),
-                              ),
+                        decoration:
+                            controller.tabIndex.value == 0
+                                ? BoxDecoration(
+                                  color: theme.colorScheme.onPrimary,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                )
+                                : BoxDecoration(
+                                  color: appTheme.whiteA700,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 14.h,
@@ -317,15 +317,16 @@ class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
                       height: 38,
                       child: Container(
                         alignment: Alignment.center,
-                        decoration: controller.tabIndex.value == 1
-                            ? BoxDecoration(
-                                color: theme.colorScheme.onPrimary,
-                                borderRadius: BorderRadius.circular(18.h),
-                              )
-                            : BoxDecoration(
-                                color: appTheme.whiteA700,
-                                borderRadius: BorderRadius.circular(18.h),
-                              ),
+                        decoration:
+                            controller.tabIndex.value == 1
+                                ? BoxDecoration(
+                                  color: theme.colorScheme.onPrimary,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                )
+                                : BoxDecoration(
+                                  color: appTheme.whiteA700,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 14.h,
@@ -339,15 +340,16 @@ class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
                       height: 38,
                       child: Container(
                         alignment: Alignment.center,
-                        decoration: controller.tabIndex.value == 2
-                            ? BoxDecoration(
-                                color: theme.colorScheme.onPrimary,
-                                borderRadius: BorderRadius.circular(18.h),
-                              )
-                            : BoxDecoration(
-                                color: appTheme.whiteA700,
-                                borderRadius: BorderRadius.circular(18.h),
-                              ),
+                        decoration:
+                            controller.tabIndex.value == 2
+                                ? BoxDecoration(
+                                  color: theme.colorScheme.onPrimary,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                )
+                                : BoxDecoration(
+                                  color: appTheme.whiteA700,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 14.h,
@@ -398,10 +400,7 @@ class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
         children: [
           // Add your CBT test content here
           Center(
-            child: Text(
-              "CBT Test Content",
-              style: theme.textTheme.titleLarge,
-            ),
+            child: Text("CBT Test Content", style: theme.textTheme.titleLarge),
           ),
         ],
       ),
@@ -416,10 +415,7 @@ class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
         children: [
           // Add your lesson content here
           Center(
-            child: Text(
-              "Lesson Content",
-              style: theme.textTheme.titleLarge,
-            ),
+            child: Text("Lesson Content", style: theme.textTheme.titleLarge),
           ),
         ],
       ),
