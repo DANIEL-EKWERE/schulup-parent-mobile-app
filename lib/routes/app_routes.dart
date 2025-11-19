@@ -2,6 +2,8 @@ import 'package:schulupparent/presentation/dashboard_edit_ward_profile/binding/d
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/dashboard_edit_ward_profile.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/binding/dashboard_extended_view_binding.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/dashboard_extended_view.dart';
+import 'package:schulupparent/presentation/direct_chat/binding/direct_chat_binding.dart';
+import 'package:schulupparent/presentation/direct_chat/direct_chat_screen.dart';
 import 'package:schulupparent/presentation/signin_screen/binding/signin_binding.dart';
 import 'package:schulupparent/presentation/signin_screen/signin_screen.dart';
 
@@ -99,17 +101,18 @@ class AppRoutes {
       '/academics_assignment_status_screen';
 
   static const String academicsFourPage = '/academics_four_page';
-//DashboardEditWardProfileScreen
+  //DashboardEditWardProfileScreen
   static const String academicsAssignmentStatusInitialPage =
       '/academics_assignment_status_initial_page';
 
-
-static const String dashboardEditWardProfileScreen =
+  static const String dashboardEditWardProfileScreen =
       '/dashboard_editWard_profile_screen';
 
-  static const String dashboardExtendedView =
-      '/dashboard_extended_view';
-//DashboardExtendedView
+  static const String dashboardExtendedView = '/dashboard_extended_view';
+  //DashboardExtendedView
+
+  static const String directChatScreen = '/direct_chat_screen';
+
   static const String academicsAssignmentStatusOneScreen =
       '/academics_assignment_status_one_screen';
 
@@ -304,6 +307,7 @@ static const String dashboardEditWardProfileScreen =
       page: () => AcademicsAssignmentAssignmentScreen(),
       bindings: [AcademicsAssignmentAssignmentBinding()],
     ),
+
     ///dashboardEditWardProfileScreen
     GetPage(
       name: academicsAssignmentAnswerScreen,
@@ -365,10 +369,17 @@ static const String dashboardEditWardProfileScreen =
       page: () => AcademicsCbtTestOngoingOneScreen(),
       bindings: [AcademicsCbtTestOngoingOneBinding()],
     ),
+
     GetPage(
       name: academicsCbtTestOngoingTwoScreen,
       page: () => AcademicsCbtTestOngoingTwoScreen(),
       bindings: [AcademicsCbtTestOngoingTwoBinding()],
+    ),
+
+    GetPage(
+      name: directChatScreen,
+      page: () => DirectChatScreen(),
+      bindings: [DirectChatBinding()],
     ),
     GetPage(
       name: academicsCbtTestTestResultScreen,

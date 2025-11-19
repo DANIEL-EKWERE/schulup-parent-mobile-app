@@ -506,7 +506,7 @@ class DashboardEditWardProfileScreen
       centerTitle: true,
       title: Column(
         children: [
-          AppbarSubtitleOne(text: "lbl_assignment".tr),
+          AppbarSubtitleOne(text: "Ward Profile"),
           AppbarSubtitleFive(
             text: "lbl_ogechi".tr,
             margin: EdgeInsets.symmetric(horizontal: 33.h),

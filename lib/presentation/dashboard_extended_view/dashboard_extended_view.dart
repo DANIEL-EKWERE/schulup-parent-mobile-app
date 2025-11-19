@@ -398,6 +398,9 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                 imagePath: ImageConstant.imgNotification,
               ),
               AppbarTrailingIconbutton(
+                onTap: () {
+                  Get.toNamed(AppRoutes.directChatScreen);
+                },
                 imagePath: ImageConstant.imgLetter,
                 margin: EdgeInsets.only(left: 11.h),
               ),
