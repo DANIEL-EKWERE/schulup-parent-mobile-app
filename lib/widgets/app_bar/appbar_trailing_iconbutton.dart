@@ -35,7 +35,7 @@ class AppbarTrailingIconbutton extends StatelessWidget {
           width: width ?? 34.h,
           padding: EdgeInsets.all(4.h),
           decoration: IconButtonStyleHelper.none,
-          child: CustomImageView(imagePath: ImageConstant.imgUserWhiteA700),
+          child: CustomImageView(imagePath: imagePath),
         ),
       ),
     );

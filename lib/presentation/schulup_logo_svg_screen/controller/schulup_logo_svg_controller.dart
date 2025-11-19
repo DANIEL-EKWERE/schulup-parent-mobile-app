@@ -9,11 +9,11 @@ import '../models/schulup_logo_svg_model.dart';
 /// current schulupLogoSvgModelObj
 class SchulupLogoSvgController extends GetxController {
   Rx<SchulupLogoSvgModel> schulupLogoSvgModelObj = SchulupLogoSvgModel().obs;
-
+//AppRoutes.academicsAssignmentStatusScreen
   @override
   void onReady() {
     Future.delayed(const Duration(milliseconds: 3000), () {
-      Get.offNamed(AppRoutes.academicsAssignmentStatusScreen);
+      Get.offNamed(AppRoutes.signinScreen);
     });
   }
 }

@@ -1,3 +1,6 @@
+import 'package:schulupparent/presentation/signin_screen/binding/signin_binding.dart';
+import 'package:schulupparent/presentation/signin_screen/signin_screen.dart';
+
 import '../core/app_export.dart';
 import '../presentation/academics_assignment_a_teacher_screen/academics_assignment_a_teacher_screen.dart';
 import '../presentation/academics_assignment_a_teacher_screen/binding/academics_assignment_a_teacher_binding.dart';
@@ -85,6 +88,8 @@ import '../presentation/schulup_logo_svg_screen/schulup_logo_svg_screen.dart';
 // ignore_for_file: must_be_immutable
 class AppRoutes {
   static const String schulupLogoSvgScreen = '/schulup_logo_svg_screen';
+
+  static const String signinScreen = '/signin_screen';
 
   static const String academicsAssignmentStatusScreen =
       '/academics_assignment_status_screen';
@@ -245,6 +250,11 @@ class AppRoutes {
       name: schulupLogoSvgScreen,
       page: () => SchulupLogoSvgScreen(),
       bindings: [SchulupLogoSvgBinding()],
+    ),
+    GetPage(
+      name: signinScreen,
+      page: () => SigninScreen(),
+      bindings: [SigninBinding()],
     ),
     GetPage(
       name: academicsAssignmentStatusScreen,

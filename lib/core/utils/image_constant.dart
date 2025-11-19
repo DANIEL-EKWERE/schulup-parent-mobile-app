@@ -52,6 +52,13 @@ class ImageConstant {
 
   static String imgIconsTinyDownload = '$imagePath/img_icons_tiny_download.svg';
 
+  static String imgUsername = '$imagePath/img_username.svg';
+
+  static String imgVisibility = '$imagePath/img_visibility.svg';
+  
+
+  static String imgPassword = '$imagePath/img_password.svg';
+
   static String imgIconsTinyClock = '$imagePath/img_icons_tiny_clock.svg';
 
   static String imgIconsSmallRadiobuttonunselected =

@@ -14,43 +14,51 @@ class SchulupLogoSvgScreen extends GetWidget<SchulupLogoSvgController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appTheme.whiteA700,
-      appBar: _buildAppbar(),
+      backgroundColor: Color(0xffFF8D2A),
+     // appBar: _buildAppbar(),
       body: SafeArea(
         top: false,
         child: Container(
-          width: double.maxFinite,
-          padding: EdgeInsets.only(left: 64.h, top: 26.h),
+          width: double.infinity,
+          //padding: EdgeInsets.only(left: 64.h, top: 26.h),
           child: Column(
-            spacing: 64,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            //spacing: 64,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(width: 306.h, child: Divider(color: appTheme.gray200)),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24.h,
-                  vertical: 106.h,
-                ),
-                decoration: AppDecoration.primaryC7Main.copyWith(
-                  borderRadius: BorderRadiusStyle.circleBorder150,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("lbl_schulup".tr, style: theme.textTheme.displayLarge),
-                    Padding(
-                      padding: EdgeInsets.only(left: 14.h),
-                      child: Text(
-                        "msg_best_school_partner".tr,
-                        style: theme.textTheme.titleLarge,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 36.h),
+            //  SizedBox(width: 306.h, child: Divider(color: appTheme.gray200)),
+              // Container(
+              //   padding: EdgeInsets.symmetric(
+              //     horizontal: 24.h,
+              //     vertical: 106.h,
+              //   ),
+              //   decoration: AppDecoration.primaryC7Main.copyWith(
+              //     borderRadius: BorderRadiusStyle.circleBorder150,
+              //   ),
+              //   child: Column(
+              //     mainAxisSize: MainAxisSize.min,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       // Text("lbl_schulup".tr, style: theme.textTheme.displayLarge),
+              //       // Padding(
+              //       //   padding: EdgeInsets.only(left: 14.h),
+              //       //   child: Text(
+              //       //     "msg_best_school_partner".tr,
+              //       //     style: theme.textTheme.titleLarge,
+              //       //   ),
+              //       // ),
+                    
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 36.h),
+
+              CustomImageView(
+                      imagePath: 'assets/images/img_schulup_icon.png',
+                      height: 150,
+                      width: 150,
+                    )
             ],
           ),
         ),
