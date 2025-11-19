@@ -405,6 +405,9 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                 margin: EdgeInsets.only(left: 11.h),
               ),
               AppbarTrailingIconbutton(
+                onTap: () {
+                  Get.toNamed(AppRoutes.settingsScreen);
+                },
                 imagePath: ImageConstant.imgSettings1,
                 margin: EdgeInsets.only(left: 11.h, right: 25.h),
               ),

@@ -1,9 +1,13 @@
+import 'package:schulupparent/presentation/change_password/binding/change_password_binding.dart';
+import 'package:schulupparent/presentation/change_password/change_password_screen.dart';
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/binding/dashboard_edit_ward_profile_binding.dart';
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/dashboard_edit_ward_profile.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/binding/dashboard_extended_view_binding.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/dashboard_extended_view.dart';
 import 'package:schulupparent/presentation/direct_chat/binding/direct_chat_binding.dart';
 import 'package:schulupparent/presentation/direct_chat/direct_chat_screen.dart';
+import 'package:schulupparent/presentation/settings/binding/settings_binding.dart';
+import 'package:schulupparent/presentation/settings/settings_screen.dart';
 import 'package:schulupparent/presentation/signin_screen/binding/signin_binding.dart';
 import 'package:schulupparent/presentation/signin_screen/signin_screen.dart';
 
@@ -187,6 +191,12 @@ class AppRoutes {
 
   static const String academicsLessonSearchForOneScreen =
       '/academics_lesson_search_for_one_screen';
+
+  static const String settingsScreen =
+      '/settings_screen';
+  
+  static const String changePasswordScreen =
+      '/change_password_screen';
 
   static const String academicsLessonSearchForTwoScreen =
       '/academics_lesson_search_for_two_screen';
@@ -381,6 +391,22 @@ class AppRoutes {
       page: () => DirectChatScreen(),
       bindings: [DirectChatBinding()],
     ),
+    //changePasswordScreen
+
+  GetPage(
+      name: changePasswordScreen,
+      page: () => ChangePasswordScreen(),
+      bindings: [ChangePasswordBinding()],
+    ),
+
+
+    GetPage(
+      name: settingsScreen,
+      page: () => SettingsScreen(),
+      bindings: [SettingsBinding()],
+    ),
+
+
     GetPage(
       name: academicsCbtTestTestResultScreen,
       page: () => AcademicsCbtTestTestResultScreen(),
