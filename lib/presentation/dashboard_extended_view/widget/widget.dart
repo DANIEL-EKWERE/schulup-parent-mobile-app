@@ -15,8 +15,8 @@ class DashboardItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 50,
-      height: 120,
-      padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 8.h),
+      //height: 100,
+      padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.h),
       decoration: BoxDecoration(
         color: Color(0xffEF5A07),
         borderRadius: BorderRadiusStyle.circleBorder12,

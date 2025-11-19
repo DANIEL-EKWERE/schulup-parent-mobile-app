@@ -1,3 +1,5 @@
+import 'package:schulupparent/presentation/dashboard_edit_ward_profile/binding/dashboard_edit_ward_profile_binding.dart';
+import 'package:schulupparent/presentation/dashboard_edit_ward_profile/dashboard_edit_ward_profile.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/binding/dashboard_extended_view_binding.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/dashboard_extended_view.dart';
 import 'package:schulupparent/presentation/signin_screen/binding/signin_binding.dart';
@@ -97,9 +99,13 @@ class AppRoutes {
       '/academics_assignment_status_screen';
 
   static const String academicsFourPage = '/academics_four_page';
-
+//DashboardEditWardProfileScreen
   static const String academicsAssignmentStatusInitialPage =
       '/academics_assignment_status_initial_page';
+
+
+static const String dashboardEditWardProfileScreen =
+      '/dashboard_editWard_profile_screen';
 
   static const String dashboardExtendedView =
       '/dashboard_extended_view';
@@ -298,10 +304,16 @@ class AppRoutes {
       page: () => AcademicsAssignmentAssignmentScreen(),
       bindings: [AcademicsAssignmentAssignmentBinding()],
     ),
+    ///dashboardEditWardProfileScreen
     GetPage(
       name: academicsAssignmentAnswerScreen,
       page: () => AcademicsAssignmentAnswerScreen(),
       bindings: [AcademicsAssignmentAnswerBinding()],
+    ),
+    GetPage(
+      name: dashboardEditWardProfileScreen,
+      page: () => DashboardEditWardProfileScreen(),
+      bindings: [DashboardEditWardProfileBinding()],
     ),
     GetPage(
       name: academicsAssignmentNotSubmittedScreen,

@@ -39,8 +39,13 @@ class AppDecoration {
       BoxDecoration(color: appTheme.orange50);
   static BoxDecoration get primaryC11 =>
       BoxDecoration(color: appTheme.yellow50);
-  static BoxDecoration get primaryC7Main =>
-      BoxDecoration(color: theme.colorScheme.primary);
+  static BoxDecoration get primaryC7Main => BoxDecoration(
+    color: theme.colorScheme.primary,
+    borderRadius: BorderRadius.only(
+      bottomLeft: Radius.circular(12.h),
+      bottomRight: Radius.circular(12.h),
+    ),
+  );
   // Success decorations
   static BoxDecoration get successC1 => BoxDecoration(color: appTheme.green500);
   // Warning decorations

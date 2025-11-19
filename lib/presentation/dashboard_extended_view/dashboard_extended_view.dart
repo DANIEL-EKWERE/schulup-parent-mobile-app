@@ -1,16 +1,21 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:schulupparent/core/app_export.dart';
 import 'package:schulupparent/core/utils/image_constant.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/models/models.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/widget/chart_widget.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/widget/widget.dart';
 import 'package:schulupparent/theme/app_decoration.dart';
+import 'package:schulupparent/theme/custom_text_style.dart';
 import 'package:schulupparent/widgets/app_bar/appbar_subtitle_five.dart';
 import 'package:schulupparent/widgets/app_bar/appbar_subtitle_one.dart';
 import 'package:schulupparent/widgets/app_bar/appbar_trailing_iconbutton.dart';
 import 'package:schulupparent/widgets/app_bar/custom_app_bar.dart';
 import 'package:schulupparent/widgets/custom_image_view.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../core/utils/size_utils.dart';
 
@@ -26,15 +31,101 @@ class DashboardExtendedView extends StatefulWidget {
 }
 
 class _DashboardExtendedViewState extends State<DashboardExtendedView> {
+  int _currentIndex = 0;
+  bool _isSelected = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.maxFinite,
       decoration: AppDecoration.grayC13,
       child: Column(
+        // mainAxisAlignment: MainAxisAlignment.start,
         children: [
           _buildColumnacademics(),
-          Expanded(child: Column(children: [])),
+          Expanded(
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 12),
+                Padding(
+                  padding: EdgeInsetsGeometry.only(left: 16.h),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Latest Updates',
+                      style: CustomTextStyles.bodyMediumOnPrimary,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 12),
+                SizedBox(
+                  height: 90,
+                  width: double.infinity,
+                  child: CarouselSlider(
+                    items: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Color(0xffFFEED4),
+                        ),
+                        height: 150,
+                        width: double.infinity,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Color(0xffFFEED4),
+                        ),
+                        height: 150,
+                        width: double.infinity,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Color(0xffFFEED4),
+                        ),
+                        height: 150,
+                        width: double.infinity,
+                      ),
+                    ],
+                    options: CarouselOptions(
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _currentIndex = index;
+                        });
+                      },
+                      enlargeCenterPage: true,
+                      aspectRatio: 16 / 5,
+                      height: 150,
+                      viewportFraction: 0.9,
+                      autoPlay: true,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                AnimatedSmoothIndicator(
+                  activeIndex: _currentIndex,
+                  count: 3,
+                  effect: ExpandingDotsEffect(
+                    dotHeight: 8,
+                    dotWidth: 8,
+                    activeDotColor: Color(0xffEF5A07),
+                    dotColor: Colors.grey.shade300,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 5,
+                  ),
+                  child: AcademicProgressChart(),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -46,52 +137,261 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
       padding: EdgeInsets.symmetric(vertical: 18.h),
       decoration: AppDecoration.primaryC7Main,
       child: Column(
-        spacing: 16,
+        spacing: 10,
         mainAxisSize: MainAxisSize.min,
         children: [
           CustomAppBar(
-            height: 58.h,
+            height: 48.h,
             //centerTitle: true,
-            title: Container(
-              width: 100,
-              // height: 150,
-              margin: EdgeInsets.only(left: 16),
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Color(0xff27262B),
-
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(shape: BoxShape.circle),
-                    child: CustomImageView(
-                      imagePath: 'assets/images/ward_image.png',
+            title: GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  backgroundColor:
+                      Colors.transparent, // optional for rounded corners
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
                     ),
                   ),
-                  AppbarSubtitleFive(
-                    text: "lbl_ogechi".tr,
-                    margin: EdgeInsets.only(left: 8.h, right: 9.h),
-                  ),
-                  CustomImageView(
-                    imagePath: ImageConstant.imgChevronDown,
-                    height: 17,
-                    width: 17,
-                  ),
-                ],
+                  builder: (context) {
+                    return Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 5,
+                            margin: EdgeInsets.only(bottom: 16),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+
+                          Text(
+                            "Swhitch Ward",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          SizedBox(height: 20),
+
+                          // Text(
+                          //   "Your content goes here...",
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(
+                          //     fontSize: 14,
+                          //     color: Colors.black54,
+                          //   ),
+                          // ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                    'assets/images/ward_image.png',
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Text('Ogechi'),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _isSelected = !_isSelected; // toggle
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color:
+                                            _isSelected
+                                                ? Color(0xFFFF8D2A)
+                                                : Colors.grey,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child:
+                                        _isSelected
+                                            ? Center(
+                                              child: Container(
+                                                width: 10,
+                                                height: 10,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Color(0xFFFF8D2A),
+                                                ),
+                                              ),
+                                            )
+                                            : SizedBox.shrink(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          SizedBox(height: 20),
+
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                    'assets/images/fatima.png',
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Text('Fatima'),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _isSelected = !_isSelected; // toggle
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color:
+                                            _isSelected
+                                                ? Color(0xFFFF8D2A)
+                                                : Colors.grey,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child:
+                                        _isSelected
+                                            ? Center(
+                                              child: Container(
+                                                width: 10,
+                                                height: 10,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Color(0xFFFF8D2A),
+                                                ),
+                                              ),
+                                            )
+                                            : SizedBox.shrink(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                    'assets/images/adebayo.png',
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Text('Adebayo'),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _isSelected = !_isSelected; // toggle
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color:
+                                            _isSelected
+                                                ? Color(0xFFFF8D2A)
+                                                : Colors.grey,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child:
+                                        _isSelected
+                                            ? Center(
+                                              child: Container(
+                                                width: 10,
+                                                height: 10,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Color(0xFFFF8D2A),
+                                                ),
+                                              ),
+                                            )
+                                            : SizedBox.shrink(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+              child: Container(
+                width: 100,
+                // height: 150,
+                margin: EdgeInsets.only(left: 16),
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Color(0xff27262B),
+
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(shape: BoxShape.circle),
+                      child: CustomImageView(
+                        imagePath: 'assets/images/ward_image.png',
+                      ),
+                    ),
+                    AppbarSubtitleFive(
+                      text: "lbl_ogechi".tr,
+                      margin: EdgeInsets.only(left: 8.h, right: 9.h),
+                    ),
+                    CustomImageView(
+                      imagePath: ImageConstant.imgChevronDown,
+                      height: 17,
+                      width: 17,
+                    ),
+                  ],
+                ),
               ),
             ),
-            // Column(
-            //   children: [
-            //     AppbarSubtitleOne(text: "lbl_academics".tr),
-            // AppbarSubtitleFive(
-            //   text: "lbl_ogechi".tr,
-            //   margin: EdgeInsets.only(left: 28.h, right: 29.h),
-            // ),
-            //   ],
+
             // ),
             actions: [
               AppbarTrailingIconbutton(
@@ -116,121 +416,27 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: SizedBox(
               width: double.maxFinite,
-              height: 190,
+              height: 180,
               child: GridView.builder(
                 itemCount: DashboardExtendedViewModel.getSampleList().length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
                   crossAxisCount: 4,
-                  childAspectRatio: 1.2 / 1.6,
+                  childAspectRatio: 1.2 / 1.5,
                 ),
                 itemBuilder: (context, index) {
                   DashboardExtendedViewModel model =
                       DashboardExtendedViewModel.getSampleList()[index];
-                  return DashboardItemWidget(model);
+                  return GestureDetector(
+                    onTap: () => Get.toNamed(model.route!),
+                    child: DashboardItemWidget(model),
+                  );
                 },
               ),
-              // child: Obx(
-              //   () => Container(
-              //     margin: EdgeInsets.symmetric(horizontal: 46.h),
-              //     child: TabBar(
-              //       controller: controller.tabviewController,
-              //       isScrollable: true,
-              //       padding: EdgeInsets.zero,
-              //       labelPadding: EdgeInsets.symmetric(horizontal: 4),
-              //       dividerColor: Colors.transparent,
-              //       tabAlignment: TabAlignment.center,
-              //       labelColor: appTheme.whiteA700,
-              //       labelStyle: TextStyle(
-              //         fontSize: 12.fSize,
-              //         fontFamily: 'Rubik',
-              //         fontWeight: FontWeight.w500,
-              //       ),
-              //       unselectedLabelColor: theme.colorScheme.onPrimary,
-              //       unselectedLabelStyle: TextStyle(
-              //         fontSize: 12.fSize,
-              //         fontFamily: 'Rubik',
-              //         fontWeight: FontWeight.w400,
-              //       ),
-              //       tabs: [
-              //         Tab(
-              //           height: 38,
-              //           child: Container(
-              //             alignment: Alignment.center,
-              //             decoration: controller.tabIndex.value == 0
-              //                 ? BoxDecoration(
-              //                     color: theme.colorScheme.onPrimary,
-              //                     borderRadius: BorderRadius.circular(18.h),
-              //                   )
-              //                 : BoxDecoration(
-              //                     color: appTheme.whiteA700,
-              //                     borderRadius: BorderRadius.circular(18.h),
-              //                   ),
-              //             child: Padding(
-              //               padding: EdgeInsets.symmetric(
-              //                 horizontal: 14.h,
-              //                 vertical: 10.h,
-              //               ),
-              //               child: Text("lbl_assignment".tr),
-              //             ),
-              //           ),
-              //         ),
-              //         Tab(
-              //           height: 38,
-              //           child: Container(
-              //             alignment: Alignment.center,
-              //             decoration: controller.tabIndex.value == 1
-              //                 ? BoxDecoration(
-              //                     color: theme.colorScheme.onPrimary,
-              //                     borderRadius: BorderRadius.circular(18.h),
-              //                   )
-              //                 : BoxDecoration(
-              //                     color: appTheme.whiteA700,
-              //                     borderRadius: BorderRadius.circular(18.h),
-              //                   ),
-              //             child: Padding(
-              //               padding: EdgeInsets.symmetric(
-              //                 horizontal: 14.h,
-              //                 vertical: 10.h,
-              //               ),
-              //               child: Text("lbl_cbt_test".tr),
-              //             ),
-              //           ),
-              //         ),
-              //         Tab(
-              //           height: 38,
-              //           child: Container(
-              //             alignment: Alignment.center,
-              //             decoration: controller.tabIndex.value == 2
-              //                 ? BoxDecoration(
-              //                     color: theme.colorScheme.onPrimary,
-              //                     borderRadius: BorderRadius.circular(18.h),
-              //                   )
-              //                 : BoxDecoration(
-              //                     color: appTheme.whiteA700,
-              //                     borderRadius: BorderRadius.circular(18.h),
-              //                   ),
-              //             child: Padding(
-              //               padding: EdgeInsets.symmetric(
-              //                 horizontal: 14.h,
-              //                 vertical: 10.h,
-              //               ),
-              //               child: Text("lbl_lesson".tr),
-              //             ),
-              //           ),
-              //         ),
-              //       ],
-              //       indicatorColor: Colors.transparent,
-              //       onTap: (index) {
-              //         controller.tabIndex.value = index;
-              //       },
-              //     ),
-              //   ),
-              //  ),
             ),
           ),
         ],
