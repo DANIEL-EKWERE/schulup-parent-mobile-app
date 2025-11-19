@@ -4,8 +4,8 @@ import '../controller/academics_assignment_status_controller.dart';
 import '../models/listline_item_model.dart';
 
 // ignore_for_file: must_be_immutable
-class ListlineItemWidget extends StatelessWidget {
-  ListlineItemWidget(this.listlineItemModelObj, {Key? key}) : super(key: key);
+class ListlineItemCbtWidget extends StatelessWidget {
+  ListlineItemCbtWidget(this.listlineItemModelObj, {Key? key}) : super(key: key);
 
   ListlineItemModel listlineItemModelObj;
 
@@ -37,13 +37,22 @@ class ListlineItemWidget extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: CustomImageView(
-                  imagePath: ImageConstant.imgAssignments,
+                  //assets/images/img_cbttest.svg
+                  imagePath: ImageConstant.imgCbttests,
                   height: 20.h,
                   width: 20.h,
                   fit: BoxFit.contain,
                 ),
               ),
-
+              // Padding(
+              //   padding: EdgeInsets.only(left: 10.h),
+              //   child: Obx(
+              //     () => Text(
+              //       listlineItemModelObj.heading!.value,
+              //       style: theme.textTheme.bodyMedium,
+              //     ),
+              //   ),
+              // ),
               Column(
                 spacing: 10.h,
                 crossAxisAlignment: CrossAxisAlignment.start,

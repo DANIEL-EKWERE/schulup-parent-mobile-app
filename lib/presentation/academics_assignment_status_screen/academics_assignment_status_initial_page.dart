@@ -190,9 +190,13 @@
 // }
 import 'dart:ui';
 
+import 'package:schulupparent/presentation/academics_assignment_modal_one_bottomsheet/academics_assignment_modal_one_bottomsheet.dart';
+import 'package:schulupparent/presentation/academics_assignment_modal_one_bottomsheet/controller/academics_assignment_modal_one_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/academics_four_model.dart';
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/listline_item_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_cbt.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -393,36 +397,51 @@ class _AcademicsAssignmentStatusInitialPageState
                         horizontal: 20.h,
                         vertical: 8.h,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Primary 5", style: theme.textTheme.labelLarge),
-                          CustomImageView(
-                            imagePath: ImageConstant.imgIconsTinyDown,
-                            height: 16.h,
-                            width: 18.h,
-                            margin: EdgeInsets.only(left: 10.h),
-                          ),
-                          Spacer(),
-                          Text(
-                            "lbl_first_term".tr,
-                            style: theme.textTheme.labelLarge,
-                          ),
-                          CustomImageView(
-                            imagePath: ImageConstant.imgIconsTinyDown,
-                            height: 16.h,
-                            width: 18.h,
-                            margin: EdgeInsets.only(left: 10.h),
-                          ),
-                          Spacer(),
-                          Text("Pending", style: theme.textTheme.labelLarge),
-                          CustomImageView(
-                            imagePath: ImageConstant.imgIconsTinyDown,
-                            height: 16.h,
-                            width: 18.h,
-                            margin: EdgeInsets.only(left: 10.h, right: 14.h),
-                          ),
-                        ],
+                      child: GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return AcademicsAssignmentModalOneBottomsheet(
+                                AcademicsAssignmentModalOneController(),
+                              );
+                            },
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Primary 5",
+                              style: theme.textTheme.labelLarge,
+                            ),
+                            CustomImageView(
+                              imagePath: ImageConstant.imgIconsTinyDown,
+                              height: 16.h,
+                              width: 18.h,
+                              margin: EdgeInsets.only(left: 10.h),
+                            ),
+                            Spacer(),
+                            Text(
+                              "lbl_first_term".tr,
+                              style: theme.textTheme.labelLarge,
+                            ),
+                            CustomImageView(
+                              imagePath: ImageConstant.imgIconsTinyDown,
+                              height: 16.h,
+                              width: 18.h,
+                              margin: EdgeInsets.only(left: 10.h),
+                            ),
+                            Spacer(),
+                            Text("Pending", style: theme.textTheme.labelLarge),
+                            CustomImageView(
+                              imagePath: ImageConstant.imgIconsTinyDown,
+                              height: 16.h,
+                              width: 18.h,
+                              margin: EdgeInsets.only(left: 10.h, right: 14.h),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -557,8 +576,29 @@ class _AcademicsAssignmentStatusInitialPageState
       child: Column(
         children: [
           // Add your CBT test content here
-          Center(
-            child: Text("CBT Test Content", style: theme.textTheme.titleLarge),
+          //AcademicsCbtTestStatusModel
+          ListView.builder(
+            itemCount:
+                controller
+                    .academicsFourModelObj
+                    .value
+                    .listlineItemList
+                    .value
+                    .length,
+            itemBuilder: (context, index) {
+              ListlineItemModel listlineItemModelObj =
+                  controller
+                      .academicsFourModelObj
+                      .value
+                      .listlineItemListcbt
+                      .value[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: ListlineItemCbtWidget(listlineItemModelObj),
+              );
+            },
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
           ),
         ],
       ),
@@ -571,9 +611,30 @@ class _AcademicsAssignmentStatusInitialPageState
       padding: EdgeInsets.all(20.h),
       child: Column(
         children: [
+          //ListlineItemLessonWidget
           // Add your lesson content here
-          Center(
-            child: Text("Lesson Content", style: theme.textTheme.titleLarge),
+          ListView.builder(
+            itemCount:
+                controller
+                    .academicsFourModelObj
+                    .value
+                    .listlineItemListLesson
+                    .value
+                    .length,
+            itemBuilder: (context, index) {
+              ListlineItemModel listlineItemModelObj =
+                  controller
+                      .academicsFourModelObj
+                      .value
+                      .listlineItemListLesson
+                      .value[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: ListlineItemLessonWidget(listlineItemModelObj),
+              );
+            },
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
           ),
         ],
       ),
