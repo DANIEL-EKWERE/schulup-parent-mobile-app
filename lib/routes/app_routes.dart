@@ -1,3 +1,5 @@
+import 'package:schulupparent/presentation/dashboard_extended_view/binding/dashboard_extended_view_binding.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/dashboard_extended_view.dart';
 import 'package:schulupparent/presentation/signin_screen/binding/signin_binding.dart';
 import 'package:schulupparent/presentation/signin_screen/signin_screen.dart';
 
@@ -99,6 +101,9 @@ class AppRoutes {
   static const String academicsAssignmentStatusInitialPage =
       '/academics_assignment_status_initial_page';
 
+  static const String dashboardExtendedView =
+      '/dashboard_extended_view';
+//DashboardExtendedView
   static const String academicsAssignmentStatusOneScreen =
       '/academics_assignment_status_one_screen';
 
@@ -261,10 +266,17 @@ class AppRoutes {
       page: () => AcademicsAssignmentStatusScreen(),
       bindings: [AcademicsAssignmentStatusBinding()],
     ),
+    //dashboardExtendedView
     GetPage(
       name: academicsAssignmentStatusOneScreen,
       page: () => AcademicsAssignmentStatusOneScreen(),
       bindings: [AcademicsAssignmentStatusOneBinding()],
+    ),
+
+    GetPage(
+      name: dashboardExtendedView,
+      page: () => DashboardExtendedView(),
+      bindings: [DashboardExtendedViewBinding()],
     ),
     GetPage(
       name: academicsAssignmentSearchScreen,

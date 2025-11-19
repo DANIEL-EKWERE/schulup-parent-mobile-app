@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/dashboard_extended_view.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
 import '../attendance_all_variants_page/attendance_all_variants_page.dart';
@@ -18,7 +19,7 @@ class AcademicsAssignmentStatusScreen
       body: SafeArea(
         child: Navigator(
           key: Get.nestedKey(1),
-          initialRoute: AppRoutes.academicsAssignmentStatusInitialPage,
+          initialRoute: AppRoutes.dashboardExtendedView,
           onGenerateRoute:
               (routeSetting) => GetPageRoute(
                 page: () => getCurrentPage(routeSetting.name!),
@@ -49,7 +50,7 @@ class AcademicsAssignmentStatusScreen
   String getCurrentRoute(BottomBarEnum type) {
     switch (type) {
       case BottomBarEnum.Home:
-        return "/";
+        return AppRoutes.dashboardExtendedView;
       case BottomBarEnum.Academics:
         return AppRoutes.academicsAssignmentStatusInitialPage;
       case BottomBarEnum.Attendance:
@@ -66,6 +67,8 @@ class AcademicsAssignmentStatusScreen
   ///Handling page based on route
   Widget getCurrentPage(String currentRoute) {
     switch (currentRoute) {
+      case AppRoutes.dashboardExtendedView:
+        return DashboardExtendedView();
       case AppRoutes.academicsAssignmentStatusInitialPage:
         return AcademicsAssignmentStatusInitialPage();
       case AppRoutes.attendanceAllVariantsPage:

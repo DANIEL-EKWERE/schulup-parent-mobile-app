@@ -3,13 +3,37 @@ class ImageConstant {
   // Image folder path
   static String imagePath = 'assets/images';
 
+  static String imgFees = '$imagePath/img_fees.png';
+
+  static String imgAssignments = '$imagePath/img_assignments.png';
+
+  static String imgCbttests = '$imagePath/img_cbttests.png';
+
+  static String imgLessons = '$imagePath/img_lessons.png';
+
+  static String imgSchularai = '$imagePath/img_schularai.png';
+
+  static String imgEvents = '$imagePath/img_events.png';
+
+  static String imgWardprogress = '$imagePath/img_wardprogress.png';
+
+  static String imgWardprofile = '$imagePath/img_wardprofile.png';
+
   // Common images
   static String imgIconsTinyDown = '$imagePath/img_icons_tiny_down.svg';
 
+  static String imgNotification = '$imagePath/img_notification.svg';
+  //assets/images/img_notification.svg
   static String imgIconsSmallSchularAi =
       '$imagePath/img_icons_small_schular_ai.svg';
 
+  static String imgChevronDown = '$imagePath/img_chevron_down.svg';
+
   static String imgSearch = '$imagePath/img_search.svg';
+
+  static String imgSettings1 = '$imagePath/img_settings1.svg';
+
+  static String imgLetter = '$imagePath/img_letter.svg';
 
   static String imgNavHome = '$imagePath/img_nav_home.svg';
 
@@ -55,7 +79,6 @@ class ImageConstant {
   static String imgUsername = '$imagePath/img_username.svg';
 
   static String imgVisibility = '$imagePath/img_visibility.svg';
-  
 
   static String imgPassword = '$imagePath/img_password.svg';
 

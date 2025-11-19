@@ -30,12 +30,20 @@ class AppbarTrailingIconbutton extends StatelessWidget {
         onTap: () {
           onTap?.call();
         },
-        child: CustomIconButton(
-          height: height ?? 34.h,
-          width: width ?? 34.h,
-          padding: EdgeInsets.all(4.h),
-          decoration: IconButtonStyleHelper.none,
-          child: CustomImageView(imagePath: imagePath),
+        child: Container(
+          padding: EdgeInsets.all(1),
+          decoration: BoxDecoration(
+            border: Border.all(color: Color(0xFFFFBC71)),
+            shape: BoxShape.circle,
+            color: Color(0xffEF5A07),
+          ),
+          child: CustomIconButton(
+            height: height ?? 38.h,
+            width: width ?? 34.h,
+            padding: EdgeInsets.all(4.h),
+            decoration: IconButtonStyleHelper.none,
+            child: CustomImageView(imagePath: imagePath),
+          ),
         ),
       ),
     );
