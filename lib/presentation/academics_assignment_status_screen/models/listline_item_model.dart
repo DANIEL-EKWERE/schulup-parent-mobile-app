@@ -6,22 +6,42 @@ import '../../../core/app_export.dart';
 // ignore_for_file: must_be_immutable
 class ListlineItemModel {
   ListlineItemModel({
-    this.wordproblems,
-    this.mathematics,
+    this.heading,
+    this.subheading,
     this.dueOnNov52025,
     this.id,
   }) {
-    wordproblems = wordproblems ?? Rx("lbl_word_problems".tr);
-    mathematics = mathematics ?? Rx("msg_mathematics_posted".tr);
+    heading = heading ?? Rx("lbl_word_problems".tr);
+    subheading = subheading ?? Rx("msg_mathematics_posted".tr);
     dueOnNov52025 = dueOnNov52025 ?? Rx("msg_due_on_nov_5_2025".tr);
     id = id ?? Rx("");
   }
 
-  Rx<String>? wordproblems;
+  Rx<String>? heading;
 
-  Rx<String>? mathematics;
+  Rx<String>? subheading;
 
   Rx<String>? dueOnNov52025;
 
   Rx<String>? id;
+
+  // static List<ListlineItemModel> getListlineItemList() {
+  //   return [
+  //     ListlineItemModel(
+  //       id: Rx("1"),
+  //       heading: Rx("Word Problems"),
+  //       subheading: Rx("Mathematics Posted"),
+  //       dueOnNov52025: Rx("Due on Nov 5, 2025"),
+  //     ),
+  //     ListlineItemModel(
+  //       id: Rx("2"),
+  //     ),
+  //     ListlineItemModel(
+  //       id: Rx("3"),
+  //     ),
+  //     ListlineItemModel(
+  //       id: Rx("4"),
+  //     ),
+  //   ];
+  // }
 }

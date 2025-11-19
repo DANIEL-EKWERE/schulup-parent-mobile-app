@@ -34,7 +34,7 @@ class ListlineItemWidget extends StatelessWidget {
                   padding: EdgeInsets.only(left: 10.h),
                   child: Obx(
                     () => Text(
-                      listlineItemModelObj.wordproblems!.value,
+                      listlineItemModelObj.heading!.value,
                       style: theme.textTheme.bodyMedium,
                     ),
                   ),
@@ -44,7 +44,7 @@ class ListlineItemWidget extends StatelessWidget {
           ),
           Obx(
             () => Text(
-              listlineItemModelObj.mathematics!.value,
+              listlineItemModelObj.subheading!.value,
               style: CustomTextStyles.bodySmallSecondaryContainer10,
             ),
           ),

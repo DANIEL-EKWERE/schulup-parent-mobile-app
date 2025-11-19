@@ -28,13 +28,13 @@ class AcademicsFourModel {
 
   Rx<List<ListlineItemModel>> listlineItemList = Rx([
     ListlineItemModel(
-      wordproblems: "lbl_word_problems".tr.obs,
-      mathematics: "msg_mathematics_posted".tr.obs,
+      heading: "lbl_word_problems".tr.obs,
+      subheading: "msg_mathematics_posted".tr.obs,
       dueOnNov52025: "msg_due_on_nov_5_2025".tr.obs,
     ),
     ListlineItemModel(
-      wordproblems: "msg_the_respiratory".tr.obs,
-      mathematics: "msg_basic_science".tr.obs,
+      heading: "msg_the_respiratory".tr.obs,
+      subheading: "msg_basic_science".tr.obs,
       dueOnNov52025: "msg_due_on_oct_30".tr.obs,
     ),
   ]);

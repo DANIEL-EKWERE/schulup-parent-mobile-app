@@ -188,8 +188,11 @@
 //     );
 //   }
 // }
+import 'dart:ui';
 
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/academics_four_model.dart';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/listline_item_model.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -197,10 +200,18 @@ import '../../widgets/app_bar/appbar_trailing_iconbutton.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import 'controller/academics_assignment_status_controller.dart';
 import 'models/academics_assignment_status_initial_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget.dart';
 
-class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
+class AcademicsAssignmentStatusInitialPage extends StatefulWidget {
   AcademicsAssignmentStatusInitialPage({Key? key}) : super(key: key);
 
+  @override
+  State<AcademicsAssignmentStatusInitialPage> createState() =>
+      _AcademicsAssignmentStatusInitialPageState();
+}
+
+class _AcademicsAssignmentStatusInitialPageState
+    extends State<AcademicsAssignmentStatusInitialPage> {
   AcademicsAssignmentStatusController controller = Get.put(
     AcademicsAssignmentStatusController(),
   );
@@ -237,7 +248,7 @@ class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
   Widget _buildColumnacademics() {
     return Container(
       width: double.maxFinite,
-      padding: EdgeInsets.symmetric(vertical: 18.h),
+      padding: EdgeInsets.only(top: 18.h),
       decoration: AppDecoration.primaryC7Main,
       child: Column(
         spacing: 16,
@@ -265,6 +276,7 @@ class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
               ),
             ],
           ),
+
           SizedBox(
             width: double.maxFinite,
             child: Obx(
@@ -363,11 +375,133 @@ class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
                   indicatorColor: Colors.transparent,
                   onTap: (index) {
                     controller.tabIndex.value = index;
+                    setState(() {});
                   },
                 ),
               ),
             ),
           ),
+          controller.tabIndex.value == 0
+              ? Container(
+                decoration: AppDecoration.outline,
+                width: double.maxFinite,
+                child: ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.h,
+                        vertical: 8.h,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Primary 5", style: theme.textTheme.labelLarge),
+                          CustomImageView(
+                            imagePath: ImageConstant.imgIconsTinyDown,
+                            height: 16.h,
+                            width: 18.h,
+                            margin: EdgeInsets.only(left: 10.h),
+                          ),
+                          Spacer(),
+                          Text(
+                            "lbl_first_term".tr,
+                            style: theme.textTheme.labelLarge,
+                          ),
+                          CustomImageView(
+                            imagePath: ImageConstant.imgIconsTinyDown,
+                            height: 16.h,
+                            width: 18.h,
+                            margin: EdgeInsets.only(left: 10.h),
+                          ),
+                          Spacer(),
+                          Text("Pending", style: theme.textTheme.labelLarge),
+                          CustomImageView(
+                            imagePath: ImageConstant.imgIconsTinyDown,
+                            height: 16.h,
+                            width: 18.h,
+                            margin: EdgeInsets.only(left: 10.h, right: 14.h),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
+              : controller.tabIndex.value == 1
+              ? Container(
+                decoration: AppDecoration.outline,
+                width: double.maxFinite,
+                child: ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.h,
+                        vertical: 8.h,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Primary 5", style: theme.textTheme.labelLarge),
+                          CustomImageView(
+                            imagePath: ImageConstant.imgIconsTinyDown,
+                            height: 16.h,
+                            width: 18.h,
+                            margin: EdgeInsets.only(left: 10.h),
+                          ),
+                          Spacer(),
+                          Text(
+                            "Scheduled Test",
+                            style: theme.textTheme.labelLarge,
+                          ),
+                          CustomImageView(
+                            imagePath: ImageConstant.imgIconsTinyDown,
+                            height: 16.h,
+                            width: 18.h,
+                            margin: EdgeInsets.only(left: 10.h),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
+              : Container(
+                decoration: AppDecoration.outline,
+                width: double.maxFinite,
+                child: ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.h,
+                        vertical: 8.h,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Primary 5", style: theme.textTheme.labelLarge),
+                          CustomImageView(
+                            imagePath: ImageConstant.imgIconsTinyDown,
+                            height: 16.h,
+                            width: 18.h,
+                            margin: EdgeInsets.only(left: 10.h),
+                          ),
+                          Spacer(),
+                          Text("First Term", style: theme.textTheme.labelLarge),
+                          CustomImageView(
+                            imagePath: ImageConstant.imgIconsTinyDown,
+                            height: 16.h,
+                            width: 18.h,
+                            margin: EdgeInsets.only(left: 10.h),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
         ],
       ),
     );
@@ -376,16 +510,40 @@ class AcademicsAssignmentStatusInitialPage extends StatelessWidget {
   /// Assignment Tab Content
   Widget _buildAssignmentTab() {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(20.h),
+      padding: EdgeInsets.symmetric(horizontal: 20.h),
       child: Column(
         children: [
           // Add your assignment content here
-          Center(
-            child: Text(
-              "Assignment Content",
-              style: theme.textTheme.titleLarge,
-            ),
+          // Center(
+          //   child: Text(
+          //     "Assignment Content",
+          //     style: theme.textTheme.titleLarge,
+          //   ),
+          // ),
+          ListView.builder(
+            itemCount:
+                controller
+                    .academicsFourModelObj
+                    .value
+                    .listlineItemList
+                    .value
+                    .length,
+            itemBuilder: (context, index) {
+              ListlineItemModel listlineItemModelObj =
+                  controller
+                      .academicsFourModelObj
+                      .value
+                      .listlineItemList
+                      .value[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: ListlineItemWidget(listlineItemModelObj),
+              );
+            },
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
           ),
+
           // Example: Add assignment list or empty state
         ],
       ),
