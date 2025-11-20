@@ -32,7 +32,7 @@ class DashboardExtendedViewModel {
       DashboardExtendedViewModel(
         title: "Lessons",
         imagePath: ImageConstant.imgLessons,
-        route: '',
+        route: '/academics_lesson_all_lessons_page',
       ),
       DashboardExtendedViewModel(
         title: "Schular Ai",

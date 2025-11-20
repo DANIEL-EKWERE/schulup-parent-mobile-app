@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:schulupparent/presentation/attendance_filter_start_date_bottomsheet/attendance_filter_start_date_bottomsheet.dart';
+import 'package:schulupparent/presentation/attendance_filter_start_date_bottomsheet/controller/attendance_filter_start_date_controller.dart';
 import '../../core/app_export.dart';
 import '../../core/utils/date_time_utils.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -80,9 +82,31 @@ class AttendanceAllVariantsPage extends StatelessWidget {
               ],
             ),
             actions: [
-              AppbarTrailingIconbutton(
-                imagePath: ImageConstant.imgUserWhiteA700,
-                margin: EdgeInsets.only(top: 1.h, right: 25.h, bottom: 2.h),
+              GestureDetector(
+                onTap: () {
+                  // AttendanceFilterStartDateBottomsheet(
+                  //   AttendanceFilterStartDateController(),
+                  // );
+                  print('object');
+                },
+                child: AppbarTrailingIconbutton(
+                  onTap: () {
+                    print('object');
+                    // return AttendanceFilterStartDateBottomsheet(
+                    //   AttendanceFilterStartDateController(),
+                    // );
+                    showModalBottomSheet(
+                      context: Get.context!,
+                      builder: (context) {
+                        return AttendanceFilterStartDateBottomsheet(
+                          AttendanceFilterStartDateController(),
+                        );
+                      },
+                    );
+                  },
+                  imagePath: ImageConstant.imgUserWhiteA700,
+                  margin: EdgeInsets.only(top: 1.h, right: 25.h, bottom: 2.h),
+                ),
               ),
             ],
           ),

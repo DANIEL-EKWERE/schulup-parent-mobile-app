@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import '../../../core/app_export.dart';
-import '../controller/academics_lesson_all_lessons_controller.dart';
 import '../models/listline_item_model.dart';
 
 // ignore_for_file: must_be_immutable
@@ -9,7 +9,7 @@ class ListlineItemWidget extends StatelessWidget {
 
   ListlineItemModel listlineItemModelObj;
 
-  var controller = Get.find<AcademicsLessonAllLessonsController>();
+  var controller = Get.find<AcademicsAssignmentStatusController>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,34 +19,49 @@ class ListlineItemWidget extends StatelessWidget {
       decoration: AppDecoration.primaryC11.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder8,
       ),
-      child: Column(
+      child: Row(
         spacing: 10,
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
-            width: double.maxFinite,
-            child: Row(
-              children: [
-                VerticalDivider(width: 5.h, thickness: 5.h),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.h),
-                  child: Obx(
-                    () => Text(
-                      listlineItemModelObj.processesof!.value,
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                  ),
-                ),
-              ],
+          Container(
+            padding: EdgeInsets.all(5.h),
+            width: 40.h,
+            height: 40.h,
+            decoration: BoxDecoration(
+              color: Color(0xffFFEED4),
+              shape: BoxShape.circle,
+            ),
+            child: CustomImageView(
+              //assets/images/img_cbttest.svg
+              imagePath: ImageConstant.imgLessons,
+              height: 20.h,
+              width: 20.h,
+              fit: BoxFit.contain,
             ),
           ),
-          Obx(
-            () => Text(
-              listlineItemModelObj.agricultural!.value,
-              style: CustomTextStyles.bodySmallSecondaryContainer10,
-            ),
+          Column(
+            spacing: 10.h,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 0.h),
+                child: Obx(
+                  () => Text(
+                    listlineItemModelObj.processesof!.value,
+                    style: theme.textTheme.bodyMedium,
+                  ),
+                ),
+              ),
+              Obx(
+                () => Text(
+                  listlineItemModelObj.agricultural!.value,
+                  style: CustomTextStyles.bodySmallSecondaryContainer10,
+                ),
+              ),
+            ],
           ),
         ],
       ),

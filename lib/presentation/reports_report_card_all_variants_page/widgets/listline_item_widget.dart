@@ -29,7 +29,24 @@ class ListlineItemWidget extends StatelessWidget {
             width: double.maxFinite,
             child: Row(
               children: [
-                VerticalDivider(width: 5.h, thickness: 5.h),
+                Container(
+                  height: 40,
+                  width: 40,
+                  padding: EdgeInsets.all(5.h),
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFEED4),
+
+                    shape: BoxShape.circle,
+                  ),
+                  child: CustomImageView(
+                    imagePath: 'assets/images/img_icons_small_report_card.png',
+                  ),
+                  // CustomImageView(
+                  //   imagePath:   dashboardItemModelObj.imagePath,
+                  //   height: 40.h,
+                  //   width: 40.h,
+                  // ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(left: 10.h),
                   child: Obx(

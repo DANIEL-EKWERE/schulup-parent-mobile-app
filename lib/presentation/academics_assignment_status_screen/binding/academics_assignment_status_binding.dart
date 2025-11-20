@@ -1,4 +1,5 @@
 // TODO Implement this library.
+import 'package:schulupparent/presentation/attendance_filter_start_date_bottomsheet/controller/attendance_filter_start_date_controller.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
 import '../../../core/app_export.dart';
@@ -17,7 +18,9 @@ class AcademicsAssignmentStatusBinding extends Bindings {
     //   DashboardExtendedViewController(),
     // );
 
+   //AttendanceFilterStartDateController
     Get.put(DashboardExtendedViewController(), permanent: true);
+    Get.put(AttendanceFilterStartDateController(), permanent: true);
 
   }
 }

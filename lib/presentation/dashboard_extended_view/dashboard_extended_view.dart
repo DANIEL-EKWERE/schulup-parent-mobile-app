@@ -144,6 +144,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
         children: [
           CustomAppBar(
             height: 48.h,
+            styleType: Style.bgFillPrimary,
             //centerTitle: true,
             title: GestureDetector(
               onTap: () {

@@ -1,5 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/widgets/app_bar/appbar_leading_iconbutton.dart';
+import 'package:schulupparent/widgets/app_bar/custom_app_bar.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_drop_down.dart';
 import 'controller/academics_lesson_all_lessons_controller.dart';
@@ -18,14 +20,48 @@ class AcademicsLessonAllLessonsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
+      appBar: CustomAppBar(
+        height: 56.h,
+        leadingWidth: 75.h,
+        leading: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Container(
+            height: 10,
+            width: 10,
+            //margin: EdgeInsets.only(left: 25.h),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xffEF5A07),
+              border: Border.all(color: Color(0xffFFBC71)),
+            ),
+            child: AppbarLeadingIconbutton(
+              imagePath: ImageConstant.imgArrowLeftWhiteA700,
+              //margin: EdgeInsets.only(left: 25.h),
+              onTap: () {
+                Get.back();
+              },
+            ),
+          ),
+        ),
+        centerTitle: true,
+        title: Text(
+          "All Lessons",
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.left,
+          style: theme.textTheme.headlineSmall?.copyWith(
+            color: Colors.white,
+            fontSize: 20.h,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SizedBox(
           width: double.maxFinite,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              SizedBox(height: 10.h),
+              // SizedBox(height: 10.h),
               Expanded(
                 child: SizedBox(
                   width: double.maxFinite,
@@ -46,13 +82,13 @@ class AcademicsLessonAllLessonsPage extends StatelessWidget {
   /// Section Widget
   Widget _buildRowprimarycount() {
     return Container(
-      decoration: AppDecoration.outline,
+      decoration: AppDecoration.primaryC7Main,
       width: double.maxFinite,
       child: ClipRect(
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 0),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 54.h, vertical: 10.h),
+            padding: EdgeInsets.symmetric(horizontal: 54.h, vertical: 0.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -1,3 +1,5 @@
+import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/academics_lesson_all_lessons_page.dart';
+import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/binding/academics_lesson_all_lesson_binding.dart';
 import 'package:schulupparent/presentation/change_password/binding/change_password_binding.dart';
 import 'package:schulupparent/presentation/change_password/change_password_screen.dart';
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/binding/dashboard_edit_ward_profile_binding.dart';
@@ -417,10 +419,16 @@ class AppRoutes {
       page: () => AcademicsCbtTestTestResultOneScreen(),
       bindings: [AcademicsCbtTestTestResultOneBinding()],
     ),
+    //academicsLessonAllLessonsPage
     GetPage(
       name: academicsCbtTestTestResultTwoScreen,
       page: () => AcademicsCbtTestTestResultTwoScreen(),
       bindings: [AcademicsCbtTestTestResultTwoBinding()],
+    ),
+    GetPage(
+      name: academicsLessonAllLessonsPage,
+      page: () => AcademicsLessonAllLessonsPage(),
+      bindings: [AcademicsLessonAllLessonBinding()],
     ),
     GetPage(
       name: academicsLessonSearchForScreen,

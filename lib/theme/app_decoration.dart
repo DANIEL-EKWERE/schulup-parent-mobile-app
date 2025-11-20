@@ -40,7 +40,7 @@ class AppDecoration {
   static BoxDecoration get primaryC11 =>
       BoxDecoration(color: appTheme.yellow50);
   static BoxDecoration get primaryC7Main => BoxDecoration(
-    color: theme.colorScheme.primary,
+    color: Color(0xffFF8D2A), //theme.colorScheme.primary,
     borderRadius: BorderRadius.only(
       bottomLeft: Radius.circular(12.h),
       bottomRight: Radius.circular(12.h),

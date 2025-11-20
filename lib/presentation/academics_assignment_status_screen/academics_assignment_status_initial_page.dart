@@ -190,13 +190,21 @@
 // }
 import 'dart:ui';
 
+import 'package:schulupparent/presentation/academics_assignment_modal_buttomsheet/academics_assignment_modal_buttomsheet.dart';
+import 'package:schulupparent/presentation/academics_assignment_modal_buttomsheet/controller/academics_assignment_modal_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_one_bottomsheet/academics_assignment_modal_one_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_one_bottomsheet/controller/academics_assignment_modal_one_controller.dart';
+import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/academics_assignment_modal_two_bottomsheet.dart';
+import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/controller/academics_assignment_modal_two_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/academics_four_model.dart';
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/listline_item_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_cbt.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
+import 'package:schulupparent/presentation/academics_cbt_test_modal_bottomsheet/academics_cbt_test_modal_bottomsheet.dart';
+import 'package:schulupparent/presentation/academics_cbt_test_modal_bottomsheet/controller/academics_cbt_test_modal_controller.dart';
+import 'package:schulupparent/presentation/academics_cbt_test_one_modal_bottomsheet/academics_cbt_test_modal_one_bottomsheet.dart';
+import 'package:schulupparent/presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -275,6 +283,9 @@ class _AcademicsAssignmentStatusInitialPageState
                 imagePath: ImageConstant.imgIconsSmallSchularAi,
               ),
               AppbarTrailingIconbutton(
+                onTap: () {
+                  Get.toNamed(AppRoutes.academicsAssignmentSearchScreen);
+                },
                 imagePath: ImageConstant.imgSearch,
                 margin: EdgeInsets.only(left: 11.h, right: 25.h),
               ),
@@ -397,51 +408,94 @@ class _AcademicsAssignmentStatusInitialPageState
                         horizontal: 20.h,
                         vertical: 8.h,
                       ),
-                      child: GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return AcademicsAssignmentModalOneBottomsheet(
-                                AcademicsAssignmentModalOneController(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return AcademicsAssignmentModalBottomsheet(
+                                    AcademicsAssignmentModalController(),
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Primary 5",
-                              style: theme.textTheme.labelLarge,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Primary 5",
+                                  style: theme.textTheme.labelLarge,
+                                ),
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconsTinyDown,
+                                  height: 16.h,
+                                  width: 18.h,
+                                  margin: EdgeInsets.only(left: 10.h),
+                                ),
+                              ],
                             ),
-                            CustomImageView(
-                              imagePath: ImageConstant.imgIconsTinyDown,
-                              height: 16.h,
-                              width: 18.h,
-                              margin: EdgeInsets.only(left: 10.h),
+                          ),
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return AcademicsAssignmentModalOneBottomsheet(
+                                    AcademicsAssignmentModalOneController(),
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "lbl_first_term".tr,
+                                  style: theme.textTheme.labelLarge,
+                                ),
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconsTinyDown,
+                                  height: 16.h,
+                                  width: 18.h,
+                                  margin: EdgeInsets.only(left: 10.h),
+                                ),
+                              ],
                             ),
-                            Spacer(),
-                            Text(
-                              "lbl_first_term".tr,
-                              style: theme.textTheme.labelLarge,
+                          ),
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              // status selection modal bottom sheet
+                              showModalBottomSheet(
+                                context: Get.context!,
+                                builder: (context) {
+                                  return AcademicsAssignmentModalTwoBottomsheet(
+                                    AcademicsAssignmentModalTwoController(),
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Pending",
+                                  style: theme.textTheme.labelLarge,
+                                ),
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconsTinyDown,
+                                  height: 16.h,
+                                  width: 18.h,
+                                  margin: EdgeInsets.only(
+                                    left: 10.h,
+                                    right: 14.h,
+                                  ),
+                                ),
+                              ],
                             ),
-                            CustomImageView(
-                              imagePath: ImageConstant.imgIconsTinyDown,
-                              height: 16.h,
-                              width: 18.h,
-                              margin: EdgeInsets.only(left: 10.h),
-                            ),
-                            Spacer(),
-                            Text("Pending", style: theme.textTheme.labelLarge),
-                            CustomImageView(
-                              imagePath: ImageConstant.imgIconsTinyDown,
-                              height: 16.h,
-                              width: 18.h,
-                              margin: EdgeInsets.only(left: 10.h, right: 14.h),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -462,23 +516,58 @@ class _AcademicsAssignmentStatusInitialPageState
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Primary 5", style: theme.textTheme.labelLarge),
-                          CustomImageView(
-                            imagePath: ImageConstant.imgIconsTinyDown,
-                            height: 16.h,
-                            width: 18.h,
-                            margin: EdgeInsets.only(left: 10.h),
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return AcademicsAssignmentModalBottomsheet(
+                                    AcademicsAssignmentModalController(),
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Primary 5",
+                                  style: theme.textTheme.labelLarge,
+                                ),
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconsTinyDown,
+                                  height: 16.h,
+                                  width: 18.h,
+                                  margin: EdgeInsets.only(left: 10.h),
+                                ),
+                              ],
+                            ),
                           ),
                           Spacer(),
-                          Text(
-                            "Scheduled Test",
-                            style: theme.textTheme.labelLarge,
-                          ),
-                          CustomImageView(
-                            imagePath: ImageConstant.imgIconsTinyDown,
-                            height: 16.h,
-                            width: 18.h,
-                            margin: EdgeInsets.only(left: 10.h),
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return AcademicsCbtTestModalOneBottomsheet(
+                                    AcademicsCbtTestModalOneController(),
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Scheduled Test",
+                                  style: theme.textTheme.labelLarge,
+                                ),
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconsTinyDown,
+                                  height: 16.h,
+                                  width: 18.h,
+                                  margin: EdgeInsets.only(left: 10.h),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -500,20 +589,58 @@ class _AcademicsAssignmentStatusInitialPageState
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Primary 5", style: theme.textTheme.labelLarge),
-                          CustomImageView(
-                            imagePath: ImageConstant.imgIconsTinyDown,
-                            height: 16.h,
-                            width: 18.h,
-                            margin: EdgeInsets.only(left: 10.h),
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return AcademicsAssignmentModalBottomsheet(
+                                    AcademicsAssignmentModalController(),
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Primary 5",
+                                  style: theme.textTheme.labelLarge,
+                                ),
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconsTinyDown,
+                                  height: 16.h,
+                                  width: 18.h,
+                                  margin: EdgeInsets.only(left: 10.h),
+                                ),
+                              ],
+                            ),
                           ),
                           Spacer(),
-                          Text("First Term", style: theme.textTheme.labelLarge),
-                          CustomImageView(
-                            imagePath: ImageConstant.imgIconsTinyDown,
-                            height: 16.h,
-                            width: 18.h,
-                            margin: EdgeInsets.only(left: 10.h),
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return AcademicsAssignmentModalOneBottomsheet(
+                                    AcademicsAssignmentModalOneController(),
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "First Term",
+                                  style: theme.textTheme.labelLarge,
+                                ),
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconsTinyDown,
+                                  height: 16.h,
+                                  width: 18.h,
+                                  margin: EdgeInsets.only(left: 10.h),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
