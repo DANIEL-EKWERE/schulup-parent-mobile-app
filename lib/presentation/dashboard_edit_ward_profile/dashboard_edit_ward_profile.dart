@@ -482,6 +482,8 @@ class DashboardEditWardProfileScreen
   /// Section Widget
   PreferredSizeWidget _buildAppbar() {
     return CustomAppBar(
+      height: 100,
+      
       leadingWidth: 75.h,
       leading: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),

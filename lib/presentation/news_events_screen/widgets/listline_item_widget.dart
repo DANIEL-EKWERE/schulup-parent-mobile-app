@@ -8,7 +8,6 @@ class ListlineItemWidget extends StatelessWidget {
   ListlineItemWidget(this.listlineItemModelObj, {Key? key}) : super(key: key);
 
   ListlineItemModel listlineItemModelObj;
-
   var controller = Get.find<NewsEventsController>();
 
   @override
@@ -17,53 +16,67 @@ class ListlineItemWidget extends StatelessWidget {
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(horizontal: 24.h, vertical: 18.h),
       decoration: AppDecoration.primaryC11,
-      child: Column(
-        spacing: 10,
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            width: double.maxFinite,
-            child: Row(
+          // Image/Icon on the left
+          Container(
+            padding: EdgeInsets.all(8),
+            width: 40.h,
+            height: 40.h,
+            decoration: BoxDecoration(
+              color: Color(0xffFFEED4),
+              shape: BoxShape.circle,
+            ),
+            child: CustomImageView(imagePath: ImageConstant.imgEvents),
+          ),
+
+          SizedBox(width: 10.h),
+
+          // Content column on the right
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VerticalDivider(width: 5.h, thickness: 5.h),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.h),
-                  child: Obx(
-                    () => Text(
-                      listlineItemModelObj.mondaynovthree!.value,
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      CustomImageView(
-                        imagePath: ImageConstant.imgClosePrimary,
-                        height: 16.h,
-                        width: 16.h,
+                // Top row with date and label
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Obx(
+                      () => Text(
+                        listlineItemModelObj.mondaynovthree!.value,
+                        style: theme.textTheme.bodyMedium,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 4.h),
-                        child: Obx(
+                    ),
+                    Row(
+                      children: [
+                        CustomImageView(
+                          imagePath: ImageConstant.imgClosePrimary,
+                          height: 16.h,
+                          width: 16.h,
+                        ),
+                        SizedBox(width: 4.h),
+                        Obx(
                           () => Text(
                             listlineItemModelObj.label!.value,
                             style: CustomTextStyles.labelMediumPrimary,
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 10),
+
+                // Description text
+                Obx(
+                  () => Text(
+                    listlineItemModelObj.secondterm!.value,
+                    style: CustomTextStyles.bodyMediumSecondaryContainer,
                   ),
                 ),
               ],
-            ),
-          ),
-          Obx(
-            () => Text(
-              listlineItemModelObj.secondterm!.value,
-              style: CustomTextStyles.bodyMediumSecondaryContainer,
             ),
           ),
         ],

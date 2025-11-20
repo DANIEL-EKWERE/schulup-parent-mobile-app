@@ -48,6 +48,7 @@ class CustomBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: appTheme.whiteA700,
         border: Border(top: BorderSide(color: appTheme.gray20001, width: 1.h)),
       ),
       child: Obx(
@@ -113,7 +114,6 @@ class CustomBottomBar extends StatelessWidget {
     );
   }
 }
-
 
 class BottomMenuModel {
   BottomMenuModel({

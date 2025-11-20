@@ -36,97 +36,99 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      decoration: AppDecoration.grayC13,
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          _buildColumnacademics(),
-          Expanded(
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(height: 12),
-                Padding(
-                  padding: EdgeInsetsGeometry.only(left: 16.h),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Latest Updates',
-                      style: CustomTextStyles.bodyMediumOnPrimary,
+    return SafeArea(
+      child: Container(
+        width: double.maxFinite,
+        decoration: AppDecoration.grayC13,
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _buildColumnacademics(),
+            Expanded(
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: EdgeInsetsGeometry.only(left: 16.h),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Latest Updates',
+                        style: CustomTextStyles.bodyMediumOnPrimary,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 12),
-                SizedBox(
-                  height: 90,
-                  width: double.infinity,
-                  child: CarouselSlider(
-                    items: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Color(0xffFFEED4),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    height: 120,
+                    width: double.infinity,
+                    child: CarouselSlider(
+                      items: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Color(0xffFFEED4),
+                          ),
+                          height: 150,
+                          width: double.infinity,
                         ),
-                        height: 150,
-                        width: double.infinity,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Color(0xffFFEED4),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Color(0xffFFEED4),
+                          ),
+                          height: 150,
+                          width: double.infinity,
                         ),
-                        height: 150,
-                        width: double.infinity,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Color(0xffFFEED4),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Color(0xffFFEED4),
+                          ),
+                          height: 180,
+                          width: double.infinity,
                         ),
+                      ],
+                      options: CarouselOptions(
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _currentIndex = index;
+                          });
+                        },
+                        enlargeCenterPage: true,
+                        aspectRatio: 16 / 5,
                         height: 150,
-                        width: double.infinity,
+                        viewportFraction: 0.9,
+                        autoPlay: true,
                       ),
-                    ],
-                    options: CarouselOptions(
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                      },
-                      enlargeCenterPage: true,
-                      aspectRatio: 16 / 5,
-                      height: 150,
-                      viewportFraction: 0.9,
-                      autoPlay: true,
                     ),
                   ),
-                ),
-                const SizedBox(height: 8),
+                  const SizedBox(height: 8),
 
-                AnimatedSmoothIndicator(
-                  activeIndex: _currentIndex,
-                  count: 3,
-                  effect: ExpandingDotsEffect(
-                    dotHeight: 8,
-                    dotWidth: 8,
-                    activeDotColor: Color(0xffEF5A07),
-                    dotColor: Colors.grey.shade300,
+                  AnimatedSmoothIndicator(
+                    activeIndex: _currentIndex,
+                    count: 3,
+                    effect: ExpandingDotsEffect(
+                      dotHeight: 8,
+                      dotWidth: 8,
+                      activeDotColor: Color(0xffEF5A07),
+                      dotColor: Colors.grey.shade300,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 5,
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 5,
+                    ),
+                    child: AcademicProgressChart(),
                   ),
-                  child: AcademicProgressChart(),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -359,7 +361,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                 );
               },
               child: Container(
-                width: 100,
+                width: 105,
                 // height: 150,
                 margin: EdgeInsets.only(left: 16),
                 padding: EdgeInsets.all(5),
@@ -425,7 +427,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: SizedBox(
               width: double.maxFinite,
-              height: 180,
+              height: 210,
               child: GridView.builder(
                 itemCount: DashboardExtendedViewModel.getSampleList().length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

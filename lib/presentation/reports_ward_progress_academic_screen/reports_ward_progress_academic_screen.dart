@@ -19,6 +19,7 @@ class ReportsWardProgressAcademicScreen
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       body: SafeArea(
+        top: false,
         child: SizedBox(
           width: double.maxFinite,
           child: Column(
@@ -50,7 +51,7 @@ class ReportsWardProgressAcademicScreen
       padding: EdgeInsets.symmetric(vertical: 10.h),
       decoration: AppDecoration.primaryC7Main,
       child: Column(
-        spacing: 16,
+        spacing: 16.h,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomAppBar(
@@ -76,11 +77,13 @@ class ReportsWardProgressAcademicScreen
           ),
           Obx(
             () => Container(
-              width: 368.h,
-              margin: EdgeInsets.only(left: 24.h),
+              width: double.infinity,
+              // margin: EdgeInsets.only(left: 24.h),
               child: TabBar(
                 controller: controller.tabviewController,
                 isScrollable: true,
+                dividerColor: Colors.transparent,
+                labelPadding: EdgeInsets.symmetric(horizontal: 4.h),
                 tabAlignment: TabAlignment.start,
                 labelColor: appTheme.whiteA700,
                 labelStyle: TextStyle(

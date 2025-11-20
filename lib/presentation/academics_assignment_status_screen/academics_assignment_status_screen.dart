@@ -15,7 +15,8 @@ class AcademicsAssignmentStatusScreen
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appTheme.whiteA700,
+      backgroundColor: Color(0xffFF8D2A),
+      //appTheme.whiteA700,
       body: SafeArea(
         child: Navigator(
           key: Get.nestedKey(1),

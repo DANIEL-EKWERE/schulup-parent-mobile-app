@@ -36,7 +36,7 @@ class ListlineItemLessonWidget extends StatelessWidget {
             ),
             child: CustomImageView(
               //assets/images/img_cbttest.svg
-              imagePath: ImageConstant.imgCbttests,
+              imagePath: ImageConstant.imgLessons,
               height: 20.h,
               width: 20.h,
               fit: BoxFit.contain,

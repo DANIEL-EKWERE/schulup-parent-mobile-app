@@ -24,7 +24,9 @@ class _SigninScreenState extends State<SigninScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: false,
       child: Scaffold(
+      //  appBar: Cus
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 16),
           width: double.infinity,

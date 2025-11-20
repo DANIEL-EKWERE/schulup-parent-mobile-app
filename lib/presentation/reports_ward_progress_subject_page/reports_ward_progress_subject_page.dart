@@ -1,6 +1,8 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/controller/reports_ward_progress_subject_one_controller.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/reports_ward_progress_subject_one_bottomsheet.dart';
 import '../../core/app_export.dart';
 import 'controller/reports_ward_progress_subject_controller.dart';
 import 'models/listline_item_model.dart';
@@ -24,15 +26,16 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
         child: SizedBox(
           width: double.maxFinite,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
+            // mainAxisSize: MainAxisSize.max,
             children: [
-              SizedBox(height: 10.h),
+              //  SizedBox(height: 10.h),
               Expanded(
                 child: SizedBox(
                   width: double.maxFinite,
                   child: Column(
-                    spacing: 16,
+                    spacing: 16.h,
                     mainAxisSize: MainAxisSize.max,
+                    //  mainAxisSize: MainAxisSize.max,
                     children: [_buildColumnshowing(), _buildListline()],
                   ),
                 ),
@@ -46,25 +49,37 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
 
   /// Section Widget
   Widget _buildColumnshowing() {
-    return SizedBox(
-      width: double.maxFinite,
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-          child: Container(
-            width: double.maxFinite,
-            padding: EdgeInsets.only(left: 24.h, top: 10.h, bottom: 10.h),
-            decoration: AppDecoration.outline,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "msg_showing_averages".tr,
-                  style: CustomTextStyles.bodySmallWhiteA700,
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: Get.context!,
+          builder: (context) {
+            return ReportsWardProgressSubjectOneBottomsheet(
+              ReportsWardProgressSubjectOneController(),
+            );
+          },
+        );
+      },
+      child: SizedBox(
+        width: double.maxFinite,
+        child: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            child: Container(
+              width: double.maxFinite,
+              padding: EdgeInsets.only(left: 24.h, top: 10.h, bottom: 10.h),
+              decoration: AppDecoration.outline,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "msg_showing_averages".tr,
+                    style: CustomTextStyles.bodySmallWhiteA700,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

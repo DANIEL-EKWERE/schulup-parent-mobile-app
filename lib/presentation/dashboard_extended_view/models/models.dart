@@ -11,50 +11,49 @@ class DashboardExtendedViewModel {
     required this.route,
   });
 
- // Static method to get sample data
+  // Static method to get sample data
   static List<DashboardExtendedViewModel> getSampleList() {
     return [
       DashboardExtendedViewModel(
         title: "Fees",
         imagePath: ImageConstant.imgFees,
-        route: ''
+        route: '',
       ),
       DashboardExtendedViewModel(
         title: "Assignments",
         imagePath: ImageConstant.imgAssignments,
-        route: ''
+        route: '',
       ),
       DashboardExtendedViewModel(
         title: "CBT Tests",
         imagePath: ImageConstant.imgCbttests,
-        route: ''
+        route: '',
       ),
       DashboardExtendedViewModel(
         title: "Lessons",
         imagePath: ImageConstant.imgLessons,
-        route: ''
+        route: '',
       ),
       DashboardExtendedViewModel(
         title: "Schular Ai",
         imagePath: ImageConstant.imgSchularai,
-        route: ''
+        route: '/academics_schular_ai_ongoing_screen',
       ),
       DashboardExtendedViewModel(
         title: "Events",
         imagePath: ImageConstant.imgEvents,
-        route: ''
+        route: '/news_events_screen',
       ),
-       DashboardExtendedViewModel(
+      DashboardExtendedViewModel(
         title: "Ward Progress",
         imagePath: ImageConstant.imgWardprogress,
-        route: ''
+        route: '/reports_ward_progress_academic_screen',
       ),
-       DashboardExtendedViewModel(
+      DashboardExtendedViewModel(
         title: "Ward Profile",
         imagePath: ImageConstant.imgWardprofile,
-        route: '/dashboard_editWard_profile_screen'
+        route: '/dashboard_editWard_profile_screen',
       ),
     ];
   }
 }
-

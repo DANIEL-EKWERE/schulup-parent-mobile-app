@@ -1,6 +1,11 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_class_one_bottomsheet/controller/reports_ward_progress_class_one_controller.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_class_one_bottomsheet/reports_ward_progress_class_one_bottomsheet.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/controller/reports_ward_progress_subject_one_controller.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/reports_ward_progress_subject_one_bottomsheet.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_subject_page/reports_ward_progress_subject_page.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_text_form_field.dart';
 import 'controller/reports_ward_progress_class_controller.dart';
@@ -54,25 +59,37 @@ class ReportsWardProgressClassPage extends StatelessWidget {
 
   /// Section Widget
   Widget _buildColumnshowing() {
-    return SizedBox(
-      width: double.maxFinite,
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-          child: Container(
-            width: double.maxFinite,
-            padding: EdgeInsets.only(left: 24.h, top: 10.h, bottom: 10.h),
-            decoration: AppDecoration.outline,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "msg_showing_averages2".tr,
-                  style: CustomTextStyles.bodySmallWhiteA700,
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: Get.context!,
+          builder: (context) {
+            return ReportsWardProgressClassOneBottomsheet(
+              ReportsWardProgressClassOneController(),
+            );
+          },
+        );
+      },
+      child: SizedBox(
+        width: double.maxFinite,
+        child: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            child: Container(
+              width: double.maxFinite,
+              padding: EdgeInsets.only(left: 24.h, top: 10.h, bottom: 10.h),
+              decoration: AppDecoration.outline,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "msg_showing_averages2".tr,
+                    style: CustomTextStyles.bodySmallWhiteA700,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -120,7 +137,18 @@ class ReportsWardProgressClassPage extends StatelessWidget {
             width: double.maxFinite,
             child: Row(
               children: [
-                VerticalDivider(width: 5.h, thickness: 5.h),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  width: 40.h,
+                  height: 40.h,
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFEED4),
+                    shape: BoxShape.circle,
+                  ),
+                  child: CustomImageView(
+                    imagePath: ImageConstant.imgWardprogress,
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(left: 10.h),
                   child: Text(
@@ -202,7 +230,18 @@ class ReportsWardProgressClassPage extends StatelessWidget {
             width: double.maxFinite,
             child: Row(
               children: [
-                VerticalDivider(width: 5.h, thickness: 5.h),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  width: 40.h,
+                  height: 40.h,
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFEED4),
+                    shape: BoxShape.circle,
+                  ),
+                  child: CustomImageView(
+                    imagePath: ImageConstant.imgWardprogress,
+                  ),
+                ),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
@@ -288,7 +327,18 @@ class ReportsWardProgressClassPage extends StatelessWidget {
             width: double.maxFinite,
             child: Row(
               children: [
-                VerticalDivider(width: 5.h, thickness: 5.h),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  width: 40.h,
+                  height: 40.h,
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFEED4),
+                    shape: BoxShape.circle,
+                  ),
+                  child: CustomImageView(
+                    imagePath: ImageConstant.imgWardprogress,
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(left: 10.h),
                   child: Text(
@@ -356,7 +406,18 @@ class ReportsWardProgressClassPage extends StatelessWidget {
             width: double.maxFinite,
             child: Row(
               children: [
-                VerticalDivider(width: 5.h, thickness: 5.h),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  width: 40.h,
+                  height: 40.h,
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFEED4),
+                    shape: BoxShape.circle,
+                  ),
+                  child: CustomImageView(
+                    imagePath: ImageConstant.imgWardprogress,
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(left: 10.h),
                   child: Text(

@@ -19,6 +19,7 @@ class NewsEventsScreen extends GetWidget<NewsEventsController> {
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       body: SafeArea(
+        top: false,
         child: SizedBox(
           width: double.maxFinite,
           child: Column(
