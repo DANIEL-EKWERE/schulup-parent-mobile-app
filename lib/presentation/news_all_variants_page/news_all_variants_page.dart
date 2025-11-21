@@ -103,7 +103,12 @@ class NewsAllVariantsPage extends StatelessWidget {
                     .value
                     .newsAllItemList
                     .value[index];
-            return NewsAllItemWidget(model);
+            return GestureDetector(
+              onTap: () {
+                Get.toNamed(AppRoutes.newsNewsContentContainsScreen);
+              },
+              child: NewsAllItemWidget(model),
+            );
           },
         ),
       ),

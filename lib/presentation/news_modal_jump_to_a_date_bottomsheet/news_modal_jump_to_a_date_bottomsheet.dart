@@ -90,6 +90,9 @@ class NewsModalJumpToADateBottomsheet extends StatelessWidget {
   /// Section Widget
   Widget _buildJumptodate() {
     return CustomElevatedButton(
+      onPressed: () {
+        Get.toNamed(AppRoutes.newsFilterResultScreen);
+      },
       height: 64.h,
       text: "lbl_jump_to_date".tr,
       buttonStyle: CustomButtonStyles.fillPrimary,

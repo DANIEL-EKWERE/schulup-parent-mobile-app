@@ -22,6 +22,7 @@ class NewsFilterResultScreen extends GetWidget<NewsFilterResultController> {
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       body: SafeArea(
+        top: false,
         child: SizedBox(
           width: double.maxFinite,
           child: Column(
@@ -41,10 +42,10 @@ class NewsFilterResultScreen extends GetWidget<NewsFilterResultController> {
           ),
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        width: double.maxFinite,
-        child: _buildBottombar(),
-      ),
+      // bottomNavigationBar: SizedBox(
+      //   width: double.maxFinite,
+      //   child: _buildBottombar(),
+      // ),
     );
   }
 
@@ -96,23 +97,28 @@ class NewsFilterResultScreen extends GetWidget<NewsFilterResultController> {
                         "msg_showing_news_starting".tr,
                         style: CustomTextStyles.bodySmallWhiteA700,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CustomImageView(
-                            imagePath: ImageConstant.imgIconsTinyRefresh,
-                            height: 16.h,
-                            width: 16.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 4.h),
-                            child: Text(
-                              "lbl_reset".tr,
-                              style: theme.textTheme.labelMedium,
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomImageView(
+                              imagePath: ImageConstant.imgIconsTinyRefresh,
+                              height: 16.h,
+                              width: 16.h,
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: EdgeInsets.only(left: 4.h),
+                              child: Text(
+                                "lbl_reset".tr,
+                                style: theme.textTheme.labelMedium,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
