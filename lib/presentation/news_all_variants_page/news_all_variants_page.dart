@@ -1,5 +1,7 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/news_modal_jump_to_a_date_bottomsheet/controller/news_modal_jump_to_a_date_controller.dart';
+import 'package:schulupparent/presentation/news_modal_jump_to_a_date_bottomsheet/news_modal_jump_to_a_date_bottomsheet.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -27,7 +29,7 @@ class NewsAllVariantsPage extends StatelessWidget {
         top: false,
         child: Container(
           width: double.maxFinite,
-          padding: EdgeInsets.only(left: 24.h, top: 14.h, right: 24.h),
+          padding: EdgeInsets.only(left: 10.h, top: 14.h, right: 10.h),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [_buildNewsall()],
@@ -51,8 +53,23 @@ class NewsAllVariantsPage extends StatelessWidget {
         ],
       ),
       actions: [
-        AppbarTrailingIconbutton(imagePath: ImageConstant.imgIconsSmallEvents),
         AppbarTrailingIconbutton(
+          onTap: () {
+            Get.toNamed(AppRoutes.newsEventsScreen);
+          },
+          imagePath: ImageConstant.imgIconsSmallEvents,
+        ),
+        AppbarTrailingIconbutton(
+          onTap: () {
+            showModalBottomSheet(
+              context: Get.context!,
+              builder: (context) {
+                return NewsModalJumpToADateBottomsheet(
+                  NewsModalJumpToADateController(),
+                );
+              },
+            );
+          },
           imagePath: ImageConstant.imgUserWhiteA700,
           margin: EdgeInsets.only(left: 11.h, right: 25.h),
         ),

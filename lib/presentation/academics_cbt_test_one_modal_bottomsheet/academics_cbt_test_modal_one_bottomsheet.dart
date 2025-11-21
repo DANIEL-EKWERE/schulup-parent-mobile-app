@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
+import 'package:schulupparent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_cbt_test_modal_one_controller.dart';
 
 // ignore_for_file: must_be_immutable
-class AcademicsCbtTestModalOneBottomsheet extends StatelessWidget {
+
+AcademicsAssignmentStatusController controller1 = Get.put(
+  AcademicsAssignmentStatusController(),
+);
+
+class AcademicsCbtTestModalOneBottomsheet extends StatefulWidget {
   AcademicsCbtTestModalOneBottomsheet(this.controller, {Key? key})
     : super(key: key);
 
   AcademicsCbtTestModalOneController controller;
+
+  @override
+  State<AcademicsCbtTestModalOneBottomsheet> createState() =>
+      _AcademicsCbtTestModalOneBottomsheetState();
+}
+
+class _AcademicsCbtTestModalOneBottomsheetState
+    extends State<AcademicsCbtTestModalOneBottomsheet> {
+  List<String> type = ["lbl_scheduled_test".tr, "lbl_test_result".tr];
+  List<String> selectedType = [controller1.cbtType.value];
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +39,14 @@ class AcademicsCbtTestModalOneBottomsheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(width: 52.h, child: Divider(color: appTheme.gray20001)),
+          SizedBox(
+            width: 52.h,
+            child: Divider(
+              thickness: 5,
+              radius: BorderRadius.circular(12),
+              color: appTheme.gray20001,
+            ),
+          ),
           SizedBox(height: 18.h),
           SizedBox(
             width: double.maxFinite,
@@ -49,17 +73,59 @@ class AcademicsCbtTestModalOneBottomsheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 28.h),
-          CustomElevatedButton(
-            text: "lbl_scheduled_test".tr,
-            margin: EdgeInsets.only(left: 62.h, right: 60.h),
-          ),
-          SizedBox(height: 10.h),
-          Text(
-            "lbl_test_result".tr,
-            style: CustomTextStyles.bodyMediumOnPrimary,
+
+          // CustomElevatedButton(
+          //   text: "lbl_scheduled_test".tr,
+          //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
+          // ),
+          // SizedBox(height: 10.h),
+          // Text(
+          //   "lbl_test_result".tr,
+          //   style: CustomTextStyles.bodyMediumOnPrimary,
+          // ),
+          SizedBox(
+            height: 60,
+            child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: type.length,
+              itemBuilder: (context, index) {
+                var text = type[index];
+                return GestureDetector(
+                  onTap: () {
+                    selectedType.clear();
+                    selectedType.add(text);
+
+                    setState(() {});
+                  },
+                  child:
+                      selectedType.contains(text)
+                          ? SizedBox(
+                            width: double.infinity,
+                            child: CustomElevatedButtonSheet(
+                              text: text,
+                              rightIcon: Icon(Icons.check),
+                              //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
+                            ),
+                          )
+                          : Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Text(
+                              text,
+                              style: CustomTextStyles.bodyMediumOnPrimary,
+                            ),
+                          ),
+                );
+              },
+            ),
           ),
           SizedBox(height: 30.h),
           CustomElevatedButton(
+            onPressed: () {
+              setState(() {
+                controller1.cbtType.value = selectedType.first;
+              });
+              Navigator.pop(context);
+            },
             height: 64.h,
             text: "lbl_confirm".tr,
             buttonStyle: CustomButtonStyles.fillPrimary,
@@ -73,6 +139,7 @@ class AcademicsCbtTestModalOneBottomsheet extends StatelessWidget {
 
   /// Navigates to the previous screen.
   onTapImgCloseone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(context);
   }
 }

@@ -32,13 +32,44 @@ class NewsAllItemWidget extends StatelessWidget {
             radius: BorderRadius.circular(5.h),
           ),
           SizedBox(
-            width: 252.h,
+            width: double.infinity,
             child: Obx(
-              () => Text(
-                newsAllItemModelObj.gracelandhosts!.value,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodyMedium!.copyWith(height: 1.50),
+              () => Row(
+                children: [
+                  Container(
+                    height: 40,
+                    width: 40,
+                    padding: EdgeInsets.all(5.h),
+                    decoration: BoxDecoration(
+                      color: Color(0xffFFEED4),
+
+                      shape: BoxShape.circle,
+                    ),
+                    child: CustomImageView(
+                      imagePath: 'assets/images/img_icons_small_news.png',
+                    ),
+                    // CustomImageView(
+                    //   imagePath:   dashboardItemModelObj.imagePath,
+                    //   height: 40.h,
+                    //   width: 40.h,
+                    // ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: SizedBox(
+                      width: 250.h,
+                      child: Text(
+                        newsAllItemModelObj.gracelandhosts!.value,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          height: 1.50,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -1,6 +1,11 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/reports_report_card_all_variants_page/widgets/listline_item_widget_weekly.dart';
+import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/controller/reports_report_card_modal_controller.dart';
+import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart';
+import 'package:schulupparent/presentation/reports_report_card_modal_one_bottomsheet/controller/reports_report_card_modal_one_controller.dart';
+import 'package:schulupparent/presentation/reports_report_card_modal_one_bottomsheet/reports_report_card_modal_one_bottomsheet.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -160,23 +165,63 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "lbl_first_term".tr,
-                        style: theme.textTheme.labelLarge,
-                      ),
-                      CustomImageView(
-                        imagePath: ImageConstant.imgIconsTinyDown,
-                        height: 16.h,
-                        width: 18.h,
-                        margin: EdgeInsets.only(left: 10.h),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: Get.context!,
+                            builder: (context) {
+                              return ReportsReportCardModalBottomsheet(
+                                ReportsReportCardModalController(),
+                              );
+                            },
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Obx(() {
+                              return Text(
+                                // "lbl_first_term".tr,
+                                controller.termType.value,
+                                style: theme.textTheme.labelLarge,
+                              );
+                            }),
+                            CustomImageView(
+                              imagePath: ImageConstant.imgIconsTinyDown,
+                              height: 16.h,
+                              width: 18.h,
+                              margin: EdgeInsets.only(left: 10.h),
+                            ),
+                          ],
+                        ),
                       ),
                       Spacer(),
-                      Text("lbl_daily".tr, style: theme.textTheme.labelLarge),
-                      CustomImageView(
-                        imagePath: ImageConstant.imgIconsTinyDown,
-                        height: 16.h,
-                        width: 18.h,
-                        margin: EdgeInsets.only(left: 10.h, right: 14.h),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: Get.context!,
+                            builder: (context) {
+                              return ReportsReportCardModalOneBottomsheet(
+                                ReportsReportCardModalOneController(),
+                              );
+                            },
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Obx(() {
+                              return Text(
+                                controller.dayType.value,
+                                style: theme.textTheme.labelLarge,
+                              );
+                            }),
+                            CustomImageView(
+                              imagePath: ImageConstant.imgIconsTinyDown,
+                              height: 16.h,
+                              width: 18.h,
+                              margin: EdgeInsets.only(left: 10.h, right: 14.h),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -193,30 +238,56 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
   Widget _buildListline() {
     return Expanded(
       child: Obx(
-        () => ListView.separated(
-          padding: EdgeInsets.zero,
-          physics: BouncingScrollPhysics(),
-          shrinkWrap: true,
-          separatorBuilder: (context, index) {
-            return SizedBox(height: 10.h);
-          },
-          itemCount:
-              controller
-                  .reportsReportCardAllVariantsModelObj
-                  .value
-                  .listlineItemList
-                  .value
-                  .length,
-          itemBuilder: (context, index) {
-            ListlineItemModel model =
-                controller
-                    .reportsReportCardAllVariantsModelObj
-                    .value
-                    .listlineItemList
-                    .value[index];
-            return ListlineItemWidget(model);
-          },
-        ),
+        () =>
+            controller.dayType.value == 'Daily'
+                ? ListView.separated(
+                  padding: EdgeInsets.zero,
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 10.h);
+                  },
+                  itemCount:
+                      controller
+                          .reportsReportCardAllVariantsModelObj
+                          .value
+                          .listlineItemList
+                          .value
+                          .length,
+                  itemBuilder: (context, index) {
+                    ListlineItemModel model =
+                        controller
+                            .reportsReportCardAllVariantsModelObj
+                            .value
+                            .listlineItemList
+                            .value[index];
+                    return ListlineItemWidget(model);
+                  },
+                )
+                : ListView.separated(
+                  padding: EdgeInsets.zero,
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 10.h);
+                  },
+                  itemCount:
+                      controller
+                          .reportsReportCardAllVariantsModelObj
+                          .value
+                          .listlineItemWeeklyList
+                          .value
+                          .length,
+                  itemBuilder: (context, index) {
+                    ListlineItemModel model =
+                        controller
+                            .reportsReportCardAllVariantsModelObj
+                            .value
+                            .listlineItemWeeklyList
+                            .value[index];
+                    return ListlineItemWeeklyWidget(model);
+                  },
+                ),
       ),
     );
   }

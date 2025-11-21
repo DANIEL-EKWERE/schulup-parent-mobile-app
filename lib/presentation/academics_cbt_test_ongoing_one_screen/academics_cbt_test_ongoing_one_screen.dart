@@ -213,6 +213,9 @@ class AcademicsCbtTestOngoingOneScreen
                   buttonTextStyle: theme.textTheme.labelLarge!,
                 ),
                 CustomElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.academicsCbtTestTestResultTwoScreen);
+                  },
                   height: 38.h,
                   width: 112.h,
                   text: "lbl_next".tr,

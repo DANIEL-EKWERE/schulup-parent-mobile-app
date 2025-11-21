@@ -1,16 +1,30 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/reports_report_card_all_variants_page/controller/reports_report_card_all_variants_controller.dart';
+import 'package:schulupparent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/reports_report_card_modal_one_controller.dart';
 
 // ignore_for_file: must_be_immutable
-class ReportsReportCardModalOneBottomsheet extends StatelessWidget {
+class ReportsReportCardModalOneBottomsheet extends StatefulWidget {
   ReportsReportCardModalOneBottomsheet(this.controller, {Key? key})
     : super(key: key);
 
   ReportsReportCardModalOneController controller;
+
+  @override
+  State<ReportsReportCardModalOneBottomsheet> createState() =>
+      _ReportsReportCardModalOneBottomsheetState();
+}
+
+class _ReportsReportCardModalOneBottomsheetState
+    extends State<ReportsReportCardModalOneBottomsheet> {
+  List<String> type = ["lbl_daily".tr, "lbl_weekly".tr, "lbl_termly".tr];
+  List<String> selectedType = ['Daily'];
+  ReportsReportCardAllVariantsController controller1 =
+      Get.find<ReportsReportCardAllVariantsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +37,14 @@ class ReportsReportCardModalOneBottomsheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(width: 52.h, child: Divider(color: appTheme.gray20001)),
+          SizedBox(
+            width: 52.h,
+            child: Divider(
+              radius: BorderRadius.circular(12),
+              thickness: 5,
+              color: appTheme.gray20001,
+            ),
+          ),
           SizedBox(height: 18.h),
           SizedBox(
             width: double.maxFinite,
@@ -47,30 +68,75 @@ class ReportsReportCardModalOneBottomsheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 28.h),
-          Text("lbl_daily".tr, style: CustomTextStyles.bodyMediumOnPrimary),
-          SizedBox(height: 10.h),
-          CustomElevatedButton(
-            text: "lbl_weekly".tr,
-            margin: EdgeInsets.only(left: 62.h, right: 60.h),
-          ),
-          SizedBox(height: 10.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CustomImageView(
-                imagePath: ImageConstant.imgIconsTinyLock,
-                height: 16.h,
-                width: 16.h,
-              ),
-              Text(
-                "lbl_termly".tr,
-                style: CustomTextStyles.bodyMediumOnPrimary,
-              ),
-            ],
+
+          // Text("lbl_daily".tr, style: CustomTextStyles.bodyMediumOnPrimary),
+          // SizedBox(height: 10.h),
+          // CustomElevatedButton(
+          //   text: "lbl_weekly".tr,
+          //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
+          // ),
+          // SizedBox(height: 10.h),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   mainAxisSize: MainAxisSize.min,
+          //   children: [
+          //     CustomImageView(
+          //       imagePath: ImageConstant.imgIconsTinyLock,
+          //       height: 16.h,
+          //       width: 16.h,
+          //     ),
+          // Text(
+          //   "lbl_termly".tr,
+          //   style: CustomTextStyles.bodyMediumOnPrimary,
+          // ),
+          //   ],
+          // ),
+          SizedBox(
+            height: 90,
+            child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: type.length,
+              itemBuilder: (context, index) {
+                var text = type[index];
+                return GestureDetector(
+                  onTap: () {
+                   
+                    selectedType.clear();
+                    selectedType.add(text);
+                   
+                    setState(() {});
+                  },
+                  child:
+                      selectedType.contains(text)
+                          ? SizedBox(
+                            width: double.infinity,
+                            child: CustomElevatedButtonSheet(
+                              text: text,
+                              rightIcon: Icon(Icons.check),
+                              //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
+                            ),
+                          )
+                          : Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Text(
+                              text,
+                              style: CustomTextStyles.bodyMediumOnPrimary,
+                            ),
+                          ),
+                );
+              },
+            ),
           ),
           SizedBox(height: 30.h),
           CustomElevatedButton(
+            onPressed: () {
+       
+              setState(() {
+                controller1.dayType.value = selectedType.first;
+              });
+              
+              Get.back();
+            },
             height: 64.h,
             text: "lbl_confirm".tr,
             buttonStyle: CustomButtonStyles.fillPrimary,

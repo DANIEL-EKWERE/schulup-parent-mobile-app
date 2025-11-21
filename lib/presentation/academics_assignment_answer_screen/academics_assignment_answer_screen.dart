@@ -1,5 +1,7 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_modal_four_bottomsheet/academics_assignment_modal_four_bottomsheet.dart';
+import 'package:schulupparent/presentation/academics_assignment_modal_four_bottomsheet/controller/academics_assignment_modal_four_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -144,6 +146,34 @@ class AcademicsAssignmentAnswerScreen
             child: Row(
               children: [
                 CustomImageView(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: Get.context!,
+                      builder: (context) {
+                        // upload a file modal bottom sheet
+                        return AcademicsAssignmentModalFourBottomsheet(
+                          AcademicsAssignmentModalFourController(),
+                        );
+                        // select status modal bottom sheet with two options
+                        // return AcademicsAssignmentModalTwoBottomsheet(
+                        //   AcademicsAssignmentModalTwoController(),
+                        // );
+
+                        // still status with all options
+                        // return AcademicsAssignmentModalThreeBottomsheet(
+                        //   AcademicsAssignmentModalThreeController(),
+                        // );
+                        // primary school selection modal bottom sheet
+                        // return AcademicsAssignmentModalBottomsheet(
+                        //   AcademicsAssignmentModalController(),
+                        // );
+
+                        // return AcademicsAssignmentModalOneBottomsheet(
+                        //   AcademicsAssignmentModalOneController(),
+                        //  );
+                      },
+                    );
+                  },
                   imagePath: ImageConstant.imgIconsSmallAttachment,
                   height: 24.h,
                   width: 24.h,

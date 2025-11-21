@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
+import 'package:schulupparent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_assignment_modal_two_controller.dart';
 
 // ignore_for_file: must_be_immutable
-class AcademicsAssignmentModalTwoBottomsheet extends StatelessWidget {
+
+AcademicsAssignmentStatusController controller1 = Get.put(
+  AcademicsAssignmentStatusController(),
+);
+
+class AcademicsAssignmentModalTwoBottomsheet extends StatefulWidget {
   AcademicsAssignmentModalTwoBottomsheet(this.controller, {Key? key})
     : super(key: key);
 
   AcademicsAssignmentModalTwoController controller;
+
+  @override
+  State<AcademicsAssignmentModalTwoBottomsheet> createState() =>
+      _AcademicsAssignmentModalTwoBottomsheetState();
+}
+
+class _AcademicsAssignmentModalTwoBottomsheetState
+    extends State<AcademicsAssignmentModalTwoBottomsheet> {
+  List<String> type = ["lbl_pending".tr, "lbl_submitted".tr];
+  List<String> selectedType = [controller1.statusType.value];
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +39,14 @@ class AcademicsAssignmentModalTwoBottomsheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(width: 52.h, child: Divider(color: appTheme.gray20001)),
+          SizedBox(
+            width: 52.h,
+            child: Divider(
+              thickness: 5,
+              radius: BorderRadius.circular(12),
+              color: appTheme.gray20001,
+            ),
+          ),
           SizedBox(height: 18.h),
           SizedBox(
             width: double.maxFinite,
@@ -49,14 +73,56 @@ class AcademicsAssignmentModalTwoBottomsheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 28.h),
-          CustomElevatedButton(
-            text: "lbl_pending".tr,
-            margin: EdgeInsets.only(left: 62.h, right: 60.h),
+
+          // CustomElevatedButton(
+          //   text: "lbl_pending".tr,
+          //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
+          // ),
+          // SizedBox(height: 10.h),
+          // Text("lbl_submitted".tr, style: CustomTextStyles.bodyMediumOnPrimary),
+          SizedBox(
+            height: 90,
+            child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: type.length,
+              itemBuilder: (context, index) {
+                var text = type[index];
+                return GestureDetector(
+                  onTap: () {
+                    selectedType.clear();
+                    selectedType.add(text);
+
+                    setState(() {});
+                  },
+                  child:
+                      selectedType.contains(text)
+                          ? SizedBox(
+                            width: double.infinity,
+                            child: CustomElevatedButtonSheet(
+                              text: text,
+                              rightIcon: Icon(Icons.check),
+                              //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
+                            ),
+                          )
+                          : Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Text(
+                              text,
+                              style: CustomTextStyles.bodyMediumOnPrimary,
+                            ),
+                          ),
+                );
+              },
+            ),
           ),
-          SizedBox(height: 10.h),
-          Text("lbl_submitted".tr, style: CustomTextStyles.bodyMediumOnPrimary),
           SizedBox(height: 30.h),
+
           CustomElevatedButton(
+            onPressed: () {
+              controller1.statusType.value = selectedType.first;
+              Navigator.pop(context);
+            },
+
             height: 64.h,
             text: "lbl_confirm".tr,
             buttonStyle: CustomButtonStyles.fillPrimary,
@@ -70,6 +136,7 @@ class AcademicsAssignmentModalTwoBottomsheet extends StatelessWidget {
 
   /// Navigates to the previous screen.
   onTapImgCloseone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(context);
   }
 }

@@ -156,7 +156,12 @@ class AcademicsLessonAllLessonsPage extends StatelessWidget {
                       .value
                       .listlineItemList
                       .value[index];
-              return ListlineItemWidget(model);
+              return GestureDetector(
+                onTap: () {
+                  Get.toNamed(AppRoutes.academicsLessonLessonDetailsScreen);
+                },
+                child: ListlineItemWidget(model),
+              );
             },
           ),
         ),

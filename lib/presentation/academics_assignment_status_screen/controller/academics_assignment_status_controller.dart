@@ -62,4 +62,23 @@ class AcademicsAssignmentStatusController extends GetxController
     }
     academicsFourModelObj.value.dropdownItemList2.refresh();
   }
+
+  Rx<String> classType = 'primary 5'.obs;
+
+  Rx<String> termType = 'First Term'.obs;
+
+  Rx<String> statusType = 'Pending'.obs;
+
+// cbt
+  Rx<String> classType1 = 'primary 50'.obs;
+
+  Rx<String> cbtType = 'Scheduled Test 0'.obs;
+
+// lesson
+  Rx<String> classType2 = 'primary 50'.obs;
+
+  Rx<String> termType1 = 'First Term 0'.obs;
+
+  //search
+  Rx<String> searchStatus = 'All'.obs;
 }

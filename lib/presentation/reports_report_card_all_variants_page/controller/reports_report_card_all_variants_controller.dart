@@ -12,4 +12,7 @@ class ReportsReportCardAllVariantsController extends GetxController {
   );
 
   Rx<ReportsReportCardAllVariantsModel> reportsReportCardAllVariantsModelObj;
+
+  Rx<String> termType = 'First Term'.obs;
+  Rx<String> dayType = 'Daily'.obs;
 }

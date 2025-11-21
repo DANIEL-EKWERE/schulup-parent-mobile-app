@@ -151,6 +151,9 @@ class AcademicsCbtTestTestDetailsScreen
         mainAxisSize: MainAxisSize.min,
         children: [
           CustomElevatedButton(
+            onPressed: () {
+              Get.toNamed(AppRoutes.academicsCbtTestOngoingScreen);
+            },
             height: 64.h,
             text: "lbl_start_test".tr,
             buttonStyle: CustomButtonStyles.fillPrimary,

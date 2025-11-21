@@ -196,13 +196,10 @@ import 'package:schulupparent/presentation/academics_assignment_modal_one_bottom
 import 'package:schulupparent/presentation/academics_assignment_modal_one_bottomsheet/controller/academics_assignment_modal_one_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/academics_assignment_modal_two_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/controller/academics_assignment_modal_two_controller.dart';
-import 'package:schulupparent/presentation/academics_assignment_status_screen/models/academics_four_model.dart';
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/listline_item_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_cbt.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
-import 'package:schulupparent/presentation/academics_cbt_test_modal_bottomsheet/academics_cbt_test_modal_bottomsheet.dart';
-import 'package:schulupparent/presentation/academics_cbt_test_modal_bottomsheet/controller/academics_cbt_test_modal_controller.dart';
 import 'package:schulupparent/presentation/academics_cbt_test_one_modal_bottomsheet/academics_cbt_test_modal_one_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
 import '../../core/app_export.dart';
@@ -211,7 +208,6 @@ import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/appbar_trailing_iconbutton.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import 'controller/academics_assignment_status_controller.dart';
-import 'models/academics_assignment_status_initial_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget.dart';
 
 class AcademicsAssignmentStatusInitialPage extends StatefulWidget {
@@ -424,10 +420,12 @@ class _AcademicsAssignmentStatusInitialPageState
                             },
                             child: Row(
                               children: [
-                                Text(
-                                  "Primary 5",
-                                  style: theme.textTheme.labelLarge,
-                                ),
+                                Obx(() {
+                                  return Text(
+                                    controller.classType.value,
+                                    style: theme.textTheme.labelLarge,
+                                  );
+                                }),
                                 CustomImageView(
                                   imagePath: ImageConstant.imgIconsTinyDown,
                                   height: 16.h,
@@ -451,10 +449,12 @@ class _AcademicsAssignmentStatusInitialPageState
                             },
                             child: Row(
                               children: [
-                                Text(
-                                  "lbl_first_term".tr,
-                                  style: theme.textTheme.labelLarge,
-                                ),
+                                Obx(() {
+                                  return Text(
+                                    "${controller.termType.value} Term",
+                                    style: theme.textTheme.labelLarge,
+                                  );
+                                }),
                                 CustomImageView(
                                   imagePath: ImageConstant.imgIconsTinyDown,
                                   height: 16.h,
@@ -479,10 +479,12 @@ class _AcademicsAssignmentStatusInitialPageState
                             },
                             child: Row(
                               children: [
-                                Text(
-                                  "Pending",
-                                  style: theme.textTheme.labelLarge,
-                                ),
+                                Obx(() {
+                                  return Text(
+                                    controller.statusType.value,
+                                    style: theme.textTheme.labelLarge,
+                                  );
+                                }),
                                 CustomImageView(
                                   imagePath: ImageConstant.imgIconsTinyDown,
                                   height: 16.h,
@@ -529,10 +531,13 @@ class _AcademicsAssignmentStatusInitialPageState
                             },
                             child: Row(
                               children: [
-                                Text(
-                                  "Primary 5",
-                                  style: theme.textTheme.labelLarge,
-                                ),
+                                Obx(() {
+                                  return Text(
+                                    // cbt tab
+                                    controller.classType.value,
+                                    style: theme.textTheme.labelLarge,
+                                  );
+                                }),
                                 CustomImageView(
                                   imagePath: ImageConstant.imgIconsTinyDown,
                                   height: 16.h,
@@ -548,6 +553,7 @@ class _AcademicsAssignmentStatusInitialPageState
                               showModalBottomSheet(
                                 context: context,
                                 builder: (context) {
+                                  //cbt tab
                                   return AcademicsCbtTestModalOneBottomsheet(
                                     AcademicsCbtTestModalOneController(),
                                   );
@@ -556,10 +562,12 @@ class _AcademicsAssignmentStatusInitialPageState
                             },
                             child: Row(
                               children: [
-                                Text(
-                                  "Scheduled Test",
-                                  style: theme.textTheme.labelLarge,
-                                ),
+                                Obx(() {
+                                  return Text(
+                                    controller.cbtType.value,
+                                    style: theme.textTheme.labelLarge,
+                                  );
+                                }),
                                 CustomImageView(
                                   imagePath: ImageConstant.imgIconsTinyDown,
                                   height: 16.h,
@@ -602,10 +610,12 @@ class _AcademicsAssignmentStatusInitialPageState
                             },
                             child: Row(
                               children: [
-                                Text(
-                                  "Primary 5",
-                                  style: theme.textTheme.labelLarge,
-                                ),
+                                Obx(() {
+                                  return Text(
+                                    controller.classType.value,
+                                    style: theme.textTheme.labelLarge,
+                                  );
+                                }),
                                 CustomImageView(
                                   imagePath: ImageConstant.imgIconsTinyDown,
                                   height: 16.h,
@@ -629,10 +639,12 @@ class _AcademicsAssignmentStatusInitialPageState
                             },
                             child: Row(
                               children: [
-                                Text(
-                                  "First Term",
-                                  style: theme.textTheme.labelLarge,
-                                ),
+                                Obx(() {
+                                  return Text(
+                                    "${controller.termType.value} Term",
+                                    style: theme.textTheme.labelLarge,
+                                  );
+                                }),
                                 CustomImageView(
                                   imagePath: ImageConstant.imgIconsTinyDown,
                                   height: 16.h,
@@ -683,7 +695,12 @@ class _AcademicsAssignmentStatusInitialPageState
                       .value[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: ListlineItemWidget(listlineItemModelObj),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.academicsAssignmentAnswerScreen);
+                  },
+                  child: ListlineItemWidget(listlineItemModelObj),
+                ),
               );
             },
             shrinkWrap: true,
@@ -721,7 +738,12 @@ class _AcademicsAssignmentStatusInitialPageState
                       .value[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: ListlineItemCbtWidget(listlineItemModelObj),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
+                  },
+                  child: ListlineItemCbtWidget(listlineItemModelObj),
+                ),
               );
             },
             shrinkWrap: true,
@@ -757,7 +779,12 @@ class _AcademicsAssignmentStatusInitialPageState
                       .value[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: ListlineItemLessonWidget(listlineItemModelObj),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.academicsLessonLessonDetailsScreen);
+                  },
+                  child: ListlineItemLessonWidget(listlineItemModelObj),
+                ),
               );
             },
             shrinkWrap: true,

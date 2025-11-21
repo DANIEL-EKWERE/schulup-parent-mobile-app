@@ -9,6 +9,7 @@ import 'package:schulupparent/presentation/academics_assignment_modal_one_bottom
 import 'package:schulupparent/presentation/academics_assignment_modal_one_bottomsheet/controller/academics_assignment_modal_one_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/academics_assignment_modal_two_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/controller/academics_assignment_modal_two_controller.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_three_bottomsheet/academics_assignment_three_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_three_bottomsheet/controller/academics_assignment_modal_three_controller.dart';
 import '../../core/app_export.dart';
@@ -17,6 +18,10 @@ import '../../widgets/app_bar/appbar_title_searchview.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_drop_down.dart';
 import 'controller/academics_assignment_search_controller.dart'; // ignore_for_file: must_be_immutable
+
+AcademicsAssignmentStatusController controller1 = Get.put(
+  AcademicsAssignmentStatusController(),
+);
 
 class AcademicsAssignmentSearchScreen
     extends GetWidget<AcademicsAssignmentSearchController> {
@@ -108,10 +113,12 @@ class AcademicsAssignmentSearchScreen
                         },
                         child: Row(
                           children: [
-                            Text(
-                              "lbl_primary_5".tr,
-                              style: theme.textTheme.labelLarge,
-                            ),
+                            Obx(() {
+                              return Text(
+                                controller1.classType.value,
+                                style: theme.textTheme.labelLarge,
+                              );
+                            }),
                             CustomImageView(
                               imagePath: ImageConstant.imgIconsTinyDown,
                               height: 16.h,
@@ -153,10 +160,12 @@ class AcademicsAssignmentSearchScreen
                         },
                         child: Row(
                           children: [
-                            Text(
-                              "lbl_first_term".tr,
-                              style: theme.textTheme.labelLarge,
-                            ),
+                            Obx(() {
+                              return Text(
+                                "${controller1.termType.value} Term",
+                                style: theme.textTheme.labelLarge,
+                              );
+                            }),
                             CustomImageView(
                               imagePath: ImageConstant.imgIconsTinyDown,
                               height: 16.h,
@@ -181,10 +190,12 @@ class AcademicsAssignmentSearchScreen
                         },
                         child: Row(
                           children: [
-                            Text(
-                              "lbl_all".tr,
-                              style: theme.textTheme.labelLarge,
-                            ),
+                            Obx(() {
+                              return Text(
+                                controller1.searchStatus.value,
+                                style: theme.textTheme.labelLarge,
+                              );
+                            }),
                             CustomImageView(
                               imagePath: ImageConstant.imgIconsTinyDown,
                               height: 16.h,

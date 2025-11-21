@@ -193,6 +193,9 @@ class AcademicsCbtTestOngoingScreen
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           CustomElevatedButton(
+            onPressed: () {
+              Get.toNamed(AppRoutes.academicsCbtTestOngoingOneScreen);
+            },
             height: 38.h,
             width: 112.h,
             text: "lbl_next".tr,

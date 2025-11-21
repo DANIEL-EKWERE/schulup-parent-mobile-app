@@ -32,4 +32,31 @@ class ReportsReportCardAllVariantsModel {
       tuesdayseptthir: "msg_tuesday_sept_23".tr.obs,
     ),
   ]);
+
+  Rx<List<ListlineItemModel>> listlineItemWeeklyList = Rx([
+    ListlineItemModel(
+      duration: "msg_week_6_primary".tr.obs,
+      tuesdayseptthir: "msg_monday_oct_6".tr.obs,
+    ),
+    ListlineItemModel(
+      duration: "msg_week_5_primary".tr.obs,
+      tuesdayseptthir: "msg_monday_sept_292".tr.obs,
+    ),
+    ListlineItemModel(
+      duration: "msg_week_4_primary".tr.obs,
+      tuesdayseptthir: "msg_monday_sept_22".tr.obs,
+    ),
+    ListlineItemModel(
+      duration: "msg_week_3_primary".tr.obs,
+      tuesdayseptthir: "msg_monday_sept_15".tr.obs,
+    ),
+    ListlineItemModel(
+      duration: "msg_week_2_primary".tr.obs,
+      tuesdayseptthir: "msg_monday_sept_8".tr.obs,
+    ),
+    ListlineItemModel(
+      duration: "msg_week_1_primary".tr.obs,
+      tuesdayseptthir: "msg_monday_sept_1".tr.obs,
+    ),
+  ]);
 }
