@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           translations: AppLocalization(),
           locale: Locale('en', ''),
           fallbackLocale: Locale('en', ''),
-          title: 'schulup_parent',
+          title: 'Schulup Parent',
           initialRoute: AppRoutes.initialRoute,
           getPages: AppRoutes.pages,
           builder: (context, child) {

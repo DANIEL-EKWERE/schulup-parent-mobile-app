@@ -9,10 +9,20 @@ import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
 
-class DashboardEditWardProfileScreen
-    extends GetWidget<DashboardEditWardProfileController> {
+DashboardEditWardProfileController controller = Get.put(
+  DashboardEditWardProfileController(),
+);
+
+class DashboardEditWardProfileScreen extends StatefulWidget {
   const DashboardEditWardProfileScreen({Key? key}) : super(key: key);
 
+  @override
+  State<DashboardEditWardProfileScreen> createState() =>
+      _DashboardEditWardProfileScreenState();
+}
+
+class _DashboardEditWardProfileScreenState
+    extends State<DashboardEditWardProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +46,7 @@ class DashboardEditWardProfileScreen
                     Stack(
                       children: [
                         CircleAvatar(
-                          radius: 50,
+                          radius: 60,
                           backgroundImage: AssetImage(
                             'assets/images/ward_image.png',
                           ),
@@ -60,7 +70,10 @@ class DashboardEditWardProfileScreen
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      controller: controller.lastNameController,
                       hintText: "Last Name",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       // prefix: Container(
@@ -98,7 +111,10 @@ class DashboardEditWardProfileScreen
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      controller: controller.firstNameController,
                       hintText: "First Name",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       // prefix: Container(
@@ -136,7 +152,10 @@ class DashboardEditWardProfileScreen
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      controller: controller.middleNameController,
                       hintText: "Middle Name",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       // prefix: Container(
@@ -174,7 +193,10 @@ class DashboardEditWardProfileScreen
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      controller: controller.genderController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       hintText: "Gender",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       // prefix: Container(
@@ -212,7 +234,10 @@ class DashboardEditWardProfileScreen
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      controller: controller.dateOfBirthController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       hintText: "Date Of Birth",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       // prefix: Container(
@@ -228,7 +253,8 @@ class DashboardEditWardProfileScreen
                       suffix: Container(
                         margin: EdgeInsets.fromLTRB(16.h, 14.h, 14.h, 14.h),
                         child: CustomImageView(
-                          imagePath: ImageConstant.imgEvents,
+                          imagePath:
+                              'assets/images/img_icons_small_calender_outlined.svg',
                           height: 16.h,
                           width: 16.h,
                           fit: BoxFit.contain,
@@ -250,7 +276,10 @@ class DashboardEditWardProfileScreen
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      controller: controller.bloodGroupController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       hintText: "Blood Group",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       // prefix: Container(
@@ -288,7 +317,10 @@ class DashboardEditWardProfileScreen
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      controller: controller.genotypeController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       hintText: "Genotype",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       // prefix: Container(
@@ -326,7 +358,10 @@ class DashboardEditWardProfileScreen
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      controller: controller.placeOfBirthNameController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       hintText: "Place Of Birth",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       // prefix: Container(
@@ -364,8 +399,49 @@ class DashboardEditWardProfileScreen
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      controller: controller.stateController,
                       hintText: "State",
+                      hintStyle: CustomTextStyles.labelLargeBluegray700,
+                      // prefix: Container(
+                      //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
+                      //   child: CustomImageView(
+                      //     imagePath: ImageConstant.imgPassword,
+                      //     height: 16.h,
+                      //     width: 16.h,
+                      //     fit: BoxFit.contain,
+                      //   ),
+                      // ),
+                      prefixConstraints: BoxConstraints(maxHeight: 44.h),
+                      // suffix: Container(
+                      //   margin: EdgeInsets.fromLTRB(16.h, 14.h, 14.h, 14.h),
+                      //   child: CustomImageView(
+                      //     imagePath: ImageConstant.imgVisibility,
+                      //     height: 16.h,
+                      //     width: 16.h,
+                      //     fit: BoxFit.contain,
+                      //   ),
+                      // ),
+                      suffixConstraints: BoxConstraints(maxHeight: 44.h),
+                      contentPadding: EdgeInsets.all(14.h),
+                      borderDecoration: TextFormFieldStyleHelper.outlineGray,
+                      fillColor: appTheme.gray100,
+                    ),
+                    SizedBox(height: 30),
+                    Align(
+                      alignment: AlignmentGeometry.centerLeft,
+                      child: Text(
+                        'City',
+                        style: CustomTextStyles.bodyMediumOnPrimary,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    CustomTextFormField(
+                      controller: controller.cityController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      //  controller: controller.passwordController,
+                      hintText: "City",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       // prefix: Container(
                       //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
@@ -402,6 +478,10 @@ class DashboardEditWardProfileScreen
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
+                      controller: controller.addressController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       //  controller: controller.passwordController,
                       hintText: "Address",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
@@ -434,12 +514,56 @@ class DashboardEditWardProfileScreen
                     Align(
                       alignment: AlignmentGeometry.centerLeft,
                       child: Text(
+                        'Phone Number',
+                        style: CustomTextStyles.bodyMediumOnPrimary,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    CustomTextFormField(
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      controller: controller.phoneController,
+                      hintText: "Phone Number",
+                      hintStyle: CustomTextStyles.labelLargeBluegray700,
+                      // prefix: Container(
+                      //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
+                      //   child: CustomImageView(
+                      //     imagePath: ImageConstant.imgPassword,
+                      //     height: 16.h,
+                      //     width: 16.h,
+                      //     fit: BoxFit.contain,
+                      //   ),
+                      // ),
+                      prefixConstraints: BoxConstraints(maxHeight: 44.h),
+                      // suffix: Container(
+                      //   margin: EdgeInsets.fromLTRB(16.h, 14.h, 14.h, 14.h),
+                      //   child: CustomImageView(
+                      //     imagePath: ImageConstant.imgVisibility,
+                      //     height: 16.h,
+                      //     width: 16.h,
+                      //     fit: BoxFit.contain,
+                      //   ),
+                      // ),
+                      suffixConstraints: BoxConstraints(maxHeight: 44.h),
+                      contentPadding: EdgeInsets.all(14.h),
+                      borderDecoration: TextFormFieldStyleHelper.outlineGray,
+                      fillColor: appTheme.gray100,
+                    ),
+                    SizedBox(height: 30),
+                    Align(
+                      alignment: AlignmentGeometry.centerLeft,
+                      child: Text(
                         'Religion',
                         style: CustomTextStyles.bodyMediumOnPrimary,
                       ),
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
+                      controller: controller.religionController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       //  controller: controller.passwordController,
                       hintText: "Religion",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
@@ -482,8 +606,8 @@ class DashboardEditWardProfileScreen
   /// Section Widget
   PreferredSizeWidget _buildAppbar() {
     return CustomAppBar(
-      height: 100,
-      
+      height: 70,
+
       leadingWidth: 75.h,
       leading: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -515,6 +639,52 @@ class DashboardEditWardProfileScreen
           ),
         ],
       ),
+      actions: [
+        (controller.lastNameController.text.isEmpty ||
+                controller.firstNameController.text.isEmpty ||
+                controller.middleNameController.text.isEmpty ||
+                controller.genderController.text.isEmpty ||
+                controller.dateOfBirthController.text.isEmpty ||
+                controller.bloodGroupController.text.isEmpty ||
+                controller.genotypeController.text.isEmpty ||
+                controller.placeOfBirthNameController.text.isEmpty ||
+                controller.stateController.text.isEmpty ||
+                controller.cityController.text.isEmpty ||
+                controller.addressController.text.isEmpty ||
+                controller.phoneController.text.isEmpty ||
+                controller.religionController.text.isEmpty)
+            ? SizedBox.shrink()
+            : ElevatedButton(
+              onPressed: () {
+                print(controller.lastNameController.text);
+                print(controller.firstNameController.text);
+                print(controller.middleNameController.text);
+                print(controller.genderController.text);
+                print(controller.dateOfBirthController.text);
+                print(controller.bloodGroupController.text);
+                print(controller.genotypeController.text);
+                print(controller.placeOfBirthNameController.text);
+                print(controller.stateController.text);
+                print(controller.cityController.text);
+                print(controller.addressController.text);
+                print(controller.phoneController.text);
+                print(controller.religionController.text);
+
+                //controller.changePassword();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xff20C6E6),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Color(0xffA8EFF9)),
+                  borderRadius: BorderRadius.circular(16.h),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 8.h),
+                textStyle: CustomTextStyles.bodySmallWhiteA700_1,
+              ),
+              child: Text('save', style: TextStyle(color: Colors.white)),
+            ),
+        SizedBox(width: 16.h),
+      ],
       styleType: Style.bgFillPrimary,
     );
   }

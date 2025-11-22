@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/change_password/controller/change_password_controller.dart';
 import 'package:schulupparent/presentation/settings/controller/settings_controller.dart';
 import 'package:schulupparent/widgets/custom_text_form_field.dart';
 import '../../core/app_export.dart';
@@ -9,9 +10,16 @@ import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
 
-class ChangePasswordScreen extends GetWidget<SettingsController> {
+ChangePasswordController controller = Get.put(ChangePasswordController());
+
+class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
+}
+
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +49,10 @@ class ChangePasswordScreen extends GetWidget<SettingsController> {
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      controller: controller.currentPasswordController,
                       hintText: "Current Password",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       prefix: Container(
@@ -78,7 +89,10 @@ class ChangePasswordScreen extends GetWidget<SettingsController> {
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      controller: controller.newPasswordController,
                       hintText: "New Password",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       prefix: Container(
@@ -115,7 +129,10 @@ class ChangePasswordScreen extends GetWidget<SettingsController> {
                     ),
                     SizedBox(height: 10),
                     CustomTextFormField(
-                      //  controller: controller.passwordController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      controller: controller.confirmPasswordController,
                       hintText: "Confirm New Password",
                       hintStyle: CustomTextStyles.labelLargeBluegray700,
                       prefix: Container(
@@ -189,19 +206,29 @@ class ChangePasswordScreen extends GetWidget<SettingsController> {
       ),
       styleType: Style.bgFillPrimary,
       actions: [
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xff20C6E6),
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: Color(0xffA8EFF9)),
-              borderRadius: BorderRadius.circular(16.h),
+        (controller.currentPasswordController.text.isEmpty ||
+                controller.newPasswordController.text.isEmpty ||
+                controller.confirmPasswordController.text.isEmpty)
+            ? SizedBox.shrink()
+            : ElevatedButton(
+              onPressed: () {
+print(controller.currentPasswordController.text);
+print(controller.newPasswordController.text);
+print(controller.confirmPasswordController.text);
+//controller.changePassword();
+
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xff20C6E6),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Color(0xffA8EFF9)),
+                  borderRadius: BorderRadius.circular(16.h),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 8.h),
+                textStyle: CustomTextStyles.bodySmallWhiteA700_1,
+              ),
+              child: Text('save', style: TextStyle(color: Colors.white)),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 8.h),
-            textStyle: CustomTextStyles.bodySmallWhiteA700_1,
-          ),
-          child: Text('save', style: TextStyle(color: Colors.white)),
-        ),
         SizedBox(width: 16.h),
       ],
     );

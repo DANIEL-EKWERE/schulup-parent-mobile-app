@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:schulupparent/core/utils/image_constant.dart';
 import 'package:schulupparent/core/utils/size_utils.dart';
 import 'package:schulupparent/presentation/signin_screen/controller/signin_controller.dart';
+import 'package:schulupparent/presentation/signin_screen/test_screen.dart';
 import 'package:schulupparent/routes/app_routes.dart';
 import 'package:schulupparent/theme/custom_button_style.dart';
 import 'package:schulupparent/theme/custom_text_style.dart';
@@ -26,7 +27,7 @@ class _SigninScreenState extends State<SigninScreen> {
     return SafeArea(
       top: false,
       child: Scaffold(
-      //  appBar: Cus
+        //  appBar: Cus
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 16),
           width: double.infinity,
@@ -130,6 +131,14 @@ class _SigninScreenState extends State<SigninScreen> {
                       buttonStyle: CustomButtonStyles.fillPrimary,
                       buttonTextStyle: theme.textTheme.titleMedium!,
                     ),
+                    // CustomElevatedButton(
+                    //   onPressed: () => Get.to(() => const TestScreen()),
+                    //   height: 64.h,
+                    //   text: "Test Screen",
+                    //   buttonStyle: CustomButtonStyles.fillPrimary,
+                    //   buttonTextStyle: theme.textTheme.titleMedium!,
+                    // ),
+                    //TestScreen
                     SizedBox(height: 10),
                   ],
                 ),

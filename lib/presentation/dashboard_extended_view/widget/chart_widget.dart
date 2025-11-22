@@ -1,11 +1,14 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/theme/theme_helper.dart';
 
 class AcademicProgressChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150,
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(color: Color(0xffF7F7F8)),
+      height: 180,
       child: LineChart(
         LineChartData(
           minX: 0,
@@ -22,7 +25,40 @@ class AcademicProgressChart extends StatelessWidget {
           ),
           titlesData: FlTitlesData(
             rightTitles: AxisTitles(),
-            topTitles: AxisTitles(),
+            topTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                interval: 1,
+                getTitlesWidget: (value, meta) {
+                  switch (value.toInt()) {
+                    case 0:
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 68, bottom: 0),
+                        child: Text(
+                          "Academic Progress",
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      );
+                    case 3:
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 98, top: 5),
+                        child: Text(
+                          "Details >",
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xffFF8D2A),
+                          ),
+                        ),
+                      );
+                  }
+                  return SizedBox.shrink();
+                },
+              ),
+            ),
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
@@ -30,14 +66,20 @@ class AcademicProgressChart extends StatelessWidget {
                 getTitlesWidget: (value, meta) {
                   switch (value.toInt()) {
                     case 0:
-                      return Text(
-                        "Nursery 1 A",
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 48, top: 5),
+                        child: Text(
+                          "Nursery 1 A",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
                       );
                     case 3:
-                      return Text(
-                        "Primary 5A",
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 98, top: 5),
+                        child: Text(
+                          "Primary 5A",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
                       );
                   }
                   return SizedBox.shrink();

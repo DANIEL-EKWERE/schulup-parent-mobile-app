@@ -16,10 +16,11 @@ class CustomBottomBar extends StatelessWidget {
       title: "lbl_home".tr,
       type: BottomBarEnum.Home,
     ),
+    //"lbl_academics".tr
     BottomMenuModel(
       icon: ImageConstant.imgNavAcademics,
       activeIcon: ImageConstant.imgNavAcademics,
-      title: "lbl_academics".tr,
+      title: "Class Work",
       type: BottomBarEnum.Academics,
     ),
     BottomMenuModel(

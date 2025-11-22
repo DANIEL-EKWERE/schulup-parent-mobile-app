@@ -86,18 +86,23 @@ class SettingsScreen extends GetWidget<SettingsController> {
                     SizedBox(height: 500.h),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Sign Out',
-                            style: CustomTextStyles.labelMediumRed500.copyWith(
-                              fontSize: 12,
+                      child: GestureDetector(
+                        onTap: () {
+                          controller.logOut();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Sign Out',
+                              style: CustomTextStyles.labelMediumRed500.copyWith(
+                                fontSize: 12,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 3),
-                          Icon(Icons.logout, color: Colors.red),
-                        ],
+                            SizedBox(width: 3),
+                            Icon(Icons.logout, color: Colors.red),
+                          ],
+                        ),
                       ),
                     ),
                   ],

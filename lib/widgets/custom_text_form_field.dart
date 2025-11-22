@@ -40,6 +40,7 @@ class CustomTextFormField extends StatelessWidget {
     this.hintText,
     this.hintStyle,
     this.prefix,
+    this.onChanged,
     this.prefixConstraints,
     this.suffix,
     this.suffixConstraints,
@@ -82,6 +83,8 @@ class CustomTextFormField extends StatelessWidget {
 
   final TextStyle? hintStyle;
 
+  final ValueChanged<String>? onChanged;
+
   final Widget? prefix;
 
   final BoxConstraints? prefixConstraints;
@@ -114,6 +117,7 @@ class CustomTextFormField extends StatelessWidget {
     width: width ?? double.maxFinite,
     decoration: boxDecoration,
     child: TextFormField(
+     
       scrollPadding: EdgeInsets.only(
         bottom: MediaQuery.of(Get.context!).viewInsets.bottom,
       ),
@@ -138,6 +142,7 @@ class CustomTextFormField extends StatelessWidget {
       maxLines: maxLines ?? 1,
       decoration: decoration,
       validator: validator,
+       onChanged: onChanged ?? (value) {},
     ),
   );
   InputDecoration get decoration => InputDecoration(
