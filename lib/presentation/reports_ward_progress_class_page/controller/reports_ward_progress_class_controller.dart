@@ -35,16 +35,16 @@ class ReportsWardProgressClassController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-academicPerformance();
-classOverview();
+    academicPerformance();
+    classOverview();
   }
 
   Rx<bool> isLoading = false.obs;
 
   List<AcademicsPerformance>? selectedPerformance = [];
-ReportsWardProgressClassModel? reportsWardProgressClassModel;
-ClassOverview? classOverviewModel;
-List<SubjectData>? selectedSubjectPerformance = [];
+  ReportsWardProgressClassModel? reportsWardProgressClassModel;
+  ClassOverview? classOverviewModel;
+  List<SubjectData>? selectedSubjectPerformance = [];
 
   @override
   void onClose() {
@@ -63,10 +63,8 @@ List<SubjectData>? selectedSubjectPerformance = [];
     super.onReady();
   }
 
+  ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
-   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
-  
- 
   Future<void> academicPerformance() async {
     // OverlayLoadingProgress.start(
     //   context: Get.context!,
@@ -74,16 +72,14 @@ List<SubjectData>? selectedSubjectPerformance = [];
     // );
     isLoading.value = true;
     try {
-      
       final response = await _apiService.academicsPerformance('43411');
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
-       ReportsWardProgressClassModel reportsWardProgressClassModel =
+        ReportsWardProgressClassModel reportsWardProgressClassModel =
             reportsWardProgressClassModelFromJson(response.body);
-            selectedPerformance = reportsWardProgressClassModel.data;
+        selectedPerformance = reportsWardProgressClassModel.data;
         //var responseData = jsonDecode(response.body);
-       
-       
+
         // OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
@@ -130,31 +126,27 @@ List<SubjectData>? selectedSubjectPerformance = [];
       );
       //OverlayLoadingProgress.stop();
     } finally {
-     // OverlayLoadingProgress.stop();
-     isLoading.value = false;
+      // OverlayLoadingProgress.stop();
+      isLoading.value = false;
     }
   }
 
-
-
-
-Future<void> classOverview() async {
+  Future<void> classOverview() async {
     // OverlayLoadingProgress.start(
     //   context: Get.context!,
     //   circularProgressColor: Color(0XFFFF8C42),
     // );
     isLoading.value = true;
     try {
-      
       final response = await _apiService.classOverview("43411", "50");
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
-       ClassOverview classOverviewModel =
-            subjectPerformanceFromJson(response.body);
-            selectedSubjectPerformance = classOverviewModel.data;
+        ClassOverview classOverviewModel = subjectPerformanceFromJson(
+          response.body,
+        );
+        selectedSubjectPerformance = classOverviewModel.data;
         //var responseData = jsonDecode(response.body);
-       
-       
+
         // OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
@@ -201,10 +193,8 @@ Future<void> classOverview() async {
       );
       //OverlayLoadingProgress.stop();
     } finally {
-     // OverlayLoadingProgress.stop();
-     isLoading.value = false;
+      // OverlayLoadingProgress.stop();
+      isLoading.value = false;
     }
   }
-
-
 }

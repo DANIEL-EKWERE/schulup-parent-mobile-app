@@ -68,48 +68,55 @@ class ReportsWardProgressClassPage extends StatelessWidget {
                         )
                         : Expanded(
                           // height: 400.h,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount:
-                                controller1.selectedSubjectPerformance!.length,
-                            itemBuilder: (context, index) {
-                              SubjectData model =
-                                  controller1
-                                      .selectedSubjectPerformance![index];
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
-                                ),
-                                child: _buildColumnshowing(model),
-                              );
-                              // Text(
-                              //   model.text!,
-                              //   style: CustomTextStyles.bodyMediumGray900,
-                              // );
-                            },
-                            // Column(
-                            //   spacing: 4,
-                            //   children: [
-                            //     _buildRowprimary5a(),
-                            //     _buildRowprimary4a(),
-                            //     _buildRowprimary4a1(),
-                            //     _buildRowprimary4a2(),
-                            //     _buildRowprimary3a(),
-                            //     _buildRowprimary3a1(),
-                            //     _buildRowprimary3a2(),
-                            //     _buildRowprimary2a(),
-                            //     _buildRowprimary2a1(),
-                            //     _buildRowprimary2a2(),
-                            //     _buildRowprimary1a(),
-                            //     _buildRowprimary1a1(),
-                            //     _buildRowprimarya2(),
-                            //     _buildRownursery3a(),
-                            //     _buildRownursery3a1(),
-                            //     _buildRownursery3a2(),
-                            //     _buildRownursery2a(),
-                            //     _buildRownursery2a1(),
-                            //     _buildRownursery2a2(),
-                            //   ],
+                          child: Column(
+                            children: [
+                              _buildColumnshowing(),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    controller1
+                                        .selectedSubjectPerformance!
+                                        .length,
+                                itemBuilder: (context, index) {
+                                  SubjectData model =
+                                      controller1
+                                          .selectedSubjectPerformance![index];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8.0,
+                                    ),
+                                    child: _buildColumnlinefour(model),
+                                  );
+                                  // Text(
+                                  //   model.text!,
+                                  //   style: CustomTextStyles.bodyMediumGray900,
+                                  // );
+                                },
+                                // Column(
+                                //   spacing: 4,
+                                //   children: [
+                                //     _buildRowprimary5a(),
+                                //     _buildRowprimary4a(),
+                                //     _buildRowprimary4a1(),
+                                //     _buildRowprimary4a2(),
+                                //     _buildRowprimary3a(),
+                                //     _buildRowprimary3a1(),
+                                //     _buildRowprimary3a2(),
+                                //     _buildRowprimary2a(),
+                                //     _buildRowprimary2a1(),
+                                //     _buildRowprimary2a2(),
+                                //     _buildRowprimary1a(),
+                                //     _buildRowprimary1a1(),
+                                //     _buildRowprimarya2(),
+                                //     _buildRownursery3a(),
+                                //     _buildRownursery3a1(),
+                                //     _buildRownursery3a2(),
+                                //     _buildRownursery2a(),
+                                //     _buildRownursery2a1(),
+                                //     _buildRownursery2a2(),
+                                //   ],
+                              ),
+                            ],
                           ),
                         ),
               ),
@@ -121,7 +128,7 @@ class ReportsWardProgressClassPage extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildColumnshowing(SubjectData model) {
+  Widget _buildColumnshowing() {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
@@ -161,13 +168,13 @@ class ReportsWardProgressClassPage extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildFrame427321469() {
+  Widget _buildFrame427321469(String wardScore) {
     return Padding(
       padding: EdgeInsets.only(left: 48.h),
       child: CustomTextFormField(
         width: 182.h,
         controller: controller.frame427321469Controller,
-        hintText: "lbl_75".tr,
+        hintText: wardScore,
         contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
         borderDecoration: TextFormFieldStyleHelper.fillGreen,
         fillColor: appTheme.green500,
@@ -176,20 +183,20 @@ class ReportsWardProgressClassPage extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildFrame427321470() {
+  Widget _buildFrame427321470(String classAverage) {
     return Padding(
       padding: EdgeInsets.only(left: 36.h),
       child: CustomTextFormField(
         width: 176.h,
         controller: controller.frame427321470Controller,
-        hintText: "lbl_73".tr,
+        hintText: classAverage,
         contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
       ),
     );
   }
 
   /// Section Widget
-  Widget _buildColumnlinefour() {
+  Widget _buildColumnlinefour(SubjectData model) {
     return Container(
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(horizontal: 24.h, vertical: 20.h),
@@ -215,7 +222,7 @@ class ReportsWardProgressClassPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 10.h),
                   child: Text(
-                    "lbl_basic_science".tr,
+                    model.subjectName ?? "N/A",
                     style: theme.textTheme.bodyMedium,
                   ),
                 ),
@@ -231,7 +238,7 @@ class ReportsWardProgressClassPage extends StatelessWidget {
                   "lbl_ward_score".tr,
                   style: CustomTextStyles.bodySmallGray700,
                 ),
-                _buildFrame427321469(),
+                _buildFrame427321469(model.studentScore!.toString()),
               ],
             ),
           ),
@@ -244,7 +251,7 @@ class ReportsWardProgressClassPage extends StatelessWidget {
                   "lbl_class_average".tr,
                   style: CustomTextStyles.bodySmallGray700,
                 ),
-                _buildFrame427321470(),
+                _buildFrame427321470(model.classAverage!.toString()),
               ],
             ),
           ),
