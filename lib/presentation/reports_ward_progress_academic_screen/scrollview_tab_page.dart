@@ -1,11 +1,18 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_class_page/controller/reports_ward_progress_class_controller.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_class_page/models/reports_ward_progress_class_model.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_text_form_field.dart';
 import 'controller/reports_ward_progress_academic_controller.dart';
 import 'models/scrollview_tab_model.dart';
 
 // ignore_for_file: must_be_immutable
+
+ReportsWardProgressClassController controller1 = Get.put(
+  ReportsWardProgressClassController(Rx(ReportsWardProgressClassModel())),
+);
+
 class ScrollviewTabPage extends StatelessWidget {
   ScrollviewTabPage({Key? key}) : super(key: key);
 
@@ -21,61 +28,91 @@ class ScrollviewTabPage extends StatelessWidget {
         margin: EdgeInsets.only(top: 24.h),
         padding: EdgeInsets.only(left: 24.h, top: 20.h, right: 24.h),
         decoration: AppDecoration.primaryC11,
-        child: Column(
-          spacing: 4,
-          children: [
-            _buildRowprimary5a(),
-            _buildRowprimary4a(),
-            _buildRowprimary4a1(),
-            _buildRowprimary4a2(),
-            _buildRowprimary3a(),
-            _buildRowprimary3a1(),
-            _buildRowprimary3a2(),
-            _buildRowprimary2a(),
-            _buildRowprimary2a1(),
-            _buildRowprimary2a2(),
-            _buildRowprimary1a(),
-            _buildRowprimary1a1(),
-            _buildRowprimarya2(),
-            _buildRownursery3a(),
-            _buildRownursery3a1(),
-            _buildRownursery3a2(),
-            _buildRownursery2a(),
-            _buildRownursery2a1(),
-            _buildRownursery2a2(),
-          ],
+        child: Obx(
+          () =>
+              controller1.isLoading.value
+                  ? Center(
+                    child: CircularProgressIndicator(color: Color(0XFFFF8C42)),
+                  )
+                  : Expanded(
+                    // height: 400.h,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: controller1.selectedPerformance!.length,
+                      itemBuilder: (context, index) {
+                        AcademicsPerformance model =
+                            controller1.selectedPerformance![index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: _buildRowprimary5a(model),
+                        );
+                        // Text(
+                        //   model.text!,
+                        //   style: CustomTextStyles.bodyMediumGray900,
+                        // );
+                      },
+                      // Column(
+                      //   spacing: 4,
+                      //   children: [
+                      //     _buildRowprimary5a(),
+                      //     _buildRowprimary4a(),
+                      //     _buildRowprimary4a1(),
+                      //     _buildRowprimary4a2(),
+                      //     _buildRowprimary3a(),
+                      //     _buildRowprimary3a1(),
+                      //     _buildRowprimary3a2(),
+                      //     _buildRowprimary2a(),
+                      //     _buildRowprimary2a1(),
+                      //     _buildRowprimary2a2(),
+                      //     _buildRowprimary1a(),
+                      //     _buildRowprimary1a1(),
+                      //     _buildRowprimarya2(),
+                      //     _buildRownursery3a(),
+                      //     _buildRownursery3a1(),
+                      //     _buildRownursery3a2(),
+                      //     _buildRownursery2a(),
+                      //     _buildRownursery2a1(),
+                      //     _buildRownursery2a2(),
+                      //   ],
+                    ),
+                  ),
         ),
       ),
     );
   }
 
   /// Section Widget
-  Widget _buildFrame427321469() {
+  Widget _buildFrame427321469(AcademicsPerformance model) {
     return Padding(
       padding: EdgeInsets.only(right: 28.h),
-      child: CustomTextFormField(
-        width: 120.h,
-        controller: controller.frame427321469Controller,
-        hintText: "lbl_80".tr,
-        contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
-        borderDecoration: TextFormFieldStyleHelper.fillGreen,
-        fillColor: appTheme.green500,
+      child: SizedBox(
+        width: 150.h,
+        child: CustomTextFormField(
+          readOnly: true,
+          width:
+              MediaQuery.of(Get.context!).size.width /
+              100 *
+              model.studentAverage!,
+
+          controller: controller.frame427321469Controller,
+          hintText: "${model.studentAverage!.toStringAsFixed(2)} %",
+          contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
+          borderDecoration: TextFormFieldStyleHelper.fillGreen,
+          fillColor: appTheme.green500,
+        ),
       ),
     );
   }
 
   /// Section Widget
-  Widget _buildRowprimary5a() {
+  Widget _buildRowprimary5a(AcademicsPerformance model) {
     return SizedBox(
       width: double.maxFinite,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            "msg_primary_5a_first".tr,
-            style: CustomTextStyles.bodySmallGray700,
-          ),
-          _buildFrame427321469(),
+          Text(model.className!, style: CustomTextStyles.bodySmallGray700),
+          _buildFrame427321469(model),
         ],
       ),
     );

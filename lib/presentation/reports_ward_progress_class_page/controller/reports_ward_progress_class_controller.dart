@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_class_page/models/class_overview_model.dart';
 import '../../../core/app_export.dart';
 import '../models/reports_ward_progress_class_model.dart';
 
@@ -35,11 +36,15 @@ class ReportsWardProgressClassController extends GetxController {
   void onInit() {
     super.onInit();
 academicPerformance();
+classOverview();
   }
 
-  List<AcademicsPerformance>? selectedPerformance;
-ReportsWardProgressClassModel? reportsWardProgressClassModel;
+  Rx<bool> isLoading = false.obs;
 
+  List<AcademicsPerformance>? selectedPerformance = [];
+ReportsWardProgressClassModel? reportsWardProgressClassModel;
+ClassOverview? classOverviewModel;
+List<SubjectData>? selectedSubjectPerformance = [];
 
   @override
   void onClose() {
@@ -63,25 +68,28 @@ ReportsWardProgressClassModel? reportsWardProgressClassModel;
   
  
   Future<void> academicPerformance() async {
-    OverlayLoadingProgress.start(
-      context: Get.context!,
-      circularProgressColor: Color(0XFFFF8C42),
-    );
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    // );
+    isLoading.value = true;
     try {
       
-      final response = await _apiService.academicsPerformance();
+      final response = await _apiService.academicsPerformance('43411');
       if (response.statusCode == 200 || response.statusCode == 201) {
+        isLoading.value = false;
        ReportsWardProgressClassModel reportsWardProgressClassModel =
             reportsWardProgressClassModelFromJson(response.body);
             selectedPerformance = reportsWardProgressClassModel.data;
         //var responseData = jsonDecode(response.body);
        
        
-        OverlayLoadingProgress.stop();
+        // OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
-        OverlayLoadingProgress.stop();
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         Get.snackbar(
@@ -92,7 +100,8 @@ ReportsWardProgressClassModel? reportsWardProgressClassModel;
           colorText: Colors.white,
         );
       } else {
-        OverlayLoadingProgress.stop();
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
         Get.snackbar(
           'Error',
           'Login failed. Please try again.',
@@ -102,6 +111,7 @@ ReportsWardProgressClassModel? reportsWardProgressClassModel;
         );
       }
     } on SocketException {
+      isLoading.value = false;
       Get.snackbar(
         'Opps!!!',
         'Check your internet connection and try again.',
@@ -110,6 +120,7 @@ ReportsWardProgressClassModel? reportsWardProgressClassModel;
         colorText: Colors.white,
       );
     } catch (e) {
+      isLoading.value = false;
       Get.snackbar(
         'Error',
         e.toString(),
@@ -119,8 +130,81 @@ ReportsWardProgressClassModel? reportsWardProgressClassModel;
       );
       //OverlayLoadingProgress.stop();
     } finally {
-      OverlayLoadingProgress.stop();
+     // OverlayLoadingProgress.stop();
+     isLoading.value = false;
     }
   }
+
+
+
+
+Future<void> classOverview() async {
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    // );
+    isLoading.value = true;
+    try {
+      
+      final response = await _apiService.classOverview("43411", "50");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isLoading.value = false;
+       ClassOverview classOverviewModel =
+            subjectPerformanceFromJson(response.body);
+            selectedSubjectPerformance = classOverviewModel.data;
+        //var responseData = jsonDecode(response.body);
+       
+       
+        // OverlayLoadingProgress.stop();
+        //   Get.toNamed(AppRoutes.signFourScreen);
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        //Get.offAllNamed(AppRoutes.signTwoScreen);
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
+        Get.snackbar(
+          'Error',
+          'Login failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      isLoading.value = false;
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      //OverlayLoadingProgress.stop();
+    } finally {
+     // OverlayLoadingProgress.stop();
+     isLoading.value = false;
+    }
+  }
+
 
 }

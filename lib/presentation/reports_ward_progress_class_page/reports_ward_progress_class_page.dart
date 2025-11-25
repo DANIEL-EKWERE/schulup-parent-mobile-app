@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_class_one_bottomsheet/controller/reports_ward_progress_class_one_controller.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_class_one_bottomsheet/reports_ward_progress_class_one_bottomsheet.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_class_page/models/class_overview_model.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/controller/reports_ward_progress_subject_one_controller.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/reports_ward_progress_subject_one_bottomsheet.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_page/reports_ward_progress_subject_page.dart';
@@ -12,6 +13,10 @@ import 'controller/reports_ward_progress_class_controller.dart';
 import 'models/reports_ward_progress_class_model.dart';
 
 // ignore_for_file: must_be_immutable
+ReportsWardProgressClassController controller1 = Get.put(
+  ReportsWardProgressClassController(Rx(ReportsWardProgressClassModel())),
+);
+
 class ReportsWardProgressClassPage extends StatelessWidget {
   ReportsWardProgressClassPage({Key? key}) : super(key: key);
 
@@ -29,26 +34,84 @@ class ReportsWardProgressClassPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: SizedBox(
               width: double.maxFinite,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: Column(
-                      children: [
-                        // _buildColumnshowing(),
-                        // SizedBox(height: 16.h),
-                        // _buildColumnlinefour(),
-                        // SizedBox(height: 10.h),
-                        // _buildColumnlineone(),
-                        // SizedBox(height: 10.h),
-                        // _buildColumnlinetwo(),
-                        // SizedBox(height: 10.h),
-                        // _buildColumnline(),
-                      ],
-                    ),
-                  ),
-                ],
+              child:
+              // Column(
+              //   mainAxisSize: MainAxisSize.max,
+              //   children: [
+              //     SizedBox(
+              //       width: double.maxFinite,
+              //       child: Column(
+              //         children: [
+              //           s
+              //           //selectedSubjectPerformance
+              //           // _buildColumnshowing(),
+              //           // SizedBox(height: 16.h),
+              //           // _buildColumnlinefour(),
+              //           // SizedBox(height: 10.h),
+              //           // _buildColumnlineone(),
+              //           // SizedBox(height: 10.h),
+              //           // _buildColumnlinetwo(),
+              //           // SizedBox(height: 10.h),
+              //           // _buildColumnline(),
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              Obx(
+                () =>
+                    controller1.isLoading.value
+                        ? Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0XFFFF8C42),
+                          ),
+                        )
+                        : Expanded(
+                          // height: 400.h,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount:
+                                controller1.selectedSubjectPerformance!.length,
+                            itemBuilder: (context, index) {
+                              SubjectData model =
+                                  controller1
+                                      .selectedSubjectPerformance![index];
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0,
+                                ),
+                                child: _buildColumnshowing(model),
+                              );
+                              // Text(
+                              //   model.text!,
+                              //   style: CustomTextStyles.bodyMediumGray900,
+                              // );
+                            },
+                            // Column(
+                            //   spacing: 4,
+                            //   children: [
+                            //     _buildRowprimary5a(),
+                            //     _buildRowprimary4a(),
+                            //     _buildRowprimary4a1(),
+                            //     _buildRowprimary4a2(),
+                            //     _buildRowprimary3a(),
+                            //     _buildRowprimary3a1(),
+                            //     _buildRowprimary3a2(),
+                            //     _buildRowprimary2a(),
+                            //     _buildRowprimary2a1(),
+                            //     _buildRowprimary2a2(),
+                            //     _buildRowprimary1a(),
+                            //     _buildRowprimary1a1(),
+                            //     _buildRowprimarya2(),
+                            //     _buildRownursery3a(),
+                            //     _buildRownursery3a1(),
+                            //     _buildRownursery3a2(),
+                            //     _buildRownursery2a(),
+                            //     _buildRownursery2a1(),
+                            //     _buildRownursery2a2(),
+                            //   ],
+                          ),
+                        ),
               ),
             ),
           ),
@@ -58,7 +121,7 @@ class ReportsWardProgressClassPage extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildColumnshowing() {
+  Widget _buildColumnshowing(SubjectData model) {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(

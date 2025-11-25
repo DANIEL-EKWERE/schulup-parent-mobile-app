@@ -642,8 +642,27 @@ class ApiClient extends GetConnect {
   }
 
   // academics performance
- Future<http.Response> academicsPerformance() async {
-    final url = Uri.parse('$baseUrl/students/43411/analytics-academics-progress');
+ Future<http.Response> academicsPerformance(String studentId) async {
+    final url = Uri.parse('$baseUrl/students/$studentId/analytics-academics-progress');
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+
+    // class overview
+ Future<http.Response> classOverview(String studentId, String batchId) async {
+    final url = Uri.parse('$baseUrl/students/$studentId/analytics-class-overview?batchId=$batchId');
     var token = await dataBase.getToken();
     _logRequest('GET', url);
     final response = await http.get(
