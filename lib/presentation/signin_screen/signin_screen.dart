@@ -27,6 +27,7 @@ class _SigninScreenState extends State<SigninScreen> {
     return SafeArea(
       top: false,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         //  appBar: Cus
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -65,8 +66,10 @@ class _SigninScreenState extends State<SigninScreen> {
                     ),
                     SizedBox(height: 30),
                     CustomTextFormField(
+                      textInputType: TextInputType.text,
                       controller: controller.usernameController,
                       hintText: "Username",
+                      hintStyle: CustomTextStyles.bodyMediumGray700,
                       prefix: Container(
                         margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                         child: CustomImageView(
@@ -94,8 +97,10 @@ class _SigninScreenState extends State<SigninScreen> {
 
                     SizedBox(height: 30),
                     CustomTextFormField(
+                      textInputType: TextInputType.visiblePassword,
                       controller: controller.passwordController,
                       hintText: "Passowrd",
+                      hintStyle: CustomTextStyles.bodyMediumGray700,
                       prefix: Container(
                         margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                         child: CustomImageView(
@@ -120,17 +125,48 @@ class _SigninScreenState extends State<SigninScreen> {
                       borderDecoration: TextFormFieldStyleHelper.outlineGray,
                       fillColor: appTheme.whiteA700,
                     ),
+                    SizedBox(height: 30),
+                    CustomTextFormField(
+                      textInputType: TextInputType.text,
+                      controller: controller.schoolCodeController,
+                      hintText: "School Code",
+                      hintStyle: CustomTextStyles.bodyMediumGray700,
+                      prefix: Container(
+                        margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
+                        child: CustomImageView(
+                          imagePath: ImageConstant.imgGroup,
+                          height: 16.h,
+                          width: 16.h,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      prefixConstraints: BoxConstraints(maxHeight: 44.h),
+                      // suffix: Container(
+                      //   margin: EdgeInsets.fromLTRB(16.h, 14.h, 14.h, 14.h),
+                      //   child: CustomImageView(
+                      //     imagePath: ImageConstant.imgVisibility,
+                      //     height: 16.h,
+                      //     width: 16.h,
+                      //     fit: BoxFit.contain,
+                      //   ),
+                      // ),
+                      suffixConstraints: BoxConstraints(maxHeight: 44.h),
+                      contentPadding: EdgeInsets.all(14.h),
+                      borderDecoration: TextFormFieldStyleHelper.outlineGray,
+                      fillColor: appTheme.whiteA700,
+                    ),
                     Spacer(),
                     CustomElevatedButton(
-                      onPressed:
-                          () => Get.offAllNamed(
-                            AppRoutes.academicsAssignmentStatusScreen,
-                          ),
+                      onPressed: () => controller.firstLogin(),
+                      // Get.offAllNamed(
+                      //   AppRoutes.academicsAssignmentStatusScreen,
+                      // )
                       height: 64.h,
                       text: "Sign In",
                       buttonStyle: CustomButtonStyles.fillPrimary,
                       buttonTextStyle: theme.textTheme.titleMedium!,
                     ),
+
                     // CustomElevatedButton(
                     //   onPressed: () => Get.to(() => const TestScreen()),
                     //   height: 64.h,

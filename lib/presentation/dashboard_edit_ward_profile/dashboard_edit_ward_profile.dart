@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/widgets/custom_text_form_field.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
@@ -8,6 +9,9 @@ import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
+
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
 DashboardEditWardProfileController controller = Get.put(
   DashboardEditWardProfileController(),
@@ -842,6 +846,7 @@ class _DashboardEditWardProfileScreenState
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+   // Get.back();
+    Navigator.pop(context);
   }
 }

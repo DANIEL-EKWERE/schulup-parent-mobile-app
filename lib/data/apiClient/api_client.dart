@@ -295,7 +295,7 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-    Future<http.Response> regCard(Map<String, dynamic> customerData) async {
+  Future<http.Response> regCard(Map<String, dynamic> customerData) async {
     final url = Uri.parse('$baseUrl/attendance/assign-uid');
     var token = await dataBase.getToken();
     _logRequest('POST', url, body: customerData);
@@ -312,7 +312,6 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-
   Future<http.Response> getSchoolLogo() async {
     var schoolId = await dataBase.getBrmCode();
     final url = Uri.parse('$baseUrl/school/$schoolId/logo');
@@ -323,12 +322,10 @@ class ApiClient extends GetConnect {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
       },
-     
     );
     _logResponse(response);
     return response;
   }
-
 
   Future<http.Response> getSchoolName() async {
     var schoolId = await dataBase.getBrmCode();
@@ -340,7 +337,6 @@ class ApiClient extends GetConnect {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
       },
-     
     );
     _logResponse(response);
     return response;
@@ -628,6 +624,41 @@ class ApiClient extends GetConnect {
     _logResponse(response);
     return response;
   }
+
+  Future<http.Response> byGuardian() async {
+    final url = Uri.parse('$baseUrl/students/by-guardian/88460');
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+  // academics performance
+ Future<http.Response> academicsPerformance() async {
+    final url = Uri.parse('$baseUrl/students/43411/analytics-academics-progress');
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
 
   // Validate user login OTP
   Future<http.Response> validateUserLoginOtp(
@@ -1261,7 +1292,6 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-
   // Get all Events
   Future<http.Response> getEvents(String page) async {
     final url = Uri.parse('$baseUrl/event/my-events?page=$page&pageSize=20');
@@ -1275,11 +1305,16 @@ class ApiClient extends GetConnect {
     _logResponse(response);
     return response;
   }
-  
 
-   // Get all Events with start and end date
-  Future<http.Response> getEventsByDateRange(String page,String startDate,String endDate) async {
-    final url = Uri.parse('$baseUrl/event/my-events?startDate=$startDate&endDate=$endDate&page=$page&pageSize=20');
+  // Get all Events with start and end date
+  Future<http.Response> getEventsByDateRange(
+    String page,
+    String startDate,
+    String endDate,
+  ) async {
+    final url = Uri.parse(
+      '$baseUrl/event/my-events?startDate=$startDate&endDate=$endDate&page=$page&pageSize=20',
+    );
     _logRequest('GET', url);
     final response = await http.get(
       url,
@@ -1290,7 +1325,8 @@ class ApiClient extends GetConnect {
     _logResponse(response);
     return response;
   }
-//event/upcoming?limit=10
+
+  //event/upcoming?limit=10
   // Get all upcoming Events
   Future<http.Response> getUpcomingEvents() async {
     final url = Uri.parse('$baseUrl/event/upcoming?limit=10');
@@ -1305,7 +1341,7 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-    // Get all news details
+  // Get all news details
   Future<http.Response> getNewsDetails(String newsId) async {
     final url = Uri.parse('$baseUrl/news/$newsId/detail');
     _logRequest('GET', url);
@@ -1320,7 +1356,7 @@ class ApiClient extends GetConnect {
   }
 
   ///event/1/detail
-     // Get all events details
+  // Get all events details
   Future<http.Response> getEventsDetails(String eventId) async {
     final url = Uri.parse('$baseUrl/event/$eventId/detail');
     _logRequest('GET', url);
@@ -1334,9 +1370,8 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-
-    Future<http.Response> getStudentsByGuardian() async {
-    final url = Uri.parse('$baseUrl/students/524/by-guardian');
+  Future<http.Response> getStudentsByGuardian() async {
+    final url = Uri.parse('$baseUrl/students/by-guardian/88460');
     _logRequest('GET', url);
     final response = await http.get(
       url,
@@ -1367,7 +1402,6 @@ class ApiClient extends GetConnect {
 
   // Update a student info
   Future<http.Response> updateStudentInfo(
-    
     Map<String, dynamic> categoryData,
   ) async {
     final url = Uri.parse('$baseUrl/students/update');
@@ -1532,13 +1566,15 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-  Future<http.Response> getAttendanceLogs(Map<String, String> queryParams) async {
+  Future<http.Response> getAttendanceLogs(
+    Map<String, String> queryParams,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
 
-    final url = Uri.parse('$baseUrl/attendance/logs').replace(
-      queryParameters: queryParams,
-    );
+    final url = Uri.parse(
+      '$baseUrl/attendance/logs',
+    ).replace(queryParameters: queryParams);
     _logRequest('GET', url);
     final response = await http.get(
       url,

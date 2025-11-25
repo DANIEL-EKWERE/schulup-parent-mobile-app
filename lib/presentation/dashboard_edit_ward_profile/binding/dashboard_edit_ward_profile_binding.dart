@@ -4,6 +4,9 @@ import 'package:schulupparent/presentation/dashboard_edit_ward_profile/controlle
 class DashboardEditWardProfileBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => DashboardEditWardProfileController());
+    Get.lazyPut<DashboardEditWardProfileController>(
+      () => DashboardEditWardProfileController(),
+      fenix: false, // Set to false so it gets deleted when not in use
+    );
   }
 }
