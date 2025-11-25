@@ -635,9 +635,12 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                       constraints: BoxConstraints(
                         maxHeight:
                             MediaQuery.of(context).size.height *
-                            0.7, // Max 70% of screen
+                            0.5, // Max 50% of screen
                       ),
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.vertical(
@@ -662,12 +665,12 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                           Text(
                             "Switch Ward",
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
 
-                          SizedBox(height: 20),
+                          SizedBox(height: 10),
 
                           // List of students
                           Flexible(
@@ -678,15 +681,15 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                 Student student = controller.students[index];
                                 return ListTile(
                                   contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
+                                    horizontal: 4,
+                                    vertical: 2,
                                   ),
                                   leading: ClipRRect(
                                     borderRadius: BorderRadius.circular(25),
                                     child: Base64Image(
                                       base64String: student.profilePicBase64,
-                                      width: 50,
-                                      height: 50,
+                                      width: 30,
+                                      height: 30,
                                       fit: BoxFit.cover,
                                       placeholder: CircleAvatar(
                                         backgroundColor: Color(
@@ -706,7 +709,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                   title: Text(
                                     '${student.firstName ?? ''} ${student.lastName ?? ''}',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 10,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -755,7 +758,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                 );
               },
               child: Container(
-                width: 105,
+                width: 110,
                 // height: 150,
                 margin: EdgeInsets.only(left: 16),
                 padding: EdgeInsets.all(5),
@@ -770,12 +773,34 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                       height: 30,
                       width: 30,
                       decoration: BoxDecoration(shape: BoxShape.circle),
-                      child: CustomImageView(
-                        imagePath: 'assets/images/ward_image.png',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child: Base64Image(
+                          base64String:
+                              controller.selectedStudent1?.profilePicBase64 ??
+                              '',
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover,
+                          placeholder: CircleAvatar(
+                            backgroundColor: Color(0xFFFF8D2A).withOpacity(0.2),
+                            child: Text(
+                              controller.selectedStudent1?.firstName?[0]
+                                      .toUpperCase() ??
+                                  '?',
+                              style: TextStyle(
+                                color: Color(0xFFFF8D2A),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     AppbarSubtitleFive(
-                      text: "lbl_ogechi".tr,
+                      text:
+                          controller.selectedStudent1?.firstName ??
+                          "lbl_ogechi".tr,
                       margin: EdgeInsets.only(left: 8.h, right: 9.h),
                     ),
                     CustomImageView(
@@ -844,7 +869,10 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                         Get.delete<
                           DashboardEditWardProfileController
                         >(); // Delete old instance
-                        Get.toNamed(model.route!, arguments: controller.selectedStudent1);
+                        Get.toNamed(
+                          model.route!,
+                          arguments: controller.selectedStudent1,
+                        );
                       } else {
                         Get.toNamed(model.route!);
                       }

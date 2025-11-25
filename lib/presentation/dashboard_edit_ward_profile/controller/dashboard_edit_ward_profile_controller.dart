@@ -15,6 +15,8 @@ class DashboardEditWardProfileController extends GetxController {
   DashboardExtendedViewController dashboardExtendedViewController =
       Get.find<DashboardExtendedViewController>();
 
+Rx<String> selectedGender = 'Male'.obs;
+
   @override
   void onReady() {
     super.onReady();

@@ -17,7 +17,6 @@ class DashboardExtendedViewController extends GetxController {
   AcademicsAssignmentStatusInitialModel? academicsAssignmentStatusInitialModel;
   Student? selectedStudent;
   Student? selectedStudent1;
-  
 
   @override
   void onInit() {
@@ -46,13 +45,16 @@ class DashboardExtendedViewController extends GetxController {
             academicsAssignmentStatusInitialModelFromJson(response.body);
         students = academicsAssignmentStatusInitialModel?.data ?? [];
         myLog.log('Students: ${students.length}');
-
-     //   OverlayLoadingProgress.stop();
+        if (students.isNotEmpty) {
+          selectedStudent = students.first;
+          selectedStudent1 = students.first;
+        }
+        //   OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //Get.offAllNamed(AppRoutes.signTwoScreen);
-       // OverlayLoadingProgress.stop();
+        // OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         Get.snackbar(
@@ -64,7 +66,7 @@ class DashboardExtendedViewController extends GetxController {
         );
       } else {
         isLoading.value = false;
-       // OverlayLoadingProgress.stop();
+        // OverlayLoadingProgress.stop();
         Get.snackbar(
           'Error',
           'Login failed. Please try again.',

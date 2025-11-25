@@ -1,7 +1,9 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/data/model/selectionPopupModel/selection_popup_model.dart';
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
+import 'package:schulupparent/widgets/custom_drop_down.dart';
 import 'package:schulupparent/widgets/custom_text_form_field.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
@@ -196,36 +198,83 @@ class _DashboardEditWardProfileScreenState
                       ),
                     ),
                     SizedBox(height: 10),
-                    CustomTextFormField(
-                      controller: controller.genderController,
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      hintText: "Gender",
-                      hintStyle: CustomTextStyles.labelLargeBluegray700,
-                      // prefix: Container(
-                      //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
-                      //   child: CustomImageView(
-                      //     imagePath: ImageConstant.imgPassword,
-                      //     height: 16.h,
-                      //     width: 16.h,
-                      //     fit: BoxFit.contain,
-                      //   ),
-                      // ),
-                      prefixConstraints: BoxConstraints(maxHeight: 44.h),
-                      suffix: Container(
-                        margin: EdgeInsets.fromLTRB(16.h, 14.h, 14.h, 14.h),
-                        child: CustomImageView(
-                          imagePath: ImageConstant.imgChevronDown,
-                          height: 16.h,
-                          width: 16.h,
-                          fit: BoxFit.contain,
+
+                    // CustomDropDown(
+                    //   //controller: controller.genderController,
+                    //   onChanged: (value) {
+                    //     setState(() {});
+                    //   },
+                    //   items: [
+                    //     SelectionPopupModel(title: 'Male'),
+                    //     SelectionPopupModel(title: 'Female'),
+                    //   ],
+                    //   hintText: "Gender",
+                    //   hintStyle: CustomTextStyles.labelLargeBluegray700,
+                    //   // prefix: Container(
+                    //   //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
+                    //   //   child: CustomImageView(
+                    //   //     imagePath: ImageConstant.imgPassword,
+                    //   //     height: 16.h,
+                    //   //     width: 16.h,
+                    //   //     fit: BoxFit.contain,
+                    //   //   ),
+                    //   // ),
+                    //   prefixConstraints: BoxConstraints(maxHeight: 44.h),
+                    //   // suffix: Container(
+                    //   //   margin: EdgeInsets.fromLTRB(16.h, 14.h, 14.h, 14.h),
+                    //   //   child: CustomImageView(
+                    //   //     imagePath: ImageConstant.imgChevronDown,
+                    //   //     height: 16.h,
+                    //   //     width: 16.h,
+                    //   //     fit: BoxFit.contain,
+                    //   //   ),
+                    //   // ),
+                    //   // suffixConstraints: BoxConstraints(maxHeight: 44.h),
+                    //   // contentPadding: EdgeInsets.all(14.h),
+                    //   // borderDecoration: TextFormFieldStyleHelper.outlineGray,
+                    //   // fillColor: appTheme.gray100,
+                    // ),
+                    SizedBox(
+                      height: 50.h,
+                      child: DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(14.h),
+                          filled: true,
+                          fillColor: appTheme.gray100,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.h),
+                            borderSide: BorderSide(color: appTheme.gray200),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.h),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
                         ),
+                        style: CustomTextStyles.bodyMediumOnPrimary,
+                        initialValue:
+                            [
+                                  'Male',
+                                  'Female',
+                                  'Other',
+                                ].contains(controller.selectedGender.value)
+                                ? controller.selectedGender.value
+                                : null,
+                        hint: Text('Select Gender'),
+                        items: const [
+                          DropdownMenuItem(value: 'Male', child: Text('Male')),
+                          DropdownMenuItem(
+                            value: 'Female',
+                            child: Text('Female'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Other',
+                            child: Text('Other'),
+                          ),
+                        ],
+                        onChanged: (String? value) {
+                          controller.selectedGender.value = value ?? '';
+                        },
                       ),
-                      suffixConstraints: BoxConstraints(maxHeight: 44.h),
-                      contentPadding: EdgeInsets.all(14.h),
-                      borderDecoration: TextFormFieldStyleHelper.outlineGray,
-                      fillColor: appTheme.gray100,
                     ),
 
                     SizedBox(height: 30),
@@ -279,36 +328,83 @@ class _DashboardEditWardProfileScreenState
                       ),
                     ),
                     SizedBox(height: 10),
-                    CustomTextFormField(
-                      controller: controller.bloodGroupController,
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      hintText: "Blood Group",
-                      hintStyle: CustomTextStyles.labelLargeBluegray700,
-                      // prefix: Container(
-                      //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
-                      //   child: CustomImageView(
-                      //     imagePath: ImageConstant.imgPassword,
-                      //     height: 16.h,
-                      //     width: 16.h,
-                      //     fit: BoxFit.contain,
-                      //   ),
-                      // ),
-                      prefixConstraints: BoxConstraints(maxHeight: 44.h),
-                      // suffix: Container(
-                      //   margin: EdgeInsets.fromLTRB(16.h, 14.h, 14.h, 14.h),
-                      //   child: CustomImageView(
-                      //     imagePath: ImageConstant.imgVisibility,
-                      //     height: 16.h,
-                      //     width: 16.h,
-                      //     fit: BoxFit.contain,
-                      //   ),
-                      // ),
-                      suffixConstraints: BoxConstraints(maxHeight: 44.h),
-                      contentPadding: EdgeInsets.all(14.h),
-                      borderDecoration: TextFormFieldStyleHelper.outlineGray,
-                      fillColor: appTheme.gray100,
+                    // CustomTextFormField(
+                    //   controller: controller.bloodGroupController,
+                    //   onChanged: (value) {
+                    //     setState(() {});
+                    //   },
+                    //   hintText: "Blood Group",
+                    //   hintStyle: CustomTextStyles.labelLargeBluegray700,
+                    //   // prefix: Container(
+                    //   //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
+                    //   //   child: CustomImageView(
+                    //   //     imagePath: ImageConstant.imgPassword,
+                    //   //     height: 16.h,
+                    //   //     width: 16.h,
+                    //   //     fit: BoxFit.contain,
+                    //   //   ),
+                    //   // ),
+                    //   prefixConstraints: BoxConstraints(maxHeight: 44.h),
+                    //   // suffix: Container(
+                    //   //   margin: EdgeInsets.fromLTRB(16.h, 14.h, 14.h, 14.h),
+                    //   //   child: CustomImageView(
+                    //   //     imagePath: ImageConstant.imgVisibility,
+                    //   //     height: 16.h,
+                    //   //     width: 16.h,
+                    //   //     fit: BoxFit.contain,
+                    //   //   ),
+                    //   // ),
+                    //   suffixConstraints: BoxConstraints(maxHeight: 44.h),
+                    //   contentPadding: EdgeInsets.all(14.h),
+                    //   borderDecoration: TextFormFieldStyleHelper.outlineGray,
+                    //   fillColor: appTheme.gray100,
+                    // ),
+                    SizedBox(
+                      height: 50.h,
+                      child: DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(14.h),
+                          filled: true,
+                          fillColor: appTheme.gray100,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.h),
+                            borderSide: BorderSide(color: appTheme.gray200),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.h),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                        style: CustomTextStyles.bodyMediumOnPrimary,
+                        initialValue:
+                            [
+                                  'A+',
+                                  'A-',
+                                  'B+',
+                                  'B-',
+                                  'AB+',
+                                  'AB-',
+                                  'O+',
+                                  'O-',
+                                ].contains(controller.selectedGender.value)
+                                ? controller.selectedGender.value
+                                : null,
+                        hint: Text('Blood Group'),
+                        items: const [
+                          DropdownMenuItem(value: 'A+', child: Text('A+')),
+                          DropdownMenuItem(value: 'A-', child: Text('A-')),
+                          DropdownMenuItem(value: 'B+', child: Text('B+')),
+                          DropdownMenuItem(value: 'B-', child: Text('B-')),
+                          DropdownMenuItem(value: 'B+', child: Text('B+')),
+                          DropdownMenuItem(value: 'AB+', child: Text('AB+')),
+                          DropdownMenuItem(value: 'AB-', child: Text('AB-')),
+                          DropdownMenuItem(value: 'O+', child: Text('O+')),
+                          DropdownMenuItem(value: 'O-', child: Text('O-')),
+                        ],
+                        onChanged: (String? value) {
+                          controller.selectedGender.value = value ?? '';
+                        },
+                      ),
                     ),
 
                     SizedBox(height: 30),
@@ -846,7 +942,7 @@ class _DashboardEditWardProfileScreenState
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-   // Get.back();
+    // Get.back();
     Navigator.pop(context);
   }
 }
