@@ -642,8 +642,10 @@ class ApiClient extends GetConnect {
   }
 
   // academics performance
- Future<http.Response> academicsPerformance(String studentId) async {
-    final url = Uri.parse('$baseUrl/students/$studentId/analytics-academics-progress');
+  Future<http.Response> academicsPerformance(String studentId) async {
+    final url = Uri.parse(
+      '$baseUrl/students/$studentId/analytics-academics-progress',
+    );
     var token = await dataBase.getToken();
     _logRequest('GET', url);
     final response = await http.get(
@@ -658,11 +660,11 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-
-
-    // class overview
- Future<http.Response> classOverview(String studentId, String batchId) async {
-    final url = Uri.parse('$baseUrl/students/$studentId/analytics-class-overview?batchId=$batchId');
+  // class overview
+  Future<http.Response> classOverview(String studentId, String batchId) async {
+    final url = Uri.parse(
+      '$baseUrl/students/$studentId/analytics-class-overview?batchId=$batchId',
+    );
     var token = await dataBase.getToken();
     _logRequest('GET', url);
     final response = await http.get(
@@ -676,8 +678,6 @@ class ApiClient extends GetConnect {
     _logResponse(response);
     return response;
   }
-
-
 
   // Validate user login OTP
   Future<http.Response> validateUserLoginOtp(
@@ -1299,12 +1299,16 @@ class ApiClient extends GetConnect {
 
   // Get all news
   Future<http.Response> getNews() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/news/my-news');
     _logRequest('GET', url);
     final response = await http.get(
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        "Authorization": 'Bearer $token',
       },
     );
     _logResponse(response);
@@ -1313,12 +1317,16 @@ class ApiClient extends GetConnect {
 
   // Get all Events
   Future<http.Response> getEvents(String page) async {
-    final url = Uri.parse('$baseUrl/event/my-events?page=$page&pageSize=20');
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final url = Uri.parse('$baseUrl/events/my-events?page=1&pageSize=20');
     _logRequest('GET', url);
     final response = await http.get(
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
       },
     );
     _logResponse(response);
@@ -1327,9 +1335,9 @@ class ApiClient extends GetConnect {
 
   // Get all Events with start and end date
   Future<http.Response> getEventsByDateRange(
-    String page,
     String startDate,
     String endDate,
+    String page,
   ) async {
     final url = Uri.parse(
       '$baseUrl/event/my-events?startDate=$startDate&endDate=$endDate&page=$page&pageSize=20',

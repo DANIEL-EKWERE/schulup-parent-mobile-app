@@ -9,23 +9,35 @@ class ListjuncounterItemWidget extends StatelessWidget {
   ListjuncounterItemWidget(this.listjuncounterItemModelObj, {Key? key})
     : super(key: key);
 
-  ListjuncounterItemModel listjuncounterItemModelObj;
+  String listjuncounterItemModelObj;
 
   var controller = Get.find<NewsEventsController>();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 14.h, vertical: 10.h),
-      decoration: AppDecoration.grayC13.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder18,
-      ),
-      child: Obx(
-        () => Text(
-          listjuncounterItemModelObj.junCounter!.value,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
-          style: CustomTextStyles.bodySmallOnPrimary_1,
+    return Obx(
+      () => Container(
+        padding: EdgeInsets.symmetric(horizontal: 14.h, vertical: 10.h),
+        decoration:
+            controller.selectedMonth.value == listjuncounterItemModelObj
+                ? AppDecoration.onPrimary.copyWith(
+                  borderRadius: BorderRadiusStyle.roundedBorder18,
+                )
+                : AppDecoration.grayC13.copyWith(
+                  borderRadius: BorderRadiusStyle.roundedBorder18,
+                ),
+        child: Obx(
+          () => Text(
+            listjuncounterItemModelObj,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style:
+                controller.selectedMonth.value == listjuncounterItemModelObj
+                    ? CustomTextStyles.bodySmallOnPrimary_1.copyWith(
+                      color: appTheme.whiteA700,
+                    )
+                    : CustomTextStyles.bodySmallOnPrimary_1,
+          ),
         ),
       ),
     );

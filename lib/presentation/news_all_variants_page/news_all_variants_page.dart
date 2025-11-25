@@ -1,7 +1,9 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/news_all_variants_page/models/news_model.dart';
 import 'package:schulupparent/presentation/news_modal_jump_to_a_date_bottomsheet/controller/news_modal_jump_to_a_date_controller.dart';
 import 'package:schulupparent/presentation/news_modal_jump_to_a_date_bottomsheet/news_modal_jump_to_a_date_bottomsheet.dart';
+import 'package:schulupparent/presentation/news_news_content_contains_screen/widgets/shimmer_widget.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -56,6 +58,7 @@ class NewsAllVariantsPage extends StatelessWidget {
         AppbarTrailingIconbutton(
           onTap: () {
             Get.toNamed(AppRoutes.newsEventsScreen);
+            // controller.getNews();
           },
           imagePath: ImageConstant.imgIconsSmallEvents,
         ),
@@ -82,35 +85,46 @@ class NewsAllVariantsPage extends StatelessWidget {
   Widget _buildNewsall() {
     return Expanded(
       child: Obx(
-        () => ListView.separated(
-          padding: EdgeInsets.zero,
-          physics: BouncingScrollPhysics(),
-          shrinkWrap: true,
-          separatorBuilder: (context, index) {
-            return SizedBox(height: 10.h);
-          },
-          itemCount:
-              controller
-                  .newsAllVariantsModelObj
-                  .value
-                  .newsAllItemList
-                  .value
-                  .length,
-          itemBuilder: (context, index) {
-            NewsAllItemModel model =
-                controller
-                    .newsAllVariantsModelObj
-                    .value
-                    .newsAllItemList
-                    .value[index];
-            return GestureDetector(
-              onTap: () {
-                Get.toNamed(AppRoutes.newsNewsContentContainsScreen);
-              },
-              child: NewsAllItemWidget(model),
-            );
-          },
-        ),
+        () =>
+            controller.isLoading.value
+                ? ListView.separated(
+                  itemCount: 5,
+                  //isLoading ? 5 : newsItems.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                  itemBuilder: (context, index) {
+                    // if (isLoading) {
+                    return NewsShimmerWidget();
+                    // }
+                    // return ListlineItemWidget(newsItems[index]);
+                  },
+                )
+                : ListView.separated(
+                  padding: EdgeInsets.zero,
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 10.h);
+                  },
+                  itemCount: controller.newsItems!.length,
+
+                  // .newsAllVariantsModelObj
+                  // .value
+                  // .newsAllItemList
+                  // .value
+                  // .length,
+                  itemBuilder: (context, index) {
+                    NewsItem model = controller.newsItems![index];
+                    return GestureDetector(
+                      onTap: () {
+                        Get.toNamed(
+                          AppRoutes.newsNewsContentContainsScreen,
+                          arguments: {'newsItem': model},
+                        );
+                      },
+                      child: NewsAllItemWidget(model),
+                    );
+                  },
+                ),
       ),
     );
   }

@@ -1,5 +1,7 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:schulupparent/presentation/news_all_variants_page/models/news_model.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -9,12 +11,29 @@ import 'controller/news_news_content_contains_controller.dart';
 import 'models/listweburl_item_model.dart';
 import 'widgets/listweburl_item_widget.dart'; // ignore_for_file: must_be_immutable
 
-class NewsNewsContentContainsScreen
-    extends GetWidget<NewsNewsContentContainsController> {
+NewsNewsContentContainsController controller = Get.put(
+  NewsNewsContentContainsController(),
+);
+
+class NewsNewsContentContainsScreen extends StatefulWidget {
   const NewsNewsContentContainsScreen({Key? key}) : super(key: key);
 
   @override
+  State<NewsNewsContentContainsScreen> createState() =>
+      _NewsNewsContentContainsScreenState();
+}
+
+class _NewsNewsContentContainsScreenState
+    extends State<NewsNewsContentContainsScreen> {
+  @override
+  void initState() {
+    final newsItem = Get.arguments['newsItem'] as NewsItem;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final newsItem = Get.arguments['newsItem'] as NewsItem;
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       appBar: _buildAppbar(),
@@ -41,7 +60,7 @@ class NewsNewsContentContainsScreen
                         ),
                         SizedBox(height: 20.h),
                         Text(
-                          "msg_graceland_hosts".tr,
+                          newsItem.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: CustomTextStyles.titleMediumOnPrimary.copyWith(
@@ -50,12 +69,12 @@ class NewsNewsContentContainsScreen
                         ),
                         SizedBox(height: 12.h),
                         Text(
-                          "msg_wednesday_nov2".tr,
+                          formatDate(newsItem.createdAt),
                           style: CustomTextStyles.bodySmall10,
                         ),
                         SizedBox(height: 14.h),
                         Text(
-                          "msg_graceland_school3".tr,
+                          removeHtmlTags(newsItem.content),
                           maxLines: 10,
                           overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.bodySmall!.copyWith(
@@ -72,7 +91,8 @@ class NewsNewsContentContainsScreen
           ),
         ),
       ),
-      bottomNavigationBar: _buildColumn(),
+      bottomNavigationBar:
+          newsItem.attachments.isNotEmpty ? _buildColumn(newsItem) : null,
     );
   }
 
@@ -102,7 +122,7 @@ class NewsNewsContentContainsScreen
   }
 
   /// Section Widget
-  Widget _buildColumn() {
+  Widget _buildColumn(NewsItem newsItem) {
     return Container(
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(horizontal: 24.h),
@@ -125,32 +145,22 @@ class NewsNewsContentContainsScreen
                   "lbl_attachments".tr,
                   style: CustomTextStyles.labelLargeBluegray700,
                 ),
-                Obx(
-                  () => ListView.separated(
-                    padding: EdgeInsets.zero,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    separatorBuilder: (context, index) {
-                      return SizedBox(height: 14.h);
-                    },
-                    itemCount:
-                        controller
-                            .newsNewsContentContainsModelObj
-                            .value
-                            .listweburlItemList
-                            .value
-                            .length,
-                    itemBuilder: (context, index) {
-                      ListweburlItemModel model =
-                          controller
-                              .newsNewsContentContainsModelObj
-                              .value
-                              .listweburlItemList
-                              .value[index];
-                      return ListweburlItemWidget(model);
-                    },
-                  ),
+                // Obx(
+                //   () =>
+                ListView.separated(
+                  padding: EdgeInsets.zero,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 14.h);
+                  },
+                  itemCount: newsItem.attachments.length,
+                  itemBuilder: (context, index) {
+                    Attachment model = newsItem.attachments[index];
+                    return ListweburlItemWidget(model);
+                  },
                 ),
+                // ),
               ],
             ),
           ),
@@ -161,6 +171,17 @@ class NewsNewsContentContainsScreen
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(Get.context!);
+  }
+
+  String formatDate(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('EEEE, MMM. d, yyyy').format(dateTime);
+  }
+
+  String removeHtmlTags(String htmlString) {
+    final regex = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: false);
+    return htmlString.replaceAll(regex, '').trim();
   }
 }

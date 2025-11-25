@@ -5,6 +5,7 @@ import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
+import 'package:schulupparent/presentation/news_all_variants_page/models/news_model.dart';
 import '../../../core/app_export.dart';
 import '../models/news_all_variants_model.dart';
 
@@ -17,25 +18,34 @@ class NewsAllVariantsController extends GetxController {
 
   Rx<NewsAllVariantsModel> newsAllVariantsModelObj;
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
-  
- 
 
+  @override
+  void onInit() {
+    super.onInit();
+    getNews();
+  }
+
+  NewsResponse? newsResponse;
+  List<NewsItem>? newsItems;
+  Rx<bool> isLoading = false.obs;
   Future<void> getNews() async {
-    OverlayLoadingProgress.start(
-      context: Get.context!,
-      circularProgressColor: Color(0XFFFF8C42),
-    );
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    // );
+    isLoading.value = true;
     try {
-      
-      
       final response = await _apiService.getNews();
       if (response.statusCode == 200 || response.statusCode == 201) {
+        isLoading.value = false;
         // OverlayLoadingProgress.stop();
         // myLog.log('Login successful: ${response.body}');
         // schoolCodeInputController.dispose();
         // usernameInputController.dispose();
         // passwordInputController.dispose();
         var responseData = jsonDecode(response.body);
+        newsResponse = newsResponseFromJson(response.body);
+        newsItems = newsResponse!.data.news;
         // var token = responseData['data']['token'];
         // var userId = responseData['data']['userID'];
         // var userName = responseData['data']['displayName'];
@@ -50,11 +60,12 @@ class NewsAllVariantsController extends GetxController {
         // schoolCodeController.clear();
         //Get.offAllNamed(AppRoutes.signinScreen,);
         myLog.log(response.body);
-        OverlayLoadingProgress.stop();
+
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
-        OverlayLoadingProgress.stop();
+        // OverlayLoadingProgress.stop();
+        isLoading.value = false;
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         Get.snackbar(
@@ -65,7 +76,8 @@ class NewsAllVariantsController extends GetxController {
           colorText: Colors.white,
         );
       } else {
-        OverlayLoadingProgress.stop();
+        // OverlayLoadingProgress.stop();
+        isLoading.value = false;
         Get.snackbar(
           'Error',
           'Fetching news failed. Please try again.',
@@ -75,6 +87,7 @@ class NewsAllVariantsController extends GetxController {
         );
       }
     } on SocketException {
+      isLoading.value = false;
       Get.snackbar(
         'Opps!!!',
         'Check your internet connection and try again.',
@@ -83,6 +96,7 @@ class NewsAllVariantsController extends GetxController {
         colorText: Colors.white,
       );
     } catch (e) {
+      isLoading.value = false;
       Get.snackbar(
         'Error',
         e.toString(),
@@ -92,19 +106,17 @@ class NewsAllVariantsController extends GetxController {
       );
       //OverlayLoadingProgress.stop();
     } finally {
-      OverlayLoadingProgress.stop();
+      // OverlayLoadingProgress.stop();
+      isLoading.value = false;
     }
   }
 
-
- Future<void> getNewsDetails(String newsId) async {
+  Future<void> getNewsDetails(String newsId) async {
     OverlayLoadingProgress.start(
       context: Get.context!,
       circularProgressColor: Color(0XFFFF8C42),
     );
     try {
-      
-      
       final response = await _apiService.getNewsDetails(newsId);
       if (response.statusCode == 200 || response.statusCode == 201) {
         // OverlayLoadingProgress.stop();
@@ -172,7 +184,4 @@ class NewsAllVariantsController extends GetxController {
       OverlayLoadingProgress.stop();
     }
   }
-
-
-
 }

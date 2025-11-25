@@ -1,5 +1,7 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:schulupparent/presentation/news_all_variants_page/models/news_model.dart';
 import '../../../core/app_export.dart';
 import '../controller/news_all_variants_controller.dart';
 import '../models/news_all_item_model.dart';
@@ -8,7 +10,9 @@ import '../models/news_all_item_model.dart';
 class NewsAllItemWidget extends StatelessWidget {
   NewsAllItemWidget(this.newsAllItemModelObj, {Key? key}) : super(key: key);
 
-  NewsAllItemModel newsAllItemModelObj;
+  // NewsAllItemModel newsAllItemModelObj;
+
+  NewsItem newsAllItemModelObj;
 
   var controller = Get.find<NewsAllVariantsController>();
 
@@ -33,56 +37,74 @@ class NewsAllItemWidget extends StatelessWidget {
           ),
           SizedBox(
             width: double.infinity,
-            child: Obx(
-              () => Row(
-                children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    padding: EdgeInsets.all(5.h),
-                    decoration: BoxDecoration(
-                      color: Color(0xffFFEED4),
+            child:
+            //  Obx(
+            //   () =>
+            Row(
+              children: [
+                Container(
+                  height: 40,
+                  width: 40,
+                  padding: EdgeInsets.all(5.h),
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFEED4),
 
-                      shape: BoxShape.circle,
-                    ),
-                    child: CustomImageView(
-                      imagePath: 'assets/images/img_icons_small_news.png',
-                    ),
-                    // CustomImageView(
-                    //   imagePath:   dashboardItemModelObj.imagePath,
-                    //   height: 40.h,
-                    //   width: 40.h,
-                    // ),
+                    shape: BoxShape.circle,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: SizedBox(
-                      width: 250.h,
-                      child: Text(
-                        newsAllItemModelObj.gracelandhosts!.value,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodyMedium!.copyWith(
-                          height: 1.50,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  child: CustomImageView(
+                    imagePath: 'assets/images/img_icons_small_news.png',
+                  ),
+                  // CustomImageView(
+                  //   imagePath:   dashboardItemModelObj.imagePath,
+                  //   height: 40.h,
+                  //   width: 40.h,
+                  // ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: SizedBox(
+                    width: 250.h,
+                    child: Text(
+                      newsAllItemModelObj.title,
+                      //gracelandhosts!.value,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        height: 1.50,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
+            //   ),
+          ),
+          // Obx(
+          //   () =>
+          Text(
+            removeHtmlTags(newsAllItemModelObj.content),
+            //.students!.value,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: CustomTextStyles.bodySmallSecondaryContainer.copyWith(
+              height: 1.50,
             ),
           ),
-          Obx(
-            () => Text(
-              newsAllItemModelObj.students!.value,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: CustomTextStyles.bodySmallSecondaryContainer.copyWith(
-                height: 1.50,
-              ),
-            ),
-          ),
+          // Html(
+          //   data: newsAllItemModelObj.content,
+          //   style: {
+          //     "body": Style(
+          //       maxLines: 2,
+          //       textOverflow: TextOverflow.ellipsis,
+          //       fontSize: FontSize(12.0),
+          //       fontWeight: FontWeight.w400,
+          //       lineHeight: LineHeight(1.5),
+          //       color: theme.colorScheme.secondaryContainer,
+          //     ),
+          //   },
+          // ),
+          // ),
           SizedBox(
             width: double.maxFinite,
             child: Row(
@@ -94,12 +116,16 @@ class NewsAllItemWidget extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 4.h),
-                  child: Obx(
-                    () => Text(
-                      newsAllItemModelObj.attachments!.value,
-                      style: CustomTextStyles.bodySmallSecondaryContainer10,
-                    ),
+                  child:
+                  //  Obx(
+                  //   () =>
+                  Text(
+                    newsAllItemModelObj.attachments!.length.toString() +
+                        ' ' +
+                        'lbl_attachments'.tr,
+                    style: CustomTextStyles.bodySmallSecondaryContainer10,
                   ),
+                  //),
                 ),
               ],
             ),
@@ -107,5 +133,10 @@ class NewsAllItemWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String removeHtmlTags(String htmlString) {
+    final regex = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: false);
+    return htmlString.replaceAll(regex, '').trim();
   }
 }

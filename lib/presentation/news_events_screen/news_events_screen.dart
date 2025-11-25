@@ -1,5 +1,8 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/news_events_screen/models/events_model.dart';
+import 'package:schulupparent/presentation/news_events_screen/widgets/event_widget.dart';
+import 'package:schulupparent/presentation/signin_screen/shimmer_widget.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -10,6 +13,7 @@ import 'models/listjuncounter_item_model.dart';
 import 'models/listline_item_model.dart';
 import 'widgets/listjuncounter_item_widget.dart';
 import 'widgets/listline_item_widget.dart'; // ignore_for_file: must_be_immutable
+import 'package:intl/intl.dart';
 
 class NewsEventsScreen extends GetWidget<NewsEventsController> {
   const NewsEventsScreen({Key? key}) : super(key: key);
@@ -63,32 +67,28 @@ class NewsEventsScreen extends GetWidget<NewsEventsController> {
             ),
           ),
           Container(
-            child: Obx(
-              () => SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: 4.h,
-                  children: List.generate(
-                    controller
-                        .newsEventsModelObj
-                        .value
-                        .listjuncounterItemList
-                        .value
-                        .length,
-                    (index) {
-                      ListjuncounterItemModel model =
-                          controller
-                              .newsEventsModelObj
-                              .value
-                              .listjuncounterItemList
-                              .value[index];
-                      return ListjuncounterItemWidget(model);
+            child:
+            //  Obx(
+            //   () =>
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Wrap(
+                direction: Axis.horizontal,
+                spacing: 4.h,
+                children: List.generate(getMonths().length, (index) {
+                  String model = getMonths()[index];
+                  return GestureDetector(
+                    onTap: () {
+                      controller.selectedMonth.value = model;
+                      controller.eventsByDateRange(model, '');
+                      // print(model);
                     },
-                  ),
-                ),
+                    child: ListjuncounterItemWidget(model),
+                  );
+                }),
               ),
             ),
+            // ),
           ),
         ],
       ),
@@ -99,31 +99,49 @@ class NewsEventsScreen extends GetWidget<NewsEventsController> {
   Widget _buildListline() {
     return Expanded(
       child: Obx(
-        () => ListView.separated(
-          padding: EdgeInsets.zero,
-          physics: BouncingScrollPhysics(),
-          shrinkWrap: true,
-          separatorBuilder: (context, index) {
-            return SizedBox(height: 10.h);
-          },
-          itemCount:
-              controller.newsEventsModelObj.value.listlineItemList.value.length,
-          itemBuilder: (context, index) {
-            ListlineItemModel model =
-                controller
-                    .newsEventsModelObj
-                    .value
-                    .listlineItemList
-                    .value[index];
-            return ListlineItemWidget(model);
-          },
-        ),
+        () =>
+            controller.isLoading.value
+                ? ListView.separated(
+                  itemCount: 5,
+                  //isLoading ? 5 : newsItems.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                  itemBuilder: (context, index) {
+                    // if (isLoading) {
+                    return ListlineShimmerWidget();
+                    // }
+                    // return ListlineItemWidget(newsItems[index]);
+                  },
+                )
+                : ListView.separated(
+                  padding: EdgeInsets.zero,
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 10.h);
+                  },
+                  itemCount: controller.eventItems?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    EventItem model = controller.eventItems![index];
+                    return EventWidget(model);
+                  },
+                ),
       ),
     );
   }
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(Get.context!);
+    // controller.getEvents();
+  }
+
+  List<String> getMonths() {
+    final currentYear = DateTime.now().year;
+
+    return List.generate(12, (index) {
+      final date = DateTime(currentYear, index + 1, 1);
+      return DateFormat('MMMM yyyy').format(date);
+    });
   }
 }

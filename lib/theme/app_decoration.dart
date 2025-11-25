@@ -39,6 +39,9 @@ class AppDecoration {
       BoxDecoration(color: appTheme.orange50);
   static BoxDecoration get primaryC11 =>
       BoxDecoration(color: appTheme.yellow50);
+
+  static BoxDecoration get onPrimary =>
+      BoxDecoration(color: appTheme.black900);
   static BoxDecoration get primaryC7Main => BoxDecoration(
     color: Color(0xffFF8D2A), //theme.colorScheme.primary,
     borderRadius: BorderRadius.only(
