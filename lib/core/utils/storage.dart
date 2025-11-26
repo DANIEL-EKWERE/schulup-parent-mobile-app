@@ -38,7 +38,7 @@ class DataBase extends GetxController {
 
   String _userName = '';
 
-  String _userId = '';
+  int _userId = 0;
 
   String _profileId = '';
 
@@ -108,7 +108,7 @@ class DataBase extends GetxController {
 
   String get userName => _userName;
 
-  String get userId => _userId;
+  int get userId => _userId;
 
   String get profileId => _profileId;
 
@@ -762,18 +762,18 @@ class DataBase extends GetxController {
     }
   }
 
-  Future<String> getUserId() async {
+  Future<int> getUserId() async {
     SharedPreferences sharedPreferences = await _pref;
 
     if (sharedPreferences.containsKey('userId')) {
-      String data = sharedPreferences.getString('userId')!;
+      int data = sharedPreferences.getInt('userId')!;
       _userId = data;
 
       return data;
     } else {
-      _userId = '';
+      _userId = 0;
 
-      return '';
+      return 0;
     }
   }
 

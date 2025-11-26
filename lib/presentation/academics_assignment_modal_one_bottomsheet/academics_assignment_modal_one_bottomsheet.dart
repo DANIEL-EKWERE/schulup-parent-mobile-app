@@ -119,6 +119,7 @@ class _AcademicsAssignmentModalOneBottomsheetState
                 return GestureDetector(
                   onTap: () {
                     selectedType.clear();
+                    
                     selectedType.add(text);
 
                     setState(() {});
@@ -149,6 +150,14 @@ class _AcademicsAssignmentModalOneBottomsheetState
             onPressed: () {
               setState(() {
                 controller1.termType.value = selectedType.first;
+                if (controller1.termType.value.contains('First Term')) {
+                  controller1.termType.value = '1';
+                } else if (controller1.termType.value.contains('Second Term')) {
+                  controller1.termType.value = '2';
+                } else if (controller1.termType.value.contains('Third Term')) {
+                  controller1.termType.value = '3';
+                }
+                controller1.allLessons();
               });
               Navigator.pop(context);
             },

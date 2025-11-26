@@ -4,8 +4,13 @@ import 'dart:developer' as myLog;
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:schulupparent/core/utils/storage.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/data/model/selectionPopupModel/selection_popup_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/lesson_model.dart';
+// import 'package:schulupparent/presentation/dashboard_extended_view/models/student_batch_model.dart';
+// import 'package:schulupparent/presentation/dashboard_extended_view/models/student_class_model.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../../core/app_export.dart';
 import '../models/academics_assignment_status_initial_model.dart';
 import '../models/academics_assignment_status_model.dart';
@@ -19,15 +24,30 @@ class AcademicsAssignmentStatusController extends GetxController
     with GetSingleTickerProviderStateMixin {
   Rx<AcademicsAssignmentStatusModel> academicsAssignmentStatusModelObj =
       AcademicsAssignmentStatusModel().obs;
-ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
+  ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
   late TabController tabviewController = Get.put(
     TabController(vsync: this, length: 3),
   );
+  Rx<bool> isLoading = false.obs;
+  DashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<DashboardExtendedViewController>();
 
   @override
   void onInit() {
     super.onInit();
-    byGuardian(); 
+    byGuardian();
+    allLessons();
+  }
+
+  DashboardExtendedViewController controller =
+      Get.find<DashboardExtendedViewController>();
+  Lesson lesson = Lesson();
+
+  List<LessonData> lessonList = [];
+
+  void getUserId() async {
+    var userId = await dataBase.getUserId();
+    myLog.log('User ID: $userId');
   }
 
   Rx<AcademicsFourModel> academicsFourModelObj = AcademicsFourModel().obs;
@@ -80,12 +100,12 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   Rx<String> statusType = 'Pending'.obs;
 
-// cbt
+  // cbt
   Rx<String> classType1 = 'primary 50'.obs;
 
   Rx<String> cbtType = 'Scheduled Test 0'.obs;
 
-// lesson
+  // lesson
   Rx<String> classType2 = 'primary 50'.obs;
 
   Rx<String> termType1 = 'First Term 0'.obs;
@@ -93,16 +113,15 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
   //search
   Rx<String> searchStatus = 'All'.obs;
 
-
   Future<void> byGuardian() async {
     OverlayLoadingProgress.start(
       context: Get.context!,
       circularProgressColor: Color(0XFFFF8C42),
     );
     try {
-      
-      
-      final response = await _apiService.byGuardian();
+      var userId = await dataBase.getUserId();
+      myLog.log('User ID: $userId');
+      final response = await _apiService.byGuardian(userId.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         // OverlayLoadingProgress.stop();
         // myLog.log('Login successful: ${response.body}');
@@ -110,9 +129,9 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
         // usernameInputController.dispose();
         // passwordInputController.dispose();
         var responseData = jsonDecode(response.body);
-        
+
         myLog.log('Token: $responseData');
-        
+
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
@@ -157,6 +176,83 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
       //OverlayLoadingProgress.stop();
     } finally {
       OverlayLoadingProgress.stop();
+    }
+  }
+
+  Future<void> allLessons() async {
+    isLoading.value = true;
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    var termId;
+    // );
+    try {
+      if (termType.value == 'First') {
+        termId = '1';
+      } else if (termType.value == 'Second') {
+        termId = '2';
+      } else if (termType.value == 'Third') {
+        termId = '3';
+      }
+      final response = await _apiService.allLessons(
+        controller.classDataList.first.classID.toString(),
+        termId,
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isLoading.value = false;
+
+        lessonList = lessonFromJson(response.body).data!;
+        myLog.log('Lessons Length: ${lessonList.length}');
+
+        //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
+        // OverlayLoadingProgress.stop();
+        //   Get.toNamed(AppRoutes.signFourScreen);
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isLoading.value = false;
+        //Get.offAllNamed(AppRoutes.signTwoScreen);
+        // OverlayLoadingProgress.stop();
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
+        Get.snackbar(
+          'Error',
+          'Login failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+      isLoading.value = false;
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      isLoading.value = false;
+      //OverlayLoadingProgress.stop();
+    } finally {
+      // OverlayLoadingProgress.stop();
+      isLoading.value = false;
     }
   }
 }

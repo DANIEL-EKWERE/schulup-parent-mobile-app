@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:schulupparent/core/app_export.dart';
 import 'package:schulupparent/core/utils/image_constant.dart';
+import 'package:schulupparent/core/utils/storage.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_one_bottomsheet/academics_assignment_modal_one_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/academics_assignment_status_initial_model.dart';
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
@@ -353,273 +354,6 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
             //centerTitle: true,
             title: GestureDetector(
               onTap: () {
-                // showModalBottomSheet(
-                //   context: context,
-                //   backgroundColor:
-                //       Colors.transparent, // optional for rounded corners
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.vertical(
-                //       top: Radius.circular(20),
-                //     ),
-                //   ),
-                //   builder: (context) {
-                //     // return Container(
-                //     //   width: double.infinity,
-                //     //   padding: EdgeInsets.all(20),
-                //     //   decoration: BoxDecoration(
-                //     //     color: Colors.white,
-                //     //     borderRadius: BorderRadius.vertical(
-                //     //       top: Radius.circular(20),
-                //     //     ),
-                //     //   ),
-                //     //   child: Column(
-                //     //     mainAxisSize: MainAxisSize.min,
-                //     //     children: [
-                //     // Container(
-                //     //   width: 50,
-                //     //   height: 5,
-                //     //   margin: EdgeInsets.only(bottom: 16),
-                //     //   decoration: BoxDecoration(
-                //     //     color: Colors.grey.shade300,
-                //     //     borderRadius: BorderRadius.circular(10),
-                //     //   ),
-                //     // ),
-
-                //     //       Text(
-                //     //         "Swhitch Ward",
-                //     //         style: TextStyle(
-                //     //           fontSize: 18,
-                //     //           fontWeight: FontWeight.bold,
-                //     //         ),
-                //     //       ),
-
-                //     //       SizedBox(height: 20),
-
-                //     //       // Text(
-                //     //       //   "Your content goes here...",
-                //     //       //   textAlign: TextAlign.center,
-                //     //       //   style: TextStyle(
-                //     //       //     fontSize: 14,
-                //     //       //     color: Colors.black54,
-                //     //       //   ),
-                //     //       // ),
-                //     //       GestureDetector(
-                //     //         onTap: () {
-                //     //           Navigator.pop(context);
-                //     //         },
-                //     //         child: Row(
-                //     //           children: [
-                //     //             CircleAvatar(
-                //     //               backgroundImage: AssetImage(
-                //     //                 'assets/images/ward_image.png',
-                //     //               ),
-                //     //             ),
-                //     //             SizedBox(width: 10),
-                //     //             Text('Ogechi'),
-                //     //             Spacer(),
-                //     //             GestureDetector(
-                //     //               onTap: () {
-                //     //                 setState(() {
-                //     //                   _isSelected = !_isSelected; // toggle
-                //     //                 });
-                //     //               },
-                //     //               child: Container(
-                //     //                 width: 20,
-                //     //                 height: 20,
-                //     //                 decoration: BoxDecoration(
-                //     //                   shape: BoxShape.circle,
-                //     //                   border: Border.all(
-                //     //                     color:
-                //     //                         _isSelected
-                //     //                             ? Color(0xFFFF8D2A)
-                //     //                             : Colors.grey,
-                //     //                     width: 2,
-                //     //                   ),
-                //     //                 ),
-                //     //                 child:
-                //     //                     _isSelected
-                //     //                         ? Center(
-                //     //                           child: Container(
-                //     //                             width: 10,
-                //     //                             height: 10,
-                //     //                             decoration: BoxDecoration(
-                //     //                               shape: BoxShape.circle,
-                //     //                               color: Color(0xFFFF8D2A),
-                //     //                             ),
-                //     //                           ),
-                //     //                         )
-                //     //                         : SizedBox.shrink(),
-                //     //               ),
-                //     //             ),
-                //     //           ],
-                //     //         ),
-                //     //       ),
-
-                //     //       SizedBox(height: 20),
-
-                //     //       GestureDetector(
-                //     //         onTap: () {
-                //     //           Navigator.pop(context);
-                //     //         },
-                //     //         child: Row(
-                //     //           children: [
-                //     //             CircleAvatar(
-                //     //               backgroundImage: AssetImage(
-                //     //                 'assets/images/fatima.png',
-                //     //               ),
-                //     //             ),
-                //     //             SizedBox(width: 10),
-                //     //             Text('Fatima'),
-                //     //             Spacer(),
-                //     //             GestureDetector(
-                //     //               onTap: () {
-                //     //                 setState(() {
-                //     //                   _isSelected = !_isSelected; // toggle
-                //     //                 });
-                //     //               },
-                //     //               child: Container(
-                //     //                 width: 20,
-                //     //                 height: 20,
-                //     //                 decoration: BoxDecoration(
-                //     //                   shape: BoxShape.circle,
-                //     //                   border: Border.all(
-                //     //                     color:
-                //     //                         _isSelected
-                //     //                             ? Color(0xFFFF8D2A)
-                //     //                             : Colors.grey,
-                //     //                     width: 2,
-                //     //                   ),
-                //     //                 ),
-                //     //                 child:
-                //     //                     _isSelected
-                //     //                         ? Center(
-                //     //                           child: Container(
-                //     //                             width: 10,
-                //     //                             height: 10,
-                //     //                             decoration: BoxDecoration(
-                //     //                               shape: BoxShape.circle,
-                //     //                               color: Color(0xFFFF8D2A),
-                //     //                             ),
-                //     //                           ),
-                //     //                         )
-                //     //                         : SizedBox.shrink(),
-                //     //               ),
-                //     //             ),
-                //     //           ],
-                //     //         ),
-                //     //       ),
-                //     //       SizedBox(height: 20),
-                //     //       GestureDetector(
-                //     //         onTap: () {
-                //     //           Navigator.pop(context);
-                //     //         },
-                //     //         child: Row(
-                //     //           children: [
-                //     //             CircleAvatar(
-                //     //               backgroundImage: AssetImage(
-                //     //                 'assets/images/adebayo.png',
-                //     //               ),
-                //     //             ),
-                //     //             SizedBox(width: 10),
-                //     //             Text('Adebayo'),
-                //     //             Spacer(),
-                //     //             GestureDetector(
-                //     //               onTap: () {
-                //     //                 setState(() {
-                //     //                   _isSelected = !_isSelected; // toggle
-                //     //                 });
-                //     //               },
-                //     //               child: Container(
-                //     //                 width: 20,
-                //     //                 height: 20,
-                //     //                 decoration: BoxDecoration(
-                //     //                   shape: BoxShape.circle,
-                //     //                   border: Border.all(
-                //     //                     color:
-                //     //                         _isSelected
-                //     //                             ? Color(0xFFFF8D2A)
-                //     //                             : Colors.grey,
-                //     //                     width: 2,
-                //     //                   ),
-                //     //                 ),
-                //     //                 child:
-                //     //                     _isSelected
-                //     //                         ? Center(
-                //     //                           child: Container(
-                //     //                             width: 10,
-                //     //                             height: 10,
-                //     //                             decoration: BoxDecoration(
-                //     //                               shape: BoxShape.circle,
-                //     //                               color: Color(0xFFFF8D2A),
-                //     //                             ),
-                //     //                           ),
-                //     //                         )
-                //     //                         : SizedBox.shrink(),
-                //     //               ),
-                //     //             ),
-                //     //           ],
-                //     //         ),
-                //     //       ),
-                //     //     ],
-                //     //   ),
-                //     // );
-                //     return Container(
-                //       width: double.infinity,
-                //       padding: EdgeInsets.all(20),
-                //       decoration: BoxDecoration(
-                //         color: Colors.white,
-                //         borderRadius: BorderRadius.vertical(
-                //           top: Radius.circular(20),
-                //         ),
-                //       ),
-                //       child: Column(
-                //         children: [
-                //           Container(
-                //             width: 50,
-                //             height: 5,
-                //             margin: EdgeInsets.only(bottom: 16),
-                //             decoration: BoxDecoration(
-                //               color: Colors.grey.shade300,
-                //               borderRadius: BorderRadius.circular(10),
-                //             ),
-                //           ),
-                //           ListView.builder(
-                //             itemCount: controller.students.length,
-                //             itemBuilder: (context, index) {
-                //               Student value = controller.students[index];
-                //               return ListTile(
-                //                 leading: ClipRRect(
-                //                   borderRadius: BorderRadius.circular(25),
-                //                   child: Base64Image(
-                //                     base64String: value.profilePicBase64,
-                //                     width: 50,
-                //                     height: 50,
-                //                     fit: BoxFit.cover,
-                //                     placeholder: CircleAvatar(
-                //                       child: Icon(Icons.person),
-                //                     ),
-                //                   ),
-                //                 ),
-                //                 title: Text(value.firstName!),
-                //                 trailing: Radio(
-                //                   value: true,
-                //                   groupValue: _isSelected,
-                //                   activeColor: Color(0xFFFF8D2A),
-                //                   onChanged: (value) {
-                //                     setState(() {
-                //                       _isSelected = value!;
-                //                     });
-                //                     Navigator.pop(context);
-                //                   },
-                //                 ),
-                //               );
-                //             },
-                //           ),
-                //         ],
-                //       ),
-                //     );
-                //   },
-                // );
                 showModalBottomSheet(
                   context: context,
                   backgroundColor: Colors.transparent,
@@ -734,6 +468,8 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                         'Selected student: ${student.firstName} ${student.lastName}',
                                       );
                                       controller.selectedStudent1 = student;
+                                      controller.getClass();
+                                      controller.getBatch();
                                     },
                                   ),
                                   onTap: () {
@@ -741,6 +477,8 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                       _selectedStudentIndex = index;
                                     });
                                     Navigator.pop(context, student);
+                                    controller.getClass();
+                                    controller.getBatch();
                                     myLog.log(
                                       'Selected student1: ${student.firstName} ${student.lastName}',
                                     );
@@ -828,8 +566,10 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
               AppbarTrailingIconbutton(
                 onTap: () async {
                   Get.toNamed(AppRoutes.settingsScreen);
-                  // controller.byGuardian();
-
+                  // controller.getClass();
+                  // controller.getBatch();
+                  // var userId = await dataBase.getUserId();
+                  // print('User ID from dashboard: $userId');
                   // var token = await dataBase.getToken();
                   // myLog.log('Token from dashboard: $token');
                 },
@@ -843,7 +583,10 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
             padding: const EdgeInsets.only(left: 16),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: AppbarSubtitleOne(text: "Quick Access"),
+              child: AppbarSubtitleOne(
+                onTap: () => controller.byGuardian(),
+                text: "Quick Access",
+              ),
             ),
           ),
           Padding(

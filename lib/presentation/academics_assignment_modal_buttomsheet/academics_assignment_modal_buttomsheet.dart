@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
@@ -10,6 +11,9 @@ import 'controller/academics_assignment_modal_controller.dart';
 AcademicsAssignmentStatusController controller1 = Get.put(
   AcademicsAssignmentStatusController(),
 );
+
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
 class AcademicsAssignmentModalBottomsheet extends StatefulWidget {
   AcademicsAssignmentModalBottomsheet(this.controller, {Key? key})
@@ -82,22 +86,22 @@ class _AcademicsAssignmentModalBottomsheetState
             height: 90,
             child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
-              itemCount: type.length,
+              itemCount: dashboardExtendedViewController.classDataList.length,
               itemBuilder: (context, index) {
-                var text = type[index];
+                var text = dashboardExtendedViewController.classDataList[index];
                 return GestureDetector(
                   onTap: () {
                     selectedType.clear();
-                    selectedType.add(text);
+                    selectedType.add(text.name!);
 
                     setState(() {});
                   },
                   child:
-                      selectedType.contains(text)
+                      selectedType.contains(text.name!)
                           ? SizedBox(
                             width: double.infinity,
                             child: CustomElevatedButtonSheet(
-                              text: text,
+                              text: text.name!,
                               rightIcon: Icon(Icons.check),
                               //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
                             ),
@@ -105,7 +109,7 @@ class _AcademicsAssignmentModalBottomsheetState
                           : Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: Text(
-                              text,
+                              text.name!,
                               style: CustomTextStyles.bodyMediumOnPrimary,
                             ),
                           ),

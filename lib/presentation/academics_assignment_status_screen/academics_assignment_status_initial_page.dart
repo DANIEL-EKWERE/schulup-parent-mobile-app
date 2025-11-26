@@ -197,11 +197,14 @@ import 'package:schulupparent/presentation/academics_assignment_modal_one_bottom
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/academics_assignment_modal_two_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/controller/academics_assignment_modal_two_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/lesson_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/listline_item_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_cbt.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
 import 'package:schulupparent/presentation/academics_cbt_test_one_modal_bottomsheet/academics_cbt_test_modal_one_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
+import 'package:schulupparent/presentation/signin_screen/shimmer_widget.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -209,6 +212,9 @@ import '../../widgets/app_bar/appbar_trailing_iconbutton.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import 'controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget.dart';
+
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
 class AcademicsAssignmentStatusInitialPage extends StatefulWidget {
   AcademicsAssignmentStatusInitialPage({Key? key}) : super(key: key);
@@ -610,12 +616,16 @@ class _AcademicsAssignmentStatusInitialPageState
                             },
                             child: Row(
                               children: [
-                                Obx(() {
-                                  return Text(
-                                    controller.classType.value,
-                                    style: theme.textTheme.labelLarge,
-                                  );
-                                }),
+                                // Obx(() {
+                                //   return
+                                Text(
+                                  dashboardExtendedViewController
+                                      .classDataList
+                                      .first
+                                      .name!,
+                                  style: theme.textTheme.labelLarge,
+                                ),
+                                //}),
                                 CustomImageView(
                                   imagePath: ImageConstant.imgIconsTinyDown,
                                   height: 16.h,
@@ -762,33 +772,48 @@ class _AcademicsAssignmentStatusInitialPageState
         children: [
           //ListlineItemLessonWidget
           // Add your lesson content here
-          ListView.builder(
-            itemCount:
-                controller
-                    .academicsFourModelObj
-                    .value
-                    .listlineItemListLesson
-                    .value
-                    .length,
-            itemBuilder: (context, index) {
-              ListlineItemModel listlineItemModelObj =
-                  controller
-                      .academicsFourModelObj
-                      .value
-                      .listlineItemListLesson
-                      .value[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: GestureDetector(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.academicsLessonLessonDetailsScreen);
-                  },
-                  child: ListlineItemLessonWidget(listlineItemModelObj),
-                ),
-              );
-            },
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+          Obx(
+            () =>
+                controller.isLoading.value
+                    ? SizedBox(
+                      height: 900.h,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: 5,
+                        //isLoading ? 5 : newsItems.length,
+                        separatorBuilder:
+                            (context, index) => SizedBox(height: 12.h),
+                        itemBuilder: (context, index) {
+                          // if (isLoading) {
+                          return ListlineShimmerWidget();
+                          // }
+                          // return ListlineItemWidget(newsItems[index]);
+                        },
+                      ),
+                    )
+                    : ListView.builder(
+                      itemCount: controller.lessonList.length,
+                      itemBuilder: (context, index) {
+                        LessonData listlineItemModelObj =
+                            controller.lessonList[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(
+                                AppRoutes.academicsLessonLessonDetailsScreen,
+                                arguments: {'lessonData': listlineItemModelObj},
+                              );
+                            },
+                            child: ListlineItemLessonWidget(
+                              listlineItemModelObj,
+                            ),
+                          ),
+                        );
+                      },
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                    ),
           ),
         ],
       ),

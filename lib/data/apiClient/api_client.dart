@@ -625,8 +625,8 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-  Future<http.Response> byGuardian() async {
-    final url = Uri.parse('$baseUrl/students/by-guardian/88460');
+  Future<http.Response> byGuardian(String userId) async {
+    final url = Uri.parse('$baseUrl/students/by-guardian/$userId');
     var token = await dataBase.getToken();
     _logRequest('GET', url);
     final response = await http.get(
@@ -640,6 +640,63 @@ class ApiClient extends GetConnect {
     _logResponse(response);
     return response;
   }
+
+
+  Future<http.Response> allLessons(String classId, String termId) async {
+    final url = Uri.parse('$baseUrl/lessons?classId=$classId&termId=$termId&page=1&pageSize=10');
+    //10291
+    //2
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+// get student batch
+  Future<http.Response> getBatch(String studentId) async {
+    final url = Uri.parse('$baseUrl/students/$studentId/batches');
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+
+// get student class
+  Future<http.Response> getClass(String studentId) async {
+    final url = Uri.parse('$baseUrl/students/$studentId/classes');
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+  
 
   // academics performance
   Future<http.Response> academicsPerformance(String studentId) async {

@@ -95,9 +95,8 @@ class SettingsScreen extends GetWidget<SettingsController> {
                           children: [
                             Text(
                               'Sign Out',
-                              style: CustomTextStyles.labelMediumRed500.copyWith(
-                                fontSize: 12,
-                              ),
+                              style: CustomTextStyles.labelMediumRed500
+                                  .copyWith(fontSize: 12),
                             ),
                             SizedBox(width: 3),
                             Icon(Icons.logout, color: Colors.red),
@@ -307,6 +306,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(Get.context!);
   }
 }

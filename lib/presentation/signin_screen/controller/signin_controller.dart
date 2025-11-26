@@ -11,11 +11,11 @@ import 'dart:developer' as myLog;
 
 class SigninController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
-  
+
   TextEditingController passwordController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController schoolCodeController = TextEditingController();
-
+  Rx<String> errorMessage = ''.obs;
   Future<void> firstLogin() async {
     OverlayLoadingProgress.start(
       context: Get.context!,
@@ -48,14 +48,16 @@ class SigninController extends GetxController {
         usernameController.clear();
         passwordController.clear();
         schoolCodeController.clear();
-        Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
+        Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen);
         OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
+        myLog.log(name: 'User ID', userId);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
         OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
+        errorMessage.value = message;
         Get.snackbar(
           'Error',
           message,
@@ -94,6 +96,4 @@ class SigninController extends GetxController {
       OverlayLoadingProgress.stop();
     }
   }
-
-
 }

@@ -1,5 +1,8 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart' as html;
+import 'package:intl/intl.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/lesson_model.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -13,78 +16,93 @@ class AcademicsLessonLessonDetailsScreen
 
   @override
   Widget build(BuildContext context) {
+    LessonData lessonData = Get.arguments['lessonData'];
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       appBar: _buildAppbar(),
       body: SafeArea(
         top: false,
-        child: Container(
-          width: double.maxFinite,
-          padding: EdgeInsets.only(left: 24.h, top: 18.h, right: 24.h),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SizedBox(
-                width: double.maxFinite,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "msg_processes_of_soil".tr,
-                      style: CustomTextStyles.titleMediumOnPrimary,
-                    ),
-                    SizedBox(height: 20.h),
-                    SizedBox(
-                      width: double.maxFinite,
-                      child: Divider(
-                        color: appTheme.gray400.withValues(alpha: 0.5),
+        child: SingleChildScrollView(
+          child: Container(
+            width: double.maxFinite,
+            padding: EdgeInsets.only(left: 24.h, top: 18.h, right: 24.h),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  width: double.maxFinite,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        lessonData.title ?? '',
+                        style: CustomTextStyles.titleMediumOnPrimary,
                       ),
-                    ),
-                    SizedBox(height: 20.h),
-                    SizedBox(
-                      width: double.maxFinite,
-                      child: _buildRowpostedon(
-                        postedonOne: "lbl_subject".tr,
-                        nov52025One: "msg_agricultural_science3".tr,
+                      SizedBox(height: 20.h),
+                      SizedBox(
+                        width: double.maxFinite,
+                        child: Divider(
+                          color: appTheme.gray400.withValues(alpha: 0.5),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 8.h),
-                    SizedBox(
-                      width: double.maxFinite,
-                      child: _buildRowpostedon(
-                        postedonOne: "lbl_posted_on".tr,
-                        nov52025One: "lbl_nov_5_2025".tr,
+                      SizedBox(height: 20.h),
+                      SizedBox(
+                        width: double.maxFinite,
+                        child: _buildRowpostedon(
+                          postedonOne: lessonData.subjectMasterName ?? '',
+                          nov52025One: formatDate(lessonData.lastUpdated ?? ''),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20.h),
-                    SizedBox(
-                      width: double.maxFinite,
-                      child: Divider(
-                        color: appTheme.gray400.withValues(alpha: 0.5),
+                      SizedBox(height: 8.h),
+                      SizedBox(
+                        width: double.maxFinite,
+                        child: _buildRowpostedon(
+                          postedonOne: "lbl_posted_on".tr,
+                          nov52025One: "lbl_nov_5_2025".tr,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20.h),
-                    Text(
-                      "lbl_meaning_of_soil".tr,
-                      style: CustomTextStyles.bodyMediumOnPrimary,
-                    ),
-                    SizedBox(height: 6.h),
-                    Text(
-                      "msg_soil_is_the_uppermost".tr,
-                      maxLines: 8,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall!.copyWith(height: 1.50),
-                    ),
-                    SizedBox(height: 18.h),
-                    _buildStackf3a3680dfa(),
-                  ],
+                      SizedBox(height: 20.h),
+                      SizedBox(
+                        width: double.maxFinite,
+                        child: Divider(
+                          color: appTheme.gray400.withValues(alpha: 0.5),
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      Text(
+                        "Lesson Content",
+                        style: CustomTextStyles.bodyMediumOnPrimary,
+                      ),
+                      SizedBox(height: 6.h),
+
+                      // Text(
+                      //   "msg_soil_is_the_uppermost".tr,
+                      //   maxLines: 8,
+                      //   overflow: TextOverflow.ellipsis,
+                      //   style: theme.textTheme.bodySmall!.copyWith(height: 1.50),
+                      // ),
+                      html.Html(data: lessonData.lessonContent ?? ''),
+                      SizedBox(height: 18.h),
+                      //_buildStackf3a3680dfa(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  String formatDate(String dateString) {
+    // Parse the ISO 8601 date string
+    DateTime dateTime = DateTime.parse(dateString);
+
+    // Format it to "Monday, Nov. 3, 2025"
+    String formatted = DateFormat('EEEE, MMM. d, yyyy').format(dateTime);
+
+    return formatted;
   }
 
   /// Section Widget
@@ -186,6 +204,7 @@ class AcademicsLessonLessonDetailsScreen
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    //  Get.back();
+    Navigator.pop(Get.context!);
   }
 }

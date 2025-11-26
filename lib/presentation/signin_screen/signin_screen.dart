@@ -60,9 +60,49 @@ class _SigninScreenState extends State<SigninScreen> {
                       width: 100,
                     ),
                     SizedBox(height: 30),
-                    Text(
-                      'Please sign into your account',
-                      style: CustomTextStyles.titleSmallWhiteA700,
+                    // Text(
+                    //   'Please sign into your account',
+                    //   style: CustomTextStyles.titleSmallWhiteA700,
+                    // ),
+                    //SizedBox(height: 30),
+                    Obx(
+                      () =>
+                          controller.errorMessage.value != ''
+                              ? Row(
+                                spacing: 10,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(8.h),
+                                    height: 40.h,
+                                    width: 40.h,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Color(0xffFFBC71),
+                                        width: 1,
+                                      ),
+                                      color: appTheme.red500.withOpacity(0.1),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: CustomImageView(
+                                      imagePath:
+                                          'assets/images/img_icons_small_caution.png',
+                                      height: 16.h,
+                                      width: 16.h,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  Text(
+                                    controller.errorMessage.value,
+                                    style: CustomTextStyles.titleSmallWhiteA700,
+                                  ),
+                                ],
+                              )
+                              : Text(
+                                'Please sign into your account',
+                                style: CustomTextStyles.titleSmallWhiteA700,
+                              ),
                     ),
                     SizedBox(height: 30),
                     CustomTextFormField(
