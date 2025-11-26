@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
@@ -31,13 +32,15 @@ class DashboardExtendedViewController extends GetxController {
   void onInit() {
     super.onInit();
     byGuardian();
-    getBatch(); 
-    getClass(); 
+    Timer(Duration(seconds: 3), () {
+      getBatch();
+      getClass();
+    });
   }
 
   Future<void> byGuardian() async {
-    getBatch(); 
-    getClass(); 
+    // getBatch(); 
+    // getClass(); 
     // OverlayLoadingProgress.start(
     //   context: Get.context!,
     //   circularProgressColor: Color(0XFFFF8C42),

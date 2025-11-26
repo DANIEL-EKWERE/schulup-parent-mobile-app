@@ -5,10 +5,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
+import 'package:schulupparent/presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_class_page/models/class_overview_model.dart';
 import '../../../core/app_export.dart';
 import '../models/reports_ward_progress_class_model.dart';
 
+
+// List<String> type = ["lbl_first".tr, "lbl_second".tr, "lbl_third".tr];
+//   List<String> selectedType = [controller1.termType.value];
 /// A controller class for the ReportsWardProgressClassPage.
 ///
 /// This class manages the state of the ReportsWardProgressClassPage, including the
@@ -32,13 +37,20 @@ class ReportsWardProgressClassController extends GetxController {
 
   Rx<ReportsWardProgressClassModel> reportsWardProgressClassModelObj;
 
+DashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<DashboardExtendedViewController>();
+
   @override
   void onInit() {
     super.onInit();
     academicPerformance();
     classOverview();
+    selectedBatch.value = dashboardExtendedViewController
+        .batchDataList.first.name!;
   }
 
+Rx<String> selectedBatch = "".obs;
+Rx<int> selectedBatchId = 0.obs;
   Rx<bool> isLoading = false.obs;
 
   List<AcademicsPerformance>? selectedPerformance = [];
@@ -58,6 +70,9 @@ class ReportsWardProgressClassController extends GetxController {
     frame427321475Controller.dispose();
   }
 
+  // DashboardExtendedViewController dashboardExtendedViewController =
+  //     Get.find<DashboardExtendedViewController>();
+
   @override
   void onReady() {
     super.onReady();
@@ -72,7 +87,11 @@ class ReportsWardProgressClassController extends GetxController {
     // );
     isLoading.value = true;
     try {
-      final response = await _apiService.academicsPerformance('43411');
+      var studentID =
+          dashboardExtendedViewController.selectedStudent1!.studentID;
+      final response = await _apiService.academicsPerformance(
+        studentID.toString(),
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
         ReportsWardProgressClassModel reportsWardProgressClassModel =
@@ -138,7 +157,10 @@ class ReportsWardProgressClassController extends GetxController {
     // );
     isLoading.value = true;
     try {
-      final response = await _apiService.classOverview("43411", "50");
+      var studentID =
+          dashboardExtendedViewController.selectedStudent1!.studentID;
+          var batchID = dashboardExtendedViewController.batchDataList.first.batchID;
+      final response = await _apiService.classOverview(studentID.toString(), batchID.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
         ClassOverview classOverviewModel = subjectPerformanceFromJson(
@@ -146,6 +168,7 @@ class ReportsWardProgressClassController extends GetxController {
         );
         selectedSubjectPerformance = classOverviewModel.data;
         //var responseData = jsonDecode(response.body);
+        //selectedBatch.value = selectedSubjectPerformance.first.;
 
         // OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);

@@ -119,7 +119,7 @@ class _AcademicsAssignmentModalOneBottomsheetState
                 return GestureDetector(
                   onTap: () {
                     selectedType.clear();
-                    
+
                     selectedType.add(text);
 
                     setState(() {});

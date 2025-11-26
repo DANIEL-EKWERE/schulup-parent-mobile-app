@@ -625,8 +625,46 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+// get Students linked to a guardian
   Future<http.Response> byGuardian(String userId) async {
     final url = Uri.parse('$baseUrl/students/by-guardian/$userId');
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+
+// get Student's subjects
+  Future<http.Response> getSubjects(String studentID) async {
+    final url = Uri.parse('$baseUrl/students/$studentID/subjects');
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+// get Student's subjects progress
+  Future<http.Response> getSubjectProgress(String studentID, String subjectID) async {
+    final url = Uri.parse('$baseUrl/students/$studentID/analytics-subject-progress?subjectMasterId=$subjectID');
     var token = await dataBase.getToken();
     _logRequest('GET', url);
     final response = await http.get(

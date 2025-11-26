@@ -154,9 +154,11 @@ class ReportsWardProgressClassPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "msg_showing_averages2".tr,
-                    style: CustomTextStyles.bodySmallWhiteA700,
+                  Obx(
+                    () => Text(
+                      controller.selectedBatch.value,
+                      style: CustomTextStyles.bodySmallWhiteA700,
+                    ),
                   ),
                 ],
               ),

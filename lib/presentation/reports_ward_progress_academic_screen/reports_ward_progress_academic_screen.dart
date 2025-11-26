@@ -182,6 +182,7 @@ class ReportsWardProgressAcademicScreen
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    // Get.back();
+    Navigator.of(Get.context!).pop(); //
   }
 }

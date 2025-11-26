@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_subject_page/models/subject_progress_model.dart';
 import '../../../core/app_export.dart';
 import '../../../widgets/custom_text_form_field.dart';
 import '../controller/reports_ward_progress_subject_controller.dart';
@@ -8,7 +9,7 @@ import '../models/listline_item_model.dart';
 class ListlineItemWidget extends StatelessWidget {
   ListlineItemWidget(this.listlineItemModelObj, {Key? key}) : super(key: key);
 
-  ListlineItemModel listlineItemModelObj;
+  SubjectProgressData listlineItemModelObj;
 
   var controller = Get.find<ReportsWardProgressSubjectController>();
 
@@ -27,12 +28,14 @@ class ListlineItemWidget extends StatelessWidget {
                 VerticalDivider(width: 5.h, thickness: 5.h),
                 Padding(
                   padding: EdgeInsets.only(left: 10.h),
-                  child: Obx(
-                    () => Text(
-                      listlineItemModelObj.primary5a!.value,
-                      style: theme.textTheme.bodyMedium,
-                    ),
+                  child:
+                  //  Obx(
+                  //   () =>
+                  Text(
+                    listlineItemModelObj.className!,
+                    style: theme.textTheme.bodyMedium,
                   ),
+                  // ),
                 ),
               ],
             ),
@@ -43,12 +46,10 @@ class ListlineItemWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Obx(
-                  () => Text(
-                    listlineItemModelObj.wardscore!.value,
-                    style: CustomTextStyles.bodySmallGray700,
-                  ),
-                ),
+                // Obx(
+                //   () =>
+                Text("Ward Score", style: CustomTextStyles.bodySmallGray700),
+                // ),
                 _buildFrame427321469(),
               ],
             ),
@@ -59,11 +60,12 @@ class ListlineItemWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Obx(
-                  () => Text(
-                    listlineItemModelObj.classaverage!.value,
-                    style: CustomTextStyles.bodySmallGray700,
-                  ),
+                // Obx(
+                //   () =>
+                Text(
+                  "Class Average",
+                  style: CustomTextStyles.bodySmallGray700,
+                  // ),
                 ),
                 _buildFrame427321470(),
               ],
@@ -78,13 +80,22 @@ class ListlineItemWidget extends StatelessWidget {
   Widget _buildFrame427321469() {
     return Padding(
       padding: EdgeInsets.only(right: 20.h),
-      child: CustomTextFormField(
+      child: Container(
         width: 222.h,
-        controller: listlineItemModelObj.frame427321469Controller,
-        hintText: "lbl_91".tr,
-        contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
-        borderDecoration: TextFormFieldStyleHelper.fillGreen,
-        fillColor: appTheme.green500,
+        height: 30.h,
+        decoration: BoxDecoration(
+          color: appTheme.green500,
+          borderRadius: BorderRadius.circular(12.h),
+        ),
+        // controller: listlineItemModelObj.studentScore.toString(),
+        child: Text(
+          listlineItemModelObj.studentScore.toString(),
+          style: theme.textTheme.bodySmall,
+        ),
+        // hintText: "lbl_91".tr,
+        // contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
+        // borderDecoration: TextFormFieldStyleHelper.fillGreen,
+        // fillColor: appTheme.green500,
       ),
     );
   }
@@ -93,11 +104,22 @@ class ListlineItemWidget extends StatelessWidget {
   Widget _buildFrame427321470() {
     return Padding(
       padding: EdgeInsets.only(right: 30.h),
-      child: CustomTextFormField(
-        width: 212.h,
-        controller: listlineItemModelObj.frame427321470Controller,
-        hintText: "lbl_87".tr,
-        contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
+      child: Container(
+        width: 222.h,
+        height: 30.h,
+        decoration: BoxDecoration(
+          color: appTheme.green500,
+          borderRadius: BorderRadius.circular(12.h),
+        ),
+        // controller: listlineItemModelObj.studentScore.toString(),
+        child: Text(
+          listlineItemModelObj.classAverage.toString(),
+          style: theme.textTheme.bodySmall,
+        ),
+        // hintText: "lbl_91".tr,
+        // contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
+        // borderDecoration: TextFormFieldStyleHelper.fillGreen,
+        // fillColor: appTheme.green500,
       ),
     );
   }

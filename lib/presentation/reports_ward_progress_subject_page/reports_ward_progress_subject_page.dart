@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/controller/reports_ward_progress_subject_one_controller.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/reports_ward_progress_subject_one_bottomsheet.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_subject_page/models/subject_progress_model.dart';
 import '../../core/app_export.dart';
 import 'controller/reports_ward_progress_subject_controller.dart';
 import 'models/listline_item_model.dart';
@@ -75,7 +76,7 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "msg_showing_averages".tr,
+                    "Showing averages for ${controller.selectedSubject?.name ?? ''}",
                     style: CustomTextStyles.bodySmallWhiteA700,
                   ),
                 ],
@@ -91,7 +92,12 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
   Widget _buildListline() {
     return Expanded(
       child: Obx(
-        () => ListView.separated(
+        () => controller.isLoading.value
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            :
+         ListView.separated(
           padding: EdgeInsets.zero,
           physics: BouncingScrollPhysics(),
           shrinkWrap: true,
@@ -100,18 +106,12 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
           },
           itemCount:
               controller
-                  .reportsWardProgressSubjectModelObj
-                  .value
-                  .listlineItemList
-                  .value
+                  .subjectProgressDataList
                   .length,
           itemBuilder: (context, index) {
-            ListlineItemModel model =
+            SubjectProgressData model =
                 controller
-                    .reportsWardProgressSubjectModelObj
-                    .value
-                    .listlineItemList
-                    .value[index];
+                    .subjectProgressDataList[index];
             return ListlineItemWidget(model);
           },
         ),
