@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/controller/reports_ward_progress_subject_one_controller.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/reports_ward_progress_subject_one_bottomsheet.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_page/models/subject_progress_model.dart';
+import 'package:schulupparent/presentation/reports_ward_progress_subject_page/widgets/shimmer_widget.dart';
 import '../../core/app_export.dart';
 import 'controller/reports_ward_progress_subject_controller.dart';
 import 'models/listline_item_model.dart';
@@ -92,29 +93,33 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
   Widget _buildListline() {
     return Expanded(
       child: Obx(
-        () => controller.isLoading.value
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            :
-         ListView.separated(
-          padding: EdgeInsets.zero,
-          physics: BouncingScrollPhysics(),
-          shrinkWrap: true,
-          separatorBuilder: (context, index) {
-            return SizedBox(height: 10.h);
-          },
-          itemCount:
-              controller
-                  .subjectProgressDataList
-                  .length,
-          itemBuilder: (context, index) {
-            SubjectProgressData model =
-                controller
-                    .subjectProgressDataList[index];
-            return ListlineItemWidget(model);
-          },
-        ),
+        () =>
+            controller.isLoading.value
+                ? ListView.separated(
+                  itemCount: 5,
+                  //isLoading ? 5 : newsItems.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                  itemBuilder: (context, index) {
+                    // if (isLoading) {
+                    return SubjectProgressShimmerWidget();
+                    // }
+                    // return ListlineItemWidget(newsItems[index]);
+                  },
+                )
+                : ListView.separated(
+                  padding: EdgeInsets.zero,
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 10.h);
+                  },
+                  itemCount: controller.subjectProgressDataList.length,
+                  itemBuilder: (context, index) {
+                    SubjectProgressData model =
+                        controller.subjectProgressDataList[index];
+                    return ListlineItemWidget(model);
+                  },
+                ),
       ),
     );
   }

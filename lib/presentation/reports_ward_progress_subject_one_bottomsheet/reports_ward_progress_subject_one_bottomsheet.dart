@@ -6,10 +6,12 @@ import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/reports_ward_progress_subject_one_controller.dart';
+
 ReportsWardProgressSubjectController controllerx =
     Get.find<ReportsWardProgressSubjectController>();
 DashboardExtendedViewController dashboardExtendedViewController =
     Get.find<DashboardExtendedViewController>();
+
 // ignore_for_file: must_be_immutable
 class ReportsWardProgressSubjectOneBottomsheet extends StatefulWidget {
   ReportsWardProgressSubjectOneBottomsheet(this.controller, {Key? key})
@@ -18,13 +20,13 @@ class ReportsWardProgressSubjectOneBottomsheet extends StatefulWidget {
   ReportsWardProgressSubjectOneController controller;
 
   @override
-  State<ReportsWardProgressSubjectOneBottomsheet> createState() => _ReportsWardProgressSubjectOneBottomsheetState();
+  State<ReportsWardProgressSubjectOneBottomsheet> createState() =>
+      _ReportsWardProgressSubjectOneBottomsheetState();
 }
 
-class _ReportsWardProgressSubjectOneBottomsheetState extends State<ReportsWardProgressSubjectOneBottomsheet> {
-List<String> selectedType = [
-    controllerx.selectedSubject?.name ?? '',
-  ];
+class _ReportsWardProgressSubjectOneBottomsheetState
+    extends State<ReportsWardProgressSubjectOneBottomsheet> {
+  List<String> selectedType = [controllerx.selectedSubject?.name ?? ''];
 
   List<int> selectedTypeID = [
     controllerx.selectedSubject?.subjectMasterID ?? 0,
@@ -89,8 +91,8 @@ List<String> selectedType = [
                 return GestureDetector(
                   onTap: () {
                     selectedType.clear();
-selectedTypeID.clear();
-                    
+                    selectedTypeID.clear();
+
                     selectedTypeID.add(subject.subjectMasterID ?? 0);
                     selectedType.add(subject.name ?? '');
 
@@ -125,7 +127,8 @@ selectedTypeID.clear();
               //   orElse: () => controllerx.subjectDataList.first,
               // );
               controllerx.selectedSubjectId = selectedTypeID.first.toString();
-              print(  controllerx.selectedSubjectId);
+              print(controllerx.selectedSubjectId);
+              controllerx.getSubjectProgress();
               Navigator.pop(context);
             },
             height: 64.h,
