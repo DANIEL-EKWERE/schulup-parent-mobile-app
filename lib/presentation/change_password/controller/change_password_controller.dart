@@ -14,9 +14,7 @@ class ChangePasswordController extends GetxController {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
-  
-  
+  ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   Future<void> changePassword() async {
     OverlayLoadingProgress.start(
@@ -29,7 +27,7 @@ class ChangePasswordController extends GetxController {
         "NewPassword": newPasswordController.text,
         "ConfirmPassword": confirmPasswordController.text,
       };
-      
+
       print(body);
       final response = await _apiService.resetPassword(body);
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -48,11 +46,18 @@ class ChangePasswordController extends GetxController {
         currentPasswordController.clear();
         newPasswordController.clear();
         confirmPasswordController.clear();
-        Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
+        Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen);
         OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
+        Get.snackbar(
+          'Success',
+          'Password change Successfully',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
         OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
