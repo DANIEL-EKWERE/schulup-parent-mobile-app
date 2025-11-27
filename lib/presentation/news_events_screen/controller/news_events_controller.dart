@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/news_events_screen/models/events_model.dart';
 import '../../../core/app_export.dart';
@@ -27,6 +28,14 @@ class NewsEventsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getEvents();
+  }
+
+
+        RefreshController refreshController = RefreshController(
+    initialRefresh: false,
+  );
+  void onrefresh() {
     getEvents();
   }
 

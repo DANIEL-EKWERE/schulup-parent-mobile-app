@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/presentation/news_all_variants_page/models/news_model.dart';
 import 'package:schulupparent/presentation/news_modal_jump_to_a_date_bottomsheet/controller/news_modal_jump_to_a_date_controller.dart';
 import 'package:schulupparent/presentation/news_modal_jump_to_a_date_bottomsheet/news_modal_jump_to_a_date_bottomsheet.dart';
@@ -21,6 +22,12 @@ class NewsAllVariantsPage extends StatelessWidget {
   NewsAllVariantsController controller = Get.put(
     NewsAllVariantsController(NewsAllVariantsModel().obs),
   );
+  RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
+  void _onrefresh() {
+    controller.getNews();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +36,17 @@ class NewsAllVariantsPage extends StatelessWidget {
       appBar: _buildAppbar(),
       body: SafeArea(
         top: false,
-        child: Container(
-          width: double.maxFinite,
-          padding: EdgeInsets.only(left: 10.h, top: 14.h, right: 10.h),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [_buildNewsall()],
+        child: SmartRefresher(
+          controller: _refreshController,
+          onRefresh: _onrefresh,
+          enablePullDown: true,
+          child: Container(
+            width: double.maxFinite,
+            padding: EdgeInsets.only(left: 10.h, top: 14.h, right: 10.h),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [_buildNewsall()],
+            ),
           ),
         ),
       ),

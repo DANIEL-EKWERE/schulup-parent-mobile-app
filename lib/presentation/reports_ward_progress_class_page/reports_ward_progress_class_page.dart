@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_class_one_bottomsheet/controller/reports_ward_progress_class_one_controller.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_class_one_bottomsheet/reports_ward_progress_class_one_bottomsheet.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_class_page/models/class_overview_model.dart';
@@ -28,97 +29,101 @@ class ReportsWardProgressClassPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: SizedBox(
-        width: double.maxFinite,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              width: double.maxFinite,
-              child:
-              // Column(
-              //   mainAxisSize: MainAxisSize.max,
-              //   children: [
-              //     SizedBox(
-              //       width: double.maxFinite,
-              //       child: Column(
-              //         children: [
-              //           s
-              //           //selectedSubjectPerformance
-              //           // _buildColumnshowing(),
-              //           // SizedBox(height: 16.h),
-              //           // _buildColumnlinefour(),
-              //           // SizedBox(height: 10.h),
-              //           // _buildColumnlineone(),
-              //           // SizedBox(height: 10.h),
-              //           // _buildColumnlinetwo(),
-              //           // SizedBox(height: 10.h),
-              //           // _buildColumnline(),
-              //         ],
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              Obx(
-                () =>
-                    controller1.isLoading.value
-                        ? Center(
-                          child: CircularProgressIndicator(
-                            color: Color(0XFFFF8C42),
-                          ),
-                        )
-                        : Expanded(
-                          // height: 400.h,
-                          child: Column(
-                            children: [
-                              _buildColumnshowing(),
-                              ListView.builder(
-                                shrinkWrap: true,
-                                itemCount:
-                                    controller1
-                                        .selectedSubjectPerformance!
-                                        .length,
-                                itemBuilder: (context, index) {
-                                  SubjectData model =
+      body: SmartRefresher(
+        controller: controller.refreshController,
+        onRefresh: controller.onrefresh,
+        child: SizedBox(
+          width: double.maxFinite,
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: SizedBox(
+                width: double.maxFinite,
+                child:
+                // Column(
+                //   mainAxisSize: MainAxisSize.max,
+                //   children: [
+                //     SizedBox(
+                //       width: double.maxFinite,
+                //       child: Column(
+                //         children: [
+                //           s
+                //           //selectedSubjectPerformance
+                //           // _buildColumnshowing(),
+                //           // SizedBox(height: 16.h),
+                //           // _buildColumnlinefour(),
+                //           // SizedBox(height: 10.h),
+                //           // _buildColumnlineone(),
+                //           // SizedBox(height: 10.h),
+                //           // _buildColumnlinetwo(),
+                //           // SizedBox(height: 10.h),
+                //           // _buildColumnline(),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                Obx(
+                  () =>
+                      controller1.isLoading.value
+                          ? Center(
+                            child: CircularProgressIndicator(
+                              color: Color(0XFFFF8C42),
+                            ),
+                          )
+                          : Expanded(
+                            // height: 400.h,
+                            child: Column(
+                              children: [
+                                _buildColumnshowing(),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount:
                                       controller1
-                                          .selectedSubjectPerformance![index];
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0,
-                                    ),
-                                    child: _buildColumnlinefour(model),
-                                  );
-                                  // Text(
-                                  //   model.text!,
-                                  //   style: CustomTextStyles.bodyMediumGray900,
-                                  // );
-                                },
-                                // Column(
-                                //   spacing: 4,
-                                //   children: [
-                                //     _buildRowprimary5a(),
-                                //     _buildRowprimary4a(),
-                                //     _buildRowprimary4a1(),
-                                //     _buildRowprimary4a2(),
-                                //     _buildRowprimary3a(),
-                                //     _buildRowprimary3a1(),
-                                //     _buildRowprimary3a2(),
-                                //     _buildRowprimary2a(),
-                                //     _buildRowprimary2a1(),
-                                //     _buildRowprimary2a2(),
-                                //     _buildRowprimary1a(),
-                                //     _buildRowprimary1a1(),
-                                //     _buildRowprimarya2(),
-                                //     _buildRownursery3a(),
-                                //     _buildRownursery3a1(),
-                                //     _buildRownursery3a2(),
-                                //     _buildRownursery2a(),
-                                //     _buildRownursery2a1(),
-                                //     _buildRownursery2a2(),
-                                //   ],
-                              ),
-                            ],
+                                          .selectedSubjectPerformance!
+                                          .length,
+                                  itemBuilder: (context, index) {
+                                    SubjectData model =
+                                        controller1
+                                            .selectedSubjectPerformance![index];
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0,
+                                      ),
+                                      child: _buildColumnlinefour(model),
+                                    );
+                                    // Text(
+                                    //   model.text!,
+                                    //   style: CustomTextStyles.bodyMediumGray900,
+                                    // );
+                                  },
+                                  // Column(
+                                  //   spacing: 4,
+                                  //   children: [
+                                  //     _buildRowprimary5a(),
+                                  //     _buildRowprimary4a(),
+                                  //     _buildRowprimary4a1(),
+                                  //     _buildRowprimary4a2(),
+                                  //     _buildRowprimary3a(),
+                                  //     _buildRowprimary3a1(),
+                                  //     _buildRowprimary3a2(),
+                                  //     _buildRowprimary2a(),
+                                  //     _buildRowprimary2a1(),
+                                  //     _buildRowprimary2a2(),
+                                  //     _buildRowprimary1a(),
+                                  //     _buildRowprimary1a1(),
+                                  //     _buildRowprimarya2(),
+                                  //     _buildRownursery3a(),
+                                  //     _buildRownursery3a1(),
+                                  //     _buildRownursery3a2(),
+                                  //     _buildRownursery2a(),
+                                  //     _buildRownursery2a1(),
+                                  //     _buildRownursery2a2(),
+                                  //   ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                ),
               ),
             ),
           ),

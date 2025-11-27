@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/presentation/reports_report_card_all_variants_page/models/report_model.dart';
 import 'package:schulupparent/presentation/reports_report_card_all_variants_page/widgets/listline_item_widget_weekly.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/controller/reports_report_card_modal_controller.dart';
@@ -33,23 +34,27 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       body: SafeArea(
-        child: Container(
-          width: double.maxFinite,
-          decoration: AppDecoration.grayC13,
-          child: Column(
-            children: [
-              _buildColumnreportcar(),
-              Expanded(
-                child: Container(
-                  width: double.maxFinite,
-                  padding: EdgeInsets.symmetric(horizontal: 24.h),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [SizedBox(height: 14.h), _buildListline()],
+        child: SmartRefresher(
+          controller: controller.refreshController,
+          onRefresh: controller.onrefresh,
+          child: Container(
+            width: double.maxFinite,
+            decoration: AppDecoration.grayC13,
+            child: Column(
+              children: [
+                _buildColumnreportcar(),
+                Expanded(
+                  child: Container(
+                    width: double.maxFinite,
+                    padding: EdgeInsets.symmetric(horizontal: 24.h),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [SizedBox(height: 14.h), _buildListline()],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/controller/reports_ward_progress_subject_one_controller.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_one_bottomsheet/reports_ward_progress_subject_one_bottomsheet.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_page/models/subject_progress_model.dart';
@@ -24,25 +25,30 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
-      body: SafeArea(
-        child: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            // mainAxisSize: MainAxisSize.max,
-            children: [
-              //  SizedBox(height: 10.h),
-              Expanded(
-                child: SizedBox(
-                  width: double.maxFinite,
-                  child: Column(
-                    spacing: 16.h,
-                    mainAxisSize: MainAxisSize.max,
-                    //  mainAxisSize: MainAxisSize.max,
-                    children: [_buildColumnshowing(), _buildListline()],
+      body: SmartRefresher(
+        
+        controller: controller.refreshController,
+        onRefresh: controller.onrefresh,
+        child: SafeArea(
+          child: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              // mainAxisSize: MainAxisSize.max,
+              children: [
+                //  SizedBox(height: 10.h),
+                Expanded(
+                  child: SizedBox(
+                    width: double.maxFinite,
+                    child: Column(
+                      spacing: 16.h,
+                      mainAxisSize: MainAxisSize.max,
+                      //  mainAxisSize: MainAxisSize.max,
+                      children: [_buildColumnshowing(), _buildListline()],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

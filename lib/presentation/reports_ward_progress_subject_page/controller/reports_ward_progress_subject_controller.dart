@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/presentation/reports_ward_progress_subject_page/models/subject_model.dart';
@@ -39,6 +40,15 @@ Timer(Duration(seconds: 3), (){
   getSubjectProgress();
 });
 }
+
+        RefreshController refreshController = RefreshController(
+    initialRefresh: false,
+  );
+  void onrefresh() {
+    getSubjects();
+     getSubjectProgress();
+  }
+
 
   Future<void> getSubjects() async {
     isLoading.value = true;

@@ -31,17 +31,13 @@ class ChangePasswordController extends GetxController {
       print(body);
       final response = await _apiService.resetPassword(body);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        //TODO: Handle successful password change
-        // var responseData = jsonDecode(response.body);
-        // var token = responseData['data']['token'];
-        // var userId = responseData['data']['userID'];
-        // var userName = responseData['data']['displayName'];
-        // myLog.log('Token: $token');
-        // dataBase.saveToken(token);
-        // dataBase.saveUserId(userId);
-        // dataBase.saveUserName(userName);
-        // dataBase.saveTransactionPin(passwordController.text);
-        // dataBase.saveBrmCode(schoolCodeController.text);
+        Get.snackbar(
+          'Success',
+          'Password changed Successfully',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
         print(response.body);
         currentPasswordController.clear();
         newPasswordController.clear();
@@ -52,10 +48,10 @@ class ChangePasswordController extends GetxController {
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
         Get.snackbar(
-          'Success',
-          'Password change Successfully',
+          'Error!!!',
+          'Password change Field. Try again.',
           snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.red,
           colorText: Colors.white,
         );
         OverlayLoadingProgress.stop();

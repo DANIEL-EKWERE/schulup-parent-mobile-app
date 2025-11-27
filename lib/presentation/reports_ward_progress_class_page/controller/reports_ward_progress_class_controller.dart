@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
@@ -43,6 +44,16 @@ DashboardExtendedViewController dashboardExtendedViewController =
   @override
   void onInit() {
     super.onInit();
+    academicPerformance();
+    classOverview();
+    selectedBatch.value = dashboardExtendedViewController
+        .batchDataList.first.name!;
+  }
+
+          RefreshController refreshController = RefreshController(
+    initialRefresh: false,
+  );
+  void onrefresh() {
     academicPerformance();
     classOverview();
     selectedBatch.value = dashboardExtendedViewController

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/core/app_export.dart';
 import 'package:schulupparent/core/utils/image_constant.dart';
 import 'package:schulupparent/core/utils/storage.dart';
@@ -36,6 +37,13 @@ class DashboardExtendedView extends StatefulWidget {
 }
 
 class _DashboardExtendedViewState extends State<DashboardExtendedView> {
+  RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
+  void _onrefresh() {
+    controller.byGuardian();
+  }
+
   int _currentIndex = 0;
   bool _isSelected = false;
   int _selectedStudentIndex = 0;
@@ -43,297 +51,306 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        width: double.maxFinite,
-        decoration: AppDecoration.grayC13,
-        child: Obx(
-          () =>
-              controller.isLoading.value
-                  ? Center(
-                    child: CircularProgressIndicator(color: Color(0XFFFF8C42)),
-                  )
-                  : Column(
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      _buildColumnacademics(),
-                      Expanded(
-                        child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 20),
-                            Padding(
-                              padding: EdgeInsetsGeometry.only(left: 10.h),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Latest Updates',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+      child: SmartRefresher(
+        controller: _refreshController,
+        onRefresh: _onrefresh,
+        child: Container(
+          width: double.maxFinite,
+          decoration: AppDecoration.grayC13,
+          child: Obx(
+            () =>
+                controller.isLoading.value
+                    ? Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0XFFFF8C42),
+                      ),
+                    )
+                    : Column(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _buildColumnacademics(),
+                        Expanded(
+                          child: Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 20),
+                              Padding(
+                                padding: EdgeInsetsGeometry.only(left: 10.h),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Latest Updates',
+                                    style: CustomTextStyles.bodyMediumOnPrimary,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(height: 10),
-                            SizedBox(
-                              height: 109,
-                              width: double.infinity,
-                              child: CarouselSlider(
-                                items: [
-                                  Container(
-                                    margin: EdgeInsets.all(4),
-                                    padding: EdgeInsets.only(left: 10),
-                                    decoration: AppDecoration.primaryC11
-                                        .copyWith(
-                                          borderRadius:
-                                              BorderRadiusStyle.roundedBorder8,
-                                          border: Border.all(
-                                            color: Color(
-                                              0xffFF8D2A,
-                                            ).withValues(alpha: .1),
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey[100]!,
-                                              offset: Offset(0.2, 0.2),
-                                              blurRadius: 20,
-                                              spreadRadius: 2,
+                              SizedBox(height: 10),
+                              SizedBox(
+                                height: 109,
+                                width: double.infinity,
+                                child: CarouselSlider(
+                                  items: [
+                                    Container(
+                                      margin: EdgeInsets.all(4),
+                                      padding: EdgeInsets.only(left: 10),
+                                      decoration: AppDecoration.primaryC11
+                                          .copyWith(
+                                            borderRadius:
+                                                BorderRadiusStyle
+                                                    .roundedBorder8,
+                                            border: Border.all(
+                                              color: Color(
+                                                0xffFF8D2A,
+                                              ).withValues(alpha: .1),
                                             ),
-                                          ], //BoxShadow(offset: Offset(1, 1),)
-                                        ),
-                                    height: 150,
-                                    width: double.infinity,
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          height: 40,
-                                          width: 40,
-                                          padding: EdgeInsets.all(8.h),
-                                          decoration: BoxDecoration(
-                                            color: Color(0xffFFEED4),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey[100]!,
+                                                offset: Offset(0.2, 0.2),
+                                                blurRadius: 20,
+                                                spreadRadius: 2,
+                                              ),
+                                            ], //BoxShadow(offset: Offset(1, 1),)
+                                          ),
+                                      height: 150,
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            height: 40,
+                                            width: 40,
+                                            padding: EdgeInsets.all(8.h),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xffFFEED4),
 
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: CustomImageView(
-                                            imagePath:
-                                                'assets/images/img_icons_small_news.png',
-                                          ),
-                                        ),
-                                        Spacer(),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 20,
-                                            bottom: 20,
-                                            left: 4,
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                width: 250,
-                                                child: Text(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 2,
-                                                  'GraceLand PTA Meeting Scheduled for November 15',
-                                                  style: theme
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .copyWith(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                ),
-                                              ),
-                                              Spacer(),
-                                              Row(
-                                                children: [
-                                                  CustomImageView(
-                                                    imagePath:
-                                                        ImageConstant
-                                                            .imgIconsTinyAttachment,
-                                                  ),
-                                                  Text(
-                                                    '1 attachment • Monday, Nov. 3, 2025',
-                                                    style:
-                                                        CustomTextStyles
-                                                            .bodySmallGray700_1,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: double.maxFinite,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 20.h,
-                                      vertical: 17.h,
-                                    ),
-                                    decoration: AppDecoration.primaryC11.copyWith(
-                                      borderRadius:
-                                          BorderRadiusStyle.circleBorder12,
-                                      // borderRadius: BorderRadiusStyle.roundedBorder8,
-                                      border: Border.all(
-                                        color: Color(
-                                          0xffFF8D2A,
-                                        ).withValues(alpha: .1),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey[100]!,
-                                          offset: Offset(0.2, 0.2),
-                                          blurRadius: 20,
-                                          spreadRadius: 2,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      spacing: 10,
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          spacing: 10,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.all(5.h),
-                                              width: 40.h,
-                                              height: 40.h,
-                                              decoration: BoxDecoration(
-                                                color: Color(0xffFFEED4),
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: CustomImageView(
-                                                imagePath:
-                                                    ImageConstant
-                                                        .imgAssignments,
-                                                height: 20.h,
-                                                width: 20.h,
-                                                fit: BoxFit.contain,
-                                              ),
+                                              shape: BoxShape.circle,
                                             ),
-
-                                            Column(
-                                              spacing: 15.h,
+                                            child: CustomImageView(
+                                              imagePath:
+                                                  'assets/images/img_icons_small_news.png',
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 20,
+                                              bottom: 20,
+                                              left: 4,
+                                            ),
+                                            child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 0.h,
-                                                  ),
-                                                  child:
-                                                  // Obx(
-                                                  //   () =>
-                                                  Text(
-                                                    'Word Problems',
-                                                    style: CustomTextStyles
-                                                        .titleMediumOnPrimary
+                                                SizedBox(
+                                                  width: 250,
+                                                  child: Text(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    'GraceLand PTA Meeting Scheduled for November 15',
+                                                    style: theme
+                                                        .textTheme
+                                                        .bodyMedium!
                                                         .copyWith(
-                                                          fontSize: 14.h,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w700,
                                                         ),
-                                                    //theme.textTheme.bodyLarge,
                                                   ),
-                                                  //   ),
                                                 ),
-                                                // Obx(
-                                                //   () =>
-                                                Text(
-                                                  'Mathematics • Posted on Nov. 3, 2025',
-                                                  style:
-                                                      CustomTextStyles
-                                                          .bodySmallSecondaryContainer10,
-                                                ),
-                                                //  ),
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                    horizontal: 6.h,
-                                                    vertical: 2.h,
-                                                  ),
-                                                  decoration: AppDecoration
-                                                      .grayC7
-                                                      .copyWith(
-                                                        borderRadius:
-                                                            BorderRadiusStyle
-                                                                .roundedBorder8,
-                                                      ),
-                                                  child:
-                                                  // Obx(
-                                                  //   () =>
-                                                  Text(
-                                                    'Due on Nov. 5, 2025',
-                                                    textAlign: TextAlign.center,
-                                                    style:
-                                                        CustomTextStyles
-                                                            .bodySmallWhiteA700,
-                                                  ),
-                                                  // ),
+                                                Spacer(),
+                                                Row(
+                                                  children: [
+                                                    CustomImageView(
+                                                      imagePath:
+                                                          ImageConstant
+                                                              .imgIconsTinyAttachment,
+                                                    ),
+                                                    Text(
+                                                      '1 attachment • Monday, Nov. 3, 2025',
+                                                      style:
+                                                          CustomTextStyles
+                                                              .bodySmallGray700_1,
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
-                                          ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: double.maxFinite,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 20.h,
+                                        vertical: 17.h,
+                                      ),
+                                      decoration: AppDecoration.primaryC11.copyWith(
+                                        borderRadius:
+                                            BorderRadiusStyle.circleBorder12,
+                                        // borderRadius: BorderRadiusStyle.roundedBorder8,
+                                        border: Border.all(
+                                          color: Color(
+                                            0xffFF8D2A,
+                                          ).withValues(alpha: .1),
                                         ),
-                                      ],
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey[100]!,
+                                            offset: Offset(0.2, 0.2),
+                                            blurRadius: 20,
+                                            spreadRadius: 2,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Row(
+                                        spacing: 10,
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            spacing: 10,
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.all(5.h),
+                                                width: 40.h,
+                                                height: 40.h,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xffFFEED4),
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: CustomImageView(
+                                                  imagePath:
+                                                      ImageConstant
+                                                          .imgAssignments,
+                                                  height: 20.h,
+                                                  width: 20.h,
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
+
+                                              Column(
+                                                spacing: 15.h,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                      left: 0.h,
+                                                    ),
+                                                    child:
+                                                    // Obx(
+                                                    //   () =>
+                                                    Text(
+                                                      'Word Problems',
+                                                      style: CustomTextStyles
+                                                          .titleMediumOnPrimary
+                                                          .copyWith(
+                                                            fontSize: 14.h,
+                                                          ),
+                                                      //theme.textTheme.bodyLarge,
+                                                    ),
+                                                    //   ),
+                                                  ),
+                                                  // Obx(
+                                                  //   () =>
+                                                  Text(
+                                                    'Mathematics • Posted on Nov. 3, 2025',
+                                                    style:
+                                                        CustomTextStyles
+                                                            .bodySmallSecondaryContainer10,
+                                                  ),
+                                                  //  ),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                          horizontal: 6.h,
+                                                          vertical: 2.h,
+                                                        ),
+                                                    decoration: AppDecoration
+                                                        .grayC7
+                                                        .copyWith(
+                                                          borderRadius:
+                                                              BorderRadiusStyle
+                                                                  .roundedBorder8,
+                                                        ),
+                                                    child:
+                                                    // Obx(
+                                                    //   () =>
+                                                    Text(
+                                                      'Due on Nov. 5, 2025',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          CustomTextStyles
+                                                              .bodySmallWhiteA700,
+                                                    ),
+                                                    // ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Color(0xffFFEED4),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Color(0xffFFEED4),
+                                      ),
+                                      height: 180,
+                                      width: double.infinity,
                                     ),
-                                    height: 180,
-                                    width: double.infinity,
+                                  ],
+                                  options: CarouselOptions(
+                                    onPageChanged: (index, reason) {
+                                      setState(() {
+                                        _currentIndex = index;
+                                      });
+                                    },
+                                    enlargeCenterPage: true,
+                                    aspectRatio: 16 / 5,
+                                    height: 150,
+                                    viewportFraction: 0.9,
+                                    autoPlay: true,
                                   ),
-                                ],
-                                options: CarouselOptions(
-                                  onPageChanged: (index, reason) {
-                                    setState(() {
-                                      _currentIndex = index;
-                                    });
-                                  },
-                                  enlargeCenterPage: true,
-                                  aspectRatio: 16 / 5,
-                                  height: 150,
-                                  viewportFraction: 0.9,
-                                  autoPlay: true,
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 8),
+                              const SizedBox(height: 8),
 
-                            AnimatedSmoothIndicator(
-                              activeIndex: _currentIndex,
-                              count: 3,
-                              effect: ExpandingDotsEffect(
-                                dotHeight: 8,
-                                dotWidth: 8,
-                                activeDotColor: Color(0xffEF5A07),
-                                dotColor: Colors.grey.shade300,
+                              AnimatedSmoothIndicator(
+                                activeIndex: _currentIndex,
+                                count: 3,
+                                effect: ExpandingDotsEffect(
+                                  dotHeight: 8,
+                                  dotWidth: 8,
+                                  activeDotColor: Color(0xffEF5A07),
+                                  dotColor: Colors.grey.shade300,
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 10),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                // vertical: 5,
+                              SizedBox(height: 10),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  // vertical: 5,
+                                ),
+                                child: AcademicProgressChart(),
                               ),
-                              child: AcademicProgressChart(),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+          ),
         ),
       ),
     );

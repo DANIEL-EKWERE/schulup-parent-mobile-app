@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/presentation/reports_report_card_all_variants_page/models/report_model.dart';
@@ -21,6 +22,14 @@ class ReportsReportCardAllVariantsController extends GetxController {
   Rx<String> termType = 'First Term'.obs;
   Rx<String> dayType = 'Daily'.obs;
   Rx<int> selectedTermId = 1.obs;
+
+  RefreshController refreshController = RefreshController(
+    initialRefresh: false,
+  );
+  void onrefresh() {
+   getWeeklyReports();
+  }
+
 
   DashboardExtendedViewController dashboardExtendedViewController =
       Get.find<DashboardExtendedViewController>();

@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/presentation/news_events_screen/models/events_model.dart';
 import 'package:schulupparent/presentation/news_events_screen/widgets/event_widget.dart';
 import 'package:schulupparent/presentation/signin_screen/shimmer_widget.dart';
@@ -22,13 +23,17 @@ class NewsEventsScreen extends GetWidget<NewsEventsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
-      body: SafeArea(
-        top: false,
-        child: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            spacing: 14,
-            children: [_buildColumnarrowleft(), _buildListline()],
+      body: SmartRefresher(
+        controller: controller.refreshController,
+        onRefresh: controller.onrefresh,
+        child: SafeArea(
+          top: false,
+          child: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              spacing: 14,
+              children: [_buildColumnarrowleft(), _buildListline()],
+            ),
           ),
         ),
       ),
