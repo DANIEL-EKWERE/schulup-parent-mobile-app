@@ -166,11 +166,25 @@ class _ReportsReportCardModalBottomsheetState
               print(controller1.termType);
               setState(() {
                 controller1.termType.value = selectedType.first;
+                controller1.selectedTermId.value =
+                    selectedType.first.contains('First')
+                        ? 1
+                        : selectedType.first.contains('Second')
+                        ? 2
+                        : 3;
               });
               print(
                 'this is now the controller value ${controller1.termType.value}',
               );
-              Get.back();
+              // Get.back();
+              Navigator.pop(context);
+              if (controller1.dayType == 'Daily') {
+                controller1.getTermlyReports();
+              } else if (controller1.dayType == 'Weekly') {
+                controller1.getWeeklyReports();
+              } else {
+                controller1.getTermlyReports();
+              }
             },
             height: 64.h,
             text: "lbl_confirm".tr,

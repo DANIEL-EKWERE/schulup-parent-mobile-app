@@ -1,11 +1,13 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/reports_report_card_all_variants_page/models/report_model.dart';
 import 'package:schulupparent/presentation/reports_report_card_all_variants_page/widgets/listline_item_widget_weekly.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/controller/reports_report_card_modal_controller.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_one_bottomsheet/controller/reports_report_card_modal_one_controller.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_one_bottomsheet/reports_report_card_modal_one_bottomsheet.dart';
+import 'package:schulupparent/presentation/signin_screen/shimmer_widget.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -239,7 +241,19 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
     return Expanded(
       child: Obx(
         () =>
-            controller.dayType.value == 'Daily'
+            controller.isLoading.value
+                ? ListView.separated(
+                  itemCount: 5,
+                  //isLoading ? 5 : newsItems.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                  itemBuilder: (context, index) {
+                    // if (isLoading) {
+                    return ListlineShimmerWidget();
+                    // }
+                    // return ListlineItemWidget(newsItems[index]);
+                  },
+                )
+                : controller.dayType.value == 'Daily'
                 ? ListView.separated(
                   padding: EdgeInsets.zero,
                   physics: BouncingScrollPhysics(),
@@ -264,6 +278,20 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
                     return ListlineItemWidget(model);
                   },
                 )
+                : controller.dayType.value == 'Weekly'
+                ? ListView.separated(
+                  padding: EdgeInsets.zero,
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 10.h);
+                  },
+                  itemCount: controller.reportDataList.length,
+                  itemBuilder: (context, index) {
+                    ReportData model = controller.reportDataList[index];
+                    return ListlineItemWeeklyWidget(model);
+                  },
+                )
                 : ListView.separated(
                   padding: EdgeInsets.zero,
                   physics: BouncingScrollPhysics(),
@@ -271,20 +299,9 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
                   separatorBuilder: (context, index) {
                     return SizedBox(height: 10.h);
                   },
-                  itemCount:
-                      controller
-                          .reportsReportCardAllVariantsModelObj
-                          .value
-                          .listlineItemWeeklyList
-                          .value
-                          .length,
+                  itemCount: controller.reportDataList.length,
                   itemBuilder: (context, index) {
-                    ListlineItemModel model =
-                        controller
-                            .reportsReportCardAllVariantsModelObj
-                            .value
-                            .listlineItemWeeklyList
-                            .value[index];
+                    ReportData model = controller.reportDataList[index];
                     return ListlineItemWeeklyWidget(model);
                   },
                 ),

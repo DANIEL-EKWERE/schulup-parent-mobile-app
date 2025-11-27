@@ -1,11 +1,15 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/presentation/reports_report_card_all_variants_page/controller/reports_report_card_all_variants_controller.dart';
 import 'package:schulupparent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/reports_report_card_modal_one_controller.dart';
+
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
 // ignore_for_file: must_be_immutable
 class ReportsReportCardModalOneBottomsheet extends StatefulWidget {
@@ -39,10 +43,13 @@ class _ReportsReportCardModalOneBottomsheetState
         children: [
           SizedBox(
             width: 52.h,
-            child: Divider(
-              radius: BorderRadius.circular(12),
-              thickness: 5,
-              color: appTheme.gray20001,
+            child: SizedBox(
+              width: 52.h,
+              child: Divider(
+                thickness: 5,
+                radius: BorderRadius.circular(12),
+                color: appTheme.gray20001,
+              ),
             ),
           ),
           SizedBox(height: 18.h),
@@ -100,10 +107,9 @@ class _ReportsReportCardModalOneBottomsheetState
                 var text = type[index];
                 return GestureDetector(
                   onTap: () {
-                   
                     selectedType.clear();
                     selectedType.add(text);
-                   
+
                     setState(() {});
                   },
                   child:
@@ -130,12 +136,20 @@ class _ReportsReportCardModalOneBottomsheetState
           SizedBox(height: 30.h),
           CustomElevatedButton(
             onPressed: () {
-       
               setState(() {
                 controller1.dayType.value = selectedType.first;
               });
-              
-              Get.back();
+
+              if (controller1.dayType.value.contains('Daily')) {
+                controller1.getDailyReports();
+              } else if (controller1.dayType.value.contains('Weekly')) {
+                controller1.getWeeklyReports();
+              } else if (controller1.dayType.value.contains('Termly')) {
+                controller1.getTermlyReports();
+              }
+
+              // Get.back();
+              Navigator.pop(context);
             },
             height: 64.h,
             text: "lbl_confirm".tr,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:schulupparent/presentation/reports_report_card_all_variants_one_screen/controller/reports_report_card_all_variants_one_controller.dart';
 import 'package:schulupparent/presentation/reports_report_card_all_variants_page/controller/reports_report_card_all_variants_controller.dart';
+import 'package:schulupparent/presentation/reports_report_card_all_variants_page/models/report_model.dart';
 import '../../../core/app_export.dart';
 import '../models/listline_item_model.dart';
 
@@ -9,7 +11,7 @@ class ListlineItemWeeklyWidget extends StatefulWidget {
   ListlineItemWeeklyWidget(this.listlineItemModelObj, {Key? key})
     : super(key: key);
 
-  ListlineItemModel listlineItemModelObj;
+  ReportData listlineItemModelObj;
 
   @override
   State<ListlineItemWeeklyWidget> createState() =>
@@ -58,10 +60,17 @@ class _ListlineItemWeeklyWidgetState extends State<ListlineItemWeeklyWidget> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 10.h),
-                  child: Obx(
-                    () => Text(
-                      widget.listlineItemModelObj.duration!.value,
+                  child:
+                  //  Obx(
+                  //   () =>
+                  SizedBox(
+                    width: 180.h,
+                    child: Text(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      widget.listlineItemModelObj.className ?? '',
                       style: theme.textTheme.bodyMedium,
+                      //  ),
                     ),
                   ),
                 ),
@@ -88,14 +97,25 @@ class _ListlineItemWeeklyWidgetState extends State<ListlineItemWeeklyWidget> {
               ],
             ),
           ),
-          Obx(
-            () => Text(
-              widget.listlineItemModelObj.tuesdayseptthir!.value,
-              style: CustomTextStyles.bodySmallSecondaryContainer10,
-            ),
+          // Obx(
+          //   () =>
+          Text(
+            widget.listlineItemModelObj.reportCardTypeName ?? '',
+            style: CustomTextStyles.bodySmallSecondaryContainer10,
           ),
+          //),
         ],
       ),
     );
+  }
+
+  String formatDate(String dateString) {
+    // Parse the ISO 8601 date string
+    DateTime dateTime = DateTime.parse(dateString);
+
+    // Format it to "Monday, Nov. 3, 2025"
+    String formatted = DateFormat('EEEE, MMM. d, yyyy').format(dateTime);
+
+    return formatted;
   }
 }

@@ -212,11 +212,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             ? SizedBox.shrink()
             : ElevatedButton(
               onPressed: () {
-print(controller.currentPasswordController.text);
-print(controller.newPasswordController.text);
-print(controller.confirmPasswordController.text);
-//controller.changePassword();
-
+                // print(controller.currentPasswordController.text);
+                // print(controller.newPasswordController.text);
+                // print(controller.confirmPasswordController.text);
+                controller.changePassword();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xff20C6E6),

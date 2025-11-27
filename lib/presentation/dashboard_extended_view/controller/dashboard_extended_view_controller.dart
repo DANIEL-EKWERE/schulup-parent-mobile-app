@@ -9,6 +9,7 @@ import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/core/utils/storage.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/academics_assignment_status_initial_model.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/models/academics_session_model.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/models/student_batch_model.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/models/student_class_model.dart';
 
@@ -21,21 +22,23 @@ class DashboardExtendedViewController extends GetxController {
   AcademicsAssignmentStatusInitialModel? academicsAssignmentStatusInitialModel;
   Student? selectedStudent;
   Student? selectedStudent1;
+  AcademicSessionData? selectedAcademicSessionData;
 
   StudentClass studentClassObj = StudentClass();
   StudentBatch studentBatchObj = StudentBatch();
+  AcademicSession academicSessionObj = AcademicSession();
 
   List<ClassData> classDataList = [];
   List<BatchData> batchDataList = [];
+  List<AcademicSessionData> academicSessionDataList = [];
 
   @override
   void onInit() {
     super.onInit();
     byGuardian();
-    Timer(Duration(seconds: 3), () {
-      getBatch();
-      getClass();
-    });
+    // Timer(Duration(seconds: 3), () {
+      
+    // });
   }
 
   Future<void> byGuardian() async {
@@ -69,6 +72,86 @@ class DashboardExtendedViewController extends GetxController {
         }
         //   OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
+        getBatch();
+      getClass();
+      getAcademicSessions();
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isLoading.value = false;
+        //Get.offAllNamed(AppRoutes.signTwoScreen);
+        // OverlayLoadingProgress.stop();
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
+        Get.snackbar(
+          'Error',
+          'Login failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      isLoading.value = false;
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      //OverlayLoadingProgress.stop();
+      myLog.log('Error: ${e.toString()}');
+    } finally {
+      isLoading.value = false;
+      //OverlayLoadingProgress.stop();
+    }
+  }
+
+
+
+
+  Future<void> getAcademicSessions() async {
+    // getBatch(); 
+    // getClass(); 
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    // );
+    isLoading.value = true;
+    try {
+      var userId = await dataBase.getUserId();
+      myLog.log('User ID: $userId');
+      final response = await _apiService.getAcademicSessions(selectedStudent1!.studentID.toString());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // // OverlayLoadingProgress.stop();
+        // // myLog.log('Login successful: ${response.body}');
+        // // schoolCodeInputController.dispose();
+        // // usernameInputController.dispose();
+        // // passwordInputController.dispose();
+        // var responseData = jsonDecode(response.body);
+        // myLog.log(responseData.toString());
+        isLoading.value = false;
+        academicSessionObj = academicSessionFromJson(response.body);
+        academicSessionDataList = academicSessionObj.data ?? [];
+        selectedAcademicSessionData = academicSessionDataList.isNotEmpty ? academicSessionDataList.first : null;
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //Get.offAllNamed(AppRoutes.signTwoScreen);

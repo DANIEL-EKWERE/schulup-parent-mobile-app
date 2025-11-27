@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart' as html;
 import 'package:intl/intl.dart';
 import 'package:schulupparent/presentation/news_all_variants_page/models/news_model.dart';
 import '../../core/app_export.dart';
@@ -52,13 +53,13 @@ class _NewsNewsContentContainsScreenState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomImageView(
-                          imagePath: ImageConstant.imgImage63192x342,
-                          height: 192.h,
-                          width: double.maxFinite,
-                          radius: BorderRadius.circular(4.h),
-                        ),
-                        SizedBox(height: 20.h),
+                        // CustomImageView(
+                        //   imagePath: ImageConstant.imgImage63192x342,
+                        //   height: 192.h,
+                        //   width: double.maxFinite,
+                        //   radius: BorderRadius.circular(4.h),
+                        // ),
+                        // SizedBox(height: 20.h),
                         Text(
                           newsItem.title,
                           maxLines: 2,
@@ -73,14 +74,15 @@ class _NewsNewsContentContainsScreenState
                           style: CustomTextStyles.bodySmall10,
                         ),
                         SizedBox(height: 14.h),
-                        Text(
-                          removeHtmlTags(newsItem.content),
-                          maxLines: 10,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.bodySmall!.copyWith(
-                            height: 1.50,
-                          ),
-                        ),
+                        // Text(
+                        //   removeHtmlTags(newsItem.content),
+                        //   maxLines: 10,
+                        //   overflow: TextOverflow.ellipsis,
+                        //   style: theme.textTheme.bodySmall!.copyWith(
+                        //     height: 1.50,
+                        //   ),
+                        // ),
+                        html.Html(data: newsItem.content),
                       ],
                     ),
                   ),
