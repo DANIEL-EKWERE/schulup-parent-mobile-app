@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_model.dart';
 import '../../../core/app_export.dart';
 import '../controller/academics_assignment_status_controller.dart';
 import '../models/listline_item_model.dart';
@@ -7,7 +8,7 @@ import '../models/listline_item_model.dart';
 class ListlineItemWidget extends StatelessWidget {
   ListlineItemWidget(this.listlineItemModelObj, {Key? key}) : super(key: key);
 
-  ListlineItemModel listlineItemModelObj;
+  AssignmentData listlineItemModelObj;
 
   var controller = Get.find<AcademicsAssignmentStatusController>();
 
@@ -50,18 +51,21 @@ class ListlineItemWidget extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 0.h),
-                    child: Obx(
-                      () => Text(
-                        listlineItemModelObj.heading!.value,
-                        style: theme.textTheme.bodyMedium,
-                      ),
+                    child:
+                    //  Obx(
+                    //   () =>
+                    Text(
+                      listlineItemModelObj.title!,
+                      style: theme.textTheme.bodyMedium,
                     ),
+                    //  ),
                   ),
-                  Obx(
-                    () => Text(
-                      listlineItemModelObj.subheading!.value,
-                      style: CustomTextStyles.bodySmallSecondaryContainer10,
-                    ),
+                  // Obx(
+                  //   () =>
+                  Text(
+                    "${listlineItemModelObj.subjectName!} • ${listlineItemModelObj.formattedDatePosted}",
+                    style: CustomTextStyles.bodySmallSecondaryContainer10,
+                    // ),
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(
@@ -71,12 +75,14 @@ class ListlineItemWidget extends StatelessWidget {
                     decoration: AppDecoration.grayC7.copyWith(
                       borderRadius: BorderRadiusStyle.roundedBorder8,
                     ),
-                    child: Obx(
-                      () => Text(
-                        listlineItemModelObj.dueOnNov52025!.value,
-                        textAlign: TextAlign.center,
-                        style: CustomTextStyles.bodySmallWhiteA700,
-                      ),
+                    child:
+                    //  Obx(
+                    //   () =>
+                    Text(
+                      listlineItemModelObj.formattedDueDateWithDay,
+                      textAlign: TextAlign.center,
+                      style: CustomTextStyles.bodySmallWhiteA700,
+                      //  ),
                     ),
                   ),
                 ],

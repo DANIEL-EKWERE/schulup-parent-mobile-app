@@ -1,7 +1,10 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart' as html;
+import 'package:intl/intl.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_four_bottomsheet/academics_assignment_modal_four_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_four_bottomsheet/controller/academics_assignment_modal_four_controller.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_details.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -16,6 +19,7 @@ class AcademicsAssignmentAnswerScreen
 
   @override
   Widget build(BuildContext context) {
+    AssignmentDetails model = Get.arguments['model'];
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       appBar: _buildAppbar(),
@@ -32,7 +36,7 @@ class AcademicsAssignmentAnswerScreen
                   padding: EdgeInsets.only(left: 24.h, top: 20.h, right: 24.h),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
-                    children: [_buildColumntherespir()],
+                    children: [_buildColumntherespir(model)],
                   ),
                 ),
               ),
@@ -70,14 +74,14 @@ class AcademicsAssignmentAnswerScreen
   }
 
   /// Section Widget
-  Widget _buildColumntherespir() {
+  Widget _buildColumntherespir(AssignmentDetails model) {
     return SizedBox(
       width: double.maxFinite,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "msg_the_respiratory".tr,
+            model.data!.title!,
             style: CustomTextStyles.titleMediumOnPrimary,
           ),
           SizedBox(height: 18.h),
@@ -90,7 +94,7 @@ class AcademicsAssignmentAnswerScreen
             width: double.maxFinite,
             child: _buildRowpostedon(
               postedonOne: "lbl_subject".tr,
-              oct272025One: "lbl_basic_science".tr,
+              oct272025One: model.data!.subjectName!,
             ),
           ),
           SizedBox(height: 8.h),
@@ -98,17 +102,22 @@ class AcademicsAssignmentAnswerScreen
             width: double.maxFinite,
             child: _buildRowpostedon(
               postedonOne: "lbl_posted_on".tr,
-              oct272025One: "lbl_oct_27_2025".tr,
+              oct272025One: formatDate(model.data!.datePosted!),
             ),
           ),
           SizedBox(height: 10.h),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 6.h, vertical: 2.h),
-            decoration: AppDecoration.errorC1.copyWith(
-              borderRadius: BorderRadiusStyle.roundedBorder8,
-            ),
+            decoration:
+                (DateTime.now().isAfter(DateTime.parse(model.data!.dueDate!)))
+                    ? AppDecoration.errorC1.copyWith(
+                      borderRadius: BorderRadiusStyle.roundedBorder8,
+                    )
+                    : AppDecoration.green.copyWith(
+                      borderRadius: BorderRadiusStyle.roundedBorder8,
+                    ),
             child: Text(
-              "msg_due_on_oct_30".tr,
+              formatDate1(model.data!.dueDate!),
               textAlign: TextAlign.center,
               style: CustomTextStyles.bodySmallWhiteA700,
             ),
@@ -121,15 +130,35 @@ class AcademicsAssignmentAnswerScreen
           SizedBox(height: 20.h),
           Text("lbl_question".tr, style: CustomTextStyles.bodyMediumOnPrimary),
           SizedBox(height: 6.h),
-          Text(
-            "msg_in_your_own_words".tr,
-            maxLines: 10,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.bodySmall!.copyWith(height: 1.50),
+          // Text(
+          //   "msg_in_your_own_words".tr,
+          //   maxLines: 10,
+          //   overflow: TextOverflow.ellipsis,
+          //   style: theme.textTheme.bodySmall!.copyWith(height: 1.50),
+          // ),
+          html.Html(
+            data: model.data!.content,
+            onLinkTap: (url, attributes, element) {
+              if (url != null) {
+                // Open the link in a browser
+                launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+              }
+            },
+            // onlyRenderTheseTags: RxSet({'<p>'}),
           ),
         ],
       ),
     );
+  }
+
+  String formatDate(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('MMM. d, yyyy').format(dateTime);
+  }
+
+  String formatDate1(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('EEEE, MMM. d, yyyy').format(dateTime);
   }
 
   /// Section Widget
@@ -250,6 +279,7 @@ class AcademicsAssignmentAnswerScreen
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(Get.context!);
   }
 }

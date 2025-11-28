@@ -1,5 +1,12 @@
 // TODO Implement this library.
+import 'dart:convert';
+import 'dart:io';
+import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
+import 'package:overlay_kit/overlay_kit.dart';
+import 'package:schulupparent/data/apiClient/api_client.dart';
+import 'package:schulupparent/presentation/attendance_all_variants_page/models/attendance_model.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../../core/app_export.dart';
 import '../models/attendance_all_variants_model.dart';
 
@@ -7,6 +14,10 @@ import '../models/attendance_all_variants_model.dart';
 ///
 /// This class manages the state of the AttendanceAllVariantsPage, including the
 /// current attendanceAllVariantsModelObj
+
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
+
 class AttendanceAllVariantsController extends GetxController {
   AttendanceAllVariantsController(this.attendanceAllVariantsModelObj);
 
@@ -38,6 +49,15 @@ class AttendanceAllVariantsController extends GetxController {
 
   Rx<AttendanceAllVariantsModel> attendanceAllVariantsModelObj;
 
+  Rx<bool> isLoading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    selectedMonth = DateTime.now().month;
+    getStudentAttendance();
+  }
+
   @override
   void onClose() {
     super.onClose();
@@ -54,5 +74,80 @@ class AttendanceAllVariantsController extends GetxController {
     timeelevenController.dispose();
     timetwelveController.dispose();
     publicholidayController.dispose();
+  }
+
+  Attendance? attendance;
+  List<AttendanceData>? attendanceData;
+
+  int? selectedMonth;
+
+  ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
+
+  Future<void> getStudentAttendance() async {
+    isLoading.value = true;
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    // );
+    try {
+      var studentID =
+          dashboardExtendedViewController.selectedStudent1!.studentID;
+      var year = DateTime.now().year;
+      myLog.log(year.toString());
+      final response = await _apiService.getStudentAttendance(
+        studentID.toString(),
+        year.toString(),
+        selectedMonth.toString(),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isLoading.value = false;
+        attendance = attendanceFromJson(response.body);
+        attendanceData = attendance!.data;
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isLoading.value = false;
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        // OverlayLoadingProgress.stop();
+        isLoading.value = false;
+        Get.snackbar(
+          'Error',
+          'Loading Attendance Failed failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      isLoading.value = false;
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      //OverlayLoadingProgress.stop();
+    } finally {
+      // OverlayLoadingProgress.stop();
+      isLoading.value = false;
+    }
   }
 }

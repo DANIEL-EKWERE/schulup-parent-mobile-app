@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_model.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_drop_down.dart';
 import 'controller/academics_assignment_status_controller.dart';
@@ -137,12 +138,7 @@ class AcademicsFourPage extends StatelessWidget {
                             .value
                             .length,
                     itemBuilder: (context, index) {
-                      ListlineItemModel model =
-                          controller
-                              .academicsFourModelObj
-                              .value
-                              .listlineItemList
-                              .value[index];
+                      AssignmentData model = controller.assignmentData![index];
                       return ListlineItemWidget(model);
                     },
                   ),

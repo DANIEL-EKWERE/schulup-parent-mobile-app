@@ -32,6 +32,9 @@ class DashboardExtendedViewController extends GetxController {
   List<BatchData> batchDataList = [];
   List<AcademicSessionData> academicSessionDataList = [];
 
+  int? selectedClassID;
+  int? selectedTerm;
+
   @override
   void onInit() {
     super.onInit();
@@ -224,7 +227,7 @@ class DashboardExtendedViewController extends GetxController {
         // passwordInputController.dispose();
           studentClassObj = studentClassFromJson(response.body);
           classDataList = studentClassObj.data ?? [];
-
+          selectedClassID = classDataList.first.classID;
         // myLog.log('Token: $responseData');
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);

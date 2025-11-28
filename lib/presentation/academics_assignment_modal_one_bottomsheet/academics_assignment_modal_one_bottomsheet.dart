@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
+import 'package:schulupparent/presentation/attendance_all_variants_page/controller/attendance_all_variants_controller.dart';
 import 'package:schulupparent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
@@ -7,9 +8,8 @@ import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_assignment_modal_one_controller.dart';
 
 // ignore_for_file: must_be_immutable
-AcademicsAssignmentStatusController controller1 = Get.put(
-  AcademicsAssignmentStatusController(),
-);
+AcademicsAssignmentStatusController controller1 =
+    Get.find<AcademicsAssignmentStatusController>();
 
 class AcademicsAssignmentModalOneBottomsheet extends StatefulWidget {
   AcademicsAssignmentModalOneBottomsheet(this.controller, {Key? key})
@@ -26,6 +26,8 @@ class _AcademicsAssignmentModalOneBottomsheetState
     extends State<AcademicsAssignmentModalOneBottomsheet> {
   List<String> type = ["lbl_first".tr, "lbl_second".tr, "lbl_third".tr];
   List<String> selectedType = [controller1.termType.value];
+
+  List<String> selectedTypeId = ['0'];
 
   @override
   Widget build(BuildContext context) {
@@ -119,8 +121,10 @@ class _AcademicsAssignmentModalOneBottomsheetState
                 return GestureDetector(
                   onTap: () {
                     selectedType.clear();
+                    selectedTypeId.clear();
 
                     selectedType.add(text);
+                    selectedTypeId.add("${index + 1}");
 
                     setState(() {});
                   },
@@ -152,12 +156,18 @@ class _AcademicsAssignmentModalOneBottomsheetState
                 controller1.termType.value = selectedType.first;
                 if (controller1.termType.value.contains('First Term')) {
                   controller1.termType.value = '1';
+                  dashboardExtendedViewController.selectedTerm = 1;
                 } else if (controller1.termType.value.contains('Second Term')) {
                   controller1.termType.value = '2';
+                  dashboardExtendedViewController.selectedTerm = 2;
                 } else if (controller1.termType.value.contains('Third Term')) {
                   controller1.termType.value = '3';
+                  dashboardExtendedViewController.selectedTerm = 3;
                 }
+
+                controller1.termTypeId.value = selectedTypeId.first;
                 controller1.allLessons();
+                controller1.getAssignment();
               });
               Navigator.pop(context);
             },

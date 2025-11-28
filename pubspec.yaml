@@ -29,6 +29,7 @@ dependencies:
   intl: ^0.20.2
   flutter_html: ^3.0.0
   pull_to_refresh_flutter3: ^2.0.2
+  url_launcher: ^6.3.2
   
 
 dev_dependencies:

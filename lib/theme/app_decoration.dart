@@ -40,6 +40,9 @@ class AppDecoration {
   static BoxDecoration get primaryC11 =>
       BoxDecoration(color: appTheme.yellow50);
 
+      static BoxDecoration get green =>
+      BoxDecoration(color: Color(0xff34C759));
+
   static BoxDecoration get onPrimary =>
       BoxDecoration(color: appTheme.black900);
   static BoxDecoration get primaryC7Main => BoxDecoration(

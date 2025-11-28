@@ -197,6 +197,7 @@ import 'package:schulupparent/presentation/academics_assignment_modal_one_bottom
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/academics_assignment_modal_two_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/controller/academics_assignment_modal_two_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/lesson_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/listline_item_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_cbt.dart';
@@ -282,6 +283,9 @@ class _AcademicsAssignmentStatusInitialPageState
             ),
             actions: [
               AppbarTrailingIconbutton(
+                onTap: () {
+                  controller.getAssignment();
+                },
                 imagePath: ImageConstant.imgIconsSmallSchularAi,
               ),
               AppbarTrailingIconbutton(
@@ -688,33 +692,45 @@ class _AcademicsAssignmentStatusInitialPageState
           //     style: theme.textTheme.titleLarge,
           //   ),
           // ),
-          ListView.builder(
-            itemCount:
-                controller
-                    .academicsFourModelObj
-                    .value
-                    .listlineItemList
-                    .value
-                    .length,
-            itemBuilder: (context, index) {
-              ListlineItemModel listlineItemModelObj =
-                  controller
-                      .academicsFourModelObj
-                      .value
-                      .listlineItemList
-                      .value[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: GestureDetector(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.academicsAssignmentAnswerScreen);
-                  },
-                  child: ListlineItemWidget(listlineItemModelObj),
-                ),
-              );
-            },
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+          Obx(
+            () =>
+                controller.isLoading.value
+                    ? SizedBox(
+                      height: 900.h,
+                      child: ListView.separated(
+                        itemCount: 5,
+                        //isLoading ? 5 : newsItems.length,
+                        separatorBuilder:
+                            (context, index) => SizedBox(height: 12.h),
+                        itemBuilder: (context, index) {
+                          // if (isLoading) {
+                          return ListlineShimmerWidget();
+                          // }
+                          // return ListlineItemWidget(newsItems[index]);
+                        },
+                      ),
+                    )
+                    : ListView.builder(
+                      itemCount: controller.assignmentData!.length,
+                      itemBuilder: (context, index) {
+                        AssignmentData listlineItemModelObj =
+                            controller.assignmentData![index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              // Get.toNamed(
+                              //   AppRoutes.academicsAssignmentAnswerScreen, arguments: listlineItemModelObj.assignmentID
+                              // );
+                              controller.getAssignmentDetail(listlineItemModelObj.assignmentID.toString());
+                            },
+                            child: ListlineItemWidget(listlineItemModelObj),
+                          ),
+                        );
+                      },
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                    ),
           ),
 
           // Example: Add assignment list or empty state

@@ -25,7 +25,7 @@ class AcademicsAssignmentModalTwoBottomsheet extends StatefulWidget {
 
 class _AcademicsAssignmentModalTwoBottomsheetState
     extends State<AcademicsAssignmentModalTwoBottomsheet> {
-  List<String> type = ["lbl_pending".tr, "lbl_submitted".tr];
+  List<String> type = ["all", "pending", "submitted"];
   List<String> selectedType = [controller1.statusType.value];
 
   @override
@@ -120,7 +120,9 @@ class _AcademicsAssignmentModalTwoBottomsheetState
           CustomElevatedButton(
             onPressed: () {
               controller1.statusType.value = selectedType.first;
+              controller1.selectedStatus.value = selectedType.first;
               Navigator.pop(context);
+              controller1.getAssignment();
             },
 
             height: 64.h,

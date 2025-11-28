@@ -33,6 +33,11 @@ class _AcademicsAssignmentModalBottomsheetState
     "lbl_primary_4".tr,
     "lbl_primary_3".tr,
   ];
+
+  List<int> selectedTypeID = [
+    dashboardExtendedViewController.selectedClassID ?? 0,
+  ];
+
   List<String> selectedType = [controller1.classType.value];
 
   @override
@@ -92,6 +97,9 @@ class _AcademicsAssignmentModalBottomsheetState
                 return GestureDetector(
                   onTap: () {
                     selectedType.clear();
+                    selectedTypeID.clear();
+
+                    selectedTypeID.add(text.classID!);
                     selectedType.add(text.name!);
 
                     setState(() {});
@@ -134,6 +142,9 @@ class _AcademicsAssignmentModalBottomsheetState
               print('object');
               setState(() {
                 controller1.classType.value = selectedType.first;
+                dashboardExtendedViewController.selectedClassID =
+                    selectedTypeID.first;
+                controller1.getAssignment();
               });
               // Get.back();
               Navigator.pop(context);

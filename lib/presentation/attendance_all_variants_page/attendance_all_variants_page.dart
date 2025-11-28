@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:schulupparent/presentation/attendance_all_variants_page/models/attendance_model.dart';
+import 'package:schulupparent/presentation/attendance_all_variants_page/widgets/attendance_shimmer_widget.dart';
 import 'package:schulupparent/presentation/attendance_filter_start_date_bottomsheet/attendance_filter_start_date_bottomsheet.dart';
 import 'package:schulupparent/presentation/attendance_filter_start_date_bottomsheet/controller/attendance_filter_start_date_controller.dart';
 import '../../core/app_export.dart';
@@ -15,8 +17,23 @@ import 'models/listdropoff_item_model.dart';
 import 'widgets/listdropoff_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
-class AttendanceAllVariantsPage extends StatelessWidget {
+class AttendanceAllVariantsPage extends StatefulWidget {
   AttendanceAllVariantsPage({Key? key}) : super(key: key);
+
+  @override
+  State<AttendanceAllVariantsPage> createState() =>
+      _AttendanceAllVariantsPageState();
+}
+
+class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
+  List<String> getMonths() {
+    final currentYear = DateTime.now().year;
+
+    return List.generate(12, (index) {
+      final date = DateTime(currentYear, index + 1, 1);
+      return DateFormat('MMMM yyyy').format(date);
+    });
+  }
 
   AttendanceAllVariantsController controller = Get.put(
     AttendanceAllVariantsController(AttendanceAllVariantsModel().obs),
@@ -38,17 +55,64 @@ class AttendanceAllVariantsPage extends StatelessWidget {
                   child: Container(
                     width: double.maxFinite,
                     padding: EdgeInsets.only(top: 14.h),
-                    child: Column(
-                      spacing: 10,
-                      children: [
-                        _buildColumnlinesix(),
-                        _buildColumnlineone(),
-                        _buildColumnlinetwo(),
-                        _buildColumnline(),
-                        _buildColumnlinefour(),
-                        _buildColumnlinefive(),
-                      ],
+                    child: Obx(
+                      () =>
+                          controller.isLoading.value
+                              ? ListView.separated(
+                                shrinkWrap: true,
+                                itemCount: 5,
+                                //isLoading ? 5 : newsItems.length,
+                                separatorBuilder:
+                                    (context, index) => SizedBox(height: 12.h),
+                                itemBuilder: (context, index) {
+                                  // if (isLoading) {
+                                  return AttendanceShimmerWidget();
+                                  // }
+                                  // return ListlineItemWidget(newsItems[index]);
+                                },
+                              )
+                              : controller.attendanceData!.isEmpty
+                              ? Center(
+                                child: Column(
+                                  spacing: 30,
+                                  children: [
+                                    SizedBox(height: 150.h),
+                                    CustomImageView(
+                                      imagePath: ImageConstant.imgObjects,
+                                    ),
+                                    Text(
+                                      'No Record for the selected date found',
+                                    ),
+                                  ],
+                                ),
+                              )
+                              : ListView.separated(
+                                shrinkWrap: true,
+                                itemCount: controller.attendanceData!.length,
+                                itemBuilder: (context, index) {
+                                  AttendanceData model =
+                                      controller.attendanceData![index];
+                                  return _buildColumnlinesix(model);
+                                },
+                                separatorBuilder: (
+                                  BuildContext context,
+                                  int index,
+                                ) {
+                                  return Container(height: 10);
+                                },
+                              ),
                     ),
+                    // Column(
+                    //   spacing: 10,
+                    //   children: [
+                    //     _buildColumnlinesix(),
+                    //     _buildColumnlineone(),
+                    //     _buildColumnlinetwo(),
+                    //     _buildColumnline(),
+                    //     _buildColumnlinefour(),
+                    //     _buildColumnlinefive(),
+                    //   ],
+                    // ),
                   ),
                 ),
               ),
@@ -95,14 +159,15 @@ class AttendanceAllVariantsPage extends StatelessWidget {
                     // return AttendanceFilterStartDateBottomsheet(
                     //   AttendanceFilterStartDateController(),
                     // );
-                    showModalBottomSheet(
-                      context: Get.context!,
-                      builder: (context) {
-                        return AttendanceFilterStartDateBottomsheet(
-                          AttendanceFilterStartDateController(),
-                        );
-                      },
-                    );
+                    controller.getStudentAttendance();
+                    // showModalBottomSheet(
+                    //   context: Get.context!,
+                    //   builder: (context) {
+                    //     return AttendanceFilterStartDateBottomsheet(
+                    //       AttendanceFilterStartDateController(),
+                    //     );
+                    //   },
+                    // );
                   },
                   imagePath: ImageConstant.imgUserWhiteA700,
                   margin: EdgeInsets.only(top: 1.h, right: 25.h, bottom: 2.h),
@@ -115,82 +180,130 @@ class AttendanceAllVariantsPage extends StatelessWidget {
             child: IntrinsicWidth(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.h,
-                      vertical: 10.h,
-                    ),
-                    decoration: AppDecoration.grayC13.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Text(
-                      "lbl_jun_2025".tr,
-                      textAlign: TextAlign.center,
-                      style: CustomTextStyles.bodySmallOnPrimary_1,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 4.h),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.h,
-                      vertical: 10.h,
-                    ),
-                    decoration: AppDecoration.grayC13.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Text(
-                      "lbl_jul_2025".tr,
-                      textAlign: TextAlign.center,
-                      style: CustomTextStyles.bodySmallOnPrimary_1,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 4.h),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.h,
-                      vertical: 8.h,
-                    ),
-                    decoration: AppDecoration.grayC13.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Text(
-                      "lbl_sept_2025".tr,
-                      textAlign: TextAlign.center,
-                      style: CustomTextStyles.bodySmallOnPrimary_1,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 4.h),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.h,
-                      vertical: 10.h,
-                    ),
-                    decoration: AppDecoration.grayC13.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Text(
-                      "lbl_oct_2025".tr,
-                      textAlign: TextAlign.center,
-                      style: CustomTextStyles.bodySmallOnPrimary_1,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 4.h),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.h,
-                      vertical: 10.h,
-                    ),
-                    decoration: AppDecoration.grayC2.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Text(
-                      "lbl_nov_2025".tr,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.labelLarge,
-                    ),
-                  ),
-                ],
+                children: List.generate(getMonths().length, (index) {
+                  var month = getMonths()[index];
+                  return
+                  // month
+                  GestureDetector(
+                    onTap: () {
+                      // print(month);
+                      // print(index);
+                      // print(selectedMonth);
+                      setState(() {
+                        controller.selectedMonth = index;
+                      });
+                      controller.getStudentAttendance();
+                    },
+                    child:
+                        controller.selectedMonth == index
+                            ? Container(
+                              margin: EdgeInsets.only(left: 5.h, right: 5.h),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 14.h,
+                                vertical: 10.h,
+                              ),
+                              decoration: AppDecoration.grayC2.copyWith(
+                                borderRadius: BorderRadiusStyle.roundedBorder18,
+                              ),
+                              child: Text(
+                                month,
+                                textAlign: TextAlign.center,
+                                style: theme.textTheme.labelLarge,
+                              ),
+                            )
+                            : Container(
+                              margin: EdgeInsets.only(left: 5.h, right: 5.h),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 14.h,
+                                vertical: 10.h,
+                              ),
+                              decoration: AppDecoration.grayC13.copyWith(
+                                borderRadius: BorderRadiusStyle.roundedBorder18,
+                              ),
+                              child: Text(
+                                month,
+                                textAlign: TextAlign.center,
+                                style: CustomTextStyles.bodySmallOnPrimary_1,
+                              ),
+                            ),
+                  );
+                }),
+                // [
+                // Container(
+                //   padding: EdgeInsets.symmetric(
+                //     horizontal: 14.h,
+                //     vertical: 10.h,
+                //   ),
+                //   decoration: AppDecoration.grayC13.copyWith(
+                //     borderRadius: BorderRadiusStyle.roundedBorder18,
+                //   ),
+                //   child: Text(
+                //     "lbl_jun_2025".tr,
+                //     textAlign: TextAlign.center,
+                //     style: CustomTextStyles.bodySmallOnPrimary_1,
+                //   ),
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(left: 4.h),
+                //   padding: EdgeInsets.symmetric(
+                //     horizontal: 14.h,
+                //     vertical: 10.h,
+                //   ),
+                //   decoration: AppDecoration.grayC13.copyWith(
+                //     borderRadius: BorderRadiusStyle.roundedBorder18,
+                //   ),
+                //   child: Text(
+                //     "lbl_jul_2025".tr,
+                //     textAlign: TextAlign.center,
+                //     style: CustomTextStyles.bodySmallOnPrimary_1,
+                //   ),
+                // ),
+                //   Container(
+                //     margin: EdgeInsets.only(left: 4.h),
+                //     padding: EdgeInsets.symmetric(
+                //       horizontal: 14.h,
+                //       vertical: 8.h,
+                //     ),
+                //     decoration: AppDecoration.grayC13.copyWith(
+                //       borderRadius: BorderRadiusStyle.roundedBorder18,
+                //     ),
+                //     child: Text(
+                //       "lbl_sept_2025".tr,
+                //       textAlign: TextAlign.center,
+                //       style: CustomTextStyles.bodySmallOnPrimary_1,
+                //     ),
+                //   ),
+                //   Container(
+                //     margin: EdgeInsets.only(left: 4.h),
+                //     padding: EdgeInsets.symmetric(
+                //       horizontal: 14.h,
+                //       vertical: 10.h,
+                //     ),
+                //     decoration: AppDecoration.grayC13.copyWith(
+                //       borderRadius: BorderRadiusStyle.roundedBorder18,
+                //     ),
+                //     child: Text(
+                //       "lbl_oct_2025".tr,
+                //       textAlign: TextAlign.center,
+                //       style: CustomTextStyles.bodySmallOnPrimary_1,
+                //     ),
+                //   ),
+                // Container(
+                //   margin: EdgeInsets.only(left: 4.h),
+                //   padding: EdgeInsets.symmetric(
+                //     horizontal: 14.h,
+                //     vertical: 10.h,
+                //   ),
+                //   decoration: AppDecoration.grayC2.copyWith(
+                //     borderRadius: BorderRadiusStyle.roundedBorder18,
+                //   ),
+                //   child: Text(
+                //     "lbl_nov_2025".tr,
+                //     textAlign: TextAlign.center,
+                //     style: theme.textTheme.labelLarge,
+                //   ),
+                // ),
+                // ],
               ),
             ),
           ),
@@ -200,7 +313,7 @@ class AttendanceAllVariantsPage extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildColumnlinesix() {
+  Widget _buildColumnlinesix(AttendanceData model) {
     return Container(
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(horizontal: 24.h, vertical: 20.h),
@@ -228,39 +341,30 @@ class AttendanceAllVariantsPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 10.h),
                   child: Text(
-                    "msg_wednesday_nov".tr,
+                    model.formattedDate,
                     style: theme.textTheme.bodyMedium,
                   ),
                 ),
               ],
             ),
           ),
-          Obx(
-            () => ListView.separated(
-              padding: EdgeInsets.zero,
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              separatorBuilder: (context, index) {
-                return SizedBox(height: 4.h);
-              },
-              itemCount:
-                  controller
-                      .attendanceAllVariantsModelObj
-                      .value
-                      .listdropoffItemList
-                      .value
-                      .length,
-              itemBuilder: (context, index) {
-                ListdropoffItemModel model =
-                    controller
-                        .attendanceAllVariantsModelObj
-                        .value
-                        .listdropoffItemList
-                        .value[index];
-                return ListdropoffItemWidget(model);
-              },
-            ),
+
+          // Obx(
+          //   () =>
+          ListView.separated(
+            padding: EdgeInsets.zero,
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            separatorBuilder: (context, index) {
+              return SizedBox(height: 4.h);
+            },
+            itemCount: model.attendanceLogs!.length,
+            itemBuilder: (context, index) {
+              AttendanceLogs logs = model.attendanceLogs![index];
+              return ListdropoffItemWidget(logs);
+            },
           ),
+          // ),
         ],
       ),
     );

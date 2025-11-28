@@ -7,6 +7,8 @@ import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/core/utils/storage.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/data/model/selectionPopupModel/selection_popup_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_details.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/lesson_model.dart';
 // import 'package:schulupparent/presentation/dashboard_extended_view/models/student_batch_model.dart';
 // import 'package:schulupparent/presentation/dashboard_extended_view/models/student_class_model.dart';
@@ -29,14 +31,19 @@ class AcademicsAssignmentStatusController extends GetxController
     TabController(vsync: this, length: 3),
   );
   Rx<bool> isLoading = false.obs;
+
+  Rx<bool> isDetailLoading = false.obs;
+
   DashboardExtendedViewController dashboardExtendedViewController =
       Get.find<DashboardExtendedViewController>();
 
   @override
   void onInit() {
     super.onInit();
+    getAssignment();
     byGuardian();
     allLessons();
+    getAssignment();
   }
 
   DashboardExtendedViewController controller =
@@ -44,6 +51,11 @@ class AcademicsAssignmentStatusController extends GetxController
   Lesson lesson = Lesson();
 
   List<LessonData> lessonList = [];
+
+  Assignment? assignment;
+  List<AssignmentData>? assignmentData;
+
+  AssignmentDetails? assignmentDetails;
 
   void getUserId() async {
     var userId = await dataBase.getUserId();
@@ -98,6 +110,8 @@ class AcademicsAssignmentStatusController extends GetxController
 
   Rx<String> termType = 'First Term'.obs;
 
+  Rx<String> termTypeId = '1'.obs;
+
   Rx<String> statusType = 'Pending'.obs;
 
   // cbt
@@ -110,8 +124,10 @@ class AcademicsAssignmentStatusController extends GetxController
 
   Rx<String> termType1 = 'First Term 0'.obs;
 
+  Rx<String> selectedStatus = 'all'.obs;
+
   //search
-  Rx<String> searchStatus = 'All'.obs;
+  Rx<String> searchStatus = 'all'.obs;
 
   Future<void> byGuardian() async {
     OverlayLoadingProgress.start(
@@ -195,7 +211,7 @@ class AcademicsAssignmentStatusController extends GetxController
         termId = '3';
       }
       final response = await _apiService.allLessons(
-        controller.classDataList.first.classID.toString(),
+        controller.selectedClassID.toString(),
         termId,
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -253,6 +269,151 @@ class AcademicsAssignmentStatusController extends GetxController
     } finally {
       // OverlayLoadingProgress.stop();
       isLoading.value = false;
+    }
+  }
+
+  Future<void> getAssignment() async {
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    isLoading.value = true;
+    // );
+    try {
+      var studentID =
+          dashboardExtendedViewController.selectedStudent1!.studentID;
+      var classID = dashboardExtendedViewController.selectedClassID;
+      myLog.log(
+        'parameters: student id: $studentID, $classID, ${termType.value}, $selectedStatus',
+      );
+      final response = await _apiService.getStudentAssignment(
+        studentID.toString(),
+        classID.toString(),
+        termTypeId.value,
+        selectedStatus.value,
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isLoading.value = false;
+        assignment = assignmentFromJson(response.body);
+        assignmentData = assignment!.data;
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isLoading.value = false;
+
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        isLoading.value = false;
+        Get.snackbar(
+          'Error',
+          'Login failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      isLoading.value = false;
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      //OverlayLoadingProgress.stop();
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getAssignmentDetail(String id) async {
+    OverlayLoadingProgress.start(
+      context: Get.context!,
+      circularProgressColor: Color(0XFFFF8C42),
+    );
+    isDetailLoading.value = true;
+    try {
+      final response = await _apiService.getStudentAssignmentById(id);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Get.snackbar(
+          'Success',
+          'Assignemt Retrived',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+        OverlayLoadingProgress.stop();
+        isDetailLoading.value = false;
+        assignmentDetails = assignmentDetailsFromJson(response.body);
+        Get.toNamed(
+          AppRoutes.academicsAssignmentAnswerScreen,
+          arguments: {'model': assignmentDetails},
+        );
+        myLog.log(assignmentDetails!.data!.subjectName!);
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isDetailLoading.value = false;
+        OverlayLoadingProgress.stop();
+
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        OverlayLoadingProgress.stop();
+        isDetailLoading.value = false;
+        Get.snackbar(
+          'Error',
+          'Login failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      OverlayLoadingProgress.stop();
+      isDetailLoading.value = false;
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      myLog.log(e.toString());
+      OverlayLoadingProgress.stop();
+      isDetailLoading.value = false;
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      OverlayLoadingProgress.stop();
+    } finally {
+      isDetailLoading.value = false;
+      OverlayLoadingProgress.stop();
     }
   }
 }
