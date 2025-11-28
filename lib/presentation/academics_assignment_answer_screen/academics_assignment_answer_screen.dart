@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_four_bottomsheet/academics_assignment_modal_four_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_four_bottomsheet/controller/academics_assignment_modal_four_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_details.dart';
+import 'package:schulupparent/widgets/custom_text_form_field.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
@@ -34,10 +35,14 @@ class AcademicsAssignmentAnswerScreen
               Expanded(
                 child: Container(
                   width: double.maxFinite,
-                  padding: EdgeInsets.only(left: 24.h, top: 20.h, right: 24.h),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [_buildColumntherespir(model)],
+                  padding: EdgeInsets.only(left: 16.h, top: 20.h, right: 16.h),
+                  child: ListView(
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [_buildColumntherespir(model)],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -166,7 +171,7 @@ class AcademicsAssignmentAnswerScreen
   Widget _buildColumniconssmal() {
     return Container(
       width: double.maxFinite,
-      padding: EdgeInsets.symmetric(horizontal: 24.h, vertical: 10.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 10.h),
       decoration: AppDecoration.grayC12,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -180,27 +185,9 @@ class AcademicsAssignmentAnswerScreen
                     showModalBottomSheet(
                       context: Get.context!,
                       builder: (context) {
-                        // upload a file modal bottom sheet
                         return AcademicsAssignmentModalFourBottomsheet(
                           AcademicsAssignmentModalFourController(),
                         );
-                        // select status modal bottom sheet with two options
-                        // return AcademicsAssignmentModalTwoBottomsheet(
-                        //   AcademicsAssignmentModalTwoController(),
-                        // );
-
-                        // still status with all options
-                        // return AcademicsAssignmentModalThreeBottomsheet(
-                        //   AcademicsAssignmentModalThreeController(),
-                        // );
-                        // primary school selection modal bottom sheet
-                        // return AcademicsAssignmentModalBottomsheet(
-                        //   AcademicsAssignmentModalController(),
-                        // );
-
-                        // return AcademicsAssignmentModalOneBottomsheet(
-                        //   AcademicsAssignmentModalOneController(),
-                        //  );
                       },
                     );
                   },
@@ -209,41 +196,70 @@ class AcademicsAssignmentAnswerScreen
                   width: 24.h,
                   alignment: Alignment.bottomCenter,
                 ),
+                SizedBox(width: 10),
                 Expanded(
                   child: Container(
                     width: double.maxFinite,
                     padding: EdgeInsets.only(
-                      left: 18.h,
-                      top: 12.h,
+                      //left: 18.h,
+                      // top: 12.h,
                       bottom: 12.h,
+                      right: 18.h,
                     ),
                     decoration: AppDecoration.grayC11.copyWith(
                       borderRadius: BorderRadiusStyle.circleBorder12,
                     ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Stack(
                       children: [
-                        SizedBox(
-                          width: 228.h,
-                          child: Text(
-                            "msg_the_respiratory2".tr,
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                            style: CustomTextStyles.bodyMediumGray700.copyWith(
-                              height: 1.50,
+                        TextFormField(
+                          style: CustomTextStyles.bodyMediumGray700,
+                          maxLines: 5,
+                          keyboardType: TextInputType.multiline,
+
+                          decoration: InputDecoration(
+                            hintText: 'Enter text here...',
+
+                            hintStyle:
+                                CustomTextStyles.bodySmallSecondaryContainer,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            alignLabelWithHint: true,
+                            contentPadding: EdgeInsets.only(
+                              left: 12.h,
+                              top: 12.h,
+                              right:
+                                  40.h, // Extra padding to avoid icon overlap
+                              bottom: 12.h,
                             ),
                           ),
                         ),
-                        CustomIconButton(
-                          height: 24.h,
-                          width: 24.h,
-                          padding: EdgeInsets.all(4.h),
-                          decoration: IconButtonStyleHelper.fillPrimary,
-                          alignment: Alignment.centerRight,
-                          child: CustomImageView(
-                            imagePath: ImageConstant.imgVector,
+                        Positioned(
+                          bottom: 8.h,
+                          right: 8.h,
+                          child: CustomIconButton(
+                            height: 24.h,
+                            width: 24.h,
+                            padding: EdgeInsets.all(4.h),
+                            decoration: IconButtonStyleHelper.fillPrimary,
+                            child: CustomImageView(
+                              imagePath: ImageConstant.imgVector,
+                            ),
                           ),
                         ),
                       ],
