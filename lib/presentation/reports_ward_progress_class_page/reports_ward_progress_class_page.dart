@@ -70,7 +70,8 @@ class ReportsWardProgressClassPage extends StatelessWidget {
                               color: Color(0XFFFF8C42),
                             ),
                           )
-                          : Expanded(
+                          : Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5),
                             // height: 400.h,
                             child: Column(
                               children: [

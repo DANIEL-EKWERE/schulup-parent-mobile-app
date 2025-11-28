@@ -50,7 +50,7 @@ class AcademicsAssignmentAnswerScreen
           ),
         ),
       ),
-      bottomNavigationBar: _buildColumniconssmal(),
+      bottomNavigationBar: _buildColumniconssmal(model),
     );
   }
 
@@ -168,7 +168,7 @@ class AcademicsAssignmentAnswerScreen
   }
 
   /// Section Widget
-  Widget _buildColumniconssmal() {
+  Widget _buildColumniconssmal(AssignmentDetails model) {
     return Container(
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 10.h),
@@ -212,6 +212,7 @@ class AcademicsAssignmentAnswerScreen
                     child: Stack(
                       children: [
                         TextFormField(
+                          controller: controller.replyController,
                           style: CustomTextStyles.bodyMediumGray700,
                           maxLines: 5,
                           keyboardType: TextInputType.multiline,
@@ -258,6 +259,11 @@ class AcademicsAssignmentAnswerScreen
                             padding: EdgeInsets.all(4.h),
                             decoration: IconButtonStyleHelper.fillPrimary,
                             child: CustomImageView(
+                              onTap: () {
+                                controller.studentReplyCall(
+                                  model.data!.assignmentID.toString(),
+                                );
+                              },
                               imagePath: ImageConstant.imgVector,
                             ),
                           ),

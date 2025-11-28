@@ -627,6 +627,27 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+  /// student reply to an assignment
+  Future<http.Response> studentReply(
+    Map<String, dynamic> replyData,
+    String studentId,
+  ) async {
+    var token = await dataBase.getToken();
+    final url = Uri.parse('$baseUrl/assignments/student/$studentId/reply');
+    _logRequest('POST', url, body: replyData);
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(replyData),
+    );
+    _logResponse(response);
+    return response;
+  }
+
   // get Students linked to a guardian
   Future<http.Response> byGuardian(String userId) async {
     final url = Uri.parse('$baseUrl/students/by-guardian/$userId');
@@ -645,8 +666,15 @@ class ApiClient extends GetConnect {
   }
 
   // get Students assignments
-  Future<http.Response> getStudentAssignment(String studentId, String classID, String termID, String submissionStatus) async {
-    final url = Uri.parse('$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&submissionStatus=$submissionStatus&page=1&pageSize=10');
+  Future<http.Response> getStudentAssignment(
+    String studentId,
+    String classID,
+    String termID,
+    String submissionStatus,
+  ) async {
+    final url = Uri.parse(
+      '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&submissionStatus=$submissionStatus&page=1&pageSize=10',
+    );
     var token = await dataBase.getToken();
     _logRequest('GET', url);
     final response = await http.get(
@@ -661,10 +689,9 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+  ///assignments/16429
 
-///assignments/16429
-
- // get Students assignments by id
+  // get Students assignments by id
   Future<http.Response> getStudentAssignmentById(String assignmentID) async {
     final url = Uri.parse('$baseUrl/assignments/$assignmentID');
     var token = await dataBase.getToken();
@@ -681,10 +708,15 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-
   // get Students linked to a guardian
-  Future<http.Response> getStudentAttendance(String studentID, String year,String month) async {
-    final url = Uri.parse('$baseUrl/attendance/student/$studentID/monthly?year=$year&month=$month');
+  Future<http.Response> getStudentAttendance(
+    String studentID,
+    String year,
+    String month,
+  ) async {
+    final url = Uri.parse(
+      '$baseUrl/attendance/student/$studentID/monthly?year=$year&month=$month',
+    );
     var token = await dataBase.getToken();
     _logRequest('GET', url);
     final response = await http.get(
