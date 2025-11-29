@@ -284,7 +284,8 @@ class _AcademicsAssignmentStatusInitialPageState
             actions: [
               AppbarTrailingIconbutton(
                 onTap: () {
-                  controller.getAssignment();
+                  // controller.getAssignment();
+                  Get.toNamed(AppRoutes.academicsSchularAiOngoingScreen);
                 },
                 imagePath: ImageConstant.imgIconsSmallSchularAi,
               ),
@@ -722,7 +723,9 @@ class _AcademicsAssignmentStatusInitialPageState
                               // Get.toNamed(
                               //   AppRoutes.academicsAssignmentAnswerScreen, arguments: listlineItemModelObj.assignmentID
                               // );
-                              controller.getAssignmentDetail(listlineItemModelObj.assignmentID.toString());
+                              controller.getAssignmentDetail(
+                                listlineItemModelObj.assignmentID.toString(),
+                              );
                             },
                             child: ListlineItemWidget(listlineItemModelObj),
                           ),

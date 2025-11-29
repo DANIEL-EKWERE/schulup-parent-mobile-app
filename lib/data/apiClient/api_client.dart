@@ -648,6 +648,27 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+  /// student reply to an assignment
+  Future<http.Response> studentAsk(
+    Map<String, dynamic> askData,
+    String studentId,
+  ) async {
+    var token = await dataBase.getToken();
+    final url = Uri.parse('$baseUrl/aitutor/ask/students/$studentId');
+    _logRequest('POST', url, body: askData);
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(askData),
+    );
+    _logResponse(response);
+    return response;
+  }
+
   // get Students linked to a guardian
   Future<http.Response> byGuardian(String userId) async {
     final url = Uri.parse('$baseUrl/students/by-guardian/$userId');
@@ -674,6 +695,25 @@ class ApiClient extends GetConnect {
   ) async {
     final url = Uri.parse(
       '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&submissionStatus=$submissionStatus&page=1&pageSize=10',
+    );
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+  // get ai conversations
+  Future<http.Response> getAiConversations(String studentId) async {
+    final url = Uri.parse(
+      '$baseUrl/aitutor/conversations/students/$studentId?page=1&pageSize=20',
     );
     var token = await dataBase.getToken();
     _logRequest('GET', url);
