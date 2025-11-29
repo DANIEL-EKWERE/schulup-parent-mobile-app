@@ -9,6 +9,8 @@ import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/data/model/selectionPopupModel/selection_popup_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_details.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/cbt_detail_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/cbt_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/lesson_model.dart';
 // import 'package:schulupparent/presentation/dashboard_extended_view/models/student_batch_model.dart';
 // import 'package:schulupparent/presentation/dashboard_extended_view/models/student_class_model.dart';
@@ -41,9 +43,15 @@ class AcademicsAssignmentStatusController extends GetxController
   void onInit() {
     super.onInit();
     getAssignment();
-    byGuardian();
+    getCbt();
     allLessons();
-    getAssignment();
+
+    // getAssignment();
+    // classType.value =
+    //     dashboardExtendedViewController.selectedClass!.value.isEmpty
+    //         ? 'Loading...'
+    //         : dashboardExtendedViewController.selectedClass!.value;
+    //   dashboardExtendedViewController.studentClassObj.data!.first.name!;
   }
 
   DashboardExtendedViewController controller =
@@ -55,7 +63,12 @@ class AcademicsAssignmentStatusController extends GetxController
   Assignment? assignment;
   List<AssignmentData>? assignmentData;
 
+  Cbt? cbt;
+  List<CbtData>? cbtData;
+
   AssignmentDetails? assignmentDetails;
+
+  CbtDetail? cbtDetail;
 
   void getUserId() async {
     var userId = await dataBase.getUserId();
@@ -106,7 +119,7 @@ class AcademicsAssignmentStatusController extends GetxController
     academicsFourModelObj.value.dropdownItemList2.refresh();
   }
 
-  Rx<String> classType = 'primary 5'.obs;
+  Rx<String> classType = 'Seleted Class'.obs;
 
   Rx<String> termType = 'First Term'.obs;
 
@@ -130,10 +143,10 @@ class AcademicsAssignmentStatusController extends GetxController
   Rx<String> searchStatus = 'all'.obs;
 
   Future<void> byGuardian() async {
-    OverlayLoadingProgress.start(
-      context: Get.context!,
-      circularProgressColor: Color(0XFFFF8C42),
-    );
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    // );
     try {
       var userId = await dataBase.getUserId();
       myLog.log('User ID: $userId');
@@ -149,7 +162,7 @@ class AcademicsAssignmentStatusController extends GetxController
         myLog.log('Token: $responseData');
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
-        OverlayLoadingProgress.stop();
+        // OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
@@ -269,6 +282,220 @@ class AcademicsAssignmentStatusController extends GetxController
     } finally {
       // OverlayLoadingProgress.stop();
       isLoading.value = false;
+    }
+  }
+
+  Future<void> getCbt() async {
+    isLoading.value = true;
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+
+    // );a
+    try {
+      var classId = dashboardExtendedViewController.selectedClassID;
+      final response = await _apiService.cbt(
+        controller.selectedClassID.toString(),
+        controller.selectedStudent1!.studentID.toString(),
+      );
+      myLog.log(
+        "classId: ${classId}, studentId: ${controller.selectedStudent1!.studentID}",
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isLoading.value = false;
+
+        cbt = cbtFromJson(response.body);
+        cbtData = cbt!.data;
+
+        //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
+        // OverlayLoadingProgress.stop();
+        //   Get.toNamed(AppRoutes.signFourScreen);
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isLoading.value = false;
+        //Get.offAllNamed(AppRoutes.signTwoScreen);
+        // OverlayLoadingProgress.stop();
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
+        Get.snackbar(
+          'Error',
+          'cbt fetch failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+      isLoading.value = false;
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      isLoading.value = false;
+      //OverlayLoadingProgress.stop();
+    } finally {
+      // OverlayLoadingProgress.stop();
+      isLoading.value = false;
+    }
+  }
+
+  //cbtDetails()
+  Future<void> getCbtResult() async {
+    isLoading.value = true;
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+
+    // );a
+    try {
+      var classId = dashboardExtendedViewController.selectedClassID;
+      final response = await _apiService.cbt(
+        controller.selectedClassID.toString(),
+        classId.toString(),
+      );
+      myLog.log(
+        "classId: ${classId}, studentId: ${controller.selectedClassID}",
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isLoading.value = false;
+
+        cbt = cbtFromJson(response.body);
+        cbtData = cbt!.data;
+
+        //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
+        // OverlayLoadingProgress.stop();
+        //   Get.toNamed(AppRoutes.signFourScreen);
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isLoading.value = false;
+        //Get.offAllNamed(AppRoutes.signTwoScreen);
+        // OverlayLoadingProgress.stop();
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
+        Get.snackbar(
+          'Error',
+          'cbt fetch failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+      isLoading.value = false;
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      isLoading.value = false;
+      //OverlayLoadingProgress.stop();
+    } finally {
+      // OverlayLoadingProgress.stop();
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getCbtDetails(String quizScheduledId) async {
+    OverlayLoadingProgress.start(
+      context: Get.context!,
+      circularProgressColor: Color(0XFFFF8C42),
+    );
+    try {
+      var studentId =
+          dashboardExtendedViewController.selectedStudent1!.studentID;
+      final response = await _apiService.cbtDetaails(
+        studentId.toString(),
+        quizScheduledId,
+      );
+      myLog.log("classId: ${studentId}, studentId: ${quizScheduledId}");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        OverlayLoadingProgress.stop();
+        cbtDetail = cbtDetailFromJson(response.body);
+
+        Get.toNamed(
+          AppRoutes.academicsCbtTestTestDetailsScreen,
+          arguments: {'model': cbtDetail},
+        );
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        OverlayLoadingProgress.stop();
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        OverlayLoadingProgress.stop();
+        Get.snackbar(
+          'Error',
+          'cbt fetch failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      OverlayLoadingProgress.stop();
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      OverlayLoadingProgress.stop();
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      OverlayLoadingProgress.stop();
     }
   }
 

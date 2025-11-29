@@ -933,6 +933,72 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+/// student scheduled cbt test
+  Future<http.Response> cbt(String classId, String studentId) async {
+    final url = Uri.parse(
+      '$baseUrl/quiz/schedules/students/$studentId?classI=$classId&page=1&pageSize=20',
+    );
+    //10291
+    //2
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+  /// student scheduled cbt test
+  Future<http.Response> cbtDetaails(String studentId,String quizScheduleID) async {
+    final url = Uri.parse(
+      '$baseUrl/quiz/students/$studentId/schedules/$quizScheduleID/details',
+    );
+    //10291
+    //2
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+  /// student scheduled cbt test result
+  Future<http.Response> cbtResult(String classId, String studentId) async {
+    final url = Uri.parse(
+      
+      '$baseUrl/quiz/history/students/$studentId?classId=$classId&page=1&pageSize=20',
+    );
+    //10291
+    //2
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
   // get student batch
   Future<http.Response> getBatch(String studentId) async {
     final url = Uri.parse('$baseUrl/students/$studentId/batches');

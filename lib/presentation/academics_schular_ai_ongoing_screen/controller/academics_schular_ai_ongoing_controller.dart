@@ -40,7 +40,7 @@ class AcademicsSchularAiOngoingController extends GetxController {
 
   DashboardExtendedViewController dashboardController =
       Get.find<DashboardExtendedViewController>();
-  
+
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   @override
@@ -84,9 +84,9 @@ class AcademicsSchularAiOngoingController extends GetxController {
 
       final body = {"messageText": messageText};
       var studentID = dashboardController.selectedStudent1!.studentID;
-      
+
       print('Sending message: $body to student: $studentID');
-      
+
       final response = await _apiService.studentAsk(body, studentID.toString());
 
       // Hide typing indicator
@@ -94,17 +94,16 @@ class AcademicsSchularAiOngoingController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('Message sent successfully. Response: ${response.body}');
-        
+
         // Reload all conversations to get the complete chat including AI response
         await conversations();
-        
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        
+
         // Remove the user message on error
         messageList.removeWhere((msg) => msg.id == userMessage.id);
-        
+
         Get.snackbar(
           'Error',
           message,
@@ -115,7 +114,7 @@ class AcademicsSchularAiOngoingController extends GetxController {
       } else {
         // Remove the user message on error
         messageList.removeWhere((msg) => msg.id == userMessage.id);
-        
+
         Get.snackbar(
           'Error',
           'Failed to send message. Please try again.',
@@ -127,10 +126,10 @@ class AcademicsSchularAiOngoingController extends GetxController {
     } on SocketException {
       // Hide typing indicator
       isAiTyping.value = false;
-      
+
       // Remove user message on network error
       messageList.removeWhere((msg) => msg.id.startsWith('user_'));
-      
+
       Get.snackbar(
         'Opps!!!',
         'Check your internet connection and try again.',
@@ -140,10 +139,10 @@ class AcademicsSchularAiOngoingController extends GetxController {
       );
     } catch (e) {
       print('Error sending message: $e');
-      
+
       // Hide typing indicator
       isAiTyping.value = false;
-      
+
       Get.snackbar(
         'Error',
         e.toString(),
@@ -164,25 +163,27 @@ class AcademicsSchularAiOngoingController extends GetxController {
       if (messageList.isEmpty) {
         isLoading.value = true;
       }
-      
+
       var studentID = dashboardController.selectedStudent1!.studentID;
-      
+
       print('Fetching conversations for student: $studentID');
-      
+
       // Get conversation history endpoint
-      final response = await _apiService.getAiConversations(studentID.toString());
+      final response = await _apiService.getAiConversations(
+        studentID.toString(),
+      );
 
       if (response != null) {
         print('Conversations response: $response');
-        
+
         scholarAiModel = scholarAiFromJson(response.body);
-        
+
         if (scholarAiModel?.success == true && scholarAiModel?.data != null) {
           chatData = scholarAiModel!.data;
-          
+
           // Update message list with all conversations
           _updateMessageList();
-          
+
           print('Loaded ${chatData!.length} messages');
         } else {
           print('No data in response or unsuccessful');
@@ -229,23 +230,24 @@ class AcademicsSchularAiOngoingController extends GetxController {
     }
 
     // Convert ChatData to chat messages
-    List<types.Message> messages = chatData!.map((data) {
-      return types.TextMessage(
-        author: data.isAiResponse == true ? aiUser : chatUser.value,
-        createdAt: _parseTimestamp(data.timestamp),
-        id: data.id.toString(),
-        text: data.response ?? '',
-        type: types.MessageType.text,
-        status: types.Status.delivered,
-      );
-    }).toList();
+    List<types.Message> messages =
+        chatData!.map((data) {
+          return types.TextMessage(
+            author: data.isAiResponse == true ? aiUser : chatUser.value,
+            createdAt: _parseTimestamp(data.timestamp),
+            id: data.id.toString(),
+            text: data.response ?? '',
+            type: types.MessageType.text,
+            status: types.Status.delivered,
+          );
+        }).toList();
 
     // Sort messages by timestamp (newest first for chat UI)
     messages.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
 
     // Update the message list
     messageList.value = messages;
-    
+
     print('Message list updated with ${messages.length} messages');
   }
 
@@ -270,7 +272,7 @@ class AcademicsSchularAiOngoingController extends GetxController {
         ),
         actions: [
           TextButton(
-            onPressed: () => Get.back(),
+            onPressed: () => Navigator.pop(Get.context!),
             child: const Text('Cancel'),
           ),
           TextButton(
@@ -279,8 +281,9 @@ class AcademicsSchularAiOngoingController extends GetxController {
               chatData = null;
               scholarAiModel = null;
               vectoroneController.clear();
-              Get.back();
-              
+              //Get.back();
+              Navigator.pop(Get.context!);
+
               Get.snackbar(
                 'New Chat',
                 'Started a new conversation',
@@ -301,7 +304,7 @@ class AcademicsSchularAiOngoingController extends GetxController {
   void viewHistory() {
     // Reload conversations
     conversations();
-    
+
     Get.snackbar(
       'Refreshed',
       'Chat history refreshed',

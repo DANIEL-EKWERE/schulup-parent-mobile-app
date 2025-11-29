@@ -124,6 +124,11 @@ class _AcademicsCbtTestModalOneBottomsheetState
               setState(() {
                 controller1.cbtType.value = selectedType.first;
               });
+              controller1.getCbt();
+              if (controller1.cbtType.value == 'Test Result') {
+                controller1.getCbtResult();
+                return;
+              }
               Navigator.pop(context);
             },
             height: 64.h,

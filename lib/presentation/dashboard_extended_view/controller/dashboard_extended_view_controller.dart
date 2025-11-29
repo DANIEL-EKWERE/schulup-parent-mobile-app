@@ -22,6 +22,7 @@ class DashboardExtendedViewController extends GetxController {
   AcademicsAssignmentStatusInitialModel? academicsAssignmentStatusInitialModel;
   Student? selectedStudent;
   Student? selectedStudent1;
+  Rx<String>? selectedClass;
   AcademicSessionData? selectedAcademicSessionData;
 
   StudentClass studentClassObj = StudentClass();
@@ -228,6 +229,7 @@ class DashboardExtendedViewController extends GetxController {
           studentClassObj = studentClassFromJson(response.body);
           classDataList = studentClassObj.data ?? [];
           selectedClassID = classDataList.first.classID;
+          selectedClass!.value = classDataList.first.name!;
         // myLog.log('Token: $responseData');
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);

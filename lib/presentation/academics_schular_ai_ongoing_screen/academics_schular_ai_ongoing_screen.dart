@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:schulupparent/presentation/academics_schular_ai_conversation_bottomsheet/academics_schular_ai_conversation_bottomsheet.dart';
+import 'package:schulupparent/presentation/academics_schular_ai_conversation_bottomsheet/controller/academics_schular_ai_conversation_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -29,7 +31,7 @@ class AcademicsSchularAiOngoingScreen
               Expanded(
                 child: Container(
                   width: double.maxFinite,
-                  padding: EdgeInsets.only(left: 24.h, top: 20.h, right: 24.h),
+                  padding: EdgeInsets.only(left: 0.h, top: 20.h, right: 0.h),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [_buildChatmessagelist()],
@@ -74,7 +76,17 @@ class AcademicsSchularAiOngoingScreen
         AppbarTrailingIconbutton(
           imagePath: ImageConstant.imgIconsSmallHistory,
           margin: EdgeInsets.only(left: 11.h, right: 25.h),
-          onTap: () => controller.viewHistory(),
+          onTap: () {
+            showModalBottomSheet(
+              context: Get.context!,
+              builder: (context) {
+                return AcademicsSchularAiConversationBottomsheet(
+                  AcademicsSchularAiConversationController(),
+                );
+              },
+            );
+          },
+          //=> controller.viewHistory(),
         ),
       ],
       styleType: Style.bgFillPrimary,

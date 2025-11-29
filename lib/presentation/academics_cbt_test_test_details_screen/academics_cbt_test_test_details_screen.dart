@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/cbt_detail_model.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
@@ -15,6 +16,7 @@ class AcademicsCbtTestTestDetailsScreen
 
   @override
   Widget build(BuildContext context) {
+    CbtDetail model = Get.arguments['model'];
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       appBar: _buildAppbar(),
@@ -38,7 +40,7 @@ class AcademicsCbtTestTestDetailsScreen
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "lbl_current_affairs".tr,
+                              model.quizTitle!,
                               style: CustomTextStyles.titleMediumOnPrimary,
                             ),
                             SizedBox(height: 20.h),
@@ -53,7 +55,7 @@ class AcademicsCbtTestTestDetailsScreen
                               width: double.maxFinite,
                               child: _buildRownoofquestion(
                                 noofquestions: "lbl_subject".tr,
-                                tenOne: "lbl_history".tr,
+                                tenOne: model.subjectName!,
                               ),
                             ),
                             SizedBox(height: 8.h),
@@ -61,7 +63,7 @@ class AcademicsCbtTestTestDetailsScreen
                               width: double.maxFinite,
                               child: _buildRownoofquestion(
                                 noofquestions: "msg_no_of_questions".tr,
-                                tenOne: "lbl_10".tr,
+                                tenOne: model.noOfQuestions.toString(),
                               ),
                             ),
                             SizedBox(height: 10.h),
@@ -69,7 +71,7 @@ class AcademicsCbtTestTestDetailsScreen
                               width: double.maxFinite,
                               child: _buildRownoofquestion(
                                 noofquestions: "lbl_time_limit".tr,
-                                tenOne: "lbl_2_minutes".tr,
+                                tenOne: "${model.timeLimit} minutes",
                               ),
                             ),
                             SizedBox(height: 10.h),
@@ -77,7 +79,7 @@ class AcademicsCbtTestTestDetailsScreen
                               width: double.maxFinite,
                               child: _buildRownoofquestion(
                                 noofquestions: "msg_allowed_attempts".tr,
-                                tenOne: "lbl_unlimited".tr,
+                                tenOne: model.allowedAttempts!,
                               ),
                             ),
                             SizedBox(height: 18.h),
@@ -94,7 +96,7 @@ class AcademicsCbtTestTestDetailsScreen
                             ),
                             SizedBox(height: 6.h),
                             Text(
-                              "msg_please_read_these".tr,
+                              model.instructions!,
                               maxLines: 17,
                               overflow: TextOverflow.ellipsis,
                               style: theme.textTheme.bodySmall!.copyWith(
@@ -186,6 +188,7 @@ class AcademicsCbtTestTestDetailsScreen
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(Get.context!);
   }
 }

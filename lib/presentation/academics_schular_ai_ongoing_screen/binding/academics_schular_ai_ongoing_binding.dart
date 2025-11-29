@@ -1,4 +1,6 @@
 // TODO Implement this library.
+import 'package:schulupparent/presentation/academics_schular_ai_conversation_bottomsheet/controller/academics_schular_ai_conversation_controller.dart';
+
 import '../../../core/app_export.dart';
 import '../controller/academics_schular_ai_ongoing_controller.dart';
 
@@ -10,5 +12,6 @@ class AcademicsSchularAiOngoingBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => AcademicsSchularAiOngoingController());
+    Get.put(AcademicsSchularAiConversationController(), permanent: true);
   }
 }

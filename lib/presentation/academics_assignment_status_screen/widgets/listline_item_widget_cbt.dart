@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/cbt_model.dart';
 import '../../../core/app_export.dart';
 import '../controller/academics_assignment_status_controller.dart';
 import '../models/listline_item_model.dart';
 
 // ignore_for_file: must_be_immutable
 class ListlineItemCbtWidget extends StatelessWidget {
-  ListlineItemCbtWidget(this.listlineItemModelObj, {Key? key}) : super(key: key);
+  ListlineItemCbtWidget(this.listlineItemModelObj, {Key? key})
+    : super(key: key);
 
-  ListlineItemModel listlineItemModelObj;
+  CbtData listlineItemModelObj;
 
   var controller = Get.find<AcademicsAssignmentStatusController>();
 
@@ -59,18 +62,21 @@ class ListlineItemCbtWidget extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 0.h),
-                    child: Obx(
-                      () => Text(
-                        listlineItemModelObj.heading!.value,
-                        style: theme.textTheme.bodyMedium,
-                      ),
+                    child:
+                    //  Obx(
+                    //   () =>
+                    Text(
+                      listlineItemModelObj.quizTitle!,
+                      style: theme.textTheme.bodyMedium,
                     ),
+                    //),
                   ),
-                  Obx(
-                    () => Text(
-                      listlineItemModelObj.subheading!.value,
-                      style: CustomTextStyles.bodySmallSecondaryContainer10,
-                    ),
+                  // Obx(
+                  //   () =>
+                  Text(
+                    "${listlineItemModelObj.subjectName} • ${listlineItemModelObj.attemptsMade} of ${listlineItemModelObj.noOfQuestions}",
+                    style: CustomTextStyles.bodySmallSecondaryContainer10,
+                    //  ),
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(
@@ -80,12 +86,16 @@ class ListlineItemCbtWidget extends StatelessWidget {
                     decoration: AppDecoration.grayC7.copyWith(
                       borderRadius: BorderRadiusStyle.roundedBorder8,
                     ),
-                    child: Obx(
-                      () => Text(
-                        listlineItemModelObj.dueOnNov52025!.value,
-                        textAlign: TextAlign.center,
-                        style: CustomTextStyles.bodySmallWhiteA700,
+                    child:
+                    //  Obx(
+                    //   () =>
+                    Text(
+                      "Open: ${formatDate(listlineItemModelObj.startDate.toString())} to ${formatDate(listlineItemModelObj.endDate.toString())}",
+                      textAlign: TextAlign.center,
+                      style: CustomTextStyles.bodySmallWhiteA700.copyWith(
+                        fontSize: 8.h,
                       ),
+                      //  ),
                     ),
                   ),
                 ],
@@ -95,5 +105,15 @@ class ListlineItemCbtWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String formatDate(String dateString) {
+    // Parse the ISO 8601 date string
+    DateTime dateTime = DateTime.parse(dateString);
+
+    // Format it to "Monday, Nov. 3, 2025"
+    String formatted = DateFormat('MMM. EEE, d, yyyy h:m a').format(dateTime);
+
+    return formatted;
   }
 }

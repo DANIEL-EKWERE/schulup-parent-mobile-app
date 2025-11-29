@@ -198,6 +198,7 @@ import 'package:schulupparent/presentation/academics_assignment_modal_two_bottom
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/controller/academics_assignment_modal_two_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/cbt_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/lesson_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/listline_item_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_cbt.dart';
@@ -750,33 +751,47 @@ class _AcademicsAssignmentStatusInitialPageState
         children: [
           // Add your CBT test content here
           //AcademicsCbtTestStatusModel
-          ListView.builder(
-            itemCount:
-                controller
-                    .academicsFourModelObj
-                    .value
-                    .listlineItemList
-                    .value
-                    .length,
-            itemBuilder: (context, index) {
-              ListlineItemModel listlineItemModelObj =
+          Obx(
+            ()=> 
+            controller.isLoading.value
+                    ? SizedBox(
+                      height: 900.h,
+                      child: ListView.separated(
+                        itemCount: 5,
+                        //isLoading ? 5 : newsItems.length,
+                        separatorBuilder:
+                            (context, index) => SizedBox(height: 12.h),
+                        itemBuilder: (context, index) {
+                          // if (isLoading) {
+                          return ListlineShimmerWidget();
+                          // }
+                          // return ListlineItemWidget(newsItems[index]);
+                        },
+                      ),
+                    )
+                    : ListView.builder(
+              itemCount:
                   controller
-                      .academicsFourModelObj
-                      .value
-                      .listlineItemListcbt
-                      .value[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: GestureDetector(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
-                  },
-                  child: ListlineItemCbtWidget(listlineItemModelObj),
-                ),
-              );
-            },
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+                      .cbtData!
+                      .length,
+              itemBuilder: (context, index) {
+                CbtData listlineItemModelObj =
+                    controller
+                        .cbtData![index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: GestureDetector(
+                    onTap: () {
+                     // Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
+                     controller.getCbtDetails(listlineItemModelObj.quizScheduleID.toString());
+                    },
+                    child: ListlineItemCbtWidget(listlineItemModelObj),
+                  ),
+                );
+              },
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+            ),
           ),
         ],
       ),

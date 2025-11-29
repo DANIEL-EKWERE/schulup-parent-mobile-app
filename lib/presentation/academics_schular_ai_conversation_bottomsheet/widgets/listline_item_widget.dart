@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart';
+import 'package:schulupparent/presentation/academics_schular_ai_ongoing_screen/models/academics_schular_ai_ongoing_model.dart';
 import '../../../core/app_export.dart';
 import '../controller/academics_schular_ai_conversation_controller.dart';
 import '../models/listline_item_model.dart';
@@ -7,7 +9,7 @@ import '../models/listline_item_model.dart';
 class ListlineItemWidget extends StatelessWidget {
   ListlineItemWidget(this.listlineItemModelObj, {Key? key}) : super(key: key);
 
-  ListlineItemModel listlineItemModelObj;
+  ChatData listlineItemModelObj;
 
   var controller = Get.find<AcademicsSchularAiConversationController>();
 
@@ -28,27 +30,41 @@ class ListlineItemWidget extends StatelessWidget {
             width: double.maxFinite,
             child: Row(
               children: [
-                VerticalDivider(width: 5.h, thickness: 5.h),
                 Container(
-                  width: 250.h,
+                  height: 40,
+                  width: 40,
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFEED4),
+                    shape: BoxShape.circle,
+                  ),
+                  child: CustomImageView(
+                    imagePath: 'assets/images/img_icons_small_history.png',
+                  ),
+                ),
+                Container(
+                  width: 200.h,
                   margin: EdgeInsets.only(left: 10.h),
-                  child: Obx(
-                    () => Text(
-                      listlineItemModelObj.understanding!.value,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodyMedium!.copyWith(height: 1.50),
-                    ),
+                  child:
+                  // Obx(
+                  //   () =>
+                  Text(
+                    listlineItemModelObj.response!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodyMedium!.copyWith(height: 1.50),
+                    //  ),
                   ),
                 ),
               ],
             ),
           ),
-          Obx(
-            () => Text(
-              listlineItemModelObj.nov102025!.value,
-              style: CustomTextStyles.bodySmallSecondaryContainer10,
-            ),
+          // Obx(
+          //   () =>
+          Text(
+            listlineItemModelObj.formattedTimestamp,
+            style: CustomTextStyles.bodySmallSecondaryContainer10,
+            //   ),
           ),
         ],
       ),

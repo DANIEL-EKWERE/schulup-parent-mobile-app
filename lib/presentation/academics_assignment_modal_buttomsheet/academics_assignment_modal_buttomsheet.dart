@@ -145,6 +145,8 @@ class _AcademicsAssignmentModalBottomsheetState
                 dashboardExtendedViewController.selectedClassID =
                     selectedTypeID.first;
                 controller1.getAssignment();
+                controller1.allLessons();
+                controller1.getCbt();
               });
               // Get.back();
               Navigator.pop(context);
