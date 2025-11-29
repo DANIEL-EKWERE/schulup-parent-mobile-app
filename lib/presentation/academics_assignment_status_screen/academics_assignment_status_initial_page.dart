@@ -233,6 +233,15 @@ class _AcademicsAssignmentStatusInitialPageState
   );
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.getAssignment();
+    controller.getCbt();
+    controller.allLessons();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: double.maxFinite,
@@ -752,8 +761,8 @@ class _AcademicsAssignmentStatusInitialPageState
           // Add your CBT test content here
           //AcademicsCbtTestStatusModel
           Obx(
-            ()=> 
-            controller.isLoading.value
+            () =>
+                controller.isLoading.value
                     ? SizedBox(
                       height: 900.h,
                       child: ListView.separated(
@@ -770,28 +779,26 @@ class _AcademicsAssignmentStatusInitialPageState
                       ),
                     )
                     : ListView.builder(
-              itemCount:
-                  controller
-                      .cbtData!
-                      .length,
-              itemBuilder: (context, index) {
-                CbtData listlineItemModelObj =
-                    controller
-                        .cbtData![index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: GestureDetector(
-                    onTap: () {
-                     // Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
-                     controller.getCbtDetails(listlineItemModelObj.quizScheduleID.toString());
-                    },
-                    child: ListlineItemCbtWidget(listlineItemModelObj),
-                  ),
-                );
-              },
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-            ),
+                      itemCount: controller.cbtData!.length,
+                      itemBuilder: (context, index) {
+                        CbtData listlineItemModelObj =
+                            controller.cbtData![index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              // Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
+                              controller.getCbtDetails(
+                                listlineItemModelObj.quizScheduleID.toString(),
+                              );
+                            },
+                            child: ListlineItemCbtWidget(listlineItemModelObj),
+                          ),
+                        );
+                      },
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                    ),
           ),
         ],
       ),

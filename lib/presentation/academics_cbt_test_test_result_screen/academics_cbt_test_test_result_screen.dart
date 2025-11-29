@@ -377,6 +377,7 @@ class AcademicsCbtTestTestResultScreen
 
   /// Navigates to the previous screen.
   onTapCloseone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(Get.context!);
   }
 }

@@ -16,8 +16,7 @@ void main() {
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light,
-      statusBarIconBrightness: Brightness.light
-
+      statusBarIconBrightness: Brightness.light,
     ),
   );
 }

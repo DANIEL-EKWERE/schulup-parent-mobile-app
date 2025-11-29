@@ -627,6 +627,44 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+
+  /// submit Test
+  Future<http.Response> submitTest(Map<String, dynamic> testData) async {
+    final url = Uri.parse('$baseUrl/quiz/submit');
+     var token = await dataBase.getToken();
+    _logRequest('POST', url, body: testData);
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(testData),
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+/// start cbt test
+Future<http.Response> startCbt(String studentID, String quizScheduleID) async {
+    final url = Uri.parse('$baseUrl/quiz/students/$studentID/schedules/$quizScheduleID/attempt');
+    var token = await dataBase.getToken();
+    _logRequest('POST', url,);
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+       'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+     
+    );
+    _logResponse(response);
+    return response;
+  }
+
   /// student reply to an assignment
   Future<http.Response> studentReply(
     Map<String, dynamic> replyData,

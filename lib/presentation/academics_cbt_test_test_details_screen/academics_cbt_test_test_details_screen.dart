@@ -114,7 +114,7 @@ class AcademicsCbtTestTestDetailsScreen
           ),
         ),
       ),
-      bottomNavigationBar: _buildColumnstart(),
+      bottomNavigationBar: _buildColumnstart(model),
     );
   }
 
@@ -144,7 +144,7 @@ class AcademicsCbtTestTestDetailsScreen
   }
 
   /// Section Widget
-  Widget _buildColumnstart() {
+  Widget _buildColumnstart(CbtDetail model) {
     return Container(
       width: double.maxFinite,
       padding: EdgeInsets.symmetric(horizontal: 24.h, vertical: 10.h),
@@ -154,7 +154,7 @@ class AcademicsCbtTestTestDetailsScreen
         children: [
           CustomElevatedButton(
             onPressed: () {
-              Get.toNamed(AppRoutes.academicsCbtTestOngoingScreen);
+              controller.startTest(model.quizScheduleID.toString());
             },
             height: 64.h,
             text: "lbl_start_test".tr,
