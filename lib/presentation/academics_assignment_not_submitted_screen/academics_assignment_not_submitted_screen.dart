@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -7,7 +8,7 @@ import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_text_form_field.dart';
 import 'controller/academics_assignment_not_submitted_controller.dart'; // ignore_for_file: must_be_immutable
-
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class AcademicsAssignmentNotSubmittedScreen
     extends GetWidget<AcademicsAssignmentNotSubmittedController> {
   const AcademicsAssignmentNotSubmittedScreen({Key? key}) : super(key: key);
@@ -126,7 +127,7 @@ class AcademicsAssignmentNotSubmittedScreen
         children: [
           AppbarSubtitleOne(text: "lbl_assignment".tr),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 33.h),
           ),
         ],

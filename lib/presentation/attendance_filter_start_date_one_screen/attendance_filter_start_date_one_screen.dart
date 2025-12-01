@@ -71,7 +71,10 @@ class AttendanceFilterStartDateOneScreen
               children: [
                 AppbarSubtitleOne(text: "lbl_attendance".tr),
                 AppbarSubtitleFive(
-                  text: "lbl_ogechi".tr,
+                  text:
+                      dashboardExtendedViewController
+                          .selectedStudent1!
+                          .firstName!,
                   margin: EdgeInsets.symmetric(horizontal: 32.h),
                 ),
               ],

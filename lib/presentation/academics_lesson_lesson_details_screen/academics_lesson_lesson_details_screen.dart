@@ -9,7 +9,10 @@ import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import 'controller/academics_lesson_lesson_details_controller.dart'; // ignore_for_file: must_be_immutable
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class AcademicsLessonLessonDetailsScreen
     extends GetWidget<AcademicsLessonLessonDetailsController> {
   const AcademicsLessonLessonDetailsScreen({Key? key}) : super(key: key);
@@ -121,7 +124,7 @@ class AcademicsLessonLessonDetailsScreen
         children: [
           AppbarSubtitleOne(text: "lbl_lesson".tr),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 13.h),
           ),
         ],

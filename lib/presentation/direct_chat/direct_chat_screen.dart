@@ -12,7 +12,10 @@ import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class DirectChatScreen extends GetWidget<DirectChatController> {
   const DirectChatScreen({Key? key}) : super(key: key);
 
@@ -85,7 +88,62 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
                                   itemBuilder: (context, index) {
                                     TeacherData teacherData =
                                         controller.teacherData![index];
-                                    return _buildTeacherCard(teacherData);
+                                    return GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                'Start New Conversation',
+                                                style:
+                                                    CustomTextStyles
+                                                        .titleMediumOnPrimary,
+                                              ),
+                                              content: SizedBox(
+                                                height: 40,
+                                                child: Column(
+                                                  children: [
+                                                    CustomTextFormField(
+                                                      controller:
+                                                          controller
+                                                              .subjectController,
+                                                      fillColor:
+                                                          appTheme.gray20001,
+                                                      hintText:
+                                                          'Enter Convsersation subject',
+                                                      hintStyle:
+                                                          CustomTextStyles
+                                                              .bodyMediumGray700,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text('Cancel'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    controller
+                                                        .startConversation(
+                                                          teacherData
+                                                              .teacherUserId
+                                                              .toString(),
+                                                        );
+                                                  },
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: _buildTeacherCard(teacherData),
+                                    );
                                   },
                                 );
                               }
@@ -276,7 +334,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
         children: [
           AppbarSubtitleOne(text: "Direct Chat"),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 33.h),
           ),
         ],

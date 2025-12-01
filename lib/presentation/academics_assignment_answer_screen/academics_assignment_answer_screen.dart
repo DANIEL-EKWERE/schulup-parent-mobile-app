@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_four_bottomsheet/academics_assignment_modal_four_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_four_bottomsheet/controller/academics_assignment_modal_four_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_details.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/widgets/custom_text_form_field.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/app_export.dart';
@@ -15,6 +16,8 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
 import 'controller/academics_assignment_answer_controller.dart'; // ignore_for_file: must_be_immutable
 
+
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class AcademicsAssignmentAnswerScreen
     extends GetWidget<AcademicsAssignmentAnswerController> {
   const AcademicsAssignmentAnswerScreen({Key? key}) : super(key: key);
@@ -70,7 +73,7 @@ class AcademicsAssignmentAnswerScreen
         children: [
           AppbarSubtitleOne(text: "lbl_assignment".tr),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 33.h),
           ),
         ],

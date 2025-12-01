@@ -8,7 +8,10 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import 'controller/news_news_content_downloading_controller.dart';
 import 'models/listweburl_item_model.dart';
 import 'widgets/listweburl_item_widget.dart'; // ignore_for_file: must_be_immutable
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class NewsNewsContentDownloadingScreen
     extends GetWidget<NewsNewsContentDownloadingController> {
   const NewsNewsContentDownloadingScreen({Key? key}) : super(key: key);
@@ -92,7 +95,7 @@ class NewsNewsContentDownloadingScreen
         children: [
           AppbarSubtitleOne(text: "lbl_news".tr),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 6.h),
           ),
         ],

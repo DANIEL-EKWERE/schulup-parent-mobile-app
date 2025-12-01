@@ -63,7 +63,10 @@ class AcademicsAssignmentStatusOneScreen
                 children: [
                   AppbarSubtitleOne(text: "lbl_academics".tr),
                   AppbarSubtitleFive(
-                    text: "lbl_ogechi".tr,
+                    text:
+                        dashboardExtendedViewController
+                            .selectedStudent1!
+                            .firstName!,
                     margin: EdgeInsets.only(left: 28.h, right: 29.h),
                   ),
                 ],

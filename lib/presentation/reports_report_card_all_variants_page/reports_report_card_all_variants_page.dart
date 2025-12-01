@@ -77,7 +77,10 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
               children: [
                 AppbarSubtitleOne(text: "lbl_report_card".tr),
                 AppbarSubtitleFive(
-                  text: "lbl_ogechi".tr,
+                  text:
+                      dashboardExtendedViewController
+                          .selectedStudent1!
+                          .firstName!,
                   margin: EdgeInsets.symmetric(horizontal: 33.h),
                 ),
               ],

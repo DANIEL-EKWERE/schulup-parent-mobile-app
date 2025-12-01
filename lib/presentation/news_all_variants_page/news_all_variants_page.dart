@@ -14,7 +14,10 @@ import 'controller/news_all_variants_controller.dart';
 import 'models/news_all_item_model.dart';
 import 'models/news_all_variants_model.dart';
 import 'widgets/news_all_item_widget.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 // ignore_for_file: must_be_immutable
 class NewsAllVariantsPage extends StatelessWidget {
   NewsAllVariantsPage({Key? key}) : super(key: key);
@@ -61,7 +64,7 @@ class NewsAllVariantsPage extends StatelessWidget {
         children: [
           AppbarSubtitleOne(text: "lbl_news".tr),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 6.h),
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -7,6 +8,7 @@ import '../../widgets/app_bar/appbar_trailing_iconbutton.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import 'controller/reports_ward_progress_subject_two_controller.dart'; // ignore_for_file: must_be_immutable
 
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class ReportsWardProgressSubjectTwoScreen
     extends GetWidget<ReportsWardProgressSubjectTwoController> {
   const ReportsWardProgressSubjectTwoScreen({Key? key}) : super(key: key);
@@ -65,7 +67,7 @@ class ReportsWardProgressSubjectTwoScreen
                 children: [
                   AppbarSubtitleOne(text: "lbl_ward_progress".tr),
                   AppbarSubtitleFive(
-                    text: "lbl_ogechi".tr,
+                    text: dashboardExtendedViewController.selectedStudent1!.firstName!,
                     margin: EdgeInsets.symmetric(horizontal: 43.h),
                   ),
                 ],

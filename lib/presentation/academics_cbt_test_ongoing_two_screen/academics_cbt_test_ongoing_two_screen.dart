@@ -80,7 +80,8 @@ class AcademicsCbtTestOngoingTwoScreen
                   ],
                 ),
                 AppbarSubtitleFive(
-                  text: "lbl_ogechi".tr,
+                  text:
+                      "", //dashboardExtendedViewController.selectedStudent1!.firstName!,
                   margin: EdgeInsets.symmetric(horizontal: 40.h),
                 ),
               ],

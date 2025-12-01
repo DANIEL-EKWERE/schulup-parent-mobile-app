@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -12,6 +13,7 @@ import '../news_all_variants_page/news_all_variants_page.dart';
 import '../reports_report_card_all_variants_page/reports_report_card_all_variants_page.dart';
 import 'controller/reports_report_card_downloading_controller.dart'; // ignore_for_file: must_be_immutable
 
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class ReportsReportCardDownloadingScreen
     extends GetWidget<ReportsReportCardDownloadingController> {
   const ReportsReportCardDownloadingScreen({Key? key}) : super(key: key);
@@ -64,7 +66,7 @@ class ReportsReportCardDownloadingScreen
               children: [
                 AppbarSubtitleOne(text: "lbl_report_card".tr),
                 AppbarSubtitleFive(
-                  text: "lbl_ogechi".tr,
+                  text: dashboardExtendedViewController.selectedStudent1!.firstName!,
                   margin: EdgeInsets.symmetric(horizontal: 33.h),
                 ),
               ],

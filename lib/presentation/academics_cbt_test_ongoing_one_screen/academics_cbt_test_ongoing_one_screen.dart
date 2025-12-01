@@ -10,7 +10,11 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_radio_button.dart';
 import 'controller/academics_cbt_test_ongoing_one_controller.dart'; // ignore_for_file: must_be_immutable
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+
+
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class AcademicsCbtTestOngoingOneScreen
     extends GetWidget<AcademicsCbtTestOngoingOneController> {
   const AcademicsCbtTestOngoingOneScreen({Key? key}) : super(key: key);
@@ -80,7 +84,10 @@ class AcademicsCbtTestOngoingOneScreen
                   ],
                 ),
                 AppbarSubtitleFive(
-                  text: "lbl_ogechi".tr,
+                  text:
+                      dashboardExtendedViewController
+                          .selectedStudent1!
+                          .firstName!,
                   margin: EdgeInsets.symmetric(horizontal: 39.h),
                 ),
               ],

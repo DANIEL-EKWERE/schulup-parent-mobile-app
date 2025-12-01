@@ -7,7 +7,9 @@ import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_radio_button.dart';
 import 'controller/academics_cbt_test_test_result_controller.dart'; // ignore_for_file: must_be_immutable
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class AcademicsCbtTestTestResultScreen
     extends GetWidget<AcademicsCbtTestTestResultController> {
   const AcademicsCbtTestTestResultScreen({Key? key}) : super(key: key);
@@ -94,7 +96,7 @@ class AcademicsCbtTestTestResultScreen
         children: [
           AppbarSubtitleOne(text: "lbl_result".tr),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 10.h),
           ),
         ],

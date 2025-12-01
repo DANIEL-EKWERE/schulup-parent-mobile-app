@@ -628,6 +628,23 @@ class ApiClient extends GetConnect {
   }
 
 
+Future<http.Response> startConversation(Map<String, dynamic> startConversationData) async {
+  var token = await dataBase.getToken();
+    final url = Uri.parse('$baseUrl/chat/conversations');
+    _logRequest('POST', url, body: startConversationData);
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(startConversationData),
+    );
+    _logResponse(response);
+    return response;
+  }
+
   /// submit Test
   Future<http.Response> submitTest(Map<String, dynamic> testData) async {
     final url = Uri.parse('$baseUrl/quiz/submit');

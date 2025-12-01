@@ -24,6 +24,7 @@ import 'package:schulupparent/widgets/custom_image_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'dart:developer' as myLog;
 import '../../core/utils/size_utils.dart';
+import '../signalr_chat/signalr_chat_screen.dart';
 
 DashboardExtendedViewController controller = Get.put(
   DashboardExtendedViewController(),
@@ -572,6 +573,12 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
             // ),
             actions: [
               AppbarTrailingIconbutton(
+                onTap: () async {
+                  var token = await dataBase.getToken();
+                  print('chat');
+                  Get.to(() => ChatScreen(token: token));
+                  print(token);
+                },
                 imagePath: ImageConstant.imgNotification,
               ),
               AppbarTrailingIconbutton(

@@ -9,7 +9,10 @@ import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 ChangePasswordController controller = Get.put(ChangePasswordController());
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -199,7 +202,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         children: [
           AppbarSubtitleOne(text: "Settings"),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 33.h),
           ),
         ],

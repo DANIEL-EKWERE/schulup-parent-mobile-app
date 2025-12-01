@@ -11,7 +11,10 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import 'controller/news_news_content_contains_controller.dart';
 import 'models/listweburl_item_model.dart';
 import 'widgets/listweburl_item_widget.dart'; // ignore_for_file: must_be_immutable
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 NewsNewsContentContainsController controller = Get.put(
   NewsNewsContentContainsController(),
 );
@@ -114,7 +117,7 @@ class _NewsNewsContentContainsScreenState
         children: [
           AppbarSubtitleOne(text: "lbl_news".tr),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 6.h),
           ),
         ],

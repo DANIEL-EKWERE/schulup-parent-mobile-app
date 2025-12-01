@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/presentation/direct_chat/controller/direct_chat_controller.dart';
 import 'package:schulupparent/presentation/settings/controller/settings_controller.dart';
 import 'package:schulupparent/widgets/custom_text_form_field.dart';
@@ -11,6 +12,7 @@ import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
 
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class SettingsScreen extends GetWidget<SettingsController> {
   const SettingsScreen({Key? key}) : super(key: key);
 
@@ -144,7 +146,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
         children: [
           AppbarSubtitleOne(text: "Settings"),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 33.h),
           ),
         ],

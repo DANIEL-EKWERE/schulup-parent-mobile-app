@@ -11,6 +11,10 @@ import '../../widgets/app_bar/appbar_trailing_iconbutton.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_text_form_field.dart';
 import 'controller/academics_schular_ai_ongoing_controller.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
+
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
 class AcademicsSchularAiOngoingScreen
     extends GetWidget<AcademicsSchularAiOngoingController> {
@@ -62,7 +66,12 @@ class AcademicsSchularAiOngoingScreen
           AppbarSubtitleOne(text: "lbl_schular_ai".tr),
           Obx(
             () => AppbarSubtitleFive(
-              text: controller.isAiTyping.value ? "typing..." : "lbl_ogechi".tr,
+              text:
+                  controller.isAiTyping.value
+                      ? "typing..."
+                      : dashboardExtendedViewController
+                          .selectedStudent1!
+                          .firstName!,
               margin: EdgeInsets.only(left: 25.h, right: 26.h),
             ),
           ),
@@ -464,7 +473,8 @@ class AcademicsSchularAiOngoingScreen
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(Get.context!);
   }
 }
 // ```

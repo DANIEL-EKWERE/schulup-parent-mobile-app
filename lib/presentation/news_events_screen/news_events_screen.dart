@@ -15,7 +15,10 @@ import 'models/listline_item_model.dart';
 import 'widgets/listjuncounter_item_widget.dart';
 import 'widgets/listline_item_widget.dart'; // ignore_for_file: must_be_immutable
 import 'package:intl/intl.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class NewsEventsScreen extends GetWidget<NewsEventsController> {
   const NewsEventsScreen({Key? key}) : super(key: key);
 
@@ -65,7 +68,10 @@ class NewsEventsScreen extends GetWidget<NewsEventsController> {
               children: [
                 AppbarSubtitleOne(text: "lbl_events".tr),
                 AppbarSubtitleFive(
-                  text: "lbl_ogechi".tr,
+                  text:
+                      dashboardExtendedViewController
+                          .selectedStudent1!
+                          .firstName!,
                   margin: EdgeInsets.symmetric(horizontal: 12.h),
                 ),
               ],

@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_image.dart';
 import '../../widgets/app_bar/appbar_subtitle_four.dart';
@@ -8,6 +9,7 @@ import '../../widgets/app_bar/appbar_trailing_image.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import 'controller/reports_report_card_preview_controller.dart'; // ignore_for_file: must_be_immutable
 
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class ReportsReportCardPreviewScreen
     extends GetWidget<ReportsReportCardPreviewController> {
   const ReportsReportCardPreviewScreen({Key? key}) : super(key: key);
@@ -63,7 +65,7 @@ class ReportsReportCardPreviewScreen
         children: [
           AppbarSubtitleTwo(text: "msg_first_term_primary".tr),
           AppbarSubtitleFour(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.only(left: 61.h, right: 62.h),
           ),
         ],

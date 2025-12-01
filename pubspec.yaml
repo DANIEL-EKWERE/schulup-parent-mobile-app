@@ -31,6 +31,9 @@ dependencies:
   pull_to_refresh_flutter3: ^2.0.2
   url_launcher: ^6.3.2
   alert_info: ^0.0.6
+  signalr_netcore: ^1.4.4
+  logger: ^2.6.2
+  # signalr_client: ^1.0.0
   
 
 dev_dependencies:

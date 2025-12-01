@@ -64,7 +64,10 @@ class NewsFilterResultScreen extends GetWidget<NewsFilterResultController> {
               children: [
                 AppbarSubtitleOne(text: "lbl_news".tr),
                 AppbarSubtitleFive(
-                  text: "lbl_ogechi".tr,
+                  text:
+                      dashboardExtendedViewController
+                          .selectedStudent1!
+                          .firstName!,
                   margin: EdgeInsets.symmetric(horizontal: 6.h),
                 ),
               ],

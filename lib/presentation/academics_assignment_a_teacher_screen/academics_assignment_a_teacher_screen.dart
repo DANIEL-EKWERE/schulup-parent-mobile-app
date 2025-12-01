@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -9,6 +10,7 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_text_form_field.dart';
 import 'controller/academics_assignment_a_teacher_controller.dart'; // ignore_for_file: must_be_immutable
 
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class AcademicsAssignmentATeacherScreen
     extends GetWidget<AcademicsAssignmentATeacherController> {
   const AcademicsAssignmentATeacherScreen({Key? key}) : super(key: key);
@@ -211,7 +213,7 @@ class AcademicsAssignmentATeacherScreen
                   AppbarSubtitleOne(text: "lbl_assignment".tr),
                   SizedBox(height: 1.h),
                   AppbarSubtitleFive(
-                    text: "lbl_ogechi".tr,
+                    text: dashboardExtendedViewController.selectedStudent1!.firstName!,
                     margin: EdgeInsets.symmetric(horizontal: 33.h),
                   ),
                 ],

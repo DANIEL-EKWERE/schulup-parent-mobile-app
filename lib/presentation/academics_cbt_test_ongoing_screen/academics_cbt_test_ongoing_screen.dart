@@ -82,7 +82,7 @@
 //                   ],
 //                 ),
 //                 AppbarSubtitleFive(
-//                   text: "lbl_ogechi".tr,
+//                   text: dashboardExtendedViewController.selectedStudent1!.firstName!,
 //                   margin: EdgeInsets.symmetric(horizontal: 39.h),
 //                 ),
 //               ],
@@ -276,73 +276,70 @@ class AcademicsCbtTestOngoingScreen
 
   /// Header with timer and progress
   Widget _buildHeader() {
-    return Obx(() => Container(
-          width: double.maxFinite,
-          decoration: AppDecoration.primaryC7Main,
-          child: Column(
-            children: [
-              CustomAppBar(
-                height: 60.h,
-                leadingWidth: 59.h,
-                leading: AppbarLeadingIconbutton(
-                  imagePath: ImageConstant.imgArrowLeftWhiteA700,
-                  margin: EdgeInsets.only(left: 25.h),
-                  onTap: () async {
-                    final shouldExit = await _showExitDialog(Get.context!);
-                    if (shouldExit == true) Get.back();
-                  },
-                ),
-                centerTitle: true,
-                title: Column(
-                  children: [
-                    if (controller.startTest.value.isTimed == true)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.timer, size: 16, color: Colors.white),
-                          SizedBox(width: 6.h),
-                          Text(
-                            controller.formattedTimeRemaining,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+    return Obx(
+      () => Container(
+        width: double.maxFinite,
+        decoration: AppDecoration.primaryC7Main,
+        child: Column(
+          children: [
+            CustomAppBar(
+              height: 60.h,
+              leadingWidth: 59.h,
+              leading: AppbarLeadingIconbutton(
+                imagePath: ImageConstant.imgArrowLeftWhiteA700,
+                margin: EdgeInsets.only(left: 25.h),
+                onTap: () async {
+                  final shouldExit = await _showExitDialog(Get.context!);
+                  if (shouldExit == true) Get.back();
+                },
+              ),
+              centerTitle: true,
+              title: Column(
+                children: [
+                  if (controller.startTest.value.isTimed == true)
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.timer, size: 16, color: Colors.white),
+                        SizedBox(width: 6.h),
+                        Text(
+                          controller.formattedTimeRemaining,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                    SizedBox(height: 4),
-                    Text(
-                      controller.startTest.value.quizTitle ?? 'Quiz',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 12,
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                actions: [
-                  IconButton(
-                    icon: Icon(Icons.grid_view, color: Colors.white),
-                    onPressed: controller.showQuestionNavigator,
+                  SizedBox(height: 4),
+                  Text(
+                    controller.startTest.value.quizTitle ?? 'Quiz',
+                    style: TextStyle(color: Colors.white70, fontSize: 12),
                   ),
                 ],
               ),
-              Container(
-                height: 10.h,
-                child: ClipRRect(
-                  child: LinearProgressIndicator(
-                    value: controller.progressPercentage,
-                    backgroundColor: appTheme.gray20001,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Color(0xFFFF8D2A),
-                    ),
-                  ),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.grid_view, color: Colors.white),
+                  onPressed: controller.showQuestionNavigator,
+                ),
+              ],
+            ),
+            Container(
+              height: 10.h,
+              child: ClipRRect(
+                child: LinearProgressIndicator(
+                  value: controller.progressPercentage,
+                  backgroundColor: appTheme.gray20001,
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF8D2A)),
                 ),
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   /// Question content
@@ -360,9 +357,7 @@ class AcademicsCbtTestOngoingScreen
             children: [
               Text(
                 'Question ${controller.currentQuestionIndex.value + 1}/${controller.totalQuestions}',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: Colors.grey,
-                ),
+                style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -448,50 +443,54 @@ class AcademicsCbtTestOngoingScreen
 
   /// Single choice answers (Radio buttons)
   Widget _buildSingleChoiceAnswers(Questions question) {
-    return Obx(() => Column(
-          children: question.answers?.map((answer) {
-                final isSelected = controller.isAnswerSelected(answer.answerID!);
+    return Obx(
+      () => Column(
+        children:
+            question.answers?.map((answer) {
+              final isSelected = controller.isAnswerSelected(answer.answerID!);
 
-                return Padding(
-                  padding: EdgeInsets.only(bottom: 12.h),
-                  child: GestureDetector(
-                    onTap: () {
-                      controller.selectSingleAnswer(
-                        question.questionID!,
-                        question.questionTypeID!,
-                        answer.answerID!,
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(14.h),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? Color(0xFFFF8D2A).withOpacity(0.1)
-                            : Colors.transparent,
-                        border: Border.all(
-                          color: isSelected
-                              ? Color(0xFFFF8D2A)
-                              : Colors.grey.shade300,
-                          width: isSelected ? 2 : 1,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
+              return Padding(
+                padding: EdgeInsets.only(bottom: 12.h),
+                child: GestureDetector(
+                  onTap: () {
+                    controller.selectSingleAnswer(
+                      question.questionID!,
+                      question.questionTypeID!,
+                      answer.answerID!,
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(14.h),
+                    decoration: BoxDecoration(
+                      color:
+                          isSelected
+                              ? Color(0xFFFF8D2A).withOpacity(0.1)
+                              : Colors.transparent,
+                      border: Border.all(
+                        color:
+                            isSelected
+                                ? Color(0xFFFF8D2A)
+                                : Colors.grey.shade300,
+                        width: isSelected ? 2 : 1,
                       ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 24,
-                            height: 24,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: isSelected
-                                    ? Color(0xFFFF8D2A)
-                                    : Colors.grey,
-                                width: 2,
-                              ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 24,
+                          height: 24,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color:
+                                  isSelected ? Color(0xFFFF8D2A) : Colors.grey,
+                              width: 2,
                             ),
-                            child: isSelected
-                                ? Center(
+                          ),
+                          child:
+                              isSelected
+                                  ? Center(
                                     child: Container(
                                       width: 12,
                                       height: 12,
@@ -501,27 +500,30 @@ class AcademicsCbtTestOngoingScreen
                                       ),
                                     ),
                                   )
-                                : null,
-                          ),
-                          SizedBox(width: 12.h),
-                          Expanded(
-                            child: Text(
-                              '${answer.answerLabel}. ${answer.answerText}',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight:
-                                    isSelected ? FontWeight.w600 : FontWeight.normal,
-                              ),
+                                  : null,
+                        ),
+                        SizedBox(width: 12.h),
+                        Expanded(
+                          child: Text(
+                            '${answer.answerLabel}. ${answer.answerText}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight:
+                                  isSelected
+                                      ? FontWeight.w600
+                                      : FontWeight.normal,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              }).toList() ??
-              [],
-        ));
+                ),
+              );
+            }).toList() ??
+            [],
+      ),
+    );
   }
 
   /// Multiple choice answers (Checkboxes)
@@ -538,80 +540,90 @@ class AcademicsCbtTestOngoingScreen
           ),
         ),
         SizedBox(height: 12.h),
-        Obx(() => Column(
-              children: question.answers?.map((answer) {
-                    final isSelected =
-                        controller.isAnswerSelected(answer.answerID!);
+        Obx(
+          () => Column(
+            children:
+                question.answers?.map((answer) {
+                  final isSelected = controller.isAnswerSelected(
+                    answer.answerID!,
+                  );
 
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: 12.h),
-                      child: GestureDetector(
-                        onTap: () {
-                          controller.toggleMultipleAnswer(
-                            question.questionID!,
-                            question.questionTypeID!,
-                            answer.answerID!,
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(14.h),
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? Color(0xFFFF8D2A).withOpacity(0.1)
-                                : Colors.transparent,
-                            border: Border.all(
-                              color: isSelected
-                                  ? Color(0xFFFF8D2A)
-                                  : Colors.grey.shade300,
-                              width: isSelected ? 2 : 1,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 12.h),
+                    child: GestureDetector(
+                      onTap: () {
+                        controller.toggleMultipleAnswer(
+                          question.questionID!,
+                          question.questionTypeID!,
+                          answer.answerID!,
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(14.h),
+                        decoration: BoxDecoration(
+                          color:
+                              isSelected
+                                  ? Color(0xFFFF8D2A).withOpacity(0.1)
+                                  : Colors.transparent,
+                          border: Border.all(
+                            color:
+                                isSelected
+                                    ? Color(0xFFFF8D2A)
+                                    : Colors.grey.shade300,
+                            width: isSelected ? 2 : 1,
                           ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(
-                                    color: isSelected
-                                        ? Color(0xFFFF8D2A)
-                                        : Colors.grey,
-                                    width: 2,
-                                  ),
-                                  color: isSelected
-                                      ? Color(0xFFFF8D2A)
-                                      : Colors.transparent,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(
+                                  color:
+                                      isSelected
+                                          ? Color(0xFFFF8D2A)
+                                          : Colors.grey,
+                                  width: 2,
                                 ),
-                                child: isSelected
-                                    ? Icon(
+                                color:
+                                    isSelected
+                                        ? Color(0xFFFF8D2A)
+                                        : Colors.transparent,
+                              ),
+                              child:
+                                  isSelected
+                                      ? Icon(
                                         Icons.check,
                                         size: 16,
                                         color: Colors.white,
                                       )
-                                    : null,
-                              ),
-                              SizedBox(width: 12.h),
-                              Expanded(
-                                child: Text(
-                                  '${answer.answerLabel}. ${answer.answerText}',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: isSelected
-                                        ? FontWeight.w600
-                                        : FontWeight.normal,
-                                  ),
+                                      : null,
+                            ),
+                            SizedBox(width: 12.h),
+                            Expanded(
+                              child: Text(
+                                '${answer.answerLabel}. ${answer.answerText}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight:
+                                      isSelected
+                                          ? FontWeight.w600
+                                          : FontWeight.normal,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  }).toList() ??
-                  [],
-            )),
+                    ),
+                  );
+                }).toList() ??
+                [],
+          ),
+        ),
       ],
     );
   }
@@ -620,7 +632,7 @@ class AcademicsCbtTestOngoingScreen
   Widget _buildTextAnswer(Questions question) {
     final textController = TextEditingController();
     final answer = controller.currentQuestionAnswer;
-    
+
     if (answer?.textAnswer != null) {
       textController.text = answer!.textAnswer!;
     }
@@ -668,66 +680,69 @@ class AcademicsCbtTestOngoingScreen
 
   /// Bottom navigation
   Widget _buildBottomNavigation() {
-    return Obx(() => Container(
-          padding: EdgeInsets.all(20.h),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade300,
-                blurRadius: 10,
-                offset: Offset(0, -2),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              // Previous button
-              if (!controller.isFirstQuestion)
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: controller.previousQuestion,
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                      side: BorderSide(color: Color(0xFFFF8D2A)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+    return Obx(
+      () => Container(
+        padding: EdgeInsets.all(20.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade300,
+              blurRadius: 10,
+              offset: Offset(0, -2),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            // Previous button
+            if (!controller.isFirstQuestion)
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: controller.previousQuestion,
+                  style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 14),
+                    side: BorderSide(color: Color(0xFFFF8D2A)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Text(
-                      'Previous',
-                      style: TextStyle(
-                        color: Color(0xFFFF8D2A),
-                        fontWeight: FontWeight.w600,
-                      ),
+                  ),
+                  child: Text(
+                    'Previous',
+                    style: TextStyle(
+                      color: Color(0xFFFF8D2A),
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
+              ),
 
-              if (!controller.isFirstQuestion) SizedBox(width: 12.h),
+            if (!controller.isFirstQuestion) SizedBox(width: 12.h),
 
-              // Next/Submit button
-              Expanded(
-                flex: controller.isFirstQuestion ? 1 : 1,
-                child: ElevatedButton(
-                  onPressed: controller.isSubmitting.value
-                      ? null
-                      : () {
+            // Next/Submit button
+            Expanded(
+              flex: controller.isFirstQuestion ? 1 : 1,
+              child: ElevatedButton(
+                onPressed:
+                    controller.isSubmitting.value
+                        ? null
+                        : () {
                           if (controller.isLastQuestion) {
                             controller.submitTest();
                           } else {
                             controller.nextQuestion();
                           }
                         },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFF8D2A),
-                    padding: EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFFF8D2A),
+                  padding: EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  child: controller.isSubmitting.value
-                      ? SizedBox(
+                ),
+                child:
+                    controller.isSubmitting.value
+                        ? SizedBox(
                           height: 20,
                           width: 20,
                           child: CircularProgressIndicator(
@@ -735,7 +750,7 @@ class AcademicsCbtTestOngoingScreen
                             strokeWidth: 2,
                           ),
                         )
-                      : Row(
+                        : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
@@ -756,11 +771,12 @@ class AcademicsCbtTestOngoingScreen
                             ),
                           ],
                         ),
-                ),
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   /// Show exit confirmation dialog
@@ -778,9 +794,7 @@ class AcademicsCbtTestOngoingScreen
           ),
           ElevatedButton(
             onPressed: () => Get.back(result: true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             child: Text('Exit'),
           ),
         ],

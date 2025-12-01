@@ -22,6 +22,8 @@ class SigninScreen extends StatefulWidget {
 }
 
 class _SigninScreenState extends State<SigninScreen> {
+  bool isVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -140,6 +142,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       textInputType: TextInputType.visiblePassword,
                       controller: controller.passwordController,
                       hintText: "Passowrd",
+                      obscureText: isVisible,
                       hintStyle: CustomTextStyles.bodyMediumGray700,
                       prefix: Container(
                         margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
@@ -153,12 +156,32 @@ class _SigninScreenState extends State<SigninScreen> {
                       prefixConstraints: BoxConstraints(maxHeight: 44.h),
                       suffix: Container(
                         margin: EdgeInsets.fromLTRB(16.h, 14.h, 14.h, 14.h),
-                        child: CustomImageView(
-                          imagePath: ImageConstant.imgVisibility,
-                          height: 16.h,
-                          width: 16.h,
-                          fit: BoxFit.contain,
-                        ),
+                        child:
+                            isVisible
+                                ? CustomImageView(
+                                  onTap: () {
+                                    setState(() {
+                                      isVisible = !isVisible;
+                                    });
+                                  },
+                                  imagePath: ImageConstant.imgVisibility,
+                                  height: 16.h,
+                                  width: 16.h,
+                                  fit: BoxFit.contain,
+                                )
+                                : GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isVisible = !isVisible;
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.visibility_off_outlined,
+                                    color: Colors.grey,
+                                    size: 14,
+                                    weight: 0.5,
+                                  ),
+                                ),
                       ),
                       suffixConstraints: BoxConstraints(maxHeight: 44.h),
                       contentPadding: EdgeInsets.all(14.h),

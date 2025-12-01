@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/cbt_detail_model.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
@@ -10,6 +11,7 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_cbt_test_test_details_controller.dart'; // ignore_for_file: must_be_immutable
 
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class AcademicsCbtTestTestDetailsScreen
     extends GetWidget<AcademicsCbtTestTestDetailsController> {
   const AcademicsCbtTestTestDetailsScreen({Key? key}) : super(key: key);
@@ -134,7 +136,7 @@ class AcademicsCbtTestTestDetailsScreen
         children: [
           AppbarSubtitleOne(text: "lbl_cbt_test".tr),
           AppbarSubtitleFive(
-            text: "lbl_ogechi".tr,
+            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.only(left: 19.h, right: 20.h),
           ),
         ],
