@@ -826,6 +826,24 @@ Future<http.Response> startCbt(String studentID, String quizScheduleID) async {
     return response;
   }
 
+
+  // get teachesr linked to a student
+  Future<http.Response> getUserConversations() async {
+    final url = Uri.parse('$baseUrl/chat/user-conversations?page=1&pageSize=20');
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
   // get Student's subjects
   Future<http.Response> getSubjects(String studentID) async {
     final url = Uri.parse('$baseUrl/students/$studentID/subjects');

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/core/utils/storage.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/academics_assignment_status_initial_model.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/models/academics_session_model.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/models/student_batch_model.dart';
@@ -17,7 +18,7 @@ class DashboardExtendedViewController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   Rx<bool> isLoading = false.obs;
-
+//AcademicsAssignmentStatusController controllerx = Get.find<AcademicsAssignmentStatusController>();
   List<Student> students = [];
   AcademicsAssignmentStatusInitialModel? academicsAssignmentStatusInitialModel;
   Student? selectedStudent;
@@ -76,9 +77,10 @@ class DashboardExtendedViewController extends GetxController {
         }
         //   OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
-        getBatch();
-      getClass();
-      getAcademicSessions();
+      await  getBatch();
+    await  getClass();
+     await getAcademicSessions();
+
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //Get.offAllNamed(AppRoutes.signTwoScreen);

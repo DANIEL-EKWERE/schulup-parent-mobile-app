@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+// import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'core/app_export.dart';
 
 void main() {
@@ -12,6 +13,8 @@ void main() {
     Logger.init(kReleaseMode ? LogMode.live : LogMode.debug);
     runApp(MyApp());
   });
+  // AcademicsAssignmentStatusController controllerxxx =
+  //     Get.put(AcademicsAssignmentStatusController());
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

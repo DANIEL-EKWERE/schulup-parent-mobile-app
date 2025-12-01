@@ -494,6 +494,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                       _selectedStudentIndex = index;
                                     });
                                     Navigator.pop(context, student);
+                                    controller.selectedStudent1 = student;
                                     controller.getClass();
                                     controller.getBatch();
                                     myLog.log(

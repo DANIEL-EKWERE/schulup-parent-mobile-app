@@ -721,6 +721,19 @@ class _AcademicsAssignmentStatusInitialPageState
                         },
                       ),
                     )
+                    : controller.assignmentData!.isEmpty
+                    ? Center(
+                      child: Column(
+                        spacing: 30,
+                        children: [
+                          SizedBox(height: 150.h),
+                          CustomImageView(imagePath: ImageConstant.imgObjects),
+                          Text(
+                            'No Assignment for the selected filter condition',
+                          ),
+                        ],
+                      ),
+                    )
                     : ListView.builder(
                       itemCount: controller.assignmentData!.length,
                       itemBuilder: (context, index) {
@@ -778,6 +791,17 @@ class _AcademicsAssignmentStatusInitialPageState
                         },
                       ),
                     )
+                    : controller.cbtData!.isEmpty
+                    ? Center(
+                      child: Column(
+                        spacing: 30,
+                        children: [
+                          SizedBox(height: 150.h),
+                          CustomImageView(imagePath: ImageConstant.imgObjects),
+                          Text('No Lessons for the selected filter condition'),
+                        ],
+                      ),
+                    )
                     : ListView.builder(
                       itemCount: controller.cbtData!.length,
                       itemBuilder: (context, index) {
@@ -830,6 +854,17 @@ class _AcademicsAssignmentStatusInitialPageState
                           // }
                           // return ListlineItemWidget(newsItems[index]);
                         },
+                      ),
+                    )
+                    : controller.lessonList.isEmpty
+                    ? Center(
+                      child: Column(
+                        spacing: 30,
+                        children: [
+                          SizedBox(height: 150.h),
+                          CustomImageView(imagePath: ImageConstant.imgObjects),
+                          Text('No cbt Test for the selected filter condition'),
+                        ],
                       ),
                     )
                     : ListView.builder(

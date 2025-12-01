@@ -1,4 +1,5 @@
 // TODO Implement this library.
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as myLog;
 import 'dart:io';
@@ -42,9 +43,7 @@ class AcademicsAssignmentStatusController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    getAssignment();
-    getCbt();
-    allLessons();
+    byGuardian();
 
     // getAssignment();
     // classType.value =
@@ -160,7 +159,11 @@ class AcademicsAssignmentStatusController extends GetxController
         var responseData = jsonDecode(response.body);
 
         myLog.log('Token: $responseData');
-
+        Timer(Duration(seconds: 3), () {
+          getAssignment();
+          getCbt();
+          allLessons();
+        });
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         // OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);

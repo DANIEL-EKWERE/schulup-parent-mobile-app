@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/presentation/direct_chat/models/models.dart';
+import 'package:schulupparent/presentation/direct_chat/models/ongoing_conversation_model.dart';
 
 class DirectChatController extends GetxController {
   //students/47135/classteachers
@@ -17,10 +18,14 @@ class DirectChatController extends GetxController {
   List<TeacherData>? teacherData;
   Rx<bool> isLoading = false.obs;
 
+  OngoingConversations? ongoingConversations;
+  List<Conversations>? conversations;
+
   @override
   onInit() {
     super.onInit();
     getTeachers();
+    getUserConversations();
   }
 
   Future<void> getTeachers() async {
@@ -53,6 +58,64 @@ class DirectChatController extends GetxController {
         Get.snackbar(
           'Error',
           'Login failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      isLoading.value = false;
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      //OverlayLoadingProgress.stop();
+    } finally {
+      isLoading.value = false;
+      // OverlayLoadingProgress.stop();
+    }
+  }
+
+  Future<void> getUserConversations() async {
+    isLoading.value = true;
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    // );
+    try {
+      // var studentID = dashboardcontroller.selectedStudent1!.studentID;
+      // myLog.log(studentID.toString());
+      final response = await _apiService.getUserConversations();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ongoingConversations = ongoingConversationsFromJson(response.body);
+        conversations = ongoingConversations!.data!.conversations;
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isLoading.value = false;
+        Get.snackbar(
+          'Opps!!!',
+          'No data found.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0XFFFF8C42),
+          colorText: Colors.white,
+        );
+      } else {
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
+        Get.snackbar(
+          'Error',
+          'fetching Conversation failed. Please try again.',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
