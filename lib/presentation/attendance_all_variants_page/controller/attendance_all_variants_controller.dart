@@ -54,7 +54,8 @@ class AttendanceAllVariantsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    selectedMonth = DateTime.now().month;
+    selectedMonth = DateTime.now().month - 1;
+    myLog.log("setting selected month to the current month $selectedMonth");
     getStudentAttendance();
   }
 
@@ -93,11 +94,15 @@ class AttendanceAllVariantsController extends GetxController {
       var studentID =
           dashboardExtendedViewController.selectedStudent1!.studentID;
       var year = DateTime.now().year;
-      myLog.log(year.toString());
+      var month = DateTime.now().month;
+      // myLog.log(year.toString());
+      // myLog.log(selectedMonth.toString());
+      myLog.log("month from datetime package : $month");
+      myLog.log("selected month : ${selectedMonth! + 1}");
       final response = await _apiService.getStudentAttendance(
         studentID.toString(),
         year.toString(),
-        selectedMonth.toString(),
+        "${selectedMonth! + 1}",
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;

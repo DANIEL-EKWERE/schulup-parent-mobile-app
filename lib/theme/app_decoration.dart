@@ -40,17 +40,15 @@ class AppDecoration {
   static BoxDecoration get primaryC11 =>
       BoxDecoration(color: appTheme.yellow50);
 
-      static BoxDecoration get green =>
-      BoxDecoration(color: Color(0xff34C759));
+  static BoxDecoration get green => BoxDecoration(color: Color(0xff34C759));
 
-  static BoxDecoration get onPrimary =>
-      BoxDecoration(color: appTheme.black900);
+  static BoxDecoration get onPrimary => BoxDecoration(color: appTheme.black900);
   static BoxDecoration get primaryC7Main => BoxDecoration(
     color: Color(0xffFF8D2A), //theme.colorScheme.primary,
-    borderRadius: BorderRadius.only(
-      bottomLeft: Radius.circular(12.h),
-      bottomRight: Radius.circular(12.h),
-    ),
+    // borderRadius: BorderRadius.only(
+    //   bottomLeft: Radius.circular(12.h),
+    //   bottomRight: Radius.circular(12.h),
+    // ),
   );
   // Success decorations
   static BoxDecoration get successC1 => BoxDecoration(color: appTheme.green500);

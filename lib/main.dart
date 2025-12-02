@@ -2,11 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:schulupparent/presentation/signalr_chat/controller/signalr_service.dart';
 // import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'core/app_export.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(SignalRChatService());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((
     value,
   ) {

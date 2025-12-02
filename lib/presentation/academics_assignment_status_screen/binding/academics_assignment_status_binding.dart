@@ -25,7 +25,7 @@ class AcademicsAssignmentStatusBinding extends Bindings {
     Get.put(AttendanceFilterStartDateController(), permanent: true);
 Get.put(NewsModalJumpToADateController(), permanent: true);
 
-Get.put(ChatController(), permanent: true);
+//Get.put(ChatController(), permanent: true);
 
   }
 }

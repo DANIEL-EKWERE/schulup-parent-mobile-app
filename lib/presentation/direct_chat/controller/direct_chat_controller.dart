@@ -166,7 +166,7 @@ class DirectChatController extends GetxController {
       // myLog.log(studentID.toString());
       final response = await _apiService.startConversation(body);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Get.to(() => ChatScreen());
+       // Get.to(() => ChatScreen());
          OverlayLoadingProgress.stop();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //isLoading.value = false;

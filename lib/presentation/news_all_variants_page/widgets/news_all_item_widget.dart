@@ -29,12 +29,12 @@ class NewsAllItemWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomImageView(
-            imagePath: ImageConstant.imgImage62,
-            height: 170.h,
-            width: double.maxFinite,
-            radius: BorderRadius.circular(5.h),
-          ),
+          // CustomImageView(
+          //   imagePath: ImageConstant.imgImage62,
+          //   height: 170.h,
+          //   width: double.maxFinite,
+          //   radius: BorderRadius.circular(5.h),
+          // ),
           SizedBox(
             width: double.infinity,
             child:

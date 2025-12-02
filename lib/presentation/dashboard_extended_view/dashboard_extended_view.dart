@@ -576,7 +576,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                 onTap: () async {
                   var token = await dataBase.getToken();
                   print('chat');
-                  Get.to(() => ChatScreen(token: token));
+                  Get.to(() => ChatScreen());
                   print(token);
                 },
                 imagePath: ImageConstant.imgNotification,

@@ -14,8 +14,9 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
-DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class DirectChatScreen extends GetWidget<DirectChatController> {
   const DirectChatScreen({Key? key}) : super(key: key);
 
@@ -134,6 +135,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
                                                               .teacherUserId
                                                               .toString(),
                                                         );
+                                                    Navigator.pop(context);
                                                   },
                                                   child: Text('Ok'),
                                                 ),

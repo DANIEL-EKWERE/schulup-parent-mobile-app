@@ -162,15 +162,15 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
                     // return AttendanceFilterStartDateBottomsheet(
                     //   AttendanceFilterStartDateController(),
                     // );
-                    controller.getStudentAttendance();
-                    // showModalBottomSheet(
-                    //   context: Get.context!,
-                    //   builder: (context) {
-                    //     return AttendanceFilterStartDateBottomsheet(
-                    //       AttendanceFilterStartDateController(),
-                    //     );
-                    //   },
-                    // );
+                    //controller.getStudentAttendance();
+                    showModalBottomSheet(
+                      context: Get.context!,
+                      builder: (context) {
+                        return AttendanceFilterStartDateBottomsheet(
+                          AttendanceFilterStartDateController(),
+                        );
+                      },
+                    );
                   },
                   imagePath: ImageConstant.imgUserWhiteA700,
                   margin: EdgeInsets.only(top: 1.h, right: 25.h, bottom: 2.h),
@@ -356,7 +356,7 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
           //   () =>
           ListView.separated(
             padding: EdgeInsets.zero,
-            physics: NeverScrollableScrollPhysics(),
+            //physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             separatorBuilder: (context, index) {
               return SizedBox(height: 4.h);
