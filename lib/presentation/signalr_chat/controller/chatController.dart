@@ -35,7 +35,7 @@ class ChatController1 extends GetxController {
     apiBaseUrl = 'https://api.schulup.com/api';
     jwtToken = await getToken(); //Get.arguments['jwtToken'] ?? '';
     userId = 84178;
-    conversationId = 3;
+    conversationId = 1;
 
     _initializeChat();
   }
@@ -81,18 +81,20 @@ class ChatController1 extends GetxController {
     try {
       final response = await http.get(
         Uri.parse(
-          '$apiBaseUrl/chat/conversations/$conversationId/messages?page=1&pageSize=20',
+          '$apiBaseUrl/chat/conversations/1/messages?page=1&pageSize=20',
         ),
         headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
           'Authorization': 'Bearer $jwtToken',
-          'Content-Type': 'application/json',
         },
       );
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        print(data);
         final messagesList =
-            (data['messages'] as List)
+            (data['data']['messages'] as List)
                 .map((json) => Message.fromJson(json))
                 .toList();
 
@@ -140,6 +142,7 @@ class ChatController1 extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('Message sent successfully');
         // Message will be received via SignalR
+        // loadMessages();
       } else {
         Get.snackbar(
           'Error',
