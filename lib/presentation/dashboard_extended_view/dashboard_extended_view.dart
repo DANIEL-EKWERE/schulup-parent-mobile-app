@@ -488,6 +488,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                       controller.selectedStudent1 = student;
                                       controller.getClass();
                                       controller.getBatch();
+                                      controller.getAcademicSessions();
                                     },
                                   ),
                                   onTap: () {
@@ -498,6 +499,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                     controller.selectedStudent1 = student;
                                     controller.getClass();
                                     controller.getBatch();
+                                    controller.getAcademicSessions();
                                     myLog.log(
                                       'Selected student1: ${student.firstName} ${student.lastName}',
                                     );
@@ -576,8 +578,10 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                 onTap: () async {
                   var token = await dataBase.getToken();
                   print('chat');
-                  Get.to(() => ChatScreen());
+                  // Get.to(() => ChatScreen());
                   print(token);
+                  //controller.getAcademicSessions();
+                  controller.getClass();
                 },
                 imagePath: ImageConstant.imgNotification,
               ),

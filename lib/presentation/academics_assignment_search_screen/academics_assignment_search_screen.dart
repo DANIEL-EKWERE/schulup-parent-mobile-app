@@ -115,7 +115,7 @@ class AcademicsAssignmentSearchScreen
                           children: [
                             Obx(() {
                               return Text(
-                                controller1.classType.value,
+                                controller1.classType!.value,
                                 style: theme.textTheme.labelLarge,
                               );
                             }),

@@ -18,13 +18,14 @@ class DashboardExtendedViewController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   Rx<bool> isLoading = false.obs;
-//AcademicsAssignmentStatusController controllerx = Get.find<AcademicsAssignmentStatusController>();
+  //AcademicsAssignmentStatusController controllerx = Get.find<AcademicsAssignmentStatusController>();
   List<Student> students = [];
   AcademicsAssignmentStatusInitialModel? academicsAssignmentStatusInitialModel;
   Student? selectedStudent;
   Student? selectedStudent1;
-  Rx<String>? selectedClass;
-  Rx<String>? selectedSession;
+  Rx<String> selectedClass = 'n/a'.obs;
+  String? selectedStudentClass;
+  Rx<String> selectedSession = 'n/a'.obs;
   AcademicSessionData? selectedAcademicSessionData;
 
   StudentClass studentClassObj = StudentClass();
@@ -43,13 +44,13 @@ class DashboardExtendedViewController extends GetxController {
     super.onInit();
     byGuardian();
     // Timer(Duration(seconds: 3), () {
-      
+
     // });
   }
 
   Future<void> byGuardian() async {
-    // getBatch(); 
-    // getClass(); 
+    // getBatch();
+    // getClass();
     // OverlayLoadingProgress.start(
     //   context: Get.context!,
     //   circularProgressColor: Color(0XFFFF8C42),
@@ -78,10 +79,9 @@ class DashboardExtendedViewController extends GetxController {
         }
         //   OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
-      await  getBatch();
-    await  getClass();
-     await getAcademicSessions();
-
+        await getBatch();
+        await getClass();
+        await getAcademicSessions();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //Get.offAllNamed(AppRoutes.signTwoScreen);
@@ -132,12 +132,9 @@ class DashboardExtendedViewController extends GetxController {
     }
   }
 
-
-
-
   Future<void> getAcademicSessions() async {
-    // getBatch(); 
-    // getClass(); 
+    // getBatch();
+    // getClass();
     // OverlayLoadingProgress.start(
     //   context: Get.context!,
     //   circularProgressColor: Color(0XFFFF8C42),
@@ -146,7 +143,9 @@ class DashboardExtendedViewController extends GetxController {
     try {
       var userId = await dataBase.getUserId();
       myLog.log('User ID: $userId');
-      final response = await _apiService.getAcademicSessions(selectedStudent1!.studentID.toString());
+      final response = await _apiService.getAcademicSessions(
+        selectedStudent1!.studentID.toString(),
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         // // OverlayLoadingProgress.stop();
         // // myLog.log('Login successful: ${response.body}');
@@ -158,7 +157,21 @@ class DashboardExtendedViewController extends GetxController {
         isLoading.value = false;
         academicSessionObj = academicSessionFromJson(response.body);
         academicSessionDataList = academicSessionObj.data ?? [];
-        selectedAcademicSessionData = academicSessionDataList.isNotEmpty ? academicSessionDataList.first : null;
+        selectedAcademicSessionData =
+            academicSessionDataList.isNotEmpty
+                ? academicSessionDataList.first
+                : null;
+        for (var session in academicSessionDataList) {
+          myLog.log(session.isActive.toString());
+          if (session.isActive == true) {
+            selectedSession.value = session.name ?? 'n/a';
+            myLog.log('Found an active session ${session.name}');
+            break; // Stop once found
+          } else {
+            myLog.log('active session not found');
+            selectedSession.value = 'No Active Session';
+          }
+        }
         myLog.log("seesion List ${academicSessionDataList.first}");
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
@@ -210,31 +223,54 @@ class DashboardExtendedViewController extends GetxController {
     }
   }
 
-
-
-
-
   Future<void> getClass() async {
+    myLog.log('get class called');
     // OverlayLoadingProgress.start(
     //   context: Get.context!,
     //   circularProgressColor: Color(0XFFFF8C42),
     isLoading.value = true;
     // );
     try {
-      
-      final response = await _apiService.getClass(selectedStudent1!.studentID.toString());
+      final response = await _apiService.getClass(
+        selectedStudent1!.studentID.toString(),
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
+        myLog.log(response.body);
         // OverlayLoadingProgress.stop();
         // myLog.log('Login successful: ${response.body}');
         // schoolCodeInputController.dispose();
         // usernameInputController.dispose();
         // passwordInputController.dispose();
-          studentClassObj = studentClassFromJson(response.body);
-          classDataList = studentClassObj.data ?? [];
-          selectedClassID = classDataList.first.classID;
-          selectedClass!.value = classDataList.first.name!;
-        // myLog.log('Token: $responseData');
+        studentClassObj = studentClassFromJson(response.body);
+        classDataList = studentClassObj.data ?? [];
+        //myLog.log('Token: ${classDataList.first.name}');
+        selectedClassID = classDataList.first.classID;
+        //myLog.log('Token: ${classDataList.first.name}');
+        // selectedClass!.value = classDataList.first.name!;
+        // myLog.log('Token: ${classDataList.first.name}');
+        // myLog.log('Token: $classDataList');
+
+        for (var studentClass in classDataList) {
+          myLog.log(studentClass.name!);
+          if (studentClass.isActive == true) {
+            myLog.log('Token: xxx');
+            myLog.log('Token: ${studentClass.isActive}');
+            myLog.log('Token: ${studentClass.name}');
+            selectedStudentClass = studentClass.name!;
+            selectedClass.value = studentClass.name ?? 'n/a';
+            myLog.log('class id before: ${selectedClassID}');
+            selectedClassID = studentClass.classID;
+            myLog.log('class id after: ${selectedClassID}');
+            myLog.log('Token: assigned');
+            // myLog.log('Token: ${selectedClass!.value}');
+            // myLog.log('Found an active class ${studentClass.name}');
+            break;
+          } else {
+            myLog.log('active class not found');
+            selectedClass!.value = 'No Active Class';
+          }
+        }
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         // OverlayLoadingProgress.stop();
@@ -273,6 +309,7 @@ class DashboardExtendedViewController extends GetxController {
         colorText: Colors.white,
       );
     } catch (e) {
+      myLog.log(e.toString());
       isLoading.value = false;
       Get.snackbar(
         'Error',
@@ -288,8 +325,6 @@ class DashboardExtendedViewController extends GetxController {
     }
   }
 
-
-
   Future<void> getBatch() async {
     // OverlayLoadingProgress.start(
     //   context: Get.context!,
@@ -297,8 +332,9 @@ class DashboardExtendedViewController extends GetxController {
     // );
     isLoading.value = true;
     try {
-     
-      final response = await _apiService.getBatch(selectedStudent1!.studentID.toString());
+      final response = await _apiService.getBatch(
+        selectedStudent1!.studentID.toString(),
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
         // OverlayLoadingProgress.stop();
@@ -309,8 +345,8 @@ class DashboardExtendedViewController extends GetxController {
         // var responseData = jsonDecode(response.body);
 
         // myLog.log('Token: $responseData');
-          studentBatchObj = studentBatchFromJson(response.body);
-          batchDataList = studentBatchObj.data ?? [];
+        studentBatchObj = studentBatchFromJson(response.body);
+        batchDataList = studentBatchObj.data ?? [];
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         // OverlayLoadingProgress.stop();

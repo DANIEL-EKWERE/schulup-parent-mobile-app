@@ -42,21 +42,25 @@ class AcademicSession {
 class AcademicSessionData {
   int? academicSessionID;
   String? name;
+  dynamic isActive;
 
   AcademicSessionData({
     this.academicSessionID,
     this.name,
+    this.isActive,
   });
 
   AcademicSessionData.fromJson(Map<String, dynamic> json) {
     academicSessionID = json['academicSessionID'];
     name = json['name'];
+    isActive = json['isActive'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['academicSessionID'] = academicSessionID;
     data['name'] = name;
+    data['isActive'] = isActive;
     return data;
   }
 

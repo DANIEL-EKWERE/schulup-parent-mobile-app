@@ -118,7 +118,7 @@ class AcademicsAssignmentStatusController extends GetxController
     academicsFourModelObj.value.dropdownItemList2.refresh();
   }
 
-  Rx<String> classType = 'Seleted Class'.obs;
+  Rx<String> classType = 'N/A'.obs;
 
   Rx<String> termType = 'First Term'.obs;
 

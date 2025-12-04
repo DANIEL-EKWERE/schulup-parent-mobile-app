@@ -37,18 +37,21 @@ class StudentClass {
 class ClassData {
   int? classID;
   String? name;
+  dynamic isActive;
 
-  ClassData({this.classID, this.name});
+  ClassData({this.classID, this.name, this.isActive});
 
   ClassData.fromJson(Map<String, dynamic> json) {
     classID = json['classID'];
     name = json['name'];
+    isActive = json['isActive'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['classID'] = classID;
     data['name'] = name;
+    data['isActive'] = isActive;
     return data;
   }
 }
