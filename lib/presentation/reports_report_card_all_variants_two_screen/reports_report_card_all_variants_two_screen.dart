@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -12,6 +13,7 @@ import '../news_all_variants_page/news_all_variants_page.dart';
 import '../reports_report_card_all_variants_page/reports_report_card_all_variants_page.dart';
 import 'controller/reports_report_card_all_variants_two_controller.dart'; // ignore_for_file: must_be_immutable
 
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class ReportsReportCardAllVariantsTwoScreen
     extends GetWidget<ReportsReportCardAllVariantsTwoController> {
   const ReportsReportCardAllVariantsTwoScreen({Key? key}) : super(key: key);

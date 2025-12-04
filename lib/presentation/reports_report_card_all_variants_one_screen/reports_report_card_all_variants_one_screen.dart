@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -14,6 +15,7 @@ import 'controller/reports_report_card_all_variants_one_controller.dart';
 import 'models/listline_item_model.dart';
 import 'widgets/listline_item_widget.dart'; // ignore_for_file: must_be_immutable
 
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class ReportsReportCardAllVariantsOneScreen
     extends GetWidget<ReportsReportCardAllVariantsOneController> {
   const ReportsReportCardAllVariantsOneScreen({Key? key}) : super(key: key);

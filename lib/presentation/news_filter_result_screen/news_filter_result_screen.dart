@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -13,6 +14,8 @@ import '../reports_report_card_all_variants_page/reports_report_card_all_variant
 import 'controller/news_filter_result_controller.dart';
 import 'models/listyellowhouse_item_model.dart';
 import 'widgets/listyellowhouse_item_widget.dart'; // ignore_for_file: must_be_immutable
+
+DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 
 class NewsFilterResultScreen extends GetWidget<NewsFilterResultController> {
   const NewsFilterResultScreen({Key? key}) : super(key: key);

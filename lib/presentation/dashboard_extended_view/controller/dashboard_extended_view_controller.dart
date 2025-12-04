@@ -24,6 +24,7 @@ class DashboardExtendedViewController extends GetxController {
   Student? selectedStudent;
   Student? selectedStudent1;
   Rx<String>? selectedClass;
+  Rx<String>? selectedSession;
   AcademicSessionData? selectedAcademicSessionData;
 
   StudentClass studentClassObj = StudentClass();
@@ -158,6 +159,7 @@ class DashboardExtendedViewController extends GetxController {
         academicSessionObj = academicSessionFromJson(response.body);
         academicSessionDataList = academicSessionObj.data ?? [];
         selectedAcademicSessionData = academicSessionDataList.isNotEmpty ? academicSessionDataList.first : null;
+        myLog.log("seesion List ${academicSessionDataList.first}");
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //Get.offAllNamed(AppRoutes.signTwoScreen);

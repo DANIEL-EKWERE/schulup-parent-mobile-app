@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
@@ -12,7 +13,8 @@ import '../models/reports_report_card_all_variants_model.dart';
 ///
 /// This class manages the state of the ReportsReportCardAllVariantsPage, including the
 /// current reportsReportCardAllVariantsModelObj
-class ReportsReportCardAllVariantsController extends GetxController with GetSingleTickerProviderStateMixin {
+class ReportsReportCardAllVariantsController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   ReportsReportCardAllVariantsController(
     this.reportsReportCardAllVariantsModelObj,
   );
@@ -21,10 +23,12 @@ class ReportsReportCardAllVariantsController extends GetxController with GetSing
 
   Rx<String> termType = 'First Term'.obs;
   Rx<String> dayType = 'Daily'.obs;
+  Rx<String> session = ''.obs;
   Rx<int> selectedTermId = 1.obs;
   Rx<int> tabIndex = 0.obs;
-
-    late TabController tabviewController = Get.put(
+  Rx<String> date = ''.obs;
+  DateTime? datex; 
+  late TabController tabviewController = Get.put(
     TabController(vsync: this, length: 3),
   );
   RefreshController refreshController = RefreshController(
@@ -41,6 +45,12 @@ class ReportsReportCardAllVariantsController extends GetxController with GetSing
   ReportModel? reports;
   List<ReportData> reportDataList = [];
 
+  ReportModel? reportsWeekly;
+  List<ReportData> reportDataWeeklyList = [];
+
+  ReportModel? reportsTermly;
+  List<ReportData> reportDataTermlyList = [];
+
   ReportData? selectedReport;
   String? selectedReportId;
 
@@ -53,10 +63,20 @@ class ReportsReportCardAllVariantsController extends GetxController with GetSing
   void onInit() {
     super.onInit();
     getWeeklyReports();
+    getTermlyReports();
+    datex = DateTime.now();
+    date.value = formatDate(datex.toString()); 
     // getTermlyReports();
     // Timer(Duration(seconds: 3), (){
     //   getSubjectProgress();
     // });
+    session.value =
+        dashboardExtendedViewController.selectedAcademicSessionData!.name!;
+  }
+
+  String formatDate(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('MMM. d, yyyy').format(dateTime);
   }
 
   Future<void> getTermlyReports() async {
@@ -79,10 +99,10 @@ class ReportsReportCardAllVariantsController extends GetxController with GetSing
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
-        reports = reportModelFromJson(response.body);
-        reportDataList = reports!.data!;
+        reportsTermly = reportModelFromJson(response.body);
+        reportDataTermlyList = reportsTermly!.data!;
         selectedReport =
-            reportDataList.isNotEmpty ? reportDataList.first : null;
+            reportDataTermlyList.isNotEmpty ? reportDataTermlyList.first : null;
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
       } else {
@@ -142,10 +162,10 @@ class ReportsReportCardAllVariantsController extends GetxController with GetSing
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
-        reports = reportModelFromJson(response.body);
-        reportDataList = reports!.data!;
+        reportsWeekly = reportModelFromJson(response.body);
+        reportDataWeeklyList = reportsWeekly!.data!;
         selectedReport =
-            reportDataList.isNotEmpty ? reportDataList.first : null;
+            reportDataWeeklyList.isNotEmpty ? reportDataWeeklyList.first : null;
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
       } else {

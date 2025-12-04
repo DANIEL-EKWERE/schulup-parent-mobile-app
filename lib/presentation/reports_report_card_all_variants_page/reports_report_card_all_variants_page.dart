@@ -1,13 +1,19 @@
 // TODO Implement this library.
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/presentation/reports_report_card_all_variants_page/models/report_model.dart';
+import 'package:schulupparent/presentation/reports_report_card_all_variants_page/widgets/custom_date_picker_model.dart';
 import 'package:schulupparent/presentation/reports_report_card_all_variants_page/widgets/listline_item_widget_weekly.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/controller/reports_report_card_modal_controller.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_one_bottomsheet/controller/reports_report_card_modal_one_controller.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_one_bottomsheet/reports_report_card_modal_one_bottomsheet.dart';
+import 'package:schulupparent/presentation/session_model_sheet/controller/session_modal_controller.dart';
+import 'package:schulupparent/presentation/session_model_sheet/session_modal_bottom_sheet.dart';
 import 'package:schulupparent/presentation/signin_screen/shimmer_widget.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -19,15 +25,27 @@ import 'models/listline_item_model.dart';
 import 'models/reports_report_card_all_variants_model.dart';
 import 'widgets/listline_item_widget.dart';
 
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
+
 // ignore_for_file: must_be_immutable
-class ReportsReportCardAllVariantsPage extends StatelessWidget {
+class ReportsReportCardAllVariantsPage extends StatefulWidget {
   ReportsReportCardAllVariantsPage({Key? key}) : super(key: key);
 
+  @override
+  State<ReportsReportCardAllVariantsPage> createState() =>
+      _ReportsReportCardAllVariantsPageState();
+}
+
+class _ReportsReportCardAllVariantsPageState
+    extends State<ReportsReportCardAllVariantsPage> {
   ReportsReportCardAllVariantsController controller = Get.put(
     ReportsReportCardAllVariantsController(
       ReportsReportCardAllVariantsModel().obs,
     ),
   );
+
+  DateTime datetime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +67,26 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
                     child: Container(
                       width: double.maxFinite,
                       padding: EdgeInsets.symmetric(horizontal: 24.h),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [SizedBox(height: 14.h), _buildListline()],
+                      child: Container(
+                        child: TabBarView(
+                          controller: controller.tabviewController,
+                          children: [
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                SizedBox(height: 14.h),
+                                _buildListline(),
+                              ],
+                            ),
+                            _buildListline1(),
+                            _buildListline2(),
+                          ],
+                        ),
                       ),
+                      // Column(
+                      //   mainAxisSize: MainAxisSize.max,
+                      //   children: [SizedBox(height: 14.h), _buildListline()],
+                      // ),
                     ),
                   ),
                 ],
@@ -209,68 +243,245 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
                     horizontal: 54.h,
                     vertical: 8.h,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: Get.context!,
-                            builder: (context) {
-                              return ReportsReportCardModalBottomsheet(
-                                ReportsReportCardModalController(),
-                              );
-                            },
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Obx(() {
-                              return Text(
-                                // "lbl_first_term".tr,
-                                controller.termType.value,
-                                style: theme.textTheme.labelLarge,
-                              );
-                            }),
-                            CustomImageView(
-                              imagePath: ImageConstant.imgIconsTinyDown,
-                              height: 16.h,
-                              width: 18.h,
-                              margin: EdgeInsets.only(left: 10.h),
+                  child: Obx(
+                    () =>
+                        controller.tabIndex.value == 0
+                            ?
+                            //SizedBox.shrink()
+                            Row(
+                              spacing: 10,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffEF5A07),
+                                    border: Border.all(
+                                      color: Color(0xffFFBC71),
+                                    ),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: CustomImageView(
+                                    onTap: () {
+                                      setState(() {
+                                        controller.datex = controller.datex!
+                                            .subtract(Duration(days: 1));
+                                      });
+                                    },
+                                    imagePath:
+                                        "assets/images/img_icons_tiny_left.svg",
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    showCustomDatePicker(
+                                      context,
+                                      controller.datex!,
+                                      (newDate) {
+                                        setState(() {
+                                          controller.datex = newDate;
+                                        });
+                                      },
+                                    );
+                                  },
+                                  child: Row(
+                                    spacing: 5,
+                                    children: [
+                                      Text(
+                                        formatDate(controller.datex.toString()),
+                                        style: CustomTextStyles
+                                            .bodySmallWhiteA700_1
+                                            .copyWith(fontSize: 12),
+                                      ),
+                                      CustomImageView(
+                                        imagePath:
+                                            ImageConstant.imgIconsTinyDown,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                // GestureDetector(
+                                //   onTap: () {
+                                // showCupertinoSheet(
+                                //   context: context,
+                                //   builder: (context) {
+                                //     return SizedBox(
+                                //       //width: maxFinite,
+                                //       height: 100,
+                                //       child: CupertinoActionSheet(
+                                //         actions: [
+                                //           CupertinoDatePicker(
+                                //             maximumYear:
+                                //                 DateTime.now().year,
+                                //             minimumDate: datetime.subtract(
+                                //               Duration(days: 3000),
+                                //             ),
+                                //             initialDateTime: datetime,
+                                //             onDateTimeChanged: (value) {
+                                //               setState(() {
+                                //                 datetime = value;
+                                //               });
+                                //             },
+                                //             mode:
+                                //                 CupertinoDatePickerMode
+                                //                     .date,
+                                //           ),
+                                //         ],
+                                //       ),
+                                //     );
+                                //   },
+                                // );
+                                //     showModalBottomSheet(
+                                //       context: context,
+                                //       builder: (context) {
+                                //         return SizedBox(
+                                //           height: 200,
+                                //           child: CupertinoDatePicker(
+                                //             //backgroundColor: Clors.red,
+                                //             dateOrder: DatePickerDateOrder.ydm,
+                                //             maximumYear: DateTime.now().year,
+                                //             minimumDate: datetime.subtract(
+                                //               Duration(days: 3000),
+                                //             ),
+                                //             initialDateTime: datetime,
+                                //             onDateTimeChanged: (value) {
+                                //               setState(() {
+                                //                 datetime = value;
+                                //               });
+                                //             },
+                                //             mode: CupertinoDatePickerMode.date,
+                                //           ),
+                                //         );
+                                //       },
+                                //     );
+
+                                //     // CupertinoDatePicker(
+                                //     //   maximumYear: DateTime.now().year,
+                                //     //   minimumDate: datetime.subtract(Duration(days: 3000)),
+                                //     //   initialDateTime: datetime,
+                                //     //   onDateTimeChanged: (value) {
+                                //     //    setState(() {
+                                //     //      datetime = value;
+                                //     //    });
+                                //     //   },
+                                //     //   mode: CupertinoDatePickerMode.date,
+                                //     // );
+                                //   },
+                                //   child: Row(
+                                //     spacing: 5,
+                                //     children: [
+                                //       Text(
+                                //         //'sept. 30, 2025',
+                                //         formatDate(controller.datex.toString()),
+                                //         style: CustomTextStyles
+                                //             .bodySmallWhiteA700_1
+                                //             .copyWith(fontSize: 12.h),
+                                //       ),
+                                //       CustomImageView(
+                                //         imagePath:
+                                //             ImageConstant.imgIconsTinyDown,
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffEF5A07),
+                                    border: Border.all(
+                                      color: Color(0xffFFBC71),
+                                    ),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: CustomImageView(
+                                    onTap: () {
+                                      setState(() {
+                                        controller.datex = controller.datex!
+                                            .add(Duration(days: 1));
+                                      });
+                                    },
+                                    imagePath:
+                                        "assets/images/img_icons_tiny_right.svg",
+                                  ),
+                                ),
+                              ],
+                            )
+                            : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: Get.context!,
+                                      builder: (context) {
+                                        return SessionModalBottomSheet(
+                                          SessionModalController(),
+                                        );
+                                        // ReportsReportCardModalBottomsheet(
+                                        //   ReportsReportCardModalController(),
+                                        // );
+                                      },
+                                    );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Obx(() {
+                                        return Text(
+                                          // "lbl_first_term".tr,
+                                          controller.session.value,
+                                          style: theme.textTheme.labelLarge,
+                                        );
+                                      }),
+                                      CustomImageView(
+                                        imagePath:
+                                            ImageConstant.imgIconsTinyDown,
+                                        height: 16.h,
+                                        width: 18.h,
+                                        margin: EdgeInsets.only(left: 10.h),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: Get.context!,
+                                      builder: (context) {
+                                        return
+                                        // SessionModalBottomSheet(
+                                        //   SessionModalController(),
+                                        // );
+                                        ReportsReportCardModalBottomsheet(
+                                          ReportsReportCardModalController(),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Obx(() {
+                                        return Text(
+                                          // "lbl_first_term".tr,
+                                          "${controller.termType.value} Term",
+                                          style: theme.textTheme.labelLarge,
+                                        );
+                                      }),
+                                      CustomImageView(
+                                        imagePath:
+                                            ImageConstant.imgIconsTinyDown,
+                                        height: 16.h,
+                                        width: 18.h,
+                                        margin: EdgeInsets.only(left: 10.h),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: Get.context!,
-                            builder: (context) {
-                              return ReportsReportCardModalOneBottomsheet(
-                                ReportsReportCardModalOneController(),
-                              );
-                            },
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Obx(() {
-                              return Text(
-                                controller.dayType.value,
-                                style: theme.textTheme.labelLarge,
-                              );
-                            }),
-                            CustomImageView(
-                              imagePath: ImageConstant.imgIconsTinyDown,
-                              height: 16.h,
-                              width: 18.h,
-                              margin: EdgeInsets.only(left: 10.h, right: 14.h),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ),
@@ -279,6 +490,11 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String formatDate(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('MMM. d, yyyy').format(dateTime);
   }
 
   /// Section Widget
@@ -298,8 +514,7 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
                     // return ListlineItemWidget(newsItems[index]);
                   },
                 )
-                : controller.dayType.value == 'Daily'
-                ? ListView.separated(
+                : ListView.separated(
                   padding: EdgeInsets.zero,
                   physics: BouncingScrollPhysics(),
                   shrinkWrap: true,
@@ -322,19 +537,26 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
                             .value[index];
                     return ListlineItemWidget(model);
                   },
-                )
-                : controller.dayType.value == 'Weekly'
+                ),
+      ),
+    );
+  }
+
+  /// Section Widget
+  Widget _buildListline1() {
+    return Expanded(
+      child: Obx(
+        () =>
+            controller.isLoading.value
                 ? ListView.separated(
-                  padding: EdgeInsets.zero,
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 10.h);
-                  },
-                  itemCount: controller.reportDataList.length,
+                  itemCount: 5,
+                  //isLoading ? 5 : newsItems.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
                   itemBuilder: (context, index) {
-                    ReportData model = controller.reportDataList[index];
-                    return ListlineItemWeeklyWidget(model);
+                    // if (isLoading) {
+                    return ListlineShimmerWidget();
+                    // }
+                    // return ListlineItemWidget(newsItems[index]);
                   },
                 )
                 : ListView.separated(
@@ -344,11 +566,51 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
                   separatorBuilder: (context, index) {
                     return SizedBox(height: 10.h);
                   },
-                  itemCount: controller.reportDataList.length,
+                  itemCount: controller.reportDataWeeklyList.length,
                   itemBuilder: (context, index) {
-                    ReportData model = controller.reportDataList[index];
-                    return ListlineItemWeeklyWidget(model);
+                    ReportData model = controller.reportDataWeeklyList[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: ListlineItemWeeklyWidget(model),
+                    );
                   },
+                ),
+      ),
+    );
+  }
+
+  /// Section Widget
+  Widget _buildListline2() {
+    return Expanded(
+      child: Obx(
+        () =>
+            controller.isLoading.value
+                ? ListView.separated(
+                  itemCount: 5,
+                  //isLoading ? 5 : newsItems.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                  itemBuilder: (context, index) {
+                    // if (isLoading) {
+                    return ListlineShimmerWidget();
+                    // }
+                    // return ListlineItemWidget(newsItems[index]);
+                  },
+                )
+                : Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: ListView.separated(
+                    padding: EdgeInsets.zero,
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) {
+                      return SizedBox(height: 10.h);
+                    },
+                    itemCount: controller.reportDataTermlyList.length,
+                    itemBuilder: (context, index) {
+                      ReportData model = controller.reportDataTermlyList[index];
+                      return ListlineItemWeeklyWidget(model);
+                    },
+                  ),
                 ),
       ),
     );
