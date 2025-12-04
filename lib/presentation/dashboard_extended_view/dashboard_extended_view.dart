@@ -187,7 +187,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                       width: double.maxFinite,
                                       padding: EdgeInsets.symmetric(
                                         horizontal: 20.h,
-                                        vertical: 17.h,
+                                        vertical: 15.h,
                                       ),
                                       decoration: AppDecoration.primaryC11.copyWith(
                                         borderRadius:
@@ -237,7 +237,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                               ),
 
                                               Column(
-                                                spacing: 15.h,
+                                                spacing: 10.h,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 mainAxisAlignment:
@@ -515,7 +515,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                 );
               },
               child: Container(
-                width: 110,
+                width: 120,
                 // height: 150,
                 margin: EdgeInsets.only(left: 16),
                 padding: EdgeInsets.all(5),

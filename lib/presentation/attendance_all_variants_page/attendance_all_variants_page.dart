@@ -87,6 +87,7 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
                                 ),
                               )
                               : ListView.separated(
+                                physics: BouncingScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: controller.attendanceData!.length,
                                 itemBuilder: (context, index) {
@@ -356,7 +357,7 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
           //   () =>
           ListView.separated(
             padding: EdgeInsets.zero,
-            //physics: NeverScrollableScrollPhysics(),
+            physics: BouncingScrollPhysics(),
             shrinkWrap: true,
             separatorBuilder: (context, index) {
               return SizedBox(height: 4.h);

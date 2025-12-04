@@ -31,29 +31,32 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: appTheme.whiteA700,
-      body: SafeArea(
-        child: SmartRefresher(
-          controller: controller.refreshController,
-          onRefresh: controller.onrefresh,
-          child: Container(
-            width: double.maxFinite,
-            decoration: AppDecoration.grayC13,
-            child: Column(
-              children: [
-                _buildColumnreportcar(),
-                Expanded(
-                  child: Container(
-                    width: double.maxFinite,
-                    padding: EdgeInsets.symmetric(horizontal: 24.h),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [SizedBox(height: 14.h), _buildListline()],
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: appTheme.whiteA700,
+        body: SafeArea(
+          child: SmartRefresher(
+            controller: controller.refreshController,
+            onRefresh: controller.onrefresh,
+            child: Container(
+              width: double.maxFinite,
+              decoration: AppDecoration.grayC13,
+              child: Column(
+                children: [
+                  _buildColumnreportcar(),
+                  Expanded(
+                    child: Container(
+                      width: double.maxFinite,
+                      padding: EdgeInsets.symmetric(horizontal: 24.h),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [SizedBox(height: 14.h), _buildListline()],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -92,75 +95,109 @@ class ReportsReportCardAllVariantsPage extends StatelessWidget {
               ),
             ],
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: IntrinsicWidth(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.h,
-                      vertical: 10.h,
-                    ),
-                    decoration: AppDecoration.grayC13.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Text(
-                      "lbl_2022_2023".tr,
-                      textAlign: TextAlign.center,
-                      style: CustomTextStyles.bodySmallOnPrimary_1,
-                    ),
+          SizedBox(
+            width: double.maxFinite,
+            child: Obx(
+              () => Container(
+                margin: EdgeInsets.symmetric(horizontal: 86.h),
+                child: TabBar(
+                  labelPadding: EdgeInsets.symmetric(horizontal: 5),
+                  dividerColor: Colors.transparent,
+                  controller: controller.tabviewController,
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
+                  labelColor: appTheme.whiteA700,
+                  labelStyle: TextStyle(
+                    fontSize: 12.fSize,
+                    fontFamily: 'Rubik',
+                    fontWeight: FontWeight.w500,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 4.h),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.h,
-                      vertical: 10.h,
-                    ),
-                    decoration: AppDecoration.grayC13.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Text(
-                      "lbl_2023_2024".tr,
-                      textAlign: TextAlign.center,
-                      style: CustomTextStyles.bodySmallOnPrimary_1,
-                    ),
+                  unselectedLabelColor: theme.colorScheme.onPrimary,
+                  unselectedLabelStyle: TextStyle(
+                    fontSize: 12.fSize,
+                    fontFamily: 'Rubik',
+                    fontWeight: FontWeight.w400,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 4.h),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.h,
-                      vertical: 10.h,
+                  tabs: [
+                    Tab(
+                      height: 38,
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration:
+                            controller.tabIndex.value == 0
+                                ? BoxDecoration(
+                                  color: theme.colorScheme.onPrimary,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                )
+                                : BoxDecoration(
+                                  color: appTheme.whiteA700,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 14.h,
+                            vertical: 10.h,
+                          ),
+                          child: Text("Daily"),
+                        ),
+                      ),
                     ),
-                    decoration: AppDecoration.grayC13.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
+                    Tab(
+                      height: 38,
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration:
+                            controller.tabIndex.value == 1
+                                ? BoxDecoration(
+                                  color: theme.colorScheme.onPrimary,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                )
+                                : BoxDecoration(
+                                  color: appTheme.whiteA700,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 14.h,
+                            vertical: 10.h,
+                          ),
+                          child: Text("Weekly"),
+                        ),
+                      ),
                     ),
-                    child: Text(
-                      "lbl_2024_2025".tr,
-                      textAlign: TextAlign.center,
-                      style: CustomTextStyles.bodySmallOnPrimary_1,
+                    Tab(
+                      height: 38,
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration:
+                            controller.tabIndex.value == 2
+                                ? BoxDecoration(
+                                  color: theme.colorScheme.onPrimary,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                )
+                                : BoxDecoration(
+                                  color: appTheme.whiteA700,
+                                  borderRadius: BorderRadius.circular(18.h),
+                                ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 14.h,
+                            vertical: 10.h,
+                          ),
+                          child: Text("Termly"),
+                        ),
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 4.h),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.h,
-                      vertical: 10.h,
-                    ),
-                    decoration: AppDecoration.grayC2.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Text(
-                      "lbl_2025_2026".tr,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.labelLarge,
-                    ),
-                  ),
-                ],
+                  ],
+                  indicatorColor: Colors.transparent,
+                  onTap: (index) {
+                    controller.tabIndex.value = index;
+                  },
+                ),
               ),
             ),
           ),
+          // SizedBox(height: 28.h),
           Container(
             decoration: AppDecoration.outline,
             width: double.maxFinite,

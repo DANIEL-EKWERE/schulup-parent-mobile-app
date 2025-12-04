@@ -10,6 +10,7 @@ import 'controller/signalr_service.dart';
 
 //SignalRChatService servic = Get.lazyPut(() => SignalRChatService());
 ChatController1 controller = Get.put(ChatController1());
+final SignalRChatService _chatService = Get.find<SignalRChatService>();
 
 class ChatScreen extends GetView<ChatController1> {
   const ChatScreen({Key? key}) : super(key: key);
@@ -36,6 +37,12 @@ class ChatScreen extends GetView<ChatController1> {
                 ),
               ),
             ),
+          ),
+          IconButton(
+            onPressed: () {
+              _chatService.connect();
+            },
+            icon: Icon(Icons.refresh),
           ),
         ],
       ),

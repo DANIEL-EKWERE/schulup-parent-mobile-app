@@ -12,7 +12,7 @@ import '../models/reports_report_card_all_variants_model.dart';
 ///
 /// This class manages the state of the ReportsReportCardAllVariantsPage, including the
 /// current reportsReportCardAllVariantsModelObj
-class ReportsReportCardAllVariantsController extends GetxController {
+class ReportsReportCardAllVariantsController extends GetxController with GetSingleTickerProviderStateMixin {
   ReportsReportCardAllVariantsController(
     this.reportsReportCardAllVariantsModelObj,
   );
@@ -22,14 +22,17 @@ class ReportsReportCardAllVariantsController extends GetxController {
   Rx<String> termType = 'First Term'.obs;
   Rx<String> dayType = 'Daily'.obs;
   Rx<int> selectedTermId = 1.obs;
+  Rx<int> tabIndex = 0.obs;
 
+    late TabController tabviewController = Get.put(
+    TabController(vsync: this, length: 3),
+  );
   RefreshController refreshController = RefreshController(
     initialRefresh: false,
   );
   void onrefresh() {
-   getWeeklyReports();
+    getWeeklyReports();
   }
-
 
   DashboardExtendedViewController dashboardExtendedViewController =
       Get.find<DashboardExtendedViewController>();

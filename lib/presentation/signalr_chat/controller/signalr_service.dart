@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
-import 'package:signalr_netcore/signalr_client.dart';
+import 'package:logging/logging.dart';
+
+import 'package:signalr_netcore3/signalr_client.dart';
 
 /// Model classes
 class Message {
@@ -102,62 +106,167 @@ class SignalRChatService extends GetxService {
     _currentUserId = userId;
   }
 
+  final transportProtLogger = Logger("SignalR - transport");
+
   /// Connect to SignalR hub
+  //import 'package:signalr_core/signalr_core.dart';
+
   Future<void> connect() async {
     if (_apiBaseUrl == null || _jwtToken == null) {
-      Get.snackbar(
-        'Configuration Error',
-        'Please configure the service first',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      Get.snackbar('Error', 'Please configure the service first');
       return;
     }
 
-    if (_hubConnection != null) {
-      await disconnect();
+    // Stop existing connection
+    if (_hubConnection != null &&
+        _hubConnection!.state != HubConnectionState.Disconnected) {
+      await _hubConnection!.stop();
     }
 
     final hubUrl = 'https://api.schulup.com/hubs/conversation';
     connectionStatus.value = 'Connecting...';
 
+    // Setup logging (optional, for debugging)
+    Logger.root.level = Level.ALL;
+    Logger.root.onRecord.listen((LogRecord rec) {
+      print('SignalR ${rec.level.name}: ${rec.message}');
+    });
+
+    // Configure connection options
+    final httpConnectionOptions = HttpConnectionOptions(
+      accessTokenFactory: () => Future.value(_jwtToken),
+      logMessageContent: true,
+      requestTimeout: 1500000, // 60 seconds (default is 30)
+      // ✅ ADD KEEP-ALIVE SETTINGS
+      logger: Logger("SignalR"),
+     // transport: HttpTransportType.ServerSentEvents,
+      skipNegotiation: false, // Try both true and false
+    );
+
+    // Build the connection
+    _hubConnection =
+        HubConnectionBuilder()
+            .withUrl(hubUrl, options: httpConnectionOptions)
+            .withAutomaticReconnect(retryDelays: [0, 2000, 5000, 10000, 30000])
+            .configureLogging(Logger("SignalR"))
+            .build();
+
+    // Setup event handlers
+    _setupConnectionHandlers();
+
+    // Start the connection
     try {
-      _hubConnection =
-          HubConnectionBuilder()
-              .withUrl(
-                hubUrl,
-                options: HttpConnectionOptions(
-                  skipNegotiation: true,
-                  accessTokenFactory: () async => _jwtToken!,
-                  logger:
-                      null, //(level, message) => print('SignalR: $message'),
-                ),
-              )
-              .withAutomaticReconnect()
-              .build();
-
-      _setupEventHandlers();
-
+      print("🔌 Starting SignalR connection...");
+      _hubConnection!.keepAliveIntervalInMilliseconds = 10 * 60 * 60 * 1000;
       await _hubConnection!.start();
-      isConnected.value = true;
+      print("✅ Connected to SignalR Hub!");
+      print("Connection ID: ${_hubConnection!.connectionId}");
+      print("Connection State: ${_hubConnection!.state}");
       connectionStatus.value = 'Connected';
 
-      print('✅ Successfully connected to SignalR hub');
-
-      // Auto-join user group if userId is set
-      if (_currentUserId != null) {
-        await joinUserGroup(_currentUserId!);
-      }
-    } catch (e) {
-      isConnected.value = false;
-      connectionStatus.value = 'Connection Failed';
-      print('❌ Connection failed: $e');
+      // Setup message listeners
+      _setupMessageListeners();
+    } catch (e, s) {
+      print("❌ SignalR connection error: $e");
+      print("Error type: ${e.runtimeType}");
+      print("Stack trace: $s");
+      connectionStatus.value = 'Failed';
 
       Get.snackbar(
-        'Connection Error',
-        'Failed to connect to chat server: $e',
+        'Connection Failed',
+        'Could not connect to chat service: ${e.toString()}',
         snackPosition: SnackPosition.BOTTOM,
+        duration: Duration(seconds: 5),
       );
     }
+  }
+
+  void _setupConnectionHandlers() {
+    _hubConnection?.onclose(({error}) {
+      print("❌ Connection closed: $error");
+      connectionStatus.value = 'Disconnected';
+    });
+
+    _hubConnection?.onreconnecting(({error}) {
+      print("🔄 Reconnecting: $error");
+      connectionStatus.value = 'Reconnecting...';
+    });
+
+    _hubConnection?.onreconnected(({connectionId}) {
+      print("✅ Reconnected! Connection ID: $connectionId");
+      connectionStatus.value = 'Connected';
+    });
+  }
+
+  void _setupMessageListeners() {
+    // Listen for messages from server
+    _hubConnection?.on('ReceiveMessage', (arguments) {
+      print("📩 Message received: $arguments");
+      // Handle incoming message
+      if (arguments != null && arguments.isNotEmpty) {
+        final message = arguments[0];
+        // Process your message here
+        print("Message content: $message");
+      }
+    });
+
+    // Add other listeners as needed
+    _hubConnection?.on('UserJoined', (arguments) {
+      print("👤 User joined: $arguments");
+    });
+
+    _hubConnection?.on('UserLeft', (arguments) {
+      print("👋 User left: $arguments");
+    });
+  }
+
+  // Send a message
+  Future<void> sendMessage(String message) async {
+    if (_hubConnection?.state != HubConnectionState.Connected) {
+      print("❌ Cannot send message - not connected");
+      Get.snackbar('Error', 'Not connected to chat service');
+      return;
+    }
+
+    try {
+      await _hubConnection!.invoke('SendMessage', args: [message]);
+      print("✉️ Message sent: $message");
+    } catch (e) {
+      print("❌ Error sending message: $e");
+      Get.snackbar('Error', 'Failed to send message');
+    }
+  }
+
+  // Disconnect
+  Future<void> disconnect() async {
+    if (_hubConnection != null) {
+      await _hubConnection!.stop();
+      print("🔌 Disconnected from SignalR");
+      connectionStatus.value = 'Disconnected';
+    }
+  }
+
+  // Dispose
+  void dispose() {
+    disconnect();
+    _hubConnection = null;
+  }
+
+  void _setupConnectionHandlers1() {
+    _hubConnection?.onclose(({error}) {
+      print("❌ Connection closed: $error");
+      connectionStatus.value = 'Disconnected';
+    });
+
+    _hubConnection?.onreconnecting(({error}) {
+      print("🔄 Reconnecting: $error");
+      connectionStatus.value = 'Reconnecting...';
+    });
+
+    _hubConnection?.onreconnected(({connectionId}) {
+      print("✅ Reconnected! ID: $connectionId");
+      connectionStatus.value = 'Connected';
+    });
   }
 
   /// Setup event handlers for SignalR events
@@ -317,7 +426,7 @@ class SignalRChatService extends GetxService {
   }
 
   /// Disconnect from SignalR hub
-  Future<void> disconnect() async {
+  Future<void> disconnect1() async {
     if (_hubConnection != null) {
       try {
         await _hubConnection!.stop();
