@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
+import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
@@ -14,6 +15,8 @@ AcademicsAssignmentStatusController controller1 = Get.put(
 
 DashboardExtendedViewController dashboardExtendedViewController =
     Get.find<DashboardExtendedViewController>();
+AcademicsLessonAllLessonsController lessonsController =
+    Get.find<AcademicsLessonAllLessonsController>();
 
 class AcademicsAssignmentModalBottomsheet extends StatefulWidget {
   AcademicsAssignmentModalBottomsheet(this.controller, {Key? key})
@@ -147,6 +150,7 @@ class _AcademicsAssignmentModalBottomsheetState
                 controller1.getAssignment();
                 controller1.allLessons();
                 controller1.getCbt();
+                lessonsController.allLessons();
               });
               // Get.back();
               Navigator.pop(context);

@@ -1,5 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_modal_buttomsheet/academics_assignment_modal_buttomsheet.dart';
+import 'package:schulupparent/presentation/academics_assignment_modal_buttomsheet/controller/academics_assignment_modal_controller.dart';
+import 'package:schulupparent/presentation/academics_assignment_modal_one_bottomsheet/academics_assignment_modal_one_bottomsheet.dart';
+import 'package:schulupparent/presentation/academics_assignment_modal_one_bottomsheet/controller/academics_assignment_modal_one_controller.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/lesson_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
+import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/controller/reports_report_card_modal_controller.dart';
+import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart';
+import 'package:schulupparent/presentation/signin_screen/shimmer_widget.dart';
 import 'package:schulupparent/widgets/app_bar/appbar_leading_iconbutton.dart';
 import 'package:schulupparent/widgets/app_bar/custom_app_bar.dart';
 import '../../core/app_export.dart';
@@ -15,6 +25,10 @@ class AcademicsLessonAllLessonsPage extends StatelessWidget {
 
   AcademicsLessonAllLessonsController controller = Get.put(
     AcademicsLessonAllLessonsController(AcademicsLessonAllLessonsModel().obs),
+  );
+
+  AcademicsAssignmentStatusController controllerx = Get.put(
+    AcademicsAssignmentStatusController(),
   );
 
   @override
@@ -39,7 +53,8 @@ class AcademicsLessonAllLessonsPage extends StatelessWidget {
               imagePath: ImageConstant.imgArrowLeftWhiteA700,
               //margin: EdgeInsets.only(left: 25.h),
               onTap: () {
-                Get.back();
+                //Get.back();
+                Navigator.pop(context);
               },
             ),
           ),
@@ -92,34 +107,65 @@ class AcademicsLessonAllLessonsPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomDropDown(
-                  width: 84.h,
-                  icon: Container(
-                    margin: EdgeInsets.only(left: 10.h),
-                    child: CustomImageView(
-                      imagePath: ImageConstant.imgIconsTinyDown,
-                      height: 16.h,
-                      width: 16.h,
-                      fit: BoxFit.contain,
-                    ),
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: Get.context!,
+                      builder: (context) {
+                        return AcademicsAssignmentModalBottomsheet(
+                          AcademicsAssignmentModalController(),
+                        );
+                      },
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      // Obx(() {
+                      //   return
+                      Text(
+                        dashboardExtendedViewController.selectedClass.value,
+                        style: theme.textTheme.labelLarge,
+                      ),
+                      //}),
+                      CustomImageView(
+                        imagePath: ImageConstant.imgIconsTinyDown,
+                        height: 16.h,
+                        width: 18.h,
+                        margin: EdgeInsets.only(left: 10.h),
+                      ),
+                    ],
                   ),
-                  iconSize: 16.h,
-                  hintText: "lbl_primary_5".tr,
-                  items:
-                      controller
-                          .academicsLessonAllLessonsModelObj
-                          .value
-                          .dropdownItemList!
-                          .value,
-                  contentPadding: EdgeInsets.all(12.h),
                 ),
                 Spacer(),
-                Text("lbl_first_term".tr, style: theme.textTheme.labelLarge),
-                CustomImageView(
-                  imagePath: ImageConstant.imgIconsTinyDown,
-                  height: 16.h,
-                  width: 18.h,
-                  margin: EdgeInsets.only(left: 10.h),
+                //             AcademicsLessonAllLessonsController lessonsController =
+                // Get.find<AcademicsLessonAllLessonsController>();
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: Get.context!,
+                      builder: (context) {
+                        return AcademicsAssignmentModalOneBottomsheet(
+                          AcademicsAssignmentModalOneController(),
+                        );
+                      },
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Obx(() {
+                        return Text(
+                          "${controllerx.termType.value} Term",
+                          style: theme.textTheme.labelLarge,
+                        );
+                      }),
+                      CustomImageView(
+                        imagePath: ImageConstant.imgIconsTinyDown,
+                        height: 16.h,
+                        width: 18.h,
+                        margin: EdgeInsets.only(left: 10.h),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -135,35 +181,56 @@ class AcademicsLessonAllLessonsPage extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.h),
         child: Obx(
-          () => ListView.separated(
-            padding: EdgeInsets.zero,
-            physics: BouncingScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 10.h);
-            },
-            itemCount:
-                controller
-                    .academicsLessonAllLessonsModelObj
-                    .value
-                    .listlineItemList
-                    .value
-                    .length,
-            itemBuilder: (context, index) {
-              ListlineItemModel model =
-                  controller
-                      .academicsLessonAllLessonsModelObj
-                      .value
-                      .listlineItemList
-                      .value[index];
-              return GestureDetector(
-                onTap: () {
-                  Get.toNamed(AppRoutes.academicsLessonLessonDetailsScreen);
-                },
-                child: ListlineItemWidget(model),
-              );
-            },
-          ),
+          () =>
+              controller.isLoading.value
+                  ? SizedBox(
+                    height: 900.h,
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      //isLoading ? 5 : newsItems.length,
+                      separatorBuilder:
+                          (context, index) => SizedBox(height: 12.h),
+                      itemBuilder: (context, index) {
+                        // if (isLoading) {
+                        return ListlineShimmerWidget();
+                        // }
+                        // return ListlineItemWidget(newsItems[index]);
+                      },
+                    ),
+                  )
+                  : controller.lessonList.isEmpty
+                  ? Center(
+                    child: Column(
+                      spacing: 30,
+                      children: [
+                        SizedBox(height: 150.h),
+                        CustomImageView(imagePath: ImageConstant.imgObjects),
+                        Text('No cbt Test for the selected filter condition'),
+                      ],
+                    ),
+                  )
+                  : ListView.builder(
+                    itemCount: controller.lessonList.length,
+                    itemBuilder: (context, index) {
+                      LessonData listlineItemModelObj =
+                          controller.lessonList[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed(
+                              AppRoutes.academicsLessonLessonDetailsScreen,
+                              arguments: {'lessonData': listlineItemModelObj},
+                            );
+                          },
+                          child: ListlineItemLessonWidget(listlineItemModelObj),
+                        ),
+                      );
+                    },
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                  ),
         ),
       ),
     );
