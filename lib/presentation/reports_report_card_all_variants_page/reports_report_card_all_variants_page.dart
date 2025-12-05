@@ -17,6 +17,7 @@ import 'package:schulupparent/presentation/reports_report_card_modal_one_bottoms
 import 'package:schulupparent/presentation/session_model_sheet/controller/session_modal_controller.dart';
 import 'package:schulupparent/presentation/session_model_sheet/session_modal_bottom_sheet.dart';
 import 'package:schulupparent/presentation/signin_screen/shimmer_widget.dart';
+import 'package:schulupparent/widgets/custom_text_form_field.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
@@ -436,55 +437,239 @@ class _ReportsReportCardAllVariantsPageState
                   itemBuilder: (context, index) {
                     // Check if it's the last item FIRST before accessing the list
                     if (index == controller.dailyReportDataList.length) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: Color(0xffF7F7F8),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        width: double.infinity,
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                'Comments',
-                                style: theme.textTheme.bodyLarge!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Expanded(child:
-                            
-                             Obx(
-                               ()=> controller.isCommentsLoading.value ? Center(child: CircularProgressIndicator(),) : ListView.separated(itemBuilder: (context, index) {
-                                Messages message = controller.messageList[index];
-                                return message.senderType == 2 ?  Column(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10))
+                      // Only show comments section if there are messages OR if loading
+                      return Obx(
+                        () =>
+                            (controller.tempMessageList.isNotEmpty ||
+                                    controller.isCommentsLoading.value)
+                                ? Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffF7F7F8),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  width: double.infinity,
+                                  padding: EdgeInsets.all(20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Comments',
+                                        style: theme.textTheme.bodyLarge!
+                                            .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
-                                      child: Text(message.messageText.toString()),
-                                    ),
-                                  ],
-                                ) : Column(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10))
+                                      SizedBox(height: 10),
+                                      SizedBox(
+                                        height: 200,
+                                        child:
+                                            controller.isCommentsLoading.value
+                                                ? Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                        color: Color(
+                                                          0xffFF8D2A,
+                                                        ),
+                                                      ),
+                                                )
+                                                : ListView.separated(
+                                                  physics:
+                                                      BouncingScrollPhysics(),
+                                                  reverse: true,
+                                                  itemBuilder: (
+                                                    context,
+                                                    index,
+                                                  ) {
+                                                    Messages message =
+                                                        controller
+                                                            .tempMessageList[index];
+
+                                                    bool isLastMessage =
+                                                        index ==
+                                                        controller
+                                                                .tempMessageList
+                                                                .length -
+                                                            1;
+                                                    bool isSending =
+                                                        controller
+                                                            .isCommentsSendLoading
+                                                            .value &&
+                                                        isLastMessage;
+
+                                                    return Align(
+                                                      alignment:
+                                                          message.senderType ==
+                                                                  2
+                                                              ? Alignment
+                                                                  .centerLeft
+                                                              : Alignment
+                                                                  .centerRight,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            message.senderType ==
+                                                                    2
+                                                                ? CrossAxisAlignment
+                                                                    .start
+                                                                : CrossAxisAlignment
+                                                                    .end,
+                                                        children: [
+                                                          Container(
+                                                            constraints:
+                                                                BoxConstraints(
+                                                                  maxWidth: 250,
+                                                                ),
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                  12,
+                                                                ),
+                                                            decoration: BoxDecoration(
+                                                              color:
+                                                                  message.senderType ==
+                                                                          2
+                                                                      ? Color(
+                                                                        0xffA8EFF9,
+                                                                      )
+                                                                      : Color(
+                                                                        0xffF4EEA9,
+                                                                      ),
+                                                              borderRadius:
+                                                                  message.senderType ==
+                                                                          2
+                                                                      ? BorderRadius.only(
+                                                                        topRight:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                        bottomRight:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                        bottomLeft:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                      )
+                                                                      : BorderRadius.only(
+                                                                        topLeft:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                        bottomRight:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                        bottomLeft:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                      ),
+                                                            ),
+                                                            child: Text(
+                                                              message.messageText ??
+                                                                  '',
+                                                              style: TextStyle(
+                                                                color:
+                                                                    isSending
+                                                                        ? Colors
+                                                                            .grey[400]
+                                                                        : Color(
+                                                                          0xff27262B,
+                                                                        ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 4),
+                                                          Text(
+                                                            isSending
+                                                                ? 'Sending...'
+                                                                : message
+                                                                        .formattedTime ??
+                                                                    '',
+                                                            style: TextStyle(
+                                                              fontSize: 11,
+                                                              color:
+                                                                  Colors
+                                                                      .grey[600],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                  separatorBuilder: (
+                                                    context,
+                                                    index,
+                                                  ) {
+                                                    return SizedBox(height: 10);
+                                                  },
+                                                  itemCount:
+                                                      controller
+                                                          .tempMessageList
+                                                          .length,
+                                                ),
                                       ),
-                                      child: Text(message.messageText.toString()),
-                                    ),
-                                  ],
-                                );
-                                                           }, separatorBuilder: (context, index) {
-                                return SizedBox(height: 10,);
-                                                           }, itemCount: controller.messageList.length),
-                             ))
-                          ],
-                        ),
+                                      SizedBox(height: 10),
+                                      TextFormField(
+                                        controller:
+                                            controller.messageController,
+                                        decoration: InputDecoration(
+                                          suffixIcon: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child:
+                                                controller
+                                                        .isCommentsSendLoading
+                                                        .value
+                                                    ? SizedBox(
+                                                      width: 20,
+                                                      height: 20,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                            strokeWidth: 2,
+                                                            color: Color(
+                                                              0xffFF8D2A,
+                                                            ),
+                                                          ),
+                                                    )
+                                                    : CustomImageView(
+                                                      onTap: () {
+                                                        controller
+                                                            .makeComment();
+                                                      },
+                                                      imagePath:
+                                                          'assets/images/img_icons_small_send.svg',
+                                                    ),
+                                          ),
+                                          filled: true,
+                                          hintText: "Leave a comment...",
+                                          hintStyle: theme.textTheme.bodyMedium!
+                                              .copyWith(
+                                                color: Color(0xff646769),
+                                              ),
+                                          fillColor: Colors.white,
+                                          focusColor: Colors.white,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                            borderSide: BorderSide(
+                                              color: Color(0xffEFEEF0),
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                            borderSide: BorderSide(
+                                              color: Color(0xffEFEEF0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                : SizedBox.shrink(), // Return empty widget when no messages
                       );
                     }
 

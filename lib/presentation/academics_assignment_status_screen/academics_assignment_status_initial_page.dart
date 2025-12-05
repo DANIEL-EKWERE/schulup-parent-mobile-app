@@ -304,7 +304,7 @@ class _AcademicsAssignmentStatusInitialPageState
               ),
               AppbarTrailingIconbutton(
                 onTap: () {
-                  Get.toNamed(AppRoutes.academicsAssignmentSearchScreen);
+                  Get.toNamed(AppRoutes.academicsAssignmentSearchScreen, arguments: {'value': controller.tabIndex});
                 },
                 imagePath: ImageConstant.imgSearch,
                 margin: EdgeInsets.only(left: 11.h, right: 25.h),

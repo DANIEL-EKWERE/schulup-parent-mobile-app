@@ -628,6 +628,24 @@ class ApiClient extends GetConnect {
   }
 
 
+  Future<http.Response> makeComment(Map<String, dynamic> commentData, String studentID, String date) async {
+    var token = await dataBase.getToken();
+    final url = Uri.parse('$baseUrl/dailyreport/students/$studentID/date/$date/sendcomment');
+    _logRequest('POST', url, body: commentData);
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(commentData),
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
 Future<http.Response> startConversation(Map<String, dynamic> startConversationData) async {
   var token = await dataBase.getToken();
     final url = Uri.parse('$baseUrl/chat/conversations');
@@ -750,6 +768,34 @@ Future<http.Response> startCbt(String studentID, String quizScheduleID) async {
   ) async {
     final url = Uri.parse(
       '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&submissionStatus=$submissionStatus&page=1&pageSize=10',
+    );
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+
+
+  // get Students assignments
+  Future<http.Response> searchStudentAssignment(
+    String studentId,
+    String classID,
+    String termID,
+    String submissionStatus,
+    String searchTerm
+  ) async {
+    final url = Uri.parse(
+      '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&searchTerm=$searchTerm&submissionStatus=$submissionStatus&page=1&pageSize=10',
     );
     var token = await dataBase.getToken();
     _logRequest('GET', url);
@@ -1009,6 +1055,30 @@ Future<http.Response> startCbt(String studentID, String quizScheduleID) async {
     return response;
   }
 
+
+/// search lesson
+Future<http.Response> searchLessons(String classId, String termId, String searchTerm) async {
+    final url = Uri.parse(
+      '$baseUrl/lessons/search?classId=$classId&termId=$termId&searchTerm=$searchTerm&page=1&pageSize=10',
+    );
+    //10291
+    //2
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+
   Future<http.Response> allLessons(String classId, String termId) async {
     final url = Uri.parse(
       '$baseUrl/lessons?classId=$classId&termId=$termId&page=1&pageSize=10',
@@ -1049,6 +1119,30 @@ Future<http.Response> startCbt(String studentID, String quizScheduleID) async {
     _logResponse(response);
     return response;
   }
+
+
+
+/// student search cbt test
+  Future<http.Response> serachCbt(String classId, String studentId, String serachTerm) async {
+    final url = Uri.parse(
+      '$baseUrl/quiz/schedules/students/$studentId/search?classId=$classId&searchTerm=$serachTerm&page=1&pageSize=20',
+    );
+    //10291
+    //2
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
 
 
   /// student scheduled cbt test

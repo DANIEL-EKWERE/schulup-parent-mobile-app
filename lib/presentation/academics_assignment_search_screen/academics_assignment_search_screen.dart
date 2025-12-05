@@ -10,15 +10,22 @@ import 'package:schulupparent/presentation/academics_assignment_modal_one_bottom
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/academics_assignment_modal_two_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_two_bottomsheet/controller/academics_assignment_modal_two_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/cbt_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/models/lesson_model.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_cbt.dart';
+import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
 import 'package:schulupparent/presentation/academics_assignment_three_bottomsheet/academics_assignment_three_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_three_bottomsheet/controller/academics_assignment_modal_three_controller.dart';
+//import 'package:schulupparent/presentation/news_events_screen/widgets/listline_item_widget.dart';
+import 'package:schulupparent/presentation/signin_screen/shimmer_widget.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_title_searchview.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_drop_down.dart';
 import 'controller/academics_assignment_search_controller.dart'; // ignore_for_file: must_be_immutable
-
+import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget.dart';
 AcademicsAssignmentStatusController controller1 = Get.put(
   AcademicsAssignmentStatusController(),
 );
@@ -29,6 +36,7 @@ class AcademicsAssignmentSearchScreen
 
   @override
   Widget build(BuildContext context) {
+    var value = Get.arguments['value'];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: appTheme.whiteA700,
@@ -39,7 +47,16 @@ class AcademicsAssignmentSearchScreen
           child: Column(
             children: [
               _buildColumnarrowleft(),
-              SizedBox(width: double.maxFinite, child: Column(children: [])),
+              SizedBox(
+                width: double.maxFinite,
+                child: Column(children: [
+                  value == 0 
+                  ? _buildAssignmentTab()
+                  : value == 1
+                  ? _buildCBTTestTab()
+                  : _buildLessonTab()
+                ]),
+              ),
             ],
           ),
         ),
@@ -81,9 +98,13 @@ class AcademicsAssignmentSearchScreen
             title: SizedBox(
               width: double.maxFinite,
               child: AppbarTitleSearchview(
+                onChange: (value){
+                  return controller.onSearchSubmit();
+                },
                 margin: EdgeInsets.only(left: 16.h, right: 25.h),
                 hintText: "msg_search_for_an_assignment".tr,
                 controller: controller.searchController,
+                
               ),
             ),
           ),
@@ -115,7 +136,11 @@ class AcademicsAssignmentSearchScreen
                           children: [
                             Obx(() {
                               return Text(
-                                controller1.classType!.value,
+                                controller1.classType.value == 'N/A'
+                                    ? dashboardExtendedViewController
+                                        .selectedClass
+                                        .value
+                                    : controller1.classType.value,
                                 style: theme.textTheme.labelLarge,
                               );
                             }),
@@ -215,6 +240,215 @@ class AcademicsAssignmentSearchScreen
       ),
     );
   }
+
+
+  /// Assignment Tab Content
+  Widget _buildAssignmentTab() {
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(horizontal: 20.h),
+      child: Column(
+        children: [
+          // Add your assignment content here
+          // Center(
+          //   child: Text(
+          //     "Assignment Content",
+          //     style: theme.textTheme.titleLarge,
+          //   ),
+          // ),
+          Obx(
+            () =>
+                controller.isLoading.value
+                    ? SizedBox(
+                      height: 900.h,
+                      child: ListView.separated(
+                        itemCount: 5,
+                        //isLoading ? 5 : newsItems.length,
+                        separatorBuilder:
+                            (context, index) => SizedBox(height: 12.h),
+                        itemBuilder: (context, index) {
+                          // if (isLoading) {
+                          return ListlineShimmerWidget();
+                          // }
+                          // return ListlineItemWidget(newsItems[index]);
+                        },
+                      ),
+                    )
+                    : controller.assignmentData!.isEmpty
+                    ? Center(
+                      child: Column(
+                        spacing: 30,
+                        children: [
+                          SizedBox(height: 150.h),
+                          CustomImageView(imagePath: ImageConstant.imgObjects),
+                          Text(
+                            'No Assignment for the selected filter condition',
+                          ),
+                        ],
+                      ),
+                    )
+                    : ListView.builder(
+                      itemCount: controller.assignmentData!.length,
+                      itemBuilder: (context, index) {
+                        AssignmentData listlineItemModelObj =
+                            controller.assignmentData![index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              // Get.toNamed(
+                              //   AppRoutes.academicsAssignmentAnswerScreen, arguments: listlineItemModelObj.assignmentID
+                              // );
+                              controller.getAssignmentDetail(
+                                listlineItemModelObj.assignmentID.toString(),
+                              );
+                            },
+                            child: ListlineItemWidget(listlineItemModelObj),
+                          ),
+                        );
+                      },
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                    ),
+          ),
+
+          // Example: Add assignment list or empty state
+        ],
+      ),
+    );
+  }
+
+  /// CBT Test Tab Content
+  Widget _buildCBTTestTab() {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(20.h),
+      child: Column(
+        children: [
+          // Add your CBT test content here
+          //AcademicsCbtTestStatusModel
+          Obx(
+            () =>
+                controller.isLoading.value
+                    ? SizedBox(
+                      height: 900.h,
+                      child: ListView.separated(
+                        itemCount: 5,
+                        //isLoading ? 5 : newsItems.length,
+                        separatorBuilder:
+                            (context, index) => SizedBox(height: 12.h),
+                        itemBuilder: (context, index) {
+                          // if (isLoading) {
+                          return ListlineShimmerWidget();
+                          // }
+                          // return ListlineItemWidget(newsItems[index]);
+                        },
+                      ),
+                    )
+                    : controller.cbtData!.isEmpty
+                    ? Center(
+                      child: Column(
+                        spacing: 30,
+                        children: [
+                          SizedBox(height: 150.h),
+                          CustomImageView(imagePath: ImageConstant.imgObjects),
+                          Text('No Lessons for the selected filter condition'),
+                        ],
+                      ),
+                    )
+                    : ListView.builder(
+                      itemCount: controller.cbtData!.length,
+                      itemBuilder: (context, index) {
+                        CbtData listlineItemModelObj =
+                            controller.cbtData![index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              // Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
+                              controller.getCbtDetails(
+                                listlineItemModelObj.quizScheduleID.toString(),
+                              );
+                            },
+                            child: ListlineItemCbtWidget(listlineItemModelObj),
+                          ),
+                        );
+                      },
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                    ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Lesson Tab Content
+  Widget _buildLessonTab() {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(20.h),
+      child: Column(
+        children: [
+          //ListlineItemLessonWidget
+          // Add your lesson content here
+          Obx(
+            () =>
+                controller.isLoading.value
+                    ? SizedBox(
+                      height: 900.h,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: 5,
+                        //isLoading ? 5 : newsItems.length,
+                        separatorBuilder:
+                            (context, index) => SizedBox(height: 12.h),
+                        itemBuilder: (context, index) {
+                          // if (isLoading) {
+                          return ListlineShimmerWidget();
+                          // }
+                          // return ListlineItemWidget(newsItems[index]);
+                        },
+                      ),
+                    )
+                    : controller.lessonList.isEmpty
+                    ? Center(
+                      child: Column(
+                        spacing: 30,
+                        children: [
+                          SizedBox(height: 150.h),
+                          CustomImageView(imagePath: ImageConstant.imgObjects),
+                          Text('No cbt Test for the selected filter condition'),
+                        ],
+                      ),
+                    )
+                    : ListView.builder(
+                      itemCount: controller.lessonList.length,
+                      itemBuilder: (context, index) {
+                        LessonData listlineItemModelObj =
+                            controller.lessonList[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(
+                                AppRoutes.academicsLessonLessonDetailsScreen,
+                                arguments: {'lessonData': listlineItemModelObj},
+                              );
+                            },
+                            child: ListlineItemLessonWidget(
+                              listlineItemModelObj,
+                            ),
+                          ),
+                        );
+                      },
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                    ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {

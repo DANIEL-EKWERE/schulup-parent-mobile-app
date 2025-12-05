@@ -22,12 +22,13 @@ class ReportsReportCardAllVariantsController extends GetxController
   );
 
   Rx<ReportsReportCardAllVariantsModel> reportsReportCardAllVariantsModelObj;
-
+  TextEditingController messageController = TextEditingController();
   Rx<String> termType = 'First'.obs;
   Rx<String> dayType = 'Daily'.obs;
   Rx<String> session = ''.obs;
   Rx<int> selectedTermId = 1.obs;
   Rx<int> tabIndex = 0.obs;
+  RxList<Messages> tempMessageList = <Messages>[].obs;
   Rx<String> date = ''.obs;
   DateTime? datex;
   late TabController tabviewController = Get.put(
@@ -63,7 +64,7 @@ class ReportsReportCardAllVariantsController extends GetxController
   DailyReportDate? selectedDailyReport;
 
   String? selectedReportId;
-
+  Rx<bool> isCommentsSendLoading = false.obs;
   Rx<bool> isLoading = false.obs;
   Rx<bool> isCommentsLoading = false.obs;
   Rx<bool> isLoading1 = false.obs;
@@ -271,7 +272,10 @@ class ReportsReportCardAllVariantsController extends GetxController
   }
 
   Future<void> getCommets() async {
-    isCommentsLoading.value = true;
+    tempMessageList.clear();
+    if (tempMessageList.isEmpty) {
+      isCommentsLoading.value = true;
+    }
     try {
       final response = await _apiService.getCommets(
         dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
@@ -282,6 +286,7 @@ class ReportsReportCardAllVariantsController extends GetxController
 
         commets = commentsFromJson(response.body);
         messageList = commets!.data!.messages!;
+        tempMessageList.value = messageList;
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isCommentsLoading.value = false;
       } else {
@@ -318,6 +323,84 @@ class ReportsReportCardAllVariantsController extends GetxController
     } finally {
       // OverlayLoadingProgress.stop();
       isCommentsLoading.value = false;
+    }
+  }
+
+  Future<void> makeComment() async {
+    if (messageController.text.trim().isEmpty) return; // Validate input
+
+    isCommentsSendLoading.value = true;
+    String messageText = messageController.text.trim();
+
+    // Create optimistic message
+    final optimisticMessage = Messages(
+      messageText: messageText,
+      messageID: DateTime.now().millisecondsSinceEpoch,
+      senderType: 4,
+      sentAt: DateTime.now().toString(),
+    );
+
+    // Add to list immediately for optimistic UI
+    tempMessageList.insert(0, optimisticMessage);
+    messageController.clear();
+    try {
+      Map<String, dynamic> body = {"messageText": messageText};
+      final response = await _apiService.makeComment(
+        body,
+        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+        formatDate1(datex.toString()),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Success - refresh to get server data
+        // await getCommets();
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        // Remove optimistic message on auth/not found errors
+        //  tempMessageList.remove(optimisticMessage);
+        tempMessageList.removeWhere(
+          (msg) => msg.messageID == optimisticMessage.messageID,
+        );
+        Get.snackbar(
+          'Error',
+          'Unable to send comment. Please check your permissions.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        // Remove optimistic message on other errors
+        tempMessageList.remove(optimisticMessage);
+        Get.snackbar(
+          'Error',
+          'Comment failed to send. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      // Remove optimistic message on network error
+      tempMessageList.remove(optimisticMessage);
+      Get.snackbar(
+        'No Internet',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      // Remove optimistic message on unexpected error
+      tempMessageList.remove(optimisticMessage);
+      Get.snackbar(
+        'Error',
+        'Something went wrong. Please try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      print('Comment error: $e'); // Log for debugging
+    } finally {
+      isCommentsSendLoading.value = false;
     }
   }
 
