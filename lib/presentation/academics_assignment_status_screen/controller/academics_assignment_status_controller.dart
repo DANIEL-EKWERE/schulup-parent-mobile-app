@@ -120,16 +120,16 @@ class AcademicsAssignmentStatusController extends GetxController
 
   Rx<String> classType = 'N/A'.obs;
 
-  Rx<String> termType = 'First Term'.obs;
+  Rx<String> termType = 'First'.obs;
 
   Rx<String> termTypeId = '1'.obs;
 
-  Rx<String> statusType = 'Pending'.obs;
+  Rx<String> statusType = 'all'.obs;
 
   // cbt
   Rx<String> classType1 = 'primary 50'.obs;
 
-  Rx<String> cbtType = 'Scheduled Test 0'.obs;
+  Rx<String> cbtType = 'Scheduled Test'.obs;
 
   // lesson
   Rx<String> classType2 = 'primary 50'.obs;

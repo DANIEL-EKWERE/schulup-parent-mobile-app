@@ -927,11 +927,34 @@ Future<http.Response> startCbt(String studentID, String quizScheduleID) async {
   // get Daily report
   Future<http.Response> getDailyReport(
     String studentID,
-    String academicSessionId,
-    String termId,
+    // String academicSessionId,
+    String date,
   ) async {
     final url = Uri.parse(
-      '$baseUrl/students/$studentID/dailyreports?academicSessionId=$academicSessionId&termId=$termId',
+      '$baseUrl/dailyreport/students/$studentID/date/$date?page=1&pageSize=20',
+    );
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+  // get Daily report
+  Future<http.Response> getCommets(
+    String studentID,
+    // String academicSessionId,
+    String date,
+  ) async {
+    final url = Uri.parse(
+      '$baseUrl/dailyreport/students/$studentID/date/$date/comments?page=1&pageSize=20',
     );
     var token = await dataBase.getToken();
     _logRequest('GET', url);

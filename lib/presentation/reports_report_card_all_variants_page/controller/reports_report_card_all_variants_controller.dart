@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
+import 'package:schulupparent/presentation/reports_report_card_all_variants_page/models/comments_model.dart';
+import 'package:schulupparent/presentation/reports_report_card_all_variants_page/models/daily_report_model.dart';
 import 'package:schulupparent/presentation/reports_report_card_all_variants_page/models/report_model.dart';
 import '../../../core/app_export.dart';
 import '../models/reports_report_card_all_variants_model.dart';
@@ -21,13 +23,13 @@ class ReportsReportCardAllVariantsController extends GetxController
 
   Rx<ReportsReportCardAllVariantsModel> reportsReportCardAllVariantsModelObj;
 
-  Rx<String> termType = 'First Term'.obs;
+  Rx<String> termType = 'First'.obs;
   Rx<String> dayType = 'Daily'.obs;
   Rx<String> session = ''.obs;
   Rx<int> selectedTermId = 1.obs;
   Rx<int> tabIndex = 0.obs;
   Rx<String> date = ''.obs;
-  DateTime? datex; 
+  DateTime? datex;
   late TabController tabviewController = Get.put(
     TabController(vsync: this, length: 3),
   );
@@ -36,14 +38,16 @@ class ReportsReportCardAllVariantsController extends GetxController
   );
   void onrefresh() {
     getWeeklyReports();
+    getDailyReports();
+    getTermlyReports();
   }
 
   DashboardExtendedViewController dashboardExtendedViewController =
       Get.find<DashboardExtendedViewController>();
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
-  ReportModel? reports;
-  List<ReportData> reportDataList = [];
+  DailyReport? dailyReports;
+  List<DailyReportDate> dailyReportDataList = [];
 
   ReportModel? reportsWeekly;
   List<ReportData> reportDataWeeklyList = [];
@@ -51,10 +55,17 @@ class ReportsReportCardAllVariantsController extends GetxController
   ReportModel? reportsTermly;
   List<ReportData> reportDataTermlyList = [];
 
+  Comments? commets;
+  List<Messages> messageList = [];
+
   ReportData? selectedReport;
+
+  DailyReportDate? selectedDailyReport;
+
   String? selectedReportId;
 
   Rx<bool> isLoading = false.obs;
+  Rx<bool> isCommentsLoading = false.obs;
   Rx<bool> isLoading1 = false.obs;
 
   // SubjectProgressModel? subjectProgress;
@@ -65,7 +76,7 @@ class ReportsReportCardAllVariantsController extends GetxController
     getWeeklyReports();
     getTermlyReports();
     datex = DateTime.now();
-    date.value = formatDate(datex.toString()); 
+    date.value = formatDate(datex.toString());
     // getTermlyReports();
     // Timer(Duration(seconds: 3), (){
     //   getSubjectProgress();
@@ -208,27 +219,18 @@ class ReportsReportCardAllVariantsController extends GetxController
   Future<void> getDailyReports() async {
     isLoading.value = true;
     try {
-      if (termType.value.contains('First Term')) {
-        selectedTermId.value = 1;
-      } else if (termType.value.contains('Second Term')) {
-        selectedTermId.value = 2;
-      } else if (termType.value.contains('Third Term')) {
-        selectedTermId.value = 3;
-      }
       final response = await _apiService.getDailyReport(
         dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
-        dashboardExtendedViewController
-            .selectedAcademicSessionData!
-            .academicSessionID
-            .toString(),
-        selectedTermId.value.toString(),
+        formatDate1(datex.toString()),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
-        reports = reportModelFromJson(response.body);
-        reportDataList = reports!.data!;
-        selectedReport =
-            reportDataList.isNotEmpty ? reportDataList.first : null;
+
+        dailyReports = dailyReportFromJson(response.body);
+        dailyReportDataList = dailyReports!.data;
+        selectedDailyReport =
+            dailyReportDataList.isNotEmpty ? dailyReportDataList.first : null;
+        getCommets();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
       } else {
@@ -266,5 +268,61 @@ class ReportsReportCardAllVariantsController extends GetxController
       // OverlayLoadingProgress.stop();
       isLoading.value = false;
     }
+  }
+
+  Future<void> getCommets() async {
+    isCommentsLoading.value = true;
+    try {
+      final response = await _apiService.getCommets(
+        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+        formatDate1(datex.toString()),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isCommentsLoading.value = false;
+
+        commets = commentsFromJson(response.body);
+        messageList = commets!.data!.messages!;
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isCommentsLoading.value = false;
+      } else {
+        // OverlayLoadingProgress.stop();
+        isCommentsLoading.value = false;
+        Get.snackbar(
+          'Error',
+          'comments failed to fetch. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      isCommentsLoading.value = false;
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      isCommentsLoading.value = false;
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      //OverlayLoadingProgress.stop();
+      isCommentsLoading.value = false;
+    } finally {
+      // OverlayLoadingProgress.stop();
+      isCommentsLoading.value = false;
+    }
+  }
+
+  String formatDate1(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('yyyy-MM-dd').format(dateTime);
   }
 }

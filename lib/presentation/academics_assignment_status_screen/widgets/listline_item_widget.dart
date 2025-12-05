@@ -62,10 +62,15 @@ class ListlineItemWidget extends StatelessWidget {
                   ),
                   // Obx(
                   //   () =>
-                  Text(
-                    "${listlineItemModelObj.subjectName!} • ${listlineItemModelObj.formattedDatePosted}",
-                    style: CustomTextStyles.bodySmallSecondaryContainer10,
-                    // ),
+                  SizedBox(
+                    width: 200,
+                    child: Text(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      "${listlineItemModelObj.subjectName!} • ${listlineItemModelObj.formattedDatePosted}",
+                      style: CustomTextStyles.bodySmallSecondaryContainer10,
+                      // ),
+                    ),
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(

@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/reports_report_card_all_variants_page/models/daily_report_model.dart';
 import '../../../core/app_export.dart';
 import '../controller/reports_report_card_all_variants_controller.dart';
 import '../models/listline_item_model.dart';
@@ -8,7 +9,7 @@ import '../models/listline_item_model.dart';
 class ListlineItemWidget extends StatelessWidget {
   ListlineItemWidget(this.listlineItemModelObj, {Key? key}) : super(key: key);
 
-  ListlineItemModel listlineItemModelObj;
+  DailyReportDate listlineItemModelObj;
 
   var controller = Get.find<ReportsReportCardAllVariantsController>();
 
@@ -29,42 +30,41 @@ class ListlineItemWidget extends StatelessWidget {
             width: double.maxFinite,
             child: Row(
               children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  padding: EdgeInsets.all(5.h),
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFEED4),
+                // Container(
+                //   height: 40,
+                //   width: 40,
+                //   padding: EdgeInsets.all(5.h),
+                //   decoration: BoxDecoration(
+                //     color: Color.fromRGBO(255, 238, 212, 1),
 
-                    shape: BoxShape.circle,
+                //     shape: BoxShape.circle,
+                //   ),
+                //   child: CustomImageView(
+                //     imagePath: 'assets/images/img_icons_small_report_card.png',
+                //   ),
+                //   // CustomImageView(
+                //   //   imagePath:   dashboardItemModelObj.imagePath,
+                //   //   height: 40.h,
+                //   //   width: 40.h,
+                //   // ),
+                // ),
+                Text(
+                  listlineItemModelObj.reportTopic,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: CustomImageView(
-                    imagePath: 'assets/images/img_icons_small_report_card.png',
-                  ),
-                  // CustomImageView(
-                  //   imagePath:   dashboardItemModelObj.imagePath,
-                  //   height: 40.h,
-                  //   width: 40.h,
                   // ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.h),
-                  child: Obx(
-                    () => Text(
-                      listlineItemModelObj.duration!.value,
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                  ),
                 ),
               ],
             ),
           ),
-          Obx(
-            () => Text(
-              listlineItemModelObj.tuesdayseptthir!.value,
-              style: CustomTextStyles.bodySmallSecondaryContainer10,
-            ),
+          // Obx(
+          //   () =>
+          Text(
+            listlineItemModelObj.reportComment,
+            style: CustomTextStyles.bodySmallSecondaryContainer10,
           ),
+          //   ),
         ],
       ),
     );

@@ -517,7 +517,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                 );
               },
               child: Container(
-                width: 120,
+                width: 125,
                 // height: 150,
                 margin: EdgeInsets.only(left: 16),
                 padding: EdgeInsets.all(5),

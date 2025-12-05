@@ -562,7 +562,11 @@ class _AcademicsAssignmentStatusInitialPageState
                                 Obx(() {
                                   return Text(
                                     // cbt tab
-                                    controller.classType!.value,
+                                    controller.classType.value == 'N/A'
+                                        ? dashboardExtendedViewController
+                                            .selectedClass
+                                            .value
+                                        : controller.classType.value,
                                     style: theme.textTheme.labelLarge,
                                   );
                                 }),
