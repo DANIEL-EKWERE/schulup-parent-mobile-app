@@ -128,10 +128,10 @@ String? searchQuery;
   List<LessonData> lessonList = [];
 
   Assignment? assignment;
-  List<AssignmentData>? assignmentData;
+  List<AssignmentData> assignmentData = <AssignmentData>[].obs;
 
   Cbt? cbt;
-  List<CbtData>? cbtData;
+  List<CbtData> cbtData = <CbtData>[].obs;
 
   AssignmentDetails? assignmentDetails;
 
@@ -247,7 +247,7 @@ Rx<bool> isLoading = false.obs;
         isLoading.value = false;
 
         cbt = cbtFromJson(response.body);
-        cbtData = cbt!.data;
+        cbtData = cbt!.data!;
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         // OverlayLoadingProgress.stop();
@@ -322,7 +322,7 @@ Rx<bool> isLoading = false.obs;
         isLoading.value = false;
 
         cbt = cbtFromJson(response.body);
-        cbtData = cbt!.data;
+        cbtData = cbt!.data!;
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         // OverlayLoadingProgress.stop();
@@ -464,7 +464,7 @@ Rx<bool> isLoading = false.obs;
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
         assignment = assignmentFromJson(response.body);
-        assignmentData = assignment!.data;
+        assignmentData = assignment!.data!;
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
 

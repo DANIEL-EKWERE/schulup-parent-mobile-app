@@ -426,6 +426,17 @@ class _ReportsReportCardAllVariantsPageState
                     // return ListlineItemWidget(newsItems[index]);
                   },
                 )
+                : controller.dailyReportDataList.isEmpty
+                ? Center(
+                  child: Column(
+                    spacing: 30,
+                    children: [
+                      SizedBox(height: 150.h),
+                      CustomImageView(imagePath: ImageConstant.imgObjects),
+                      Text('No Report for the selected filter condition'),
+                    ],
+                  ),
+                )
                 : ListView.separated(
                   padding: EdgeInsets.zero,
                   physics: BouncingScrollPhysics(),
@@ -685,74 +696,114 @@ class _ReportsReportCardAllVariantsPageState
 
   /// Section Widget
   Widget _buildListline1() {
-    return Expanded(
-      child: Obx(
-        () =>
-            controller.isLoading.value
-                ? ListView.separated(
-                  itemCount: 5,
-                  //isLoading ? 5 : newsItems.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
-                  itemBuilder: (context, index) {
-                    // if (isLoading) {
-                    return ListlineShimmerWidget();
-                    // }
-                    // return ListlineItemWidget(newsItems[index]);
-                  },
-                )
-                : ListView.separated(
-                  padding: EdgeInsets.zero,
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 10.h);
-                  },
-                  itemCount: controller.reportDataWeeklyList.length,
-                  itemBuilder: (context, index) {
-                    ReportData model = controller.reportDataWeeklyList[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: ListlineItemWeeklyWidget(model),
-                    );
-                  },
-                ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Obx(
+            () =>
+                controller.isLoading.value
+                    ? SizedBox(
+                      height: 900,
+                      child: ListView.separated(
+                        itemCount: 5,
+                        //isLoading ? 5 : newsItems.length,
+                        separatorBuilder:
+                            (context, index) => SizedBox(height: 12.h),
+                        itemBuilder: (context, index) {
+                          // if (isLoading) {
+                          return ListlineShimmerWidget();
+                          // }
+                          // return ListlineItemWidget(newsItems[index]);
+                        },
+                      ),
+                    )
+                    : controller.reportDataWeeklyList.isEmpty
+                    ? Center(
+                      child: Column(
+                        spacing: 30,
+                        children: [
+                          SizedBox(height: 150.h),
+                          CustomImageView(imagePath: ImageConstant.imgObjects),
+                          Text('No Report for the selected filter condition'),
+                        ],
+                      ),
+                    )
+                    : ListView.separated(
+                      padding: EdgeInsets.zero,
+                      physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) {
+                        return SizedBox(height: 10.h);
+                      },
+                      itemCount: controller.reportDataWeeklyList.length,
+                      itemBuilder: (context, index) {
+                        ReportData model =
+                            controller.reportDataWeeklyList[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: ListlineItemWeeklyWidget(model),
+                        );
+                      },
+                    ),
+          ),
+        ],
       ),
     );
   }
 
   /// Section Widget
   Widget _buildListline2() {
-    return Expanded(
-      child: Obx(
-        () =>
-            controller.isLoading.value
-                ? ListView.separated(
-                  itemCount: 5,
-                  //isLoading ? 5 : newsItems.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
-                  itemBuilder: (context, index) {
-                    // if (isLoading) {
-                    return ListlineShimmerWidget();
-                    // }
-                    // return ListlineItemWidget(newsItems[index]);
-                  },
-                )
-                : Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: ListView.separated(
-                    padding: EdgeInsets.zero,
-                    physics: BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    separatorBuilder: (context, index) {
-                      return SizedBox(height: 10.h);
-                    },
-                    itemCount: controller.reportDataTermlyList.length,
-                    itemBuilder: (context, index) {
-                      ReportData model = controller.reportDataTermlyList[index];
-                      return ListlineItemWeeklyWidget(model);
-                    },
-                  ),
-                ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Obx(
+            () =>
+                controller.isLoading.value
+                    ? SizedBox(
+                      height: 900,
+                      child: ListView.separated(
+                        itemCount: 5,
+                        //isLoading ? 5 : newsItems.length,
+                        separatorBuilder:
+                            (context, index) => SizedBox(height: 12.h),
+                        itemBuilder: (context, index) {
+                          // if (isLoading) {
+                          return ListlineShimmerWidget();
+                          // }
+                          // return ListlineItemWidget(newsItems[index]);
+                        },
+                      ),
+                    )
+                    : controller.reportDataTermlyList.isEmpty
+                    ? Center(
+                      child: Column(
+                        spacing: 30,
+                        children: [
+                          SizedBox(height: 150.h),
+                          CustomImageView(imagePath: ImageConstant.imgObjects),
+                          Text('No report for the selected filter condition'),
+                        ],
+                      ),
+                    )
+                    : Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: ListView.separated(
+                        padding: EdgeInsets.zero,
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: 10.h);
+                        },
+                        itemCount: controller.reportDataTermlyList.length,
+                        itemBuilder: (context, index) {
+                          ReportData model =
+                              controller.reportDataTermlyList[index];
+                          return ListlineItemWeeklyWidget(model);
+                        },
+                      ),
+                    ),
+          ),
+        ],
       ),
     );
   }

@@ -26,6 +26,7 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_drop_down.dart';
 import 'controller/academics_assignment_search_controller.dart'; // ignore_for_file: must_be_immutable
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget.dart';
+
 AcademicsAssignmentStatusController controller1 = Get.put(
   AcademicsAssignmentStatusController(),
 );
@@ -49,13 +50,15 @@ class AcademicsAssignmentSearchScreen
               _buildColumnarrowleft(),
               SizedBox(
                 width: double.maxFinite,
-                child: Column(children: [
-                  value == 0 
-                  ? _buildAssignmentTab()
-                  : value == 1
-                  ? _buildCBTTestTab()
-                  : _buildLessonTab()
-                ]),
+                child: Column(
+                  children: [
+                    value == 0
+                        ? _buildAssignmentTab()
+                        : value == 1
+                        ? _buildCBTTestTab()
+                        : _buildLessonTab(),
+                  ],
+                ),
               ),
             ],
           ),
@@ -98,13 +101,12 @@ class AcademicsAssignmentSearchScreen
             title: SizedBox(
               width: double.maxFinite,
               child: AppbarTitleSearchview(
-                onChange: (value){
+                onChange: (value) {
                   return controller.onSearchSubmit();
                 },
                 margin: EdgeInsets.only(left: 16.h, right: 25.h),
                 hintText: "msg_search_for_an_assignment".tr,
                 controller: controller.searchController,
-                
               ),
             ),
           ),
@@ -241,7 +243,6 @@ class AcademicsAssignmentSearchScreen
     );
   }
 
-
   /// Assignment Tab Content
   Widget _buildAssignmentTab() {
     return SingleChildScrollView(
@@ -259,7 +260,7 @@ class AcademicsAssignmentSearchScreen
             () =>
                 controller.isLoading.value
                     ? SizedBox(
-                      height: 900.h,
+                      height: 650.h,
                       child: ListView.separated(
                         itemCount: 5,
                         //isLoading ? 5 : newsItems.length,
@@ -273,7 +274,7 @@ class AcademicsAssignmentSearchScreen
                         },
                       ),
                     )
-                    : controller.assignmentData!.isEmpty
+                    : controller.assignmentData.isEmpty
                     ? Center(
                       child: Column(
                         spacing: 30,
@@ -287,10 +288,10 @@ class AcademicsAssignmentSearchScreen
                       ),
                     )
                     : ListView.builder(
-                      itemCount: controller.assignmentData!.length,
+                      itemCount: controller.assignmentData.length,
                       itemBuilder: (context, index) {
                         AssignmentData listlineItemModelObj =
-                            controller.assignmentData![index];
+                            controller.assignmentData[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: GestureDetector(
@@ -329,7 +330,7 @@ class AcademicsAssignmentSearchScreen
             () =>
                 controller.isLoading.value
                     ? SizedBox(
-                      height: 900.h,
+                      height: 650.h,
                       child: ListView.separated(
                         itemCount: 5,
                         //isLoading ? 5 : newsItems.length,
@@ -343,7 +344,7 @@ class AcademicsAssignmentSearchScreen
                         },
                       ),
                     )
-                    : controller.cbtData!.isEmpty
+                    : controller.cbtData.isEmpty
                     ? Center(
                       child: Column(
                         spacing: 30,
@@ -355,10 +356,10 @@ class AcademicsAssignmentSearchScreen
                       ),
                     )
                     : ListView.builder(
-                      itemCount: controller.cbtData!.length,
+                      itemCount: controller.cbtData.length,
                       itemBuilder: (context, index) {
                         CbtData listlineItemModelObj =
-                            controller.cbtData![index];
+                            controller.cbtData[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: GestureDetector(
@@ -393,7 +394,7 @@ class AcademicsAssignmentSearchScreen
             () =>
                 controller.isLoading.value
                     ? SizedBox(
-                      height: 900.h,
+                      height: 650.h,
                       child: ListView.separated(
                         shrinkWrap: true,
                         itemCount: 5,
@@ -448,10 +449,9 @@ class AcademicsAssignmentSearchScreen
     );
   }
 
-
-
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(Get.context!);
   }
 }
