@@ -22,7 +22,7 @@ class DashboardExtendedViewModel {
       DashboardExtendedViewModel(
         title: "Assignments",
         imagePath: ImageConstant.imgAssignments,
-        route: '',
+        route: '/academics_assignment_page',
       ),
       DashboardExtendedViewModel(
         title: "CBT Tests",

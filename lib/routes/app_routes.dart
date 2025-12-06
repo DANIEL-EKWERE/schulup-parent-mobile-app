@@ -1,3 +1,5 @@
+import 'package:schulupparent/presentation/academics_assignment_page/academics_cbt_test_page.dart';
+import 'package:schulupparent/presentation/academics_assignment_page/binding/academics_assignment_binding.dart';
 import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/academics_lesson_all_lessons_page.dart';
 import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/binding/academics_lesson_all_lesson_binding.dart';
 import 'package:schulupparent/presentation/academics_lesson_cbt_test_page/academics_cbt_test_page.dart';
@@ -188,6 +190,10 @@ class AppRoutes {
       '/academics_cbt_test_test_result_two_screen';
 
 static const String academicsCbtTestPage = '/academics_cbt_test_page';
+
+//academicsAssignmentPage
+
+static const String academicsAssignmentPage = '/academics_assignment_page';
 
   static const String academicsLessonAllLessonsPage =
       '/academics_lesson_all_lessons_page';
@@ -430,10 +436,17 @@ static const String academicsCbtTestPage = '/academics_cbt_test_page';
       page: () => AcademicsCbtTestTestResultTwoScreen(),
       bindings: [AcademicsCbtTestTestResultTwoBinding()],
     ),
+    //AcademicsAssignmentPage
     GetPage(
       name: academicsCbtTestPage,
       page: () => AcademicsCbtTestPage(),
       bindings: [AcademicsCbtTestBinding()],
+    ),
+    //academicsAssignmentPage
+    GetPage(
+      name: academicsAssignmentPage,
+      page: () => AcademicsAssignmentPage(),
+      bindings: [AcademicsAssignmentBinding()],
     ),
     GetPage(
       name: academicsLessonAllLessonsPage,
