@@ -111,7 +111,12 @@ class _SigninScreenState extends State<SigninScreen> {
                       textInputType: TextInputType.text,
                       controller: controller.usernameController,
                       hintText: "Username",
-                      hintStyle: CustomTextStyles.bodyMediumGray700,
+                      hintStyle: CustomTextStyles.bodyMediumGray700.copyWith(
+                        fontSize: 16.h,
+                      ),
+                      textStyle: CustomTextStyles.bodyMediumGray700.copyWith(
+                        fontSize: 16.h,
+                      ),
                       prefix: Container(
                         margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                         child: CustomImageView(
@@ -141,9 +146,14 @@ class _SigninScreenState extends State<SigninScreen> {
                     CustomTextFormField(
                       textInputType: TextInputType.visiblePassword,
                       controller: controller.passwordController,
-                      hintText: "Passowrd",
+                      hintText: "Password",
                       obscureText: isVisible,
-                      hintStyle: CustomTextStyles.bodyMediumGray700,
+                      hintStyle: CustomTextStyles.bodyMediumGray700.copyWith(
+                        fontSize: 16.h,
+                      ),
+                      textStyle: CustomTextStyles.bodyMediumGray700.copyWith(
+                        fontSize: 16.h,
+                      ),
                       prefix: Container(
                         margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                         child: CustomImageView(
@@ -193,7 +203,12 @@ class _SigninScreenState extends State<SigninScreen> {
                       textInputType: TextInputType.text,
                       controller: controller.schoolCodeController,
                       hintText: "School Code",
-                      hintStyle: CustomTextStyles.bodyMediumGray700,
+                      hintStyle: CustomTextStyles.bodyMediumGray700.copyWith(
+                        fontSize: 16.h,
+                      ),
+                      textStyle: CustomTextStyles.bodyMediumGray700.copyWith(
+                        fontSize: 16.h,
+                      ),
                       prefix: Container(
                         margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                         child: CustomImageView(

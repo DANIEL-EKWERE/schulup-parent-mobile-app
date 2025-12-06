@@ -17,8 +17,9 @@ import 'widgets/listline_item_widget.dart'; // ignore_for_file: must_be_immutabl
 import 'package:intl/intl.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
-DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class NewsEventsScreen extends GetWidget<NewsEventsController> {
   const NewsEventsScreen({Key? key}) : super(key: key);
 
@@ -91,8 +92,12 @@ class NewsEventsScreen extends GetWidget<NewsEventsController> {
                   return GestureDetector(
                     onTap: () {
                       controller.selectedMonth.value = model;
+                      print(model);
                       controller.eventsByDateRange(model, '');
                       // print(model);
+                      print(
+                        convertMonthYearToDateFormat(model.replaceAll(' ', '')),
+                      );
                     },
                     child: ListjuncounterItemWidget(model),
                   );
@@ -145,6 +150,49 @@ class NewsEventsScreen extends GetWidget<NewsEventsController> {
     // Get.back();
     Navigator.pop(Get.context!);
     // controller.getEvents();
+  }
+
+  String convertMonthYearToDateFormat(String monthYear) {
+    try {
+      // Extract month name and year using regex
+      final RegExp regex = RegExp(r'([A-Za-z]+)(\d{4})');
+      final match = regex.firstMatch(monthYear);
+
+      if (match == null) {
+        throw FormatException('Invalid format: $monthYear');
+      }
+
+      String monthName = match.group(1)!;
+      String year = match.group(2)!;
+
+      // Map month names to numbers
+      final Map<String, String> monthMap = {
+        'january': '01',
+        'february': '02',
+        'march': '03',
+        'april': '04',
+        'may': '05',
+        'june': '06',
+        'july': '07',
+        'august': '08',
+        'september': '09',
+        'october': '10',
+        'november': '11',
+        'december': '12',
+      };
+
+      // Get month number (case-insensitive)
+      String? monthNumber = monthMap[monthName.toLowerCase()];
+
+      if (monthNumber == null) {
+        throw FormatException('Invalid month name: $monthName');
+      }
+
+      return '$year-$monthNumber';
+    } catch (e) {
+      print('Error converting date: $e');
+      return ''; // or throw the error, or return a default value
+    }
   }
 
   List<String> getMonths() {

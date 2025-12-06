@@ -66,10 +66,15 @@ class ListlineItemLessonWidget extends StatelessWidget {
               ),
               // Obx(
               //   () =>
-              Text(
-                "${listlineItemModelObj.subjectMasterName!} • ${formatDate(listlineItemModelObj.lastUpdated!)}",
+              SizedBox(
+                width: 200,
+                child: Text(
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  "${listlineItemModelObj.subjectMasterName!} • ${formatDate(listlineItemModelObj.lastUpdated!)}",
 
-                style: CustomTextStyles.bodySmallSecondaryContainer10,
+                  style: CustomTextStyles.bodySmallSecondaryContainer10,
+                ),
               ),
               // ),
             ],

@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' as html;
 import 'package:intl/intl.dart';
+import 'package:schulupparent/presentation/academics_assignment_answer_screen/models/assignment_thread_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_four_bottomsheet/academics_assignment_modal_four_bottomsheet.dart';
 import 'package:schulupparent/presentation/academics_assignment_modal_four_bottomsheet/controller/academics_assignment_modal_four_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/assignment_details.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
+import 'package:schulupparent/presentation/reports_report_card_all_variants_page/models/comments_model.dart';
 import 'package:schulupparent/widgets/custom_text_form_field.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/app_export.dart';
@@ -16,8 +18,9 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
 import 'controller/academics_assignment_answer_controller.dart'; // ignore_for_file: must_be_immutable
 
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
-DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 class AcademicsAssignmentAnswerScreen
     extends GetWidget<AcademicsAssignmentAnswerController> {
   const AcademicsAssignmentAnswerScreen({Key? key}) : super(key: key);
@@ -25,6 +28,8 @@ class AcademicsAssignmentAnswerScreen
   @override
   Widget build(BuildContext context) {
     AssignmentDetails model = Get.arguments['model'];
+    print('building');
+    controller.studentThread(model.data!.assignmentID.toString());
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       appBar: _buildAppbar(),
@@ -43,7 +48,338 @@ class AcademicsAssignmentAnswerScreen
                     children: [
                       Column(
                         mainAxisSize: MainAxisSize.max,
-                        children: [_buildColumntherespir(model)],
+                        children: [
+                          _buildColumntherespir(model),
+
+                          SizedBox(height: 10),
+
+                          Obx(
+                            () =>
+                                (controller.isLoading.value)
+                                    ? Center(child: CircularProgressIndicator())
+                                    : controller.replies.isNotEmpty
+                                    ? Container(
+                                      decoration: BoxDecoration(
+                                        color: Color(0xffF7F7F8),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      width: double.infinity,
+                                      // padding: EdgeInsets.all(20),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // Your Submission Section (First Reply)
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Color(0xffF7F7F8),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            width: double.infinity,
+                                            padding: EdgeInsets.all(20),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'Your Submission',
+                                                      style: theme
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Color(
+                                                              0xff27262B,
+                                                            ),
+                                                          ),
+                                                    ),
+                                                    Text(
+                                                      'Submitted',
+                                                      style: theme
+                                                          .textTheme
+                                                          .bodyMedium!
+                                                          .copyWith(
+                                                            color:
+                                                                Colors
+                                                                    .grey[500],
+                                                            fontStyle:
+                                                                FontStyle
+                                                                    .italic,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 16),
+                                                Text(
+                                                  controller
+                                                          .replies
+                                                          .first
+                                                          .replyText ??
+                                                      '',
+                                                  style: theme
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        color: Color(
+                                                          0xff27262B,
+                                                        ),
+                                                        height: 1.5,
+                                                      ),
+                                                ),
+                                                // Show attachments if any
+                                                if (controller
+                                                    .replies
+                                                    .first
+                                                    .hasAttachments) ...[
+                                                  SizedBox(height: 16),
+                                                  ...controller.replies.first.attachments!.map((
+                                                    attachment,
+                                                  ) {
+                                                    return Container(
+                                                      margin: EdgeInsets.only(
+                                                        bottom: 12,
+                                                      ),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                            horizontal: 16,
+                                                            vertical: 12,
+                                                          ),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              8,
+                                                            ),
+                                                        border: Border.all(
+                                                          color: Color(
+                                                            0xffEFEEF0,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(
+                                                            attachment.isPdf
+                                                                ? Icons
+                                                                    .picture_as_pdf
+                                                                : attachment
+                                                                    .isImage
+                                                                ? Icons.image
+                                                                : Icons
+                                                                    .attach_file,
+                                                            color:
+                                                                Colors
+                                                                    .grey[600],
+                                                            size: 24,
+                                                          ),
+                                                          SizedBox(width: 12),
+                                                          Expanded(
+                                                            child: Text(
+                                                              attachment.name ??
+                                                                  'Attachment',
+                                                              style:
+                                                                  theme
+                                                                      .textTheme
+                                                                      .bodyMedium,
+                                                            ),
+                                                          ),
+                                                          Icon(
+                                                            Icons.download,
+                                                            color: Color(
+                                                              0xffFF8D2A,
+                                                            ),
+                                                            size: 24,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ],
+                                                SizedBox(height: 20),
+                                                Divider(
+                                                  thickness: 1,
+                                                  color: Color(0xffB9B8C1),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
+                                          // Comments Section (Remaining Replies)
+                                          if (controller.replies.length >
+                                              1) ...[
+                                            //SizedBox(height: 10),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Color(0xffF7F7F8),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              width: double.infinity,
+                                              padding: EdgeInsets.only(
+                                                left: 20,
+                                                right: 20,
+                                                bottom: 20,
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Comments',
+                                                    style: theme
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  // Comments ListView
+                                                  ListView.separated(
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    itemBuilder: (
+                                                      context,
+                                                      index,
+                                                    ) {
+                                                      // Skip first reply (already shown in submission)
+                                                      Replies reply =
+                                                          controller
+                                                              .replies[index +
+                                                              1];
+
+                                                      bool isLastMessage =
+                                                          (index + 1) ==
+                                                          controller
+                                                                  .replies
+                                                                  .length -
+                                                              1;
+                                                      bool isSending =
+                                                          controller
+                                                              .isCommentsSendLoading
+                                                              .value &&
+                                                          isLastMessage;
+
+                                                      return Column(
+                                                        crossAxisAlignment:
+                                                            reply.isStudentReply
+                                                                ? CrossAxisAlignment
+                                                                    .end
+                                                                : CrossAxisAlignment
+                                                                    .start,
+                                                        children: [
+                                                          Container(
+                                                            constraints:
+                                                                BoxConstraints(
+                                                                  maxWidth: 280,
+                                                                ),
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                  12,
+                                                                ),
+                                                            decoration: BoxDecoration(
+                                                              color:
+                                                                  reply.isStudentReply
+                                                                      ? Color(
+                                                                        0xffF4EEA9,
+                                                                      ) // Student
+                                                                      : Color(
+                                                                        0xffA8EFF9,
+                                                                      ), // Teacher
+                                                              borderRadius:
+                                                                  reply.isStudentReply
+                                                                      ? BorderRadius.only(
+                                                                        topLeft:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                        bottomRight:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                        bottomLeft:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                      )
+                                                                      : BorderRadius.only(
+                                                                        topRight:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                        bottomRight:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                        bottomLeft:
+                                                                            Radius.circular(
+                                                                              10,
+                                                                            ),
+                                                                      ),
+                                                            ),
+                                                            child: Text(
+                                                              reply.replyText ??
+                                                                  '',
+                                                              style: TextStyle(
+                                                                color:
+                                                                    isSending
+                                                                        ? Colors
+                                                                            .grey[400]
+                                                                        : Color(
+                                                                          0xff27262B,
+                                                                        ),
+                                                                height: 1.4,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 4),
+                                                          Text(
+                                                            '${reply.userName} • ${isSending ? 'Sending...' : reply.formattedTime}',
+                                                            style: TextStyle(
+                                                              fontSize: 11,
+                                                              color:
+                                                                  Colors
+                                                                      .grey[600],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                    separatorBuilder: (
+                                                      context,
+                                                      index,
+                                                    ) {
+                                                      return SizedBox(
+                                                        height: 16,
+                                                      );
+                                                    },
+                                                    itemCount:
+                                                        controller
+                                                            .replies
+                                                            .length -
+                                                        1, // Exclude first reply
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ],
+                                      ),
+                                    )
+                                    : SizedBox.shrink(),
+                          ),
+
+                          SizedBox(height: 20),
+                        ],
                       ),
                     ],
                   ),
@@ -256,19 +592,25 @@ class AcademicsAssignmentAnswerScreen
                         Positioned(
                           bottom: 8.h,
                           right: 8.h,
-                          child: CustomIconButton(
-                            height: 24.h,
-                            width: 24.h,
-                            padding: EdgeInsets.all(4.h),
-                            decoration: IconButtonStyleHelper.fillPrimary,
-                            child: CustomImageView(
-                              onTap: () {
-                                controller.studentReplyCall(
-                                  model.data!.assignmentID.toString(),
-                                );
-                              },
-                              imagePath: ImageConstant.imgVector,
-                            ),
+                          child: Obx(
+                            () =>
+                                controller.isCommentsSendLoading.value
+                                    ? Center(child: CircularProgressIndicator())
+                                    : CustomIconButton(
+                                      height: 24.h,
+                                      width: 24.h,
+                                      padding: EdgeInsets.all(4.h),
+                                      decoration:
+                                          IconButtonStyleHelper.fillPrimary,
+                                      child: CustomImageView(
+                                        onTap: () {
+                                          controller.studentReplyCall(
+                                            model.data!.assignmentID.toString(),
+                                          );
+                                        },
+                                        imagePath: ImageConstant.imgVector,
+                                      ),
+                                    ),
                           ),
                         ),
                       ],

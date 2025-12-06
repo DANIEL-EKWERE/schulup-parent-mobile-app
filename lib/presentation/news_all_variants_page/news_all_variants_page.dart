@@ -16,8 +16,9 @@ import 'models/news_all_variants_model.dart';
 import 'widgets/news_all_item_widget.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
-DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
 // ignore_for_file: must_be_immutable
 class NewsAllVariantsPage extends StatelessWidget {
   NewsAllVariantsPage({Key? key}) : super(key: key);
@@ -77,20 +78,21 @@ class NewsAllVariantsPage extends StatelessWidget {
           },
           imagePath: ImageConstant.imgIconsSmallEvents,
         ),
-        AppbarTrailingIconbutton(
-          onTap: () {
-            showModalBottomSheet(
-              context: Get.context!,
-              builder: (context) {
-                return NewsModalJumpToADateBottomsheet(
-                  NewsModalJumpToADateController(),
-                );
-              },
-            );
-          },
-          imagePath: ImageConstant.imgUserWhiteA700,
-          margin: EdgeInsets.only(left: 11.h, right: 25.h),
-        ),
+        SizedBox(width: 16),
+        // AppbarTrailingIconbutton(
+        //   onTap: () {
+        //     showModalBottomSheet(
+        //       context: Get.context!,
+        //       builder: (context) {
+        //         return NewsModalJumpToADateBottomsheet(
+        //           NewsModalJumpToADateController(),
+        //         );
+        //       },
+        //     );
+        //   },
+        //   imagePath: ImageConstant.imgUserWhiteA700,
+        //   margin: EdgeInsets.only(left: 11.h, right: 25.h),
+        // ),
       ],
       styleType: Style.bgFillPrimary,
     );

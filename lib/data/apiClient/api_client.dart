@@ -544,11 +544,16 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-  Future<http.Response> getCheckoutAddress() async {
+  Future<http.Response> studentThreadById(
+    String assignmentID,
+    String studentID,
+  ) async {
     //var token = await dataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
-    final url = Uri.parse('$baseUrl/addresses');
+    final url = Uri.parse(
+      '$baseUrl/assignments/$assignmentID/thread?studentId=$studentID',
+    );
     _logRequest('GET', url);
     final response = await http.get(
       url,
@@ -627,10 +632,15 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-
-  Future<http.Response> makeComment(Map<String, dynamic> commentData, String studentID, String date) async {
+  Future<http.Response> makeComment(
+    Map<String, dynamic> commentData,
+    String studentID,
+    String date,
+  ) async {
     var token = await dataBase.getToken();
-    final url = Uri.parse('$baseUrl/dailyreport/students/$studentID/date/$date/sendcomment');
+    final url = Uri.parse(
+      '$baseUrl/dailyreport/students/$studentID/date/$date/sendcomment',
+    );
     _logRequest('POST', url, body: commentData);
     final response = await http.post(
       url,
@@ -645,9 +655,10 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-
-Future<http.Response> startConversation(Map<String, dynamic> startConversationData) async {
-  var token = await dataBase.getToken();
+  Future<http.Response> startConversation(
+    Map<String, dynamic> startConversationData,
+  ) async {
+    var token = await dataBase.getToken();
     final url = Uri.parse('$baseUrl/chat/conversations');
     _logRequest('POST', url, body: startConversationData);
     final response = await http.post(
@@ -666,7 +677,7 @@ Future<http.Response> startConversation(Map<String, dynamic> startConversationDa
   /// submit Test
   Future<http.Response> submitTest(Map<String, dynamic> testData) async {
     final url = Uri.parse('$baseUrl/quiz/submit');
-     var token = await dataBase.getToken();
+    var token = await dataBase.getToken();
     _logRequest('POST', url, body: testData);
     final response = await http.post(
       url,
@@ -681,20 +692,23 @@ Future<http.Response> startConversation(Map<String, dynamic> startConversationDa
     return response;
   }
 
-
-/// start cbt test
-Future<http.Response> startCbt(String studentID, String quizScheduleID) async {
-    final url = Uri.parse('$baseUrl/quiz/students/$studentID/schedules/$quizScheduleID/attempt');
+  /// start cbt test
+  Future<http.Response> startCbt(
+    String studentID,
+    String quizScheduleID,
+  ) async {
+    final url = Uri.parse(
+      '$baseUrl/quiz/students/$studentID/schedules/$quizScheduleID/attempt',
+    );
     var token = await dataBase.getToken();
-    _logRequest('POST', url,);
+    _logRequest('POST', url);
     final response = await http.post(
       url,
       headers: <String, String>{
-       'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
-     
     );
     _logResponse(response);
     return response;
@@ -783,16 +797,13 @@ Future<http.Response> startCbt(String studentID, String quizScheduleID) async {
     return response;
   }
 
-
-
-
   // get Students assignments
   Future<http.Response> searchStudentAssignment(
     String studentId,
     String classID,
     String termID,
     String submissionStatus,
-    String searchTerm
+    String searchTerm,
   ) async {
     final url = Uri.parse(
       '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&searchTerm=$searchTerm&submissionStatus=$submissionStatus&page=1&pageSize=10',
@@ -889,10 +900,11 @@ Future<http.Response> startCbt(String studentID, String quizScheduleID) async {
     return response;
   }
 
-
   // get teachesr linked to a student
   Future<http.Response> getUserConversations() async {
-    final url = Uri.parse('$baseUrl/chat/user-conversations?page=1&pageSize=20');
+    final url = Uri.parse(
+      '$baseUrl/chat/user-conversations?page=1&pageSize=20',
+    );
     var token = await dataBase.getToken();
     _logRequest('GET', url);
     final response = await http.get(
@@ -1055,9 +1067,12 @@ Future<http.Response> startCbt(String studentID, String quizScheduleID) async {
     return response;
   }
 
-
-/// search lesson
-Future<http.Response> searchLessons(String classId, String termId, String searchTerm) async {
+  /// search lesson
+  Future<http.Response> searchLessons(
+    String classId,
+    String termId,
+    String searchTerm,
+  ) async {
     final url = Uri.parse(
       '$baseUrl/lessons/search?classId=$classId&termId=$termId&searchTerm=$searchTerm&page=1&pageSize=10',
     );
@@ -1076,8 +1091,6 @@ Future<http.Response> searchLessons(String classId, String termId, String search
     _logResponse(response);
     return response;
   }
-
-
 
   Future<http.Response> allLessons(String classId, String termId) async {
     final url = Uri.parse(
@@ -1099,7 +1112,7 @@ Future<http.Response> searchLessons(String classId, String termId, String search
     return response;
   }
 
-/// student scheduled cbt test
+  /// student scheduled cbt test
   Future<http.Response> cbt(String classId, String studentId) async {
     final url = Uri.parse(
       '$baseUrl/quiz/schedules/students/$studentId?classI=$classId&page=1&pageSize=20',
@@ -1120,10 +1133,12 @@ Future<http.Response> searchLessons(String classId, String termId, String search
     return response;
   }
 
-
-
-/// student search cbt test
-  Future<http.Response> serachCbt(String classId, String studentId, String serachTerm) async {
+  /// student search cbt test
+  Future<http.Response> serachCbt(
+    String classId,
+    String studentId,
+    String serachTerm,
+  ) async {
     final url = Uri.parse(
       '$baseUrl/quiz/schedules/students/$studentId/search?classId=$classId&searchTerm=$serachTerm&page=1&pageSize=20',
     );
@@ -1143,10 +1158,11 @@ Future<http.Response> searchLessons(String classId, String termId, String search
     return response;
   }
 
-
-
   /// student scheduled cbt test
-  Future<http.Response> cbtDetaails(String studentId,String quizScheduleID) async {
+  Future<http.Response> cbtDetaails(
+    String studentId,
+    String quizScheduleID,
+  ) async {
     final url = Uri.parse(
       '$baseUrl/quiz/students/$studentId/schedules/$quizScheduleID/details',
     );
@@ -1166,11 +1182,9 @@ Future<http.Response> searchLessons(String classId, String termId, String search
     return response;
   }
 
-
   /// student scheduled cbt test result
   Future<http.Response> cbtResult(String classId, String studentId) async {
     final url = Uri.parse(
-      
       '$baseUrl/quiz/history/students/$studentId?classId=$classId&page=1&pageSize=20',
     );
     //10291
@@ -1922,13 +1936,17 @@ Future<http.Response> searchLessons(String classId, String termId, String search
     String page,
   ) async {
     final url = Uri.parse(
-      '$baseUrl/event/my-events?startDate=$startDate&endDate=$endDate&page=$page&pageSize=20',
+      '$baseUrl/events/my-events?startDate=$startDate&endDate=$endDate&page=$page&pageSize=20',
     );
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
     _logRequest('GET', url);
     final response = await http.get(
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
       },
     );
     _logResponse(response);
@@ -1992,6 +2010,23 @@ Future<http.Response> searchLessons(String classId, String termId, String search
     return response;
   }
 
+  Future<http.Response> getStudentsById(String studentId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final url = Uri.parse('$baseUrl/students/$studentId');
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
   // Create a new category
   Future<http.Response> createCategory(
     Map<String, dynamic> categoryData,
@@ -2013,12 +2048,16 @@ Future<http.Response> searchLessons(String classId, String termId, String search
   Future<http.Response> updateStudentInfo(
     Map<String, dynamic> categoryData,
   ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/students/update');
     _logRequest('PUT', url, body: categoryData);
     final response = await http.put(
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(categoryData),
     );

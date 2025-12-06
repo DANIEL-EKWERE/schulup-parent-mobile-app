@@ -5,8 +5,12 @@ import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/mod
 class AcademicsLessonAllLessonBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AcademicsLessonAllLessonsController(
-        AcademicsLessonAllLessonsModel().obs));
+    Get.lazyPut(
+      () => AcademicsLessonAllLessonsController(
+        AcademicsLessonAllLessonsModel().obs,
+      ),
+    );
+
+ 
   }
-  
 }

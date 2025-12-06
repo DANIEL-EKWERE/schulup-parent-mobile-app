@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/news_all_variants_page/models/news_model.dart';
@@ -183,5 +184,10 @@ class NewsAllVariantsController extends GetxController {
     } finally {
       OverlayLoadingProgress.stop();
     }
+  }
+
+    String formatDate1(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('yyyy-MM-dd').format(dateTime);
   }
 }

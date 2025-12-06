@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
@@ -31,8 +32,7 @@ class NewsEventsController extends GetxController {
     getEvents();
   }
 
-
-        RefreshController refreshController = RefreshController(
+  RefreshController refreshController = RefreshController(
     initialRefresh: false,
   );
   void onrefresh() {
@@ -208,11 +208,13 @@ class NewsEventsController extends GetxController {
       var page = "1";
       // var startDate = ""; // Example start date
       // var endDate = ""; // Example end date
-      final response = await _apiService.getEventsByDateRange(
-        startDate.replaceAll(' ', ''),
-        endDate!,
-        page,
+      var start = convertMonthYearToDateFormat(
+        selectedMonth.value.replaceAll(' ', ''),
       );
+      var end = convertMonthYearToDateFormat(
+        selectedMonth.value.replaceAll(' ', ''),
+      );
+      final response = await _apiService.getEventsByDateRange(start, end, page);
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
         // OverlayLoadingProgress.stop();
@@ -443,6 +445,54 @@ class NewsEventsController extends GetxController {
       //OverlayLoadingProgress.stop();
     } finally {
       OverlayLoadingProgress.stop();
+    }
+  }
+
+  String formatDate1(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('yyyy-MM-dd').format(dateTime);
+  }
+
+  String convertMonthYearToDateFormat(String monthYear) {
+    try {
+      // Extract month name and year using regex
+      final RegExp regex = RegExp(r'([A-Za-z]+)(\d{4})');
+      final match = regex.firstMatch(monthYear);
+
+      if (match == null) {
+        throw FormatException('Invalid format: $monthYear');
+      }
+
+      String monthName = match.group(1)!;
+      String year = match.group(2)!;
+
+      // Map month names to numbers
+      final Map<String, String> monthMap = {
+        'january': '01',
+        'february': '02',
+        'march': '03',
+        'april': '04',
+        'may': '05',
+        'june': '06',
+        'july': '07',
+        'august': '08',
+        'september': '09',
+        'october': '10',
+        'november': '11',
+        'december': '12',
+      };
+
+      // Get month number (case-insensitive)
+      String? monthNumber = monthMap[monthName.toLowerCase()];
+
+      if (monthNumber == null) {
+        throw FormatException('Invalid month name: $monthName');
+      }
+
+      return '$year-$monthNumber';
+    } catch (e) {
+      print('Error converting date: $e');
+      return ''; // or throw the error, or return a default value
     }
   }
 }

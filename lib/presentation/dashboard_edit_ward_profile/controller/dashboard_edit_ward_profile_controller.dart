@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'dart:developer' as myLog;
+import 'package:alert_info/alert_info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/academics_assignment_status_initial_model.dart';
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/dashboard_edit_ward_profile.dart';
+import 'package:schulupparent/presentation/dashboard_edit_ward_profile/model/model.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
 class DashboardEditWardProfileController extends GetxController {
@@ -15,16 +17,22 @@ class DashboardEditWardProfileController extends GetxController {
   DashboardExtendedViewController dashboardExtendedViewController =
       Get.find<DashboardExtendedViewController>();
 
-Rx<String> selectedGender = 'Male'.obs;
+  Rx<String> selectedGender = 'Male'.obs;
+
+  Rx<String> selectedBloodGroup = 'A'.obs;
+
+  Rx<String> selectedGenotype = 'AA'.obs;
+
+  Rx<bool> isLoading = false.obs;
 
   @override
   void onReady() {
     super.onReady();
-    // Get the student from arguments
-    var selectedStudent = Get.arguments;
-    if (selectedStudent != null) {
-      _updateControllers(selectedStudent);
-    }
+    // // Get the student from arguments
+    // var selectedStudent = Get.arguments;
+    // if (selectedStudent != null) {
+    //   _updateControllers(selectedStudent);
+    // }
   }
 
   void _updateControllers(Student selectedStudent) {
@@ -44,6 +52,8 @@ Rx<String> selectedGender = 'Male'.obs;
       languageController.text = selectedStudent.language ?? '';
     }
   }
+
+  StudentProfile? studentProfile;
 
   // @override
   // void onClose() {
@@ -91,10 +101,10 @@ Rx<String> selectedGender = 'Male'.obs;
         "firstName": firstNameController.text,
         "lastName": lastNameController.text,
         "middleName": middleNameController.text,
-        "gender": genderController.text,
+        "gender": 1, //selectedGender.value,
         "dateOfBirth": dateOfBirthController.text,
-        "bloodGroup": bloodGroupController.text,
-        "genotype": genotypeController.text,
+        "bloodGroup": selectedBloodGroup.value,
+        "genotype": selectedGenotype.value,
         "countryID": 1,
         "state": stateController.text,
         "city": cityController.text,
@@ -107,6 +117,10 @@ Rx<String> selectedGender = 'Male'.obs;
       final response = await _apiService.updateStudentInfo(body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         OverlayLoadingProgress.stop();
+        AlertInfo.show(
+          context: Get.context!,
+          text: 'Profile updated successfully!!!',
+        );
         Get.snackbar(
           'Success',
           'Student information updated successfully',
@@ -115,6 +129,8 @@ Rx<String> selectedGender = 'Male'.obs;
           colorText: Colors.white,
         );
         Get.back(); // Go back after successful update
+        Navigator.pop(Get.context!);
+        myLog.log("profile updated successfully");
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
@@ -154,6 +170,90 @@ Rx<String> selectedGender = 'Male'.obs;
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+    }
+  }
+
+  Future<void> getStudentInfo() async {
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    // );
+    isLoading.value = true;
+    try {
+      String studentId =
+          dashboardExtendedViewController.selectedStudent1!.studentID
+              .toString();
+      final response = await _apiService.getStudentsById(studentId);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        studentProfile = studentProfileFromJson(response.body);
+        isLoading.value = false;
+
+        lastNameController.text = studentProfile!.data!.lastName!;
+        firstNameController.text = studentProfile!.data!.firstName!;
+        middleNameController.text = studentProfile!.data!.middleName!;
+        genderController.text = studentProfile!.data!.gender!;
+        dateOfBirthController.text = studentProfile!.data!.dateOfBirth!;
+        bloodGroupController.text = studentProfile!.data!.bloodGroup!;
+        genotypeController.text = studentProfile!.data!.genotype!;
+        stateController.text = studentProfile!.data!.state!;
+        cityController.text = studentProfile!.data!.city!;
+        addressController.text = studentProfile!.data!.address!;
+        religionController.text = studentProfile!.data!.religion!;
+        languageController.text = studentProfile!.data!.language!;
+        //   OverlayLoadingProgress.stop();
+        Get.snackbar(
+          'Success',
+          'Student information retrived successfully',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+        //Get.back(); // Go back after successful update
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isLoading.value = false;
+        //OverlayLoadingProgress.stop();
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        //  OverlayLoadingProgress.stop();
+        isLoading.value = false;
+        Get.snackbar(
+          'Error',
+          'Update failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      //  OverlayLoadingProgress.stop();
+      isLoading.value = false;
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      // OverlayLoadingProgress.stop();
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
     }
   }
 }

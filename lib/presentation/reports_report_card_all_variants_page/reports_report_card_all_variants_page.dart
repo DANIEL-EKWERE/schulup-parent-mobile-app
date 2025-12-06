@@ -651,6 +651,7 @@ class _ReportsReportCardAllVariantsPageState
                                                           'assets/images/img_icons_small_send.svg',
                                                     ),
                                           ),
+                                          
                                           filled: true,
                                           hintText: "Leave a comment...",
                                           hintStyle: theme.textTheme.bodyMedium!
