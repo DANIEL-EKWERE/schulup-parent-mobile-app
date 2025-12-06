@@ -1,5 +1,7 @@
 import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/academics_lesson_all_lessons_page.dart';
 import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/binding/academics_lesson_all_lesson_binding.dart';
+import 'package:schulupparent/presentation/academics_lesson_cbt_test_page/academics_cbt_test_page.dart';
+import 'package:schulupparent/presentation/academics_lesson_cbt_test_page/binding/academics_lesson_cbt_test_binding.dart';
 import 'package:schulupparent/presentation/change_password/binding/change_password_binding.dart';
 import 'package:schulupparent/presentation/change_password/change_password_screen.dart';
 import 'package:schulupparent/presentation/dashboard_edit_ward_profile/binding/dashboard_edit_ward_profile_binding.dart';
@@ -184,6 +186,8 @@ class AppRoutes {
 
   static const String academicsCbtTestTestResultTwoScreen =
       '/academics_cbt_test_test_result_two_screen';
+
+static const String academicsCbtTestPage = '/academics_cbt_test_page';
 
   static const String academicsLessonAllLessonsPage =
       '/academics_lesson_all_lessons_page';
@@ -420,10 +424,16 @@ class AppRoutes {
       bindings: [AcademicsCbtTestTestResultOneBinding()],
     ),
     //academicsLessonAllLessonsPage
+    //AcademicsCbtTestPage
     GetPage(
       name: academicsCbtTestTestResultTwoScreen,
       page: () => AcademicsCbtTestTestResultTwoScreen(),
       bindings: [AcademicsCbtTestTestResultTwoBinding()],
+    ),
+    GetPage(
+      name: academicsCbtTestPage,
+      page: () => AcademicsCbtTestPage(),
+      bindings: [AcademicsCbtTestBinding()],
     ),
     GetPage(
       name: academicsLessonAllLessonsPage,

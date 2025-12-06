@@ -13,6 +13,7 @@ import 'package:schulupparent/presentation/academics_assignment_status_screen/mo
 import 'package:schulupparent/presentation/dashboard_extended_view/models/academics_session_model.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/models/student_batch_model.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/models/student_class_model.dart';
+import 'package:schulupparent/presentation/news_all_variants_page/models/news_model.dart';
 
 class DashboardExtendedViewController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
@@ -35,6 +36,10 @@ class DashboardExtendedViewController extends GetxController {
   List<ClassData> classDataList = [];
   List<BatchData> batchDataList = [];
   List<AcademicSessionData> academicSessionDataList = [];
+
+  NewsResponse? newsResponse;
+  List<NewsItem> newsItems = [];
+
 
   int? selectedClassID;
   int? selectedTerm;
@@ -82,6 +87,7 @@ class DashboardExtendedViewController extends GetxController {
         await getBatch();
         await getClass();
         await getAcademicSessions();
+        await getNews();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //Get.offAllNamed(AppRoutes.signTwoScreen);
@@ -370,6 +376,96 @@ class DashboardExtendedViewController extends GetxController {
         Get.snackbar(
           'Error',
           'Login failed. Please try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } on SocketException {
+      isLoading.value = false;
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      //OverlayLoadingProgress.stop();
+    } finally {
+      // OverlayLoadingProgress.stop();
+      isLoading.value = false;
+    }
+  }
+
+
+
+  Future<void> getNews() async {
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    // );
+    isLoading.value = true;
+    try {
+      final response = await _apiService.getNews();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
+        // myLog.log('Login successful: ${response.body}');
+        // schoolCodeInputController.dispose();
+        // usernameInputController.dispose();
+        // passwordInputController.dispose();
+        var responseData = jsonDecode(response.body);
+        newsResponse = newsResponseFromJson(response.body);
+        newsItems = newsResponse!.data.news.length > 3
+        ? newsResponse!.data.news.sublist(0,3)
+        : newsResponse!.data.news;
+        // carouselItems.value = allItems.length > 3 
+        //   ? allItems.sublist(0, 3) 
+        //   : allItems;
+        // var token = responseData['data']['token'];
+        // var userId = responseData['data']['userID'];
+        // var userName = responseData['data']['displayName'];
+        // myLog.log('Token: $token');
+        // dataBase.saveToken(token);
+        // dataBase.saveUserId(userId);
+        // dataBase.saveUserName(userName);
+        // dataBase.saveTransactionPin(passwordController.text);
+        // dataBase.saveBrmCode(schoolCodeController.text);
+        // usernameController.clear();
+        // passwordController.clear();
+        // schoolCodeController.clear();
+        //Get.offAllNamed(AppRoutes.signinScreen,);
+        myLog.log(response.body);
+
+        //   Get.toNamed(AppRoutes.signFourScreen);
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        //Get.offAllNamed(AppRoutes.signTwoScreen);
+        // OverlayLoadingProgress.stop();
+        isLoading.value = false;
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        Get.snackbar(
+          'Error',
+          message,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        // OverlayLoadingProgress.stop();
+        isLoading.value = false;
+        Get.snackbar(
+          'Error',
+          'Fetching news failed. Please try again.',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,

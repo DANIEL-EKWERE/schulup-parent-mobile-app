@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 NewsResponse newsResponseFromJson(String str) =>
     NewsResponse.fromJson(json.decode(str));
 
@@ -122,6 +124,19 @@ class NewsItem {
       'attachments': attachments.map((e) => e.toJson()).toList(),
     };
   }
+
+
+
+  // Helper method to format date posted
+  String get formattedDatePosted {
+    if (createdAt == null) return '';
+    try {
+      DateTime dateTime = DateTime.parse(createdAt);
+      return DateFormat('MMM d, yyyy').format(dateTime);
+    } catch (e) {
+      return createdAt ?? '';
+    }
+  }
 }
 
 class Attachment {
@@ -150,4 +165,8 @@ class Attachment {
       'fileIcon': fileIcon,
     };
   }
+
+  
+
+  
 }

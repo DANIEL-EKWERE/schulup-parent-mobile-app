@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
+import 'package:schulupparent/presentation/academics_lesson_cbt_test_page/controller/academics_lesson_cbt_test_controller.dart';
 import 'package:schulupparent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
@@ -11,6 +12,9 @@ import 'controller/academics_cbt_test_modal_one_controller.dart';
 AcademicsAssignmentStatusController controller1 = Get.put(
   AcademicsAssignmentStatusController(),
 );
+
+AcademicsLessonCbtTestController controls =
+    Get.find<AcademicsLessonCbtTestController>();
 
 class AcademicsCbtTestModalOneBottomsheet extends StatefulWidget {
   AcademicsCbtTestModalOneBottomsheet(this.controller, {Key? key})
@@ -129,6 +133,7 @@ class _AcademicsCbtTestModalOneBottomsheetState
                 controller1.getCbtResult();
                 return;
               }
+              controls.getCbt();
               Navigator.pop(context);
             },
             height: 64.h,

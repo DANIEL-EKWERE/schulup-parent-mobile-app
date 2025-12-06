@@ -27,7 +27,7 @@ class DashboardExtendedViewModel {
       DashboardExtendedViewModel(
         title: "CBT Tests",
         imagePath: ImageConstant.imgCbttests,
-        route: '',
+        route: '/academics_cbt_test_page',
       ),
       DashboardExtendedViewModel(
         title: "Lessons",
