@@ -23,8 +23,9 @@ class ReportsWardProgressSubjectController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   Subjects? subjects;
-  List<SubjectData> subjectDataList = [];
+  RxList<SubjectData> subjectDataList = <SubjectData>[].obs;
 
+  Rx<bool> isSubjectLoading = false.obs;
   SubjectData? selectedSubject;
   Rx<String> selectedSubjectName = 'N/A'.obs;
   String? selectedSubjectId;
@@ -51,24 +52,25 @@ class ReportsWardProgressSubjectController extends GetxController {
   }
 
   Future<void> getSubjects() async {
-    isLoading.value = true;
+    isSubjectLoading.value = true;
     try {
       final response = await _apiService.getSubjects(
         dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        isLoading.value = false;
+        isSubjectLoading.value = false;
         subjects = subjectsFromJson(response.body);
-        subjectDataList = subjects!.data!;
+        subjectDataList.clear();
+        subjectDataList.value = subjects!.data!;
         selectedSubject =
             subjectDataList.isNotEmpty ? subjectDataList.first : null;
         selectedSubjectName.value =
             (subjectDataList.isNotEmpty ? subjectDataList.first.name : null)!;
       } else if (response.statusCode == 404 || response.statusCode == 401) {
-        isLoading.value = false;
+        isSubjectLoading.value = false;
       } else {
         // OverlayLoadingProgress.stop();
-        isLoading.value = false;
+        isSubjectLoading.value = false;
         Get.snackbar(
           'Error',
           'Login failed. Please try again.',
@@ -78,7 +80,7 @@ class ReportsWardProgressSubjectController extends GetxController {
         );
       }
     } on SocketException {
-      isLoading.value = false;
+      isSubjectLoading.value = false;
       Get.snackbar(
         'Opps!!!',
         'Check your internet connection and try again.',
@@ -87,7 +89,7 @@ class ReportsWardProgressSubjectController extends GetxController {
         colorText: Colors.white,
       );
     } catch (e) {
-      isLoading.value = false;
+      isSubjectLoading.value = false;
       Get.snackbar(
         'Error',
         e.toString(),
@@ -96,10 +98,10 @@ class ReportsWardProgressSubjectController extends GetxController {
         colorText: Colors.white,
       );
       //OverlayLoadingProgress.stop();
-      isLoading.value = false;
+      isSubjectLoading.value = false;
     } finally {
       // OverlayLoadingProgress.stop();
-      isLoading.value = false;
+      isSubjectLoading.value = false;
     }
   }
 

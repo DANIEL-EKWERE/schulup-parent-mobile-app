@@ -41,6 +41,8 @@ class DashboardExtendedViewController extends GetxController {
   List<NewsItem> newsItems = [];
 
 
+
+
   int? selectedClassID;
   int? selectedTerm;
 

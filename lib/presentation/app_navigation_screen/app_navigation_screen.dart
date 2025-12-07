@@ -544,19 +544,19 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                                 AppRoutes.reportsWardProgressAcademicScreen,
                               ),
                         ),
-                        _buildScreenTitle(
-                          screenTitle:
-                              "Reports - Ward progress - Subject One - BottomSheet",
-                          onTapScreenTitle:
-                              () => onTapBottomSheetTitle(
-                                context,
-                                ReportsWardProgressSubjectOneBottomsheet(
-                                  Get.put(
-                                    ReportsWardProgressSubjectOneController(),
-                                  ),
-                                ),
-                              ),
-                        ),
+                        // _buildScreenTitle(
+                        //   screenTitle:
+                        //       "Reports - Ward progress - Subject One - BottomSheet",
+                        //   onTapScreenTitle:
+                        //       () => onTapBottomSheetTitle(
+                        //         context,
+                        //         ReportsWardProgressSubjectOneBottomsheet(
+                        //           Get.put(
+                        //             ReportsWardProgressSubjectOneController(),
+                        //           ),
+                        //         ),
+                        //       ),
+                        // ),
                         _buildScreenTitle(
                           screenTitle: "Reports - Ward progress - Subject Two",
                           onTapScreenTitle:

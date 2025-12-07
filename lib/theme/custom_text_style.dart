@@ -21,17 +21,17 @@ class CustomTextStyles {
       .bodyMedium!
       .copyWith(color: theme.colorScheme.secondaryContainer);
   static TextStyle get bodySmall10 =>
-      theme.textTheme.bodySmall!.copyWith(fontSize: 12.fSize);
+      theme.textTheme.bodySmall!.copyWith(fontSize: 14.fSize);
   static TextStyle get bodySmall10_1 =>
-      theme.textTheme.bodySmall!.copyWith(fontSize: 12.fSize);
+      theme.textTheme.bodySmall!.copyWith(fontSize: 14.fSize);
   static TextStyle get bodySmallGray700 => theme.textTheme.bodySmall!.copyWith(
     color: appTheme.gray700,
-    fontSize: 12.fSize,
+    fontSize: 14.fSize,
   );
   static TextStyle get bodySmallGray700_1 =>
       theme.textTheme.bodySmall!.copyWith(color: appTheme.gray700);
   static TextStyle get bodySmallOnPrimary => theme.textTheme.bodySmall!
-      .copyWith(color: theme.colorScheme.onPrimary, fontSize: 12.fSize);
+      .copyWith(color: theme.colorScheme.onPrimary, fontSize: 14.fSize);
   static TextStyle get bodySmallOnPrimary_1 =>
       theme.textTheme.bodySmall!.copyWith(color: theme.colorScheme.onPrimary);
   static TextStyle get bodySmallSecondaryContainer => theme.textTheme.bodySmall!
@@ -39,10 +39,10 @@ class CustomTextStyles {
   static TextStyle get bodySmallSecondaryContainer10 =>
       theme.textTheme.bodySmall!.copyWith(
         color: theme.colorScheme.secondaryContainer,
-        fontSize: 12.fSize,
+        fontSize: 14.fSize,
       );
   static TextStyle get bodySmallWhiteA700 => theme.textTheme.bodySmall!
-      .copyWith(color: appTheme.whiteA700, fontSize: 12.fSize);
+      .copyWith(color: appTheme.whiteA700, fontSize: 14.fSize);
   static TextStyle get bodySmallWhiteA700_1 =>
       theme.textTheme.bodySmall!.copyWith(color: appTheme.whiteA700);
   // Display text style

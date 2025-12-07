@@ -7,7 +7,7 @@ import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/reports_ward_progress_subject_one_controller.dart';
 
-ReportsWardProgressSubjectController controllerx =
+ReportsWardProgressSubjectController controlsx =
     Get.find<ReportsWardProgressSubjectController>();
 DashboardExtendedViewController dashboardExtendedViewController =
     Get.find<DashboardExtendedViewController>();
@@ -21,7 +21,7 @@ class ReportsWardProgressSubjectOneBottomsheet extends StatefulWidget {
   ReportsWardProgressSubjectOneBottomsheet(this.controller, {Key? key})
     : super(key: key);
 
-  ReportsWardProgressSubjectOneController controller;
+  ReportsWardProgressSubjectController controller;
 
   @override
   State<ReportsWardProgressSubjectOneBottomsheet> createState() =>
@@ -30,11 +30,9 @@ class ReportsWardProgressSubjectOneBottomsheet extends StatefulWidget {
 
 class _ReportsWardProgressSubjectOneBottomsheetState
     extends State<ReportsWardProgressSubjectOneBottomsheet> {
-  List<String> selectedType = [controllerx.selectedSubject?.name ?? ''];
+  List<String> selectedType = [controlsx.selectedSubject?.name ?? ''];
 
-  List<int> selectedTypeID = [
-    controllerx.selectedSubject?.subjectMasterID ?? 0,
-  ];
+  List<int> selectedTypeID = [controlsx.selectedSubject?.subjectMasterID ?? 0];
 
   @override
   Widget build(BuildContext context) {
@@ -87,40 +85,52 @@ class _ReportsWardProgressSubjectOneBottomsheetState
           // ),
           SizedBox(
             height: 90,
-            child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: controllerx.subjectDataList.length,
-              itemBuilder: (context, index) {
-                final subject = controllerx.subjectDataList[index];
-                return GestureDetector(
-                  onTap: () {
-                    selectedType.clear();
-                    selectedTypeID.clear();
+            child: Obx(
+              () =>
+                  widget.controller.isSubjectLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : widget.controller.subjectDataList.isEmpty
+                      ? Text('Subject List is Empty!!!')
+                      : ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: widget.controller.subjectDataList.length,
+                        itemBuilder: (context, index) {
+                          final subject =
+                              widget.controller.subjectDataList[index];
+                          return GestureDetector(
+                            onTap: () {
+                              selectedType.clear();
+                              selectedTypeID.clear();
 
-                    selectedTypeID.add(subject.subjectMasterID ?? 0);
-                    selectedType.add(subject.name ?? '');
+                              selectedTypeID.add(subject.subjectMasterID ?? 0);
+                              selectedType.add(subject.name ?? '');
 
-                    setState(() {});
-                  },
-                  child:
-                      selectedType.contains(subject.name ?? '')
-                          ? SizedBox(
-                            width: double.infinity,
-                            child: CustomElevatedButtonSheet(
-                              text: subject.name ?? '',
-                              rightIcon: Icon(Icons.check),
-                              //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
-                            ),
-                          )
-                          : Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Text(
-                              subject.name ?? '',
-                              style: CustomTextStyles.bodyMediumOnPrimary,
-                            ),
-                          ),
-                );
-              },
+                              setState(() {});
+                            },
+                            child:
+                                selectedType.contains(subject.name ?? '')
+                                    ? SizedBox(
+                                      width: double.infinity,
+                                      child: CustomElevatedButtonSheet(
+                                        text: subject.name ?? '',
+                                        rightIcon: Icon(Icons.check),
+                                        //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
+                                      ),
+                                    )
+                                    : Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 5,
+                                      ),
+                                      child: Text(
+                                        subject.name ?? '',
+                                        style:
+                                            CustomTextStyles
+                                                .bodyMediumOnPrimary,
+                                      ),
+                                    ),
+                          );
+                        },
+                      ),
             ),
           ),
           SizedBox(height: 30.h),
@@ -130,11 +140,15 @@ class _ReportsWardProgressSubjectOneBottomsheetState
               //   (subject) => subject.subjectMasterID == selectedTypeID.first,
               //   orElse: () => controllerx.subjectDataList.first,
               // );
-              controllerx.selectedSubjectId = selectedTypeID.first.toString();
-              controllerx.selectedSubject!.name = selectedType.first;
-              print(controllerx.selectedSubjectId);
-              controllerx.getSubjectProgress();
-              Navigator.pop(context);
+              // controlsx.selectedSubjectId = selectedTypeID.first.toString();
+              // controlsx.selectedSubject!.name = selectedType.first;
+              // print(controlsx.selectedSubjectId);
+              // controlsx.getSubjectProgress();
+              // Navigator.pop(context);
+              print('object');
+              for (var x in widget.controller.subjectDataList) {
+                print("${x.name} anmes");
+              }
             },
             height: 64.h,
             text: "lbl_go_to_subject".tr,

@@ -1,4 +1,5 @@
 // TODO Implement this library.
+import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
@@ -13,12 +14,29 @@ import 'models/reports_ward_progress_subject_model.dart';
 import 'widgets/listline_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
-class ReportsWardProgressSubjectPage extends StatelessWidget {
+class ReportsWardProgressSubjectPage extends StatefulWidget {
   ReportsWardProgressSubjectPage({Key? key}) : super(key: key);
 
+  @override
+  State<ReportsWardProgressSubjectPage> createState() =>
+      _ReportsWardProgressSubjectPageState();
+}
+
+class _ReportsWardProgressSubjectPageState
+    extends State<ReportsWardProgressSubjectPage> {
   ReportsWardProgressSubjectController controller = Get.put(
     ReportsWardProgressSubjectController(ReportsWardProgressSubjectModel().obs),
   );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.getSubjects();
+    Timer(Duration(seconds: 3), () {
+      controller.getSubjectProgress();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +79,15 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
         showModalBottomSheet(
           context: Get.context!,
           builder: (context) {
-            return ReportsWardProgressSubjectOneBottomsheet(
-              ReportsWardProgressSubjectOneController(),
-            );
+            return ReportsWardProgressSubjectOneBottomsheet(controller);
           },
         );
+        // controller.subjectDataList.clear();
+        // print(controller.subjectDataList.first);
+
+        for (var x in controller.subjectDataList) {
+          print(x.name);
+        }
       },
       child: SizedBox(
         width: double.maxFinite,
@@ -83,7 +105,9 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
                 children: [
                   Obx(
                     () =>
-                        controller.selectedSubjectName.value == 'N/A'
+                        controller.isLoading.value
+                            ? Text('Loading Subjects')
+                            : controller.selectedSubjectName.value == 'N/A'
                             ? Text(
                               "Seleted a subeject",
                               style: CustomTextStyles.bodySmallWhiteA700,
