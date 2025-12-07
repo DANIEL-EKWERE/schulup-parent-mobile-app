@@ -18,12 +18,25 @@ ReportsWardProgressClassController controller1 = Get.put(
   ReportsWardProgressClassController(Rx(ReportsWardProgressClassModel())),
 );
 
-class ReportsWardProgressClassPage extends StatelessWidget {
+class ReportsWardProgressClassPage extends StatefulWidget {
   ReportsWardProgressClassPage({Key? key}) : super(key: key);
 
+  @override
+  State<ReportsWardProgressClassPage> createState() => _ReportsWardProgressClassPageState();
+}
+
+class _ReportsWardProgressClassPageState extends State<ReportsWardProgressClassPage> {
   ReportsWardProgressClassController controller = Get.put(
     ReportsWardProgressClassController(ReportsWardProgressClassModel().obs),
   );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller1.academicPerformance();
+    controller1.classOverview();
+  }
 
   @override
   Widget build(BuildContext context) {

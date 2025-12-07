@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:alert_info/alert_info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
@@ -30,6 +31,7 @@ class SigninController extends GetxController {
       print(body);
       final response = await _apiService.firstLogin(body);
       if (response.statusCode == 200 || response.statusCode == 201) {
+        //AlertInfo.show(context: Get.context!, text: 'Login Successful');
         // OverlayLoadingProgress.stop();
         // myLog.log('Login successful: ${response.body}');
         // schoolCodeInputController.dispose();
@@ -52,9 +54,16 @@ class SigninController extends GetxController {
         OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
         myLog.log(name: 'User ID', userId);
+        AlertInfo.show(context: Get.context!, text: 'Login Successful');
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
+
         OverlayLoadingProgress.stop();
+        AlertInfo.show(
+          context: Get.context!,
+          text: 'Somehting went wrong',
+          typeInfo: TypeInfo.error,
+        );
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         errorMessage.value = message;
@@ -67,6 +76,11 @@ class SigninController extends GetxController {
         );
       } else {
         OverlayLoadingProgress.stop();
+        AlertInfo.show(
+          context: Get.context!,
+          text: 'Somehting went wrong',
+          typeInfo: TypeInfo.error,
+        );
         Get.snackbar(
           'Error',
           'Login failed. Please try again.',
@@ -76,6 +90,12 @@ class SigninController extends GetxController {
         );
       }
     } on SocketException {
+      OverlayLoadingProgress.stop();
+      AlertInfo.show(
+        context: Get.context!,
+        text: 'No internet connection',
+        typeInfo: TypeInfo.error,
+      );
       Get.snackbar(
         'Opps!!!',
         'Check your internet connection and try again.',
@@ -84,6 +104,12 @@ class SigninController extends GetxController {
         colorText: Colors.white,
       );
     } catch (e) {
+      OverlayLoadingProgress.stop();
+      // AlertInfo.show(
+      //   context: Get.context!,
+      //   text: e.toString(),
+      //   typeInfo: TypeInfo.error,
+      // );
       Get.snackbar(
         'Error',
         e.toString(),

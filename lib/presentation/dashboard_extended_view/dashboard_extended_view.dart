@@ -173,7 +173,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                                                 .center,
                                                         children: [
                                                           SizedBox(
-                                                            width: 200,
+                                                            width: 250,
                                                             child: Text(
                                                               overflow:
                                                                   TextOverflow

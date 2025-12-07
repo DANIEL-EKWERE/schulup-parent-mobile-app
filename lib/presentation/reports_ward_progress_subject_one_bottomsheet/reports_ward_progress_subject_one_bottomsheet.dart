@@ -12,6 +12,10 @@ ReportsWardProgressSubjectController controllerx =
 DashboardExtendedViewController dashboardExtendedViewController =
     Get.find<DashboardExtendedViewController>();
 
+// ReportsWardProgressSubjectController controller = Get.put(
+//   ReportsWardProgressSubjectController(ReportsWardProgressSubjectModel().obs),
+// );
+
 // ignore_for_file: must_be_immutable
 class ReportsWardProgressSubjectOneBottomsheet extends StatefulWidget {
   ReportsWardProgressSubjectOneBottomsheet(this.controller, {Key? key})
@@ -127,6 +131,7 @@ class _ReportsWardProgressSubjectOneBottomsheetState
               //   orElse: () => controllerx.subjectDataList.first,
               // );
               controllerx.selectedSubjectId = selectedTypeID.first.toString();
+              controllerx.selectedSubject!.name = selectedType.first;
               print(controllerx.selectedSubjectId);
               controllerx.getSubjectProgress();
               Navigator.pop(context);

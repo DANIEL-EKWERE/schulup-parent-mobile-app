@@ -10,11 +10,12 @@ class AcademicsAssignmentBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(
-      () => AcademicsAssignmentController(
-        AcademicsAssignmentModel().obs,
-      ),
+      () => AcademicsAssignmentController(AcademicsAssignmentModel().obs),
     );
 
- 
+    Get.put(
+      AcademicsAssignmentController(AcademicsAssignmentModel().obs),
+      permanent: true,
+    );
   }
 }

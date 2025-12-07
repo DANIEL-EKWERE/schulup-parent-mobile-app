@@ -7,6 +7,7 @@ import 'package:schulupparent/presentation/academics_assignment_modal_one_bottom
 import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/models/lesson_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
+import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/controller/reports_report_card_modal_controller.dart';
 import 'package:schulupparent/presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart';
 import 'package:schulupparent/presentation/signin_screen/shimmer_widget.dart';
@@ -20,9 +21,16 @@ import 'models/listline_item_model.dart';
 import 'widgets/listline_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
-class AcademicsLessonAllLessonsPage extends StatelessWidget {
+class AcademicsLessonAllLessonsPage extends StatefulWidget {
   AcademicsLessonAllLessonsPage({Key? key}) : super(key: key);
 
+  @override
+  State<AcademicsLessonAllLessonsPage> createState() =>
+      _AcademicsLessonAllLessonsPageState();
+}
+
+class _AcademicsLessonAllLessonsPageState
+    extends State<AcademicsLessonAllLessonsPage> {
   AcademicsLessonAllLessonsController controller = Get.put(
     AcademicsLessonAllLessonsController(AcademicsLessonAllLessonsModel().obs),
   );
@@ -30,6 +38,15 @@ class AcademicsLessonAllLessonsPage extends StatelessWidget {
   AcademicsAssignmentStatusController controllerx = Get.put(
     AcademicsAssignmentStatusController(),
   );
+
+  DashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<DashboardExtendedViewController>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.allLessons();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,13 +137,16 @@ class AcademicsLessonAllLessonsPage extends StatelessWidget {
                   },
                   child: Row(
                     children: [
-                      // Obx(() {
-                      //   return
-                      Text(
-                        dashboardExtendedViewController.selectedClass.value,
-                        style: theme.textTheme.labelLarge,
-                      ),
-                      //}),
+                      Obx(() {
+                        return Text(
+                          controllerx.classType.value == 'N/A'
+                              ? dashboardExtendedViewController
+                                  .selectedClass
+                                  .value
+                              : controllerx.classType.value,
+                          style: theme.textTheme.labelLarge,
+                        );
+                      }),
                       CustomImageView(
                         imagePath: ImageConstant.imgIconsTinyDown,
                         height: 16.h,

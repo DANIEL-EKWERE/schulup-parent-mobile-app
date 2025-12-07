@@ -15,6 +15,7 @@ void main() {
     Logger.init(kReleaseMode ? LogMode.live : LogMode.debug);
     runApp(MyApp());
   });
+
   // AcademicsAssignmentStatusController controllerxxx =
   //     Get.put(AcademicsAssignmentStatusController());
   SystemChrome.setSystemUIOverlayStyle(

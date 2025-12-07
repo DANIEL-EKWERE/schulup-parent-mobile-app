@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_page/controller/academics_assignment_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
@@ -27,7 +28,7 @@ class _AcademicsAssignmentModalTwoBottomsheetState
     extends State<AcademicsAssignmentModalTwoBottomsheet> {
   List<String> type = ["all", "pending", "submitted"];
   List<String> selectedType = [controller1.statusType.value];
-
+AcademicsAssignmentController controllers = Get.find<AcademicsAssignmentController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -123,6 +124,7 @@ class _AcademicsAssignmentModalTwoBottomsheetState
               controller1.selectedStatus.value = selectedType.first;
               Navigator.pop(context);
               controller1.getAssignment();
+              controllers.getAssignment();
             },
 
             height: 64.h,

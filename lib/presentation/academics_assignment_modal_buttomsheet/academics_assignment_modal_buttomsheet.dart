@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_page/controller/academics_assignment_controller.dart';
+import 'package:schulupparent/presentation/academics_assignment_page/models/academics_assignment_model.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
 import 'package:schulupparent/presentation/academics_lesson_cbt_test_page/controller/academics_lesson_cbt_test_controller.dart';
+import 'package:schulupparent/presentation/academics_lesson_cbt_test_page/models/academics_lesson_cbt_test_model.dart';
 import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
@@ -13,12 +16,15 @@ import 'controller/academics_assignment_modal_controller.dart';
 AcademicsAssignmentStatusController controller1 = Get.put(
   AcademicsAssignmentStatusController(),
 );
-AcademicsLessonCbtTestController controls =
-    Get.find<AcademicsLessonCbtTestController>();
+AcademicsLessonCbtTestController controls = Get.put(
+  AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs),
+);
 DashboardExtendedViewController dashboardExtendedViewController =
     Get.find<DashboardExtendedViewController>();
 AcademicsLessonAllLessonsController lessonsController =
     Get.find<AcademicsLessonAllLessonsController>();
+AcademicsAssignmentController controllers =
+    Get.put(AcademicsAssignmentController(AcademicsAssignmentModel().obs));
 
 class AcademicsAssignmentModalBottomsheet extends StatefulWidget {
   AcademicsAssignmentModalBottomsheet(this.controller, {Key? key})
@@ -146,7 +152,7 @@ class _AcademicsAssignmentModalBottomsheetState
 
               print('object');
               setState(() {
-                controller1.classType!.value = selectedType.first;
+                controller1.classType.value = selectedType.first;
                 dashboardExtendedViewController.selectedClassID =
                     selectedTypeID.first;
                 controller1.getAssignment();
@@ -156,6 +162,7 @@ class _AcademicsAssignmentModalBottomsheetState
                 controls.getCbt();
               });
               // Get.back();
+              controllers.getAssignment();
               Navigator.pop(context);
             },
             height: 64.h,

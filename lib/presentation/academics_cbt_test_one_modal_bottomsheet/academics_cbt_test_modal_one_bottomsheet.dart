@@ -131,6 +131,7 @@ class _AcademicsCbtTestModalOneBottomsheetState
               controller1.getCbt();
               if (controller1.cbtType.value == 'Test Result') {
                 controller1.getCbtResult();
+                controls.getCbtResult();
                 return;
               }
               controls.getCbt();

@@ -68,7 +68,7 @@ class AcademicsAssignmentPage extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          "Cbt Test",
+          "Assignment",
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.left,
           style: theme.textTheme.headlineSmall?.copyWith(
@@ -235,7 +235,7 @@ class AcademicsAssignmentPage extends StatelessWidget {
             () =>
                 controller.isLoading.value
                     ? SizedBox(
-                      height: 900.h,
+                      height: 650.h,
                       child: ListView.separated(
                         itemCount: 5,
                         //isLoading ? 5 : newsItems.length,

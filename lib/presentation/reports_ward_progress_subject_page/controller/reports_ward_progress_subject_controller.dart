@@ -18,52 +18,54 @@ class ReportsWardProgressSubjectController extends GetxController {
   ReportsWardProgressSubjectController(this.reportsWardProgressSubjectModelObj);
 
   Rx<ReportsWardProgressSubjectModel> reportsWardProgressSubjectModelObj;
-DashboardExtendedViewController dashboardExtendedViewController =
+  DashboardExtendedViewController dashboardExtendedViewController =
       Get.find<DashboardExtendedViewController>();
-    ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
+  ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
-Subjects? subjects;
-List<SubjectData> subjectDataList = [];
+  Subjects? subjects;
+  List<SubjectData> subjectDataList = [];
 
-SubjectData? selectedSubject;
-String? selectedSubjectId;
+  SubjectData? selectedSubject;
+  Rx<String> selectedSubjectName = 'N/A'.obs;
+  String? selectedSubjectId;
 
-Rx<bool> isLoading = false.obs;
+  Rx<bool> isLoading = false.obs;
 
-SubjectProgressModel? subjectProgress;
-List<SubjectProgressData> subjectProgressDataList = [];
-@override
-void onInit (){
-super.onInit();
-getSubjects();
-Timer(Duration(seconds: 3), (){
-  getSubjectProgress();
-});
-}
+  SubjectProgressModel? subjectProgress;
+  List<SubjectProgressData> subjectProgressDataList = [];
+  @override
+  void onInit() {
+    super.onInit();
+    getSubjects();
+    Timer(Duration(seconds: 3), () {
+      getSubjectProgress();
+    });
+  }
 
-        RefreshController refreshController = RefreshController(
+  RefreshController refreshController = RefreshController(
     initialRefresh: false,
   );
   void onrefresh() {
     getSubjects();
-     getSubjectProgress();
+    getSubjectProgress();
   }
-
 
   Future<void> getSubjects() async {
     isLoading.value = true;
     try {
-      
-      final response = await _apiService.getSubjects(dashboardExtendedViewController.selectedStudent1!.studentID.toString());
+      final response = await _apiService.getSubjects(
+        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
         subjects = subjectsFromJson(response.body);
         subjectDataList = subjects!.data!;
-        selectedSubject = subjectDataList.isNotEmpty ? subjectDataList.first : null;
+        selectedSubject =
+            subjectDataList.isNotEmpty ? subjectDataList.first : null;
+        selectedSubjectName.value =
+            (subjectDataList.isNotEmpty ? subjectDataList.first.name : null)!;
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
-        
-        
       } else {
         // OverlayLoadingProgress.stop();
         isLoading.value = false;
@@ -106,17 +108,16 @@ Timer(Duration(seconds: 3), (){
   Future<void> getSubjectProgress() async {
     isLoading.value = true;
     try {
-      
-      final response = await _apiService.getSubjectProgress(dashboardExtendedViewController.selectedStudent1!.studentID.toString(), selectedSubjectId ?? subjectDataList.first.subjectMasterID.toString());
+      final response = await _apiService.getSubjectProgress(
+        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+        selectedSubjectId ?? subjectDataList.first.subjectMasterID.toString(),
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
         subjectProgress = subjectProgressFromJson(response.body);
         subjectProgressDataList = subjectProgress!.data!;
-        
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
-        
-        
       } else {
         // OverlayLoadingProgress.stop();
         isLoading.value = false;

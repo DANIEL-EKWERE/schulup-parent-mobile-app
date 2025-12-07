@@ -13,8 +13,7 @@ DashboardExtendedViewController dashboardExtendedViewController =
 
 // ignore_for_file: must_be_immutable
 class SessionModalBottomSheet extends StatefulWidget {
-  SessionModalBottomSheet(this.controller, {Key? key})
-    : super(key: key);
+  SessionModalBottomSheet(this.controller, {Key? key}) : super(key: key);
 
   SessionModalController controller;
 
@@ -58,10 +57,7 @@ class _ReportsReportCardModalOneBottomsheetState
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  "Select a session",
-                  style: theme.textTheme.titleSmall,
-                ),
+                Text("Select a session", style: theme.textTheme.titleSmall),
                 CustomImageView(
                   imagePath: ImageConstant.imgClose,
                   height: 24.h,
@@ -76,27 +72,31 @@ class _ReportsReportCardModalOneBottomsheetState
           ),
           SizedBox(height: 28.h),
 
-       
           SizedBox(
             height: 90,
             child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
-              itemCount: dashboardExtendedViewController.academicSessionDataList.length,
+              itemCount:
+                  dashboardExtendedViewController
+                      .academicSessionDataList
+                      .length,
               itemBuilder: (context, index) {
-                var text = type[index];
+                var text =
+                    dashboardExtendedViewController
+                        .academicSessionDataList[index];
                 return GestureDetector(
                   onTap: () {
                     selectedType.clear();
-                    selectedType.add(text);
+                    selectedType.add(text.name!);
 
                     setState(() {});
                   },
                   child:
-                      selectedType.contains(text)
+                      selectedType.contains(text.name!)
                           ? SizedBox(
                             width: double.infinity,
                             child: CustomElevatedButtonSheet(
-                              text: text,
+                              text: text.name!,
                               rightIcon: Icon(Icons.check),
                               //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
                             ),
@@ -104,7 +104,7 @@ class _ReportsReportCardModalOneBottomsheetState
                           : Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: Text(
-                              text,
+                              text.name!,
                               style: CustomTextStyles.bodyMediumOnPrimary,
                             ),
                           ),
@@ -118,7 +118,8 @@ class _ReportsReportCardModalOneBottomsheetState
               setState(() {
                 controller1.session.value = selectedType.first;
               });
- controller1.getDailyReports();
+              controller1.getWeeklyReports();
+              controller1.getTermlyReports();
               // if (controller1.dayType.value.contains('Daily')) {
               //   controller1.getDailyReports();
               // } else if (controller1.dayType.value.contains('Weekly')) {

@@ -1,4 +1,4 @@
-import 'package:schulupparent/presentation/academics_assignment_page/academics_cbt_test_page.dart';
+import 'package:schulupparent/presentation/academics_assignment_page/academics_assignment_page.dart';
 import 'package:schulupparent/presentation/academics_assignment_page/binding/academics_assignment_binding.dart';
 import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/academics_lesson_all_lessons_page.dart';
 import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/binding/academics_lesson_all_lesson_binding.dart';

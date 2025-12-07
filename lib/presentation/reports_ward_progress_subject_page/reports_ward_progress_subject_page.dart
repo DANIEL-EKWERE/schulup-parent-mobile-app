@@ -26,7 +26,6 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
       body: SmartRefresher(
-        
         controller: controller.refreshController,
         onRefresh: controller.onrefresh,
         child: SafeArea(
@@ -82,9 +81,17 @@ class ReportsWardProgressSubjectPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Showing averages for ${controller.selectedSubject?.name ?? ''}",
-                    style: CustomTextStyles.bodySmallWhiteA700,
+                  Obx(
+                    () =>
+                        controller.selectedSubjectName.value == 'N/A'
+                            ? Text(
+                              "Seleted a subeject",
+                              style: CustomTextStyles.bodySmallWhiteA700,
+                            )
+                            : Text(
+                              "Showing averages for ${controller.selectedSubjectName.value ?? 'No Subject Selected'}",
+                              style: CustomTextStyles.bodySmallWhiteA700,
+                            ),
                   ),
                 ],
               ),

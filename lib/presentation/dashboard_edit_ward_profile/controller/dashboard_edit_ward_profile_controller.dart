@@ -117,10 +117,10 @@ class DashboardEditWardProfileController extends GetxController {
       final response = await _apiService.updateStudentInfo(body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         OverlayLoadingProgress.stop();
-        AlertInfo.show(
-          context: Get.context!,
-          text: 'Profile updated successfully!!!',
-        );
+        // AlertInfo.show(
+        //   context: Get.context!,
+        //   text: 'Profile updated successfully!!!',
+        // );
         Get.snackbar(
           'Success',
           'Student information updated successfully',

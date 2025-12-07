@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/presentation/academics_assignment_page/controller/academics_assignment_controller.dart';
 import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
 import 'package:schulupparent/presentation/attendance_all_variants_page/controller/attendance_all_variants_controller.dart';
@@ -11,8 +12,9 @@ import 'controller/academics_assignment_modal_one_controller.dart';
 // ignore_for_file: must_be_immutable
 AcademicsAssignmentStatusController controller1 =
     Get.find<AcademicsAssignmentStatusController>();
-
-            AcademicsLessonAllLessonsController lessonsController =
+AcademicsAssignmentController controllers =
+    Get.find<AcademicsAssignmentController>();
+AcademicsLessonAllLessonsController lessonsController =
     Get.find<AcademicsLessonAllLessonsController>();
 
 class AcademicsAssignmentModalOneBottomsheet extends StatefulWidget {
@@ -172,8 +174,9 @@ class _AcademicsAssignmentModalOneBottomsheetState
                 controller1.termTypeId.value = selectedTypeId.first;
                 controller1.allLessons();
                 controller1.getAssignment();
-                lessonsController.allLessons();
+                controllers.getAssignment();
               });
+              lessonsController.allLessons();
               Navigator.pop(context);
             },
             height: 64.h,

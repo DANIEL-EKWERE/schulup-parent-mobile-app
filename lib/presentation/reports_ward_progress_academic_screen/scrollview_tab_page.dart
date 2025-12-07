@@ -13,12 +13,25 @@ ReportsWardProgressClassController controller1 = Get.put(
   ReportsWardProgressClassController(Rx(ReportsWardProgressClassModel())),
 );
 
-class ScrollviewTabPage extends StatelessWidget {
+class ScrollviewTabPage extends StatefulWidget {
   ScrollviewTabPage({Key? key}) : super(key: key);
 
+  @override
+  State<ScrollviewTabPage> createState() => _ScrollviewTabPageState();
+}
+
+class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
   ReportsWardProgressAcademicController controller = Get.put(
     ReportsWardProgressAcademicController(),
   );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller1.academicPerformance();
+    controller1.classOverview();
+  }
 
   @override
   Widget build(BuildContext context) {
