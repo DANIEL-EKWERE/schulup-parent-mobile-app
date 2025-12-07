@@ -11,14 +11,16 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_cbt_test_test_details_controller.dart'; // ignore_for_file: must_be_immutable
 
-DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
+
 class AcademicsCbtTestTestDetailsScreen
     extends GetWidget<AcademicsCbtTestTestDetailsController> {
   const AcademicsCbtTestTestDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    CbtDetail model = Get.arguments['model'];
+    CbtDetail model = Get.arguments['model'] ?? CbtDetail();
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       appBar: _buildAppbar(),
@@ -42,7 +44,7 @@ class AcademicsCbtTestTestDetailsScreen
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              model.quizTitle!,
+                              model.quizTitle ?? 'N/A',
                               style: CustomTextStyles.titleMediumOnPrimary,
                             ),
                             SizedBox(height: 20.h),

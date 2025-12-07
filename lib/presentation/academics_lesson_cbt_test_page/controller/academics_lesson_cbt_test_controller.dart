@@ -1,4 +1,3 @@
-
 // TODO Implement this library.
 import 'dart:convert';
 import 'dart:io';
@@ -24,28 +23,29 @@ class AcademicsLessonCbtTestController extends GetxController {
 
   Rx<AcademicsLessonCbtTestModel> academicsLessonAllLessonsModelObj;
 
-AcademicsAssignmentStatusController controllerx = Get.find<AcademicsAssignmentStatusController>();
-@override
-onInit(){
-  super.onInit();
-  getCbt();
-}
-Lesson lesson = Lesson();
+  AcademicsAssignmentStatusController controllerx =
+      Get.find<AcademicsAssignmentStatusController>();
+  @override
+  onInit() {
+    super.onInit();
+    getCbt();
+  }
+
+  Lesson lesson = Lesson();
 
   List<LessonData> lessonList = [];
-CbtDetail? cbtDetail;
+  CbtDetail? cbtDetail;
 
   Cbt? cbt;
   List<CbtData>? cbtData;
 
   SelectionPopupModel? selectedDropDownValue;
 
+  ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
-
-   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
-  
   Rx<bool> isLoading = false.obs;
-DashboardExtendedViewController dashboardExtendedViewController = Get.find<DashboardExtendedViewController>();
+  DashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<DashboardExtendedViewController>();
   onSelected(dynamic value) {
     for (var element
         in academicsLessonAllLessonsModelObj.value.dropdownItemList.value) {
@@ -57,14 +57,8 @@ DashboardExtendedViewController dashboardExtendedViewController = Get.find<Dashb
     academicsLessonAllLessonsModelObj.value.dropdownItemList.refresh();
   }
 
-
-
-  
-
-
-
   Future<void> getCbtDetails(String quizScheduledId) async {
-   isLoading.value = true;
+    isLoading.value = true;
     try {
       var studentId =
           dashboardExtendedViewController.selectedStudent1!.studentID;
@@ -210,9 +204,9 @@ DashboardExtendedViewController dashboardExtendedViewController = Get.find<Dashb
     try {
       var classId = dashboardExtendedViewController.selectedClassID;
       final response = await _apiService.cbt(
-       // controller.selectedClassID.toString(),
+        // controller.selectedClassID.toString(),
         classId.toString(),
-        dashboardExtendedViewController.selectedStudent1!.studentID.toString()
+        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
       );
       // myLog.log(
       //   "classId: ${classId}, studentId: ${controller.selectedClassID}",
@@ -275,3 +269,52 @@ DashboardExtendedViewController dashboardExtendedViewController = Get.find<Dashb
     }
   }
 }
+
+
+// am doing this "
+
+// ```dart
+//  @override
+//   Widget build(BuildContext context) {
+//     return WillPopScope(
+//       onWillPop: () async {
+//         return await _showExitDialog(context) ?? false;
+//       },
+//       child: Scaffold(
+//         backgroundColor: appTheme.whiteA700,
+//         body: SafeArea(
+//           child: Obx(() {
+//             if (controller.startTest.value.questions == null ||
+//                 controller.startTest.value.questions!.isEmpty) {
+//               return Center(child: CircularProgressIndicator());
+//             }
+
+//             return Column(
+//               children: [
+//                 _buildHeader(),
+//                 Expanded(
+//                   child: SingleChildScrollView(
+//                     padding: EdgeInsets.all(24.h),
+//                     child: _buildQuestionContent(),
+//                   ),
+//                 ),
+//               ],
+//             );
+//           }),
+//         ),
+//         bottomNavigationBar: _buildBottomNavigation(),
+//       ),
+//     );
+//   }
+// ```
+
+// but when i wanna go back in debug using navagor.pop(context, true) i see a red screen saying noSuchMethodError: no such method "[]" was called on null, navigated to the screen initially like this 
+
+// ```dart
+// Get.toNamed(
+//           AppRoutes.academicsCbtTestTestDetailsScreen,
+//           arguments: {'model': cbtDetail},
+//         );
+// ```
+
+// what's the error

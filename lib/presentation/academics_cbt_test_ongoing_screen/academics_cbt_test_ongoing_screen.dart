@@ -290,7 +290,7 @@ class AcademicsCbtTestOngoingScreen
                 margin: EdgeInsets.only(left: 25.h),
                 onTap: () async {
                   final shouldExit = await _showExitDialog(Get.context!);
-                  if (shouldExit == true) Get.back();
+                  if (shouldExit == true) Navigator.pop(Get.context!);
                 },
               ),
               centerTitle: true,
@@ -783,19 +783,48 @@ class AcademicsCbtTestOngoingScreen
   Future<bool?> _showExitDialog(BuildContext context) {
     return Get.dialog<bool>(
       AlertDialog(
-        title: Text('Exit Test?'),
+        iconPadding: EdgeInsets.only(top: 40, bottom: 10),
+        icon: Icon(
+          Icons.info_outline_rounded,
+          size: 60,
+          weight: 2,
+          fontWeight: FontWeight.w200,
+        ),
+        iconColor: Colors.red,
+        title: Text(
+          'Exit Test!',
+          style: CustomTextStyles.bodyMediumOnPrimary.copyWith(fontSize: 18.h),
+        ),
+        //contentTextStyle: TextStyle(al),
         content: Text(
+          textAlign: TextAlign.center,
           'Are you sure you want to exit? Your progress will be lost if you haven\'t submitted.',
         ),
+        actionsAlignment: MainAxisAlignment.center,
         actions: [
-          TextButton(
-            onPressed: () => Get.back(result: false),
-            child: Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () => Get.back(result: true),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: Text('Exit'),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomElevatedButton(
+                buttonTextStyle: CustomTextStyles.bodySmallWhiteA700_1,
+                buttonStyle: CustomButtonStyles.fillPrimary,
+                text: 'Exit',
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text('Cancel'),
+              ),
+
+              // ElevatedButton(
+              //   onPressed: () => Get.back(result: true),
+              //   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+              //   child: Text('Exit'),
+              // ),
+            ],
           ),
         ],
       ),

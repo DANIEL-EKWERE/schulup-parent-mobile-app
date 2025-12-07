@@ -17,9 +17,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:schulupparent/core/utils/size_utils.dart';
 import 'package:schulupparent/data/apiClient/api_client.dart';
 import 'package:schulupparent/presentation/academics_cbt_test_test_details_screen/models/academics_cbt_test_test_details_model.dart';
 import 'package:schulupparent/routes/app_routes.dart';
+import 'package:schulupparent/theme/custom_button_style.dart';
+import 'package:schulupparent/theme/custom_text_style.dart';
+import 'package:schulupparent/widgets/custom_elevated_button.dart';
 // import '../models/academics_cbt_test_test_details_model.dart';
 
 class AcademicsCbtTestOngoingController extends GetxController {
@@ -249,7 +253,8 @@ class AcademicsCbtTestOngoingController extends GetxController {
                   return GestureDetector(
                     onTap: () {
                       goToQuestion(index);
-                      Get.back();
+                      // Get.back();
+                      Navigator.pop(context);
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -370,20 +375,67 @@ class AcademicsCbtTestOngoingController extends GetxController {
 
   Future<bool?> _showIncompleteTestDialog() async {
     return await Get.dialog<bool>(
+      // AlertDialog(
+      //   title: Text('Incomplete Test'),
+      //   content: Text(
+      //     'You have answered $answeredQuestionsCount out of $totalQuestions questions.\n\nDo you want to submit anyway?',
+      //   ),
+      //   actions: [
+      //     TextButton(
+      //       onPressed: () => Get.back(result: false),
+      //       child: Text('Cancel'),
+      //     ),
+      //     ElevatedButton(
+      //       onPressed: () => Get.back(result: true),
+      //       style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFFF8D2A)),
+      //       child: Text('Submit'),
+      //     ),
+      //   ],
+      // ),
       AlertDialog(
-        title: Text('Incomplete Test'),
+        iconPadding: EdgeInsets.only(top: 40, bottom: 10),
+        icon: Icon(
+          Icons.info_outline_rounded,
+          size: 60,
+          weight: 2,
+          fontWeight: FontWeight.w200,
+        ),
+        iconColor: Colors.red,
+        title: Text(
+          'Incomplete Test!',
+          style: CustomTextStyles.bodyMediumOnPrimary.copyWith(fontSize: 18.h),
+        ),
+        //contentTextStyle: TextStyle(al),
         content: Text(
+          textAlign: TextAlign.center,
           'You have answered $answeredQuestionsCount out of $totalQuestions questions.\n\nDo you want to submit anyway?',
         ),
+        actionsAlignment: MainAxisAlignment.center,
         actions: [
-          TextButton(
-            onPressed: () => Get.back(result: false),
-            child: Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () => Get.back(result: true),
-            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFFF8D2A)),
-            child: Text('Submit'),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomElevatedButton(
+                buttonTextStyle: CustomTextStyles.bodySmallWhiteA700_1,
+                buttonStyle: CustomButtonStyles.fillPrimary,
+                text: 'Submit',
+                onPressed: () {
+                  // submitTest();
+                  Navigator.pop(Get.context!, true);
+                },
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(Get.context!, false),
+                child: Text('Cancel'),
+              ),
+
+              // ElevatedButton(
+              //   onPressed: () => Get.back(result: true),
+              //   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+              //   child: Text('Exit'),
+              // ),
+            ],
           ),
         ],
       ),
