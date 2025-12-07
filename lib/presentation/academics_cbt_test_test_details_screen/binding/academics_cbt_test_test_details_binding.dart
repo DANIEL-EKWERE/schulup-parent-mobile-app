@@ -8,6 +8,6 @@ import '../controller/academics_cbt_test_test_details_controller.dart';
 class AcademicsCbtTestTestDetailsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AcademicsCbtTestTestDetailsController());
+    Get.lazyPut(() => AcademicsCbtTestTestDetailsController(), fenix: true);
   }
 }
