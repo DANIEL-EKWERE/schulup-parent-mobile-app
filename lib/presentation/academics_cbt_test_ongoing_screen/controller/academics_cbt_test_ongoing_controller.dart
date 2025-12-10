@@ -354,7 +354,7 @@ class AcademicsCbtTestOngoingController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
-        Get.offAllNamed(AppRoutes.academicsCbtTestTestResultScreen);
+        Get.toNamed(AppRoutes.academicsCbtTestTestResultScreen);
       }
 
       // Navigate to results or home

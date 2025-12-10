@@ -103,7 +103,8 @@ class _SigninScreenState extends State<SigninScreen> {
                               )
                               : Text(
                                 'Please sign into your account',
-                                style: CustomTextStyles.titleSmallWhiteA700,
+                                style: CustomTextStyles.titleSmallWhiteA700
+                                    .copyWith(fontSize: 16.h),
                               ),
                     ),
                     SizedBox(height: 30),
