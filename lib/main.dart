@@ -2,9 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:overlay_kit/overlay_kit.dart';
-import 'package:schulupparent/presentation/signalr_chat/controller/signalr_service.dart';
+import 'package:schulupparent/parent/localization/app_localization.dart';
+import 'package:schulupparent/parent/parent_presentation/signalr_chat/controller/signalr_service.dart';
+import 'package:schulupparent/parent/routes/app_routes.dart';
+//import 'package:schulupparent/parent_presentation/signalr_chat/controller/signalr_service.dart';
 // import 'package:schulupparent/presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
-import 'core/app_export.dart';
+import 'parent/core/app_export.dart';
+import 'parent/core/utils/logger.dart';
+import 'parent/core/utils/size_utils.dart';
+import 'parent/theme/theme_helper.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
