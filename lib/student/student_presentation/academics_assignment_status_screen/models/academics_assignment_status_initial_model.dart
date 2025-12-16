@@ -40,10 +40,10 @@ class AcademicsAssignmentStatusInitialModel {
 }
 
 class Student {
-  final int? studentID;
+   int? studentID;
   final String? admissionNo;
   final String? lastName;
-  final String? firstName;
+   String? firstName;
   final String? middleName;
   final String? gender;
   final String? dateAdmitted;

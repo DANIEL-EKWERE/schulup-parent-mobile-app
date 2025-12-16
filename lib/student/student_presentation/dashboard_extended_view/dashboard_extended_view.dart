@@ -41,7 +41,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
     initialRefresh: false,
   );
   void _onrefresh() {
-    controller.byGuardian();
+    //  controller.byGuardian();
   }
 
   int _currentIndex = 0;
@@ -410,160 +410,163 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
             //centerTitle: true,
             title: GestureDetector(
               onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  backgroundColor: Colors.transparent,
-                  isScrollControlled: true, // Important for dynamic height
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
-                    ),
-                  ),
-                  builder: (context) {
-                    return Container(
-                      width: double.infinity,
-                      constraints: BoxConstraints(
-                        maxHeight:
-                            MediaQuery.of(context).size.height *
-                            0.5, // Max 50% of screen
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Drag handle
-                          Container(
-                            width: 50,
-                            height: 5,
-                            margin: EdgeInsets.only(bottom: 16),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                // showModalBottomSheet(
+                //   context: context,
+                //   backgroundColor: Colors.transparent,
+                //   isScrollControlled: true, // Important for dynamic height
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.vertical(
+                //       top: Radius.circular(20),
+                //     ),
+                //   ),
+                //   builder: (context) {
+                //     return Container(
+                //       width: double.infinity,
+                //       constraints: BoxConstraints(
+                //         maxHeight:
+                //             MediaQuery.of(context).size.height *
+                //             0.5, // Max 50% of screen
+                //       ),
+                //       padding: EdgeInsets.symmetric(
+                //         horizontal: 20,
+                //         vertical: 8,
+                //       ),
+                //       decoration: BoxDecoration(
+                //         color: Colors.white,
+                //         borderRadius: BorderRadius.vertical(
+                //           top: Radius.circular(20),
+                //         ),
+                //       ),
+                //       child: Column(
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: [
+                //           // Drag handle
+                //           Container(
+                //             width: 50,
+                //             height: 5,
+                //             margin: EdgeInsets.only(bottom: 16),
+                //             decoration: BoxDecoration(
+                //               color: Colors.grey.shade300,
+                //               borderRadius: BorderRadius.circular(10),
+                //             ),
+                //           ),
 
-                          // Title
-                          Text(
-                            "Switch Ward",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                //           // Title
+                //           Text(
+                //             "Switch Ward",
+                //             style: TextStyle(
+                //               fontSize: 12,
+                //               fontWeight: FontWeight.bold,
+                //             ),
+                //           ),
 
-                          SizedBox(height: 10),
+                //           SizedBox(height: 10),
 
-                          // List of students
-                          Flexible(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: controller.students.length,
-                              itemBuilder: (context, index) {
-                                Student student = controller.students[index];
-                                return ListTile(
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                    vertical: 2,
-                                  ),
-                                  leading: ClipRRect(
-                                    borderRadius: BorderRadius.circular(25),
-                                    child: Base64Image(
-                                      base64String: student.profilePicBase64,
-                                      width: 30,
-                                      height: 30,
-                                      fit: BoxFit.cover,
-                                      placeholder: CircleAvatar(
-                                        backgroundColor: Color(
-                                          0xFFFF8D2A,
-                                        ).withOpacity(0.2),
-                                        child: Text(
-                                          student.firstName?[0].toUpperCase() ??
-                                              '?',
-                                          style: TextStyle(
-                                            color: Color(0xFFFF8D2A),
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  title: Text(
-                                    '${student.firstName ?? ''} ${student.lastName ?? ''}',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    student.admissionNo ?? '',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  trailing: Radio<int>(
-                                    value: index,
-                                    groupValue: _selectedStudentIndex,
-                                    activeColor: Color(0xFFFF8D2A),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedStudentIndex = value!;
-                                      });
-                                      // Optional: close after selection
-                                      Navigator.pop(context, student);
-                                      myLog.log(
-                                        'Selected student: ${student.firstName} ${student.lastName}',
-                                      );
-                                      controller.selectedStudent1 = student;
-                                      controller.getClass();
-                                      controller.getBatch();
-                                      controller.getAcademicSessions();
-                                    },
-                                  ),
-                                  onTap: () {
-                                    setState(() {
-                                      _selectedStudentIndex = index;
-                                    });
-                                    Navigator.pop(context, student);
-                                    controller.selectedStudent1 = student;
-                                    controller.getClass();
-                                    controller.getBatch();
-                                    controller.getAcademicSessions();
-                                    myLog.log(
-                                      'Selected student1: ${student.firstName} ${student.lastName}',
-                                    );
-                                    _selectedStudent = student;
-                                    controller.selectedStudent1 = student;
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
+                //           // List of students
+                //           Flexible(
+                //             child: ListView.builder(
+                //               shrinkWrap: true,
+                //               itemCount: controller.students.length,
+                //               itemBuilder: (context, index) {
+                //                 Student student = controller.students[index];
+                //                 return ListTile(
+                //                   contentPadding: EdgeInsets.symmetric(
+                //                     horizontal: 4,
+                //                     vertical: 2,
+                //                   ),
+                //                   leading: ClipRRect(
+                //                     borderRadius: BorderRadius.circular(25),
+                //                     child: Base64Image(
+                //                       base64String: student.profilePicBase64,
+                //                       width: 30,
+                //                       height: 30,
+                //                       fit: BoxFit.cover,
+                //                       placeholder: CircleAvatar(
+                //                         backgroundColor: Color(
+                //                           0xFFFF8D2A,
+                //                         ).withOpacity(0.2),
+                //                         child: Text(
+                //                           student.firstName?[0].toUpperCase() ??
+                //                               '?',
+                //                           style: TextStyle(
+                //                             color: Color(0xFFFF8D2A),
+                //                             fontWeight: FontWeight.bold,
+                //                           ),
+                //                         ),
+                //                       ),
+                //                     ),
+                //                   ),
+                //                   title: Text(
+                //                     '${student.firstName ?? ''} ${student.lastName ?? ''}',
+                //                     style: TextStyle(
+                //                       fontSize: 10,
+                //                       fontWeight: FontWeight.w500,
+                //                     ),
+                //                   ),
+                //                   subtitle: Text(
+                //                     student.admissionNo ?? '',
+                //                     style: TextStyle(
+                //                       fontSize: 12,
+                //                       color: Colors.grey,
+                //                     ),
+                //                   ),
+                //                   trailing: Radio<int>(
+                //                     value: index,
+                //                     groupValue: _selectedStudentIndex,
+                //                     activeColor: Color(0xFFFF8D2A),
+                //                     onChanged: (value) {
+                //                       setState(() {
+                //                         _selectedStudentIndex = value!;
+                //                       });
+                //                       // Optional: close after selection
+                //                       Navigator.pop(context, student);
+                //                       myLog.log(
+                //                         'Selected student: ${student.firstName} ${student.lastName}',
+                //                       );
+                //                       controller.selectedStudent1 = student;
+                //                       controller.getClass();
+                //                       controller.getBatch();
+                //                       controller.getAcademicSessions();
+                //                     },
+                //                   ),
+                //                   onTap: () {
+                //                     setState(() {
+                //                       _selectedStudentIndex = index;
+                //                     });
+                //                     Navigator.pop(context, student);
+                //                     controller.selectedStudent1 = student;
+                //                     controller.getClass();
+                //                     controller.getBatch();
+                //                     controller.getAcademicSessions();
+                //                     myLog.log(
+                //                       'Selected student1: ${student.firstName} ${student.lastName}',
+                //                     );
+                //                     _selectedStudent = student;
+                //                     controller.selectedStudent1 = student;
+                //                   },
+                //                 );
+                //               },
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     );
+                //   },
+                // );
               },
               child: Container(
                 width: 125,
                 // height: 150,
                 margin: EdgeInsets.only(left: 16),
                 padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: Color(0xff27262B),
-
+                decoration: AppDecoration.primaryC7Main.copyWith(
                   borderRadius: BorderRadius.circular(12),
                 ),
+                // decoration: BoxDecoration(
+                //   color: Color(0xff27262B),
+
+                //   borderRadius: BorderRadius.circular(12),
+                // ),
                 child: Row(
                   children: [
                     Container(

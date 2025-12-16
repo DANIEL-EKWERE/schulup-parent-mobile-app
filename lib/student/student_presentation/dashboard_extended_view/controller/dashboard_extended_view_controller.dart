@@ -46,10 +46,26 @@ class DashboardExtendedViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    byGuardian();
-    // Timer(Duration(seconds: 3), () {
+    // byGuardian();
+    setVAlue();
+    // Timer(Duration(seconds: 3), () {0101
 
     // });
+  }
+
+  void setVAlue() async {
+    myLog.log('setting value');
+    String studentId = await dataBase.getStudentId();
+    String studentName = await dataBase.getUserName();
+    myLog.log('setting $studentId');
+    selectedStudent1!.studentID = int.tryParse(studentId);
+    selectedStudent1!.firstName = await dataBase.getUserName();
+    myLog.log('value set');
+
+    await getBatch();
+    await getClass();
+    await getAcademicSessions();
+    await getNews();
   }
 
   Future<void> byGuardian() async {

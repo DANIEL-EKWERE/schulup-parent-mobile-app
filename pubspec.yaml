@@ -47,6 +47,7 @@ dependencies:
   nfc_manager:
   nfc_manager_ndef:
   scanning_effect:
+  sqflite_common_ffi: ^2.4.0+1
 
   
 
@@ -92,6 +93,20 @@ flutter:
           weight: 900
         - asset: assets/fonts/Inter_18pt-ExtraLight.ttf
           weight: 200
+    - family: Inter Tight
+      fonts: 
+        - asset: assets/fonts/InterTight-SemiBold.ttf
+          weight: 600
+    - family: Inter
+      fonts: 
+        - asset: assets/fonts/Inter_24pt-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter_24pt-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter_24pt-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter_24pt-Bold.ttf
+          weight: 700      
  
 
 launcher_name:

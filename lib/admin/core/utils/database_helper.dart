@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:convert';
+
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class OfflineQueueDB {
   static final OfflineQueueDB _instance = OfflineQueueDB._internal();
@@ -16,6 +20,12 @@ class OfflineQueueDB {
   }
 
   Future<Database> _initDb() async {
+    // Initialize databaseFactory for desktop platforms if not already done
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      databaseFactory = databaseFactoryFfi;
+    }
+
+
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'offline_queue.db');
     return await openDatabase(

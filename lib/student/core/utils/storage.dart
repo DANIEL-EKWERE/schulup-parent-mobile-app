@@ -40,6 +40,8 @@ class DataBase extends GetxController {
 
   int _userId = 0;
 
+  String _studentId = '';
+
   String _profileId = '';
 
   String _acctName = '';
@@ -93,6 +95,8 @@ class DataBase extends GetxController {
   String get brmCode => _brmCode;
 
   String get brmName => _brmName;
+
+  String get studentId => _studentId;
 
   bool get isSet => _isSet;
 
@@ -358,10 +362,19 @@ class DataBase extends GetxController {
 
     return true;
   }
+//studentId
 
   saveFullName(String full_name) async {
     SharedPreferences sharedPreferences = await _pref;
     await sharedPreferences.setString('full_name', full_name);
+
+    return true;
+  }
+
+
+  saveStudent(String studentId) async {
+    SharedPreferences sharedPreferences = await _pref;
+    await sharedPreferences.setString('studentId', studentId);
 
     return true;
   }
@@ -562,6 +575,22 @@ class DataBase extends GetxController {
       return data;
     } else {
       _address = '';
+
+      return '';
+    }
+  }
+
+
+   Future<String> getStudentId() async {
+    SharedPreferences sharedPreferences = await _pref;
+
+    if (sharedPreferences.containsKey('studentId')) {
+      String data = sharedPreferences.getString('studentId')!;
+      _studentId = data;
+
+      return data;
+    } else {
+      _studentId = '';
 
       return '';
     }

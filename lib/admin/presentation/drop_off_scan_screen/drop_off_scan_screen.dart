@@ -14,10 +14,16 @@ import '../drop_off_scan_success_modal_dialog/drop_off_scan_success_modal_dialog
 import 'controller/drop_off_scan_controller.dart'; // ignore_for_file: must_be_immutable
 
 HomeController homeController = Get.put(HomeController());
+DropOffScanController controller = Get.put(DropOffScanController());
 
-class DropOffScanScreen extends GetWidget<DropOffScanController> {
+class DropOffScanScreen extends StatefulWidget {
   const DropOffScanScreen({Key? key}) : super(key: key);
 
+  @override
+  State<DropOffScanScreen> createState() => _DropOffScanScreenState();
+}
+
+class _DropOffScanScreenState extends State<DropOffScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,6 +110,11 @@ class DropOffScanScreen extends GetWidget<DropOffScanController> {
                         // print("printing school code ====== ${schoolCode}");
                         onTapScan();
                       },
+                      buttonStyle: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                          Color(0xFFFF8D2A),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -237,7 +248,8 @@ class DropOffScanScreen extends GetWidget<DropOffScanController> {
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    // Get.back();
+    Navigator.pop(Get.context!);
   }
 
   /// Displays a dialog with the [DropOffScanSuccessModalDialog] content.

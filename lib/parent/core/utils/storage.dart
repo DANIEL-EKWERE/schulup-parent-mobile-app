@@ -178,6 +178,14 @@ class DataBase extends GetxController {
     return true;
   }
 
+
+    saveGuardianID(int guardianID) async {
+    SharedPreferences sharedPreferences = await _pref;
+    await sharedPreferences.setInt('guardianID', guardianID);
+
+    return true;
+  }
+
   saveAddress(String address) async {
     SharedPreferences sharedPreferences = await _pref;
     await sharedPreferences.setString('address', address);
@@ -506,6 +514,19 @@ class DataBase extends GetxController {
       return ''; // Return an empty string if no cover photo is saved
     }
   }
+//guardianID
+
+ // Get guardian id
+  Future<int> getGuardianId() async {
+    SharedPreferences sharedPreferences = await _pref;
+    if (sharedPreferences.containsKey('guardianID')) {
+      int guardianID = sharedPreferences.getInt('guardianID')!;
+      return guardianID;
+    } else {
+      return 0; // Return an empty string if no cover photo is saved
+    }
+  }
+
 
   // Get vendor status
   Future<bool> getStatus() async {

@@ -48,7 +48,10 @@ class ConnectivityService {
       final requests = await OfflineQueueDB().getAllRequests();
       requests.isEmpty
           ? SizedBox.shrink() //Get.snackbar('Up To date', 'nothing to sync.')
-          : Get.snackbar('found', "Found ${requests.length.toString()} offline Operations,\nSynchronizing now!");
+          : Get.snackbar(
+            'found',
+            "Found ${requests.length.toString()} offline Operations,\nSynchronizing now!",
+          );
       for (final req in requests) {
         try {
           Get.snackbar(

@@ -43,7 +43,9 @@ class AcademicsAssignmentStatusController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    byGuardian();
+    // byGuardian();
+
+    setVAlue();
 
     // getAssignment();
     // classType.value =
@@ -51,6 +53,23 @@ class AcademicsAssignmentStatusController extends GetxController
     //         ? 'Loading...'
     //         : dashboardExtendedViewController.selectedClass!.value;
     //   dashboardExtendedViewController.studentClassObj.data!.first.name!;
+  }
+
+  void setVAlue() async {
+    myLog.log('setting value');
+    String studentId = await dataBase.getStudentId();
+    String studentName = await dataBase.getUserName();
+    myLog.log('setting $studentId');
+    dashboardExtendedViewController.selectedStudent1!.studentID = int.tryParse(
+      studentId,
+    );
+    dashboardExtendedViewController.selectedStudent1!.firstName = studentName;
+    myLog.log('value set');
+
+    await dashboardExtendedViewController.getBatch();
+    await dashboardExtendedViewController.getClass();
+    await dashboardExtendedViewController.getAcademicSessions();
+    await dashboardExtendedViewController.getNews();
   }
 
   DashboardExtendedViewController controller =

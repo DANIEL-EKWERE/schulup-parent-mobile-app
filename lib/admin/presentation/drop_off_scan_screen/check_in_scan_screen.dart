@@ -226,7 +226,8 @@ class ChecInkScanScreen extends GetWidget<DropOffScanController> {
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    //  Get.back();
+    Navigator.pop(Get.context!);
   }
 
   /// Displays a dialog with the [DropOffScanSuccessModalDialog] content.
