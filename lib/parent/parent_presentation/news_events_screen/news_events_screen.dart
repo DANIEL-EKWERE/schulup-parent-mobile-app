@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/parent/parent_presentation/news_events_screen/models/events_model.dart';
 import 'package:schulupparent/parent/parent_presentation/news_events_screen/widgets/event_widget.dart';
-import 'package:schulupparent/parent/parent_presentation/signin_screen/shimmer_widget.dart';
+import 'package:schulupparent/signin_screen/shimmer_widget.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';

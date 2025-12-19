@@ -25,7 +25,7 @@ import '../models/academics_four_model.dart';
 ///
 /// This class manages the state of the AcademicsAssignmentStatusScreen, including the
 /// current academicsAssignmentStatusModelObj
-class AcademicsAssignmentStatusController extends GetxController
+class StudentAcademicsAssignmentStatusController extends GetxController
     with GetSingleTickerProviderStateMixin {
   Rx<AcademicsAssignmentStatusModel> academicsAssignmentStatusModelObj =
       AcademicsAssignmentStatusModel().obs;
@@ -37,8 +37,8 @@ class AcademicsAssignmentStatusController extends GetxController
 
   Rx<bool> isDetailLoading = false.obs;
 
-  DashboardExtendedViewController dashboardExtendedViewController =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<StudentDashboardExtendedViewController>();
 
   @override
   void onInit() {
@@ -57,12 +57,11 @@ class AcademicsAssignmentStatusController extends GetxController
 
   void setVAlue() async {
     myLog.log('setting value');
-    String studentId = await dataBase.getStudentId();
-    String studentName = await dataBase.getUserName();
+    int studentId = await studentDataBase.getStudentId();
+    String studentName = await studentDataBase.getUserName();
     myLog.log('setting $studentId');
-    dashboardExtendedViewController.selectedStudent1!.studentID = int.tryParse(
-      studentId,
-    );
+    dashboardExtendedViewController.selectedStudent1!.studentID = studentId;
+
     dashboardExtendedViewController.selectedStudent1!.firstName = studentName;
     myLog.log('value set');
 
@@ -72,8 +71,8 @@ class AcademicsAssignmentStatusController extends GetxController
     await dashboardExtendedViewController.getNews();
   }
 
-  DashboardExtendedViewController controller =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController controller =
+      Get.find<StudentDashboardExtendedViewController>();
   Lesson lesson = Lesson();
 
   List<LessonData> lessonList = [];
@@ -89,7 +88,7 @@ class AcademicsAssignmentStatusController extends GetxController
   CbtDetail? cbtDetail;
 
   void getUserId() async {
-    var userId = await dataBase.getUserId();
+    var userId = await studentDataBase.getUserId();
     myLog.log('User ID: $userId');
   }
 
@@ -166,7 +165,7 @@ class AcademicsAssignmentStatusController extends GetxController
     //   circularProgressColor: Color(0XFFFF8C42),
     // );
     try {
-      var userId = await dataBase.getUserId();
+      var userId = await studentDataBase.getUserId();
       myLog.log('User ID: $userId');
       final response = await _apiService.byGuardian(userId.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {

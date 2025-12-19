@@ -35,12 +35,12 @@ class _AcademicsLessonAllLessonsPageState
     AcademicsLessonAllLessonsController(AcademicsLessonAllLessonsModel().obs),
   );
 
-  AcademicsAssignmentStatusController controllerx = Get.put(
-    AcademicsAssignmentStatusController(),
+  StudentAcademicsAssignmentStatusController controllerx = Get.put(
+    StudentAcademicsAssignmentStatusController(),
   );
 
-  DashboardExtendedViewController dashboardExtendedViewController =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<StudentDashboardExtendedViewController>();
   @override
   void initState() {
     // TODO: implement initState

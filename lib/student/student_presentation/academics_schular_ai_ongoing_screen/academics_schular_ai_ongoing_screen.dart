@@ -13,8 +13,8 @@
 // import 'controller/academics_schular_ai_ongoing_controller.dart';
 // import 'package:schulupparent/presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
-// DashboardExtendedViewController dashboardExtendedViewController =
-//     Get.find<DashboardExtendedViewController>();
+// StudentDashboardExtendedViewController dashboardExtendedViewController =
+//     Get.find<StudentDashboardExtendedViewController>();
 
 // class AcademicsSchularAiOngoingScreen
 //     extends GetWidget<AcademicsSchularAiOngoingController> {
@@ -530,8 +530,8 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_text_form_field.dart';
 import 'controller/academics_schular_ai_ongoing_controller.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class AcademicsSchularAiOngoingScreen
     extends GetWidget<AcademicsSchularAiOngoingController> {

@@ -11,8 +11,8 @@ import 'package:schulupparent/student/student_presentation/direct_message_screen
 
 class DirectChatController extends GetxController {
   //students/47135/classteachers
-  DashboardExtendedViewController dashboardcontroller =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardcontroller =
+      Get.find<StudentDashboardExtendedViewController>();
 
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 

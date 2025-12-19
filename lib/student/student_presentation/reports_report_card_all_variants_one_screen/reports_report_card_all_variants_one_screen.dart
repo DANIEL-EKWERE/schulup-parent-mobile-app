@@ -15,8 +15,8 @@ import 'controller/reports_report_card_all_variants_one_controller.dart';
 import 'models/listline_item_model.dart';
 import 'widgets/listline_item_widget.dart'; // ignore_for_file: must_be_immutable
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class ReportsReportCardAllVariantsOneScreen
     extends GetWidget<ReportsReportCardAllVariantsOneController> {

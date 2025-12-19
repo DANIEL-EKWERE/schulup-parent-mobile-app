@@ -12,7 +12,7 @@ class ListlineItemCbtWidget extends StatelessWidget {
 
   CbtData listlineItemModelObj;
 
-  var controller = Get.find<AcademicsAssignmentStatusController>();
+  var controller = Get.find<StudentAcademicsAssignmentStatusController>();
 
   @override
   Widget build(BuildContext context) {

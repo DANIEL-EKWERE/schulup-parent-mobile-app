@@ -11,8 +11,8 @@ import '../../widgets/custom_text_form_field.dart';
 import 'controller/academics_assignment_the_child_controller.dart'; // ignore_for_file: must_be_immutable
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class AcademicsAssignmentTheChildScreen
     extends GetWidget<AcademicsAssignmentTheChildController> {

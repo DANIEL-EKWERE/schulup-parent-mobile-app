@@ -18,7 +18,7 @@ import 'package:schulupparent/parent/parent_presentation/academics_assignment_st
 import 'package:schulupparent/parent/parent_presentation/academics_assignment_three_bottomsheet/academics_assignment_three_bottomsheet.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_assignment_three_bottomsheet/controller/academics_assignment_modal_three_controller.dart';
 //import 'package:schulupparent/presentation/news_events_screen/widgets/listline_item_widget.dart';
-import 'package:schulupparent/parent/parent_presentation/signin_screen/shimmer_widget.dart';
+import 'package:schulupparent/signin_screen/shimmer_widget.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_title_searchview.dart';

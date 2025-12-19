@@ -20,14 +20,14 @@ import '../models/academics_assignment_answer_model.dart';
 class AcademicsAssignmentAnswerController extends GetxController {
   Rx<AcademicsAssignmentAnswerModel> academicsAssignmentAnswerModelObj =
       AcademicsAssignmentAnswerModel().obs;
-  DashboardExtendedViewController controller =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController controller =
+      Get.find<StudentDashboardExtendedViewController>();
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   RxList<Messages> tempMessageList = <Messages>[].obs;
 
-  DashboardExtendedViewController dashboardExtendedViewController =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<StudentDashboardExtendedViewController>();
   // ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   // DailyReport? dailyReports;

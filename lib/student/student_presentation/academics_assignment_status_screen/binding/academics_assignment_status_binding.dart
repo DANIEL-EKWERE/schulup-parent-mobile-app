@@ -18,14 +18,14 @@ import '../controller/academics_assignment_status_controller.dart';
 class AcademicsAssignmentStatusBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AcademicsAssignmentStatusController());
+    Get.lazyPut(() => StudentAcademicsAssignmentStatusController());
 
-    // DashboardExtendedViewController controller = Get.put(
-    //   DashboardExtendedViewController(),
+    // StudentDashboardExtendedViewController controller = Get.put(
+    //   StudentDashboardExtendedViewController(),
     // );
 
     //AttendanceFilterStartDateController
-    Get.put(DashboardExtendedViewController(), permanent: true);
+    Get.put(StudentDashboardExtendedViewController(), permanent: true);
     Get.put(AttendanceFilterStartDateController(), permanent: true);
     Get.put(NewsModalJumpToADateController(), permanent: true);
     Get.put(

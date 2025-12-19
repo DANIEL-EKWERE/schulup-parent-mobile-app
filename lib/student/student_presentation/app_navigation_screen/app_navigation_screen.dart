@@ -117,7 +117,8 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                           screenTitle: "Academics - Assignment - Status",
                           onTapScreenTitle:
                               () => onTapScreenTitle(
-                                AppRoutes.academicsAssignmentStatusScreen,
+                                AppRoutes
+                                    .studentAcademicsAssignmentStatusScreen,
                               ),
                         ),
                         _buildScreenTitle(
@@ -541,7 +542,8 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                           screenTitle: "Reports - Ward Progress - Academic",
                           onTapScreenTitle:
                               () => onTapScreenTitle(
-                                AppRoutes.reportsWardProgressAcademicScreen,
+                                AppRoutes
+                                    .studentReportsWardProgressAcademicScreen,
                               ),
                         ),
                         // _buildScreenTitle(

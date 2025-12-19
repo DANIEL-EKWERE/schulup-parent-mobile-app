@@ -13,7 +13,7 @@ import 'package:schulupparent/parent/parent_presentation/academics_cbt_test_one_
 import 'package:schulupparent/parent/parent_presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_report_card_modal_bottomsheet/controller/reports_report_card_modal_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart';
-import 'package:schulupparent/parent/parent_presentation/signin_screen/shimmer_widget.dart';
+import 'package:schulupparent/signin_screen/shimmer_widget.dart';
 import 'package:schulupparent/parent/widgets/app_bar/appbar_leading_iconbutton.dart';
 import 'package:schulupparent/parent/widgets/app_bar/custom_app_bar.dart';
 import '../../core/app_export.dart';
@@ -105,11 +105,11 @@ class AcademicsCbtTestPage extends StatelessWidget {
   /// Section Widget
   Widget _buildRowprimarycount() {
     return Container(
-      decoration: AppDecoration.outline,
+      decoration: AppDecoration.primaryC7Main,
       width: double.maxFinite,
       child: ClipRect(
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 0),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 8.h),
             child: Row(

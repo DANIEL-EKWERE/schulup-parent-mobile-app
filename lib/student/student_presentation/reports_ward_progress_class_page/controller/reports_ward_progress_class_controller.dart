@@ -37,8 +37,8 @@ class ReportsWardProgressClassController extends GetxController {
 
   Rx<ReportsWardProgressClassModel> reportsWardProgressClassModelObj;
 
-  DashboardExtendedViewController dashboardExtendedViewController =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<StudentDashboardExtendedViewController>();
 
   @override
   void onInit() {
@@ -80,8 +80,8 @@ class ReportsWardProgressClassController extends GetxController {
     frame427321475Controller.dispose();
   }
 
-  // DashboardExtendedViewController dashboardExtendedViewController =
-  //     Get.find<DashboardExtendedViewController>();
+  // StudentDashboardExtendedViewController dashboardExtendedViewController =
+  //     Get.find<StudentDashboardExtendedViewController>();
 
   @override
   void onReady() {

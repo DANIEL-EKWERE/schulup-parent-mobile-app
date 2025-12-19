@@ -27,8 +27,8 @@ import '../../widgets/custom_drop_down.dart';
 import 'controller/academics_assignment_search_controller.dart'; // ignore_for_file: must_be_immutable
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/widgets/listline_item_widget.dart';
 
-AcademicsAssignmentStatusController controller1 = Get.put(
-  AcademicsAssignmentStatusController(),
+StudentAcademicsAssignmentStatusController controller1 = Get.put(
+  StudentAcademicsAssignmentStatusController(),
 );
 
 class AcademicsAssignmentSearchScreen

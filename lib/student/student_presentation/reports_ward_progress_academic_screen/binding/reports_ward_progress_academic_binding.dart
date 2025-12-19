@@ -6,9 +6,12 @@ import '../controller/reports_ward_progress_academic_controller.dart';
 ///
 /// This class ensures that the ReportsWardProgressAcademicController is created when the
 /// ReportsWardProgressAcademicScreen is first loaded.
-class ReportsWardProgressAcademicBinding extends Bindings {
+class StudentReportsWardProgressAcademicBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ReportsWardProgressAcademicController());
+    Get.lazyPut(
+      () => StudentReportsWardProgressAcademicController(),
+      fenix: true,
+    );
   }
 }

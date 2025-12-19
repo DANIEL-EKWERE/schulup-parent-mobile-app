@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_report_card_all_variants_page/controller/reports_report_card_all_variants_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_report_card_all_variants_page/models/reports_report_card_all_variants_model.dart';
-import 'package:schulupparent/parent/parent_presentation/signin_screen/signin_screen.dart';
+import 'package:schulupparent/signin_screen/signin_screen.dart';
 import 'package:schulupparent/parent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';

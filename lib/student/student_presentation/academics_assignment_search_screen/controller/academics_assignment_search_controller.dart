@@ -29,11 +29,11 @@ class AcademicsAssignmentSearchController extends GetxController {
   Rx<AcademicsAssignmentSearchModel> academicsAssignmentSearchModelObj =
       AcademicsAssignmentSearchModel().obs;
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
-  DashboardExtendedViewController dashboardExtendedViewController =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<StudentDashboardExtendedViewController>();
 
-  AcademicsAssignmentStatusController controllerx =
-      Get.find<AcademicsAssignmentStatusController>();
+  StudentAcademicsAssignmentStatusController controllerx =
+      Get.find<StudentAcademicsAssignmentStatusController>();
 
   SelectionPopupModel? selectedDropDownValue;
   String? searchQuery;
@@ -116,8 +116,8 @@ class AcademicsAssignmentSearchController extends GetxController {
     academicsAssignmentSearchModelObj.value.dropdownItemList.refresh();
   }
 
-  DashboardExtendedViewController controller =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController controller =
+      Get.find<StudentDashboardExtendedViewController>();
   Lesson lesson = Lesson();
 
   List<LessonData> lessonList = [];
@@ -137,7 +137,7 @@ class AcademicsAssignmentSearchController extends GetxController {
   Rx<bool> isDetailLoading = false.obs;
 
   void getUserId() async {
-    var userId = await dataBase.getUserId();
+    var userId = await studentDataBase.getUserId();
     myLog.log('User ID: $userId');
   }
 

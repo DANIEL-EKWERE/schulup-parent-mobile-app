@@ -38,8 +38,8 @@ class AcademicsSchularAiOngoingController extends GetxController {
   RxBool isSending = false.obs;
   RxBool isAiTyping = false.obs; // NEW: AI typing indicator
 
-  DashboardExtendedViewController dashboardController =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardController =
+      Get.find<StudentDashboardExtendedViewController>();
 
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 

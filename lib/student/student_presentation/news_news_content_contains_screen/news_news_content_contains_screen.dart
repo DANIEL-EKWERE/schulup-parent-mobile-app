@@ -13,8 +13,8 @@ import 'models/listweburl_item_model.dart';
 import 'widgets/listweburl_item_widget.dart'; // ignore_for_file: must_be_immutable
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 NewsNewsContentContainsController controller = Get.put(
   NewsNewsContentContainsController(),
 );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../parent/core/app_export.dart';
+import '../parent/core/app_export.dart';
 
 // ignore_for_file: must_be_immutable
 class ListlineShimmerWidget extends StatelessWidget {

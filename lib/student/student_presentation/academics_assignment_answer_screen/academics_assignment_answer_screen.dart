@@ -18,8 +18,8 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
 import 'controller/academics_assignment_answer_controller.dart'; // ignore_for_file: must_be_immutable
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class AcademicsAssignmentAnswerScreen
     extends GetWidget<AcademicsAssignmentAnswerController> {

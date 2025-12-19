@@ -442,7 +442,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                         children: [
                           // Drag handle
                           Container(
-                            width: 50,
+                            width: 52,
                             height: 5,
                             margin: EdgeInsets.only(bottom: 16),
                             decoration: BoxDecoration(
@@ -555,7 +555,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                 );
               },
               child: Container(
-                width: 125,
+                width: 130,
                 // height: 150,
                 margin: EdgeInsets.only(left: 16),
                 padding: EdgeInsets.all(5),

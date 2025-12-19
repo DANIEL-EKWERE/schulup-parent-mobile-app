@@ -15,8 +15,8 @@ import 'controller/news_filter_result_controller.dart';
 import 'models/listyellowhouse_item_model.dart';
 import 'widgets/listyellowhouse_item_widget.dart'; // ignore_for_file: must_be_immutable
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class NewsFilterResultScreen extends GetWidget<NewsFilterResultController> {
   const NewsFilterResultScreen({Key? key}) : super(key: key);

@@ -107,16 +107,16 @@ class AppRoutes {
 
   static const String signinScreen = '/signin_screen';
 
-  static const String academicsAssignmentStatusScreen =
-      '/academics_assignment_status_screen';
+  static const String studentAcademicsAssignmentStatusScreen =
+      '/student_academics_assignment_status_screen';
 
   static const String academicsFourPage = '/academics_four_page';
   //DashboardEditWardProfileScreen
   static const String academicsAssignmentStatusInitialPage =
       '/academics_assignment_status_initial_page';
 
-  static const String dashboardEditWardProfileScreen =
-      '/dashboard_editWard_profile_screen';
+  static const String studentDashboardEditWardProfileScreen =
+      '/student_dashboard_editWard_profile_screen';
 
   static const String dashboardExtendedView = '/dashboard_extended_view';
   //DashboardExtendedView
@@ -241,8 +241,8 @@ class AppRoutes {
   static const String reportsReportCardPreviewOneScreen =
       '/reports_report_card_preview_one_screen';
 
-  static const String reportsWardProgressAcademicScreen =
-      '/reports_ward_progress_academic_screen';
+  static const String studentReportsWardProgressAcademicScreen =
+      '/student_reports_ward_progress_academic_screen';
 
   static const String scrollviewTabPage = '/scrollview_tab_page';
 
@@ -291,8 +291,8 @@ class AppRoutes {
       bindings: [SigninBinding()],
     ),
     GetPage(
-      name: academicsAssignmentStatusScreen,
-      page: () => AcademicsAssignmentStatusScreen(),
+      name: studentAcademicsAssignmentStatusScreen,
+      page: () => StudentAcademicsAssignmentStatusScreen(),
       bindings: [AcademicsAssignmentStatusBinding()],
     ),
     //dashboardExtendedView
@@ -335,9 +335,9 @@ class AppRoutes {
       bindings: [AcademicsAssignmentAnswerBinding()],
     ),
     GetPage(
-      name: dashboardEditWardProfileScreen,
-      page: () => DashboardEditWardProfileScreen(),
-      bindings: [DashboardEditWardProfileBinding()],
+      name: studentDashboardEditWardProfileScreen,
+      page: () => StudentDashboardEditWardProfileScreen(),
+      bindings: [StudentDashboardEditWardProfileBinding()],
     ),
     GetPage(
       name: academicsAssignmentNotSubmittedScreen,
@@ -505,9 +505,9 @@ class AppRoutes {
       bindings: [ReportsReportCardPreviewOneBinding()],
     ),
     GetPage(
-      name: reportsWardProgressAcademicScreen,
-      page: () => ReportsWardProgressAcademicScreen(),
-      bindings: [ReportsWardProgressAcademicBinding()],
+      name: studentReportsWardProgressAcademicScreen,
+      page: () => StudentReportsWardProgressAcademicScreen(),
+      bindings: [StudentReportsWardProgressAcademicBinding()],
     ),
     GetPage(
       name: reportsWardProgressSubjectTwoScreen,

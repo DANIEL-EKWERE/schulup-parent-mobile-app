@@ -21,8 +21,8 @@ class ScrollviewTabPage extends StatefulWidget {
 }
 
 class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
-  ReportsWardProgressAcademicController controller = Get.put(
-    ReportsWardProgressAcademicController(),
+  StudentReportsWardProgressAcademicController controller = Get.put(
+    StudentReportsWardProgressAcademicController(),
   );
 
   @override

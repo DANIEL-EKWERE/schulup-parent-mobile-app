@@ -12,8 +12,8 @@ import 'widgets/listline_item_widget.dart';
 class AcademicsFourPage extends StatelessWidget {
   AcademicsFourPage({Key? key}) : super(key: key);
 
-  AcademicsAssignmentStatusController controller = Get.put(
-    AcademicsAssignmentStatusController(),
+  StudentAcademicsAssignmentStatusController controller = Get.put(
+    StudentAcademicsAssignmentStatusController(),
   );
 
   @override

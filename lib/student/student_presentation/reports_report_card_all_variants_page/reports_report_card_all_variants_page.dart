@@ -28,8 +28,8 @@ import 'models/listline_item_model.dart';
 import 'models/reports_report_card_all_variants_model.dart';
 import 'widgets/listline_item_widget.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 // ignore_for_file: must_be_immutable
 class ReportsReportCardAllVariantsPage extends StatefulWidget {

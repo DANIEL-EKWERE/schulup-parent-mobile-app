@@ -11,11 +11,11 @@ import 'package:schulupparent/student/student_presentation/dashboard_edit_ward_p
 import 'package:schulupparent/student/student_presentation/dashboard_edit_ward_profile/model/model.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
-class DashboardEditWardProfileController extends GetxController {
+class StudentDashboardEditWardProfileController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
-  DashboardExtendedViewController dashboardExtendedViewController =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<StudentDashboardExtendedViewController>();
 
   Rx<String> selectedGender = 'Male'.obs;
 

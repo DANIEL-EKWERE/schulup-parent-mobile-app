@@ -10,8 +10,8 @@ import 'controller/academics_cbt_test_test_result_two_controller.dart'; // ignor
 
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class AcademicsCbtTestTestResultTwoScreen
     extends GetWidget<AcademicsCbtTestTestResultTwoController> {

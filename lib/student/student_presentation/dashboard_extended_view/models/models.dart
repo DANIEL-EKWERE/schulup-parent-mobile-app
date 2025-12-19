@@ -52,7 +52,7 @@ class DashboardExtendedViewModel {
       DashboardExtendedViewModel(
         title: "Ward Profile",
         imagePath: ImageConstant.imgWardprofile,
-        route: '/dashboard_editWard_profile_screen',
+        route: '/student_dashboard_editWard_profile_screen',
       ),
     ];
   }

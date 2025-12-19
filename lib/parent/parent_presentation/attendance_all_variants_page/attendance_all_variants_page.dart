@@ -35,15 +35,13 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
     });
   }
 
-final ScrollController _scrollController = ScrollController();
-
- 
+  final ScrollController _scrollController = ScrollController();
 
   void scrollToMonth(int index) {
     // Calculate the position to scroll to
     // itemWidth (120) + spacing (16)
-    double position = index * 136.0;
-    
+    double position = index * 100.0;
+
     _scrollController.animateTo(
       position,
       duration: Duration(milliseconds: 500),
@@ -55,7 +53,7 @@ final ScrollController _scrollController = ScrollController();
     AttendanceAllVariantsController(AttendanceAllVariantsModel().obs),
   );
 
-    @override
+  @override
   void initState() {
     super.initState();
     // Scroll to current month after the widget is built
@@ -84,7 +82,6 @@ final ScrollController _scrollController = ScrollController();
                       () =>
                           controller.isLoading.value
                               ? ListView.separated(
-
                                 shrinkWrap: true,
                                 itemCount: 5,
                                 //isLoading ? 5 : newsItems.length,
@@ -208,60 +205,64 @@ final ScrollController _scrollController = ScrollController();
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: IntrinsicWidth(
-              child: 
-              Container(
-            height: 60,
-            child: ListView.builder(
-              controller: _scrollController,
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              itemCount: getMonths().length,
-              itemBuilder: (context, index) {
-                var month = getMonths()[index];
-                bool isSelected = index == controller.selectedMonth;
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      controller.selectedMonth = index;
-                    });
-                    scrollToMonth(index);
-                    controller.getStudentAttendance();
+              //  stepWidth: 30,
+              child: Container(
+                width: 400.h,
+                height: 35,
+                child: ListView.builder(
+                  controller: _scrollController,
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: getMonths().length,
+                  itemBuilder: (context, index) {
+                    var month = getMonths()[index];
+                    bool isSelected = index == controller.selectedMonth;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          controller.selectedMonth = index;
+                        });
+                        scrollToMonth(index);
+                        controller.getStudentAttendance();
+                      },
+                      child:
+                          isSelected
+                              ? Container(
+                                margin: EdgeInsets.only(left: 5.h, right: 5.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 14.h,
+                                  vertical: 10.h,
+                                ),
+                                decoration: AppDecoration.grayC2.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder18,
+                                ),
+                                child: Text(
+                                  month,
+                                  textAlign: TextAlign.center,
+                                  style: theme.textTheme.labelLarge,
+                                ),
+                              )
+                              : Container(
+                                margin: EdgeInsets.only(left: 5.h, right: 5.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 14.h,
+                                  vertical: 10.h,
+                                ),
+                                decoration: AppDecoration.grayC13.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder18,
+                                ),
+                                child: Text(
+                                  month,
+                                  textAlign: TextAlign.center,
+                                  style: CustomTextStyles.bodySmallOnPrimary_1,
+                                ),
+                              ),
+                    );
                   },
-                  child: isSelected
-                            ? Container(
-                              margin: EdgeInsets.only(left: 5.h, right: 5.h),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 14.h,
-                                vertical: 10.h,
-                              ),
-                              decoration: AppDecoration.grayC2.copyWith(
-                                borderRadius: BorderRadiusStyle.roundedBorder18,
-                              ),
-                              child: Text(
-                                month,
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.labelLarge,
-                              ),
-                            )
-                            : Container(
-                              margin: EdgeInsets.only(left: 5.h, right: 5.h),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 14.h,
-                                vertical: 10.h,
-                              ),
-                              decoration: AppDecoration.grayC13.copyWith(
-                                borderRadius: BorderRadiusStyle.roundedBorder18,
-                              ),
-                              child: Text(
-                                month,
-                                textAlign: TextAlign.center,
-                                style: CustomTextStyles.bodySmallOnPrimary_1,
-                              ),
-                            ),
-                );
-              },
-            ),
-          ),
+                ),
+              ),
               // Row(
               //   mainAxisSize: MainAxisSize.min,
               //   children: List.generate(getMonths().length, (index) {
@@ -279,37 +280,37 @@ final ScrollController _scrollController = ScrollController();
               //         controller.getStudentAttendance();
               //       },
               //       child:
-                        // controller.selectedMonth == index
-                        //     ? Container(
-                        //       margin: EdgeInsets.only(left: 5.h, right: 5.h),
-                        //       padding: EdgeInsets.symmetric(
-                        //         horizontal: 14.h,
-                        //         vertical: 10.h,
-                        //       ),
-                        //       decoration: AppDecoration.grayC2.copyWith(
-                        //         borderRadius: BorderRadiusStyle.roundedBorder18,
-                        //       ),
-                        //       child: Text(
-                        //         month,
-                        //         textAlign: TextAlign.center,
-                        //         style: theme.textTheme.labelLarge,
-                        //       ),
-                        //     )
-                        //     : Container(
-                        //       margin: EdgeInsets.only(left: 5.h, right: 5.h),
-                        //       padding: EdgeInsets.symmetric(
-                        //         horizontal: 14.h,
-                        //         vertical: 10.h,
-                        //       ),
-                        //       decoration: AppDecoration.grayC13.copyWith(
-                        //         borderRadius: BorderRadiusStyle.roundedBorder18,
-                        //       ),
-                        //       child: Text(
-                        //         month,
-                        //         textAlign: TextAlign.center,
-                        //         style: CustomTextStyles.bodySmallOnPrimary_1,
-                        //       ),
-                        //     ),
+              // controller.selectedMonth == index
+              //     ? Container(
+              //       margin: EdgeInsets.only(left: 5.h, right: 5.h),
+              //       padding: EdgeInsets.symmetric(
+              //         horizontal: 14.h,
+              //         vertical: 10.h,
+              //       ),
+              //       decoration: AppDecoration.grayC2.copyWith(
+              //         borderRadius: BorderRadiusStyle.roundedBorder18,
+              //       ),
+              //       child: Text(
+              //         month,
+              //         textAlign: TextAlign.center,
+              //         style: theme.textTheme.labelLarge,
+              //       ),
+              //     )
+              //     : Container(
+              //       margin: EdgeInsets.only(left: 5.h, right: 5.h),
+              //       padding: EdgeInsets.symmetric(
+              //         horizontal: 14.h,
+              //         vertical: 10.h,
+              //       ),
+              //       decoration: AppDecoration.grayC13.copyWith(
+              //         borderRadius: BorderRadiusStyle.roundedBorder18,
+              //       ),
+              //       child: Text(
+              //         month,
+              //         textAlign: TextAlign.center,
+              //         style: CustomTextStyles.bodySmallOnPrimary_1,
+              //       ),
+              //     ),
               //     );
               //   }),
               // ),

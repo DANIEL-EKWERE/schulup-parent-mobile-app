@@ -182,7 +182,7 @@ import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/admin/presentation/home_screen/home_screen.dart';
 
 //TODO: PARENT ROUTING
-import 'package:schulupparent/parent/core/utils/storage.dart';
+import 'package:schulupparent/parent/core/utils/storage.dart' as parent;
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
 import 'package:schulupparent/parent/routes/app_routes.dart';
 
@@ -196,6 +196,8 @@ import 'package:schulupparent/student/routes/app_routes.dart' as studentRoutes;
 import 'package:schulupparent/admin/routes/app_routes.dart' as admin;
 
 import 'dart:developer' as myLog;
+
+import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/academics_assignment_status_screen.dart';
 
 class SigninController extends GetxController {
   final ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
@@ -231,6 +233,8 @@ class SigninController extends GetxController {
         // Extract data
         var token = responseData['data']['token'] as String;
         var userId = responseData['data']['userID'] as int;
+        var studentID = responseData['data']['studentID'] as int;
+        
         var userName = responseData['data']['displayName'] as String;
         var userType = responseData['data']['userType'] as int;
 
@@ -240,11 +244,6 @@ class SigninController extends GetxController {
         myLog.log('User Type: $userType');
 
         // Save common data
-        await dataBase.saveToken(token);
-        await dataBase.saveUserId(userId);
-        await dataBase.saveUserName(userName);
-        await dataBase.saveTransactionPin(passwordController.text);
-        await dataBase.saveBrmCode(schoolCodeController.text);
 
         // Clear controllers
         usernameController.clear();
@@ -255,15 +254,36 @@ class SigninController extends GetxController {
         if (userType == 4) {
           // Parent/Guardian
           var guardianID = responseData['data']['guardianID'];
-          await dataBase.saveGuardianID(guardianID);
+          await parent.dataBase.saveGuardianID(guardianID);
+          await parent.dataBase.saveToken(token);
+          await parent.dataBase.saveUserId(userId);
+          await parent.dataBase.saveUserName(userName);
+          await parent.dataBase.saveTransactionPin(passwordController.text);
+          await parent.dataBase.saveBrmCode(schoolCodeController.text);
           myLog.log('Routing to Parent dashboard');
           Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen);
         } else if (userType == 3) {
           // Student
           myLog.log('Routing to Student dashboard');
-          Get.offAllNamed(
-            studentRoutes.AppRoutes.academicsAssignmentStatusScreen,
+          await student.studentDataBase.saveToken(token);
+          myLog.log('save token');
+          await student.studentDataBase.saveUserId(userId);
+          await student.studentDataBase.saveStudent(studentID);
+          myLog.log('save user id');
+          await student.studentDataBase.saveUserName(userName);
+          myLog.log('save user name $userName');
+          await student.studentDataBase.saveTransactionPin(
+            passwordController.text,
           );
+          await student.studentDataBase.saveBrmCode(schoolCodeController.text);
+
+          myLog.log(
+            studentRoutes.AppRoutes.studentAcademicsAssignmentStatusScreen,
+          );
+          // Get.offAllNamed(
+          //   studentRoutes.AppRoutes.studentAcademicsAssignmentStatusScreen,
+          // );
+          Get.offAll(() => StudentAcademicsAssignmentStatusScreen());
         } else {
           // Admin or other user type
           myLog.log('Routing to Admin dashboard');

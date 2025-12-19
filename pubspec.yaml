@@ -48,6 +48,7 @@ dependencies:
   nfc_manager_ndef:
   scanning_effect:
   sqflite_common_ffi: ^2.4.0+1
+  get_storage: ^2.1.1
 
   
 

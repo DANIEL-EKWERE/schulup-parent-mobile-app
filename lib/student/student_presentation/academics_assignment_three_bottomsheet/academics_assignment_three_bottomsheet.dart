@@ -7,8 +7,8 @@ import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_assignment_modal_three_controller.dart';
 
 // ignore_for_file: must_be_immutable
-AcademicsAssignmentStatusController controller1 = Get.put(
-  AcademicsAssignmentStatusController(),
+StudentAcademicsAssignmentStatusController controller1 = Get.put(
+  StudentAcademicsAssignmentStatusController(),
 );
 
 class AcademicsAssignmentModalThreeBottomsheet extends StatefulWidget {

@@ -39,6 +39,36 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
     AttendanceAllVariantsController(AttendanceAllVariantsModel().obs),
   );
 
+
+  final ScrollController _scrollController = ScrollController();
+
+ 
+
+  void scrollToMonth(int index) {
+    // Calculate the position to scroll to
+    // itemWidth (120) + spacing (16)
+    double position = index * 136.0;
+    
+    _scrollController.animateTo(
+      position,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  // AttendanceAllVariantsController controller = Get.put(
+  //   AttendanceAllVariantsController(AttendanceAllVariantsModel().obs),
+  // );
+
+    @override
+  void initState() {
+    super.initState();
+    // Scroll to current month after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollToMonth(controller.selectedMonth!);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,24 +212,153 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: IntrinsicWidth(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: List.generate(getMonths().length, (index) {
-                  var month = getMonths()[index];
-                  return
-                  // month
-                  GestureDetector(
-                    onTap: () {
-                      // print(month);
-                      // print(index);
-                      // print(selectedMonth);
-                      setState(() {
-                        controller.selectedMonth = index;
-                      });
-                      controller.getStudentAttendance();
-                    },
-                    child:
-                        controller.selectedMonth == index
+              child: 
+              // Row(
+              //   mainAxisSize: MainAxisSize.min,
+              //   children: List.generate(getMonths().length, (index) {
+              //     var month = getMonths()[index];
+              //     return
+              //     // month
+              //     GestureDetector(
+              //       onTap: () {
+              //         // print(month);
+              //         // print(index);
+              //         // print(selectedMonth);
+              //         setState(() {
+              //           controller.selectedMonth = index;
+              //         });
+              //         controller.getStudentAttendance();
+              //       },
+              //       child:
+              //           controller.selectedMonth == index
+              //               ? Container(
+              //                 margin: EdgeInsets.only(left: 5.h, right: 5.h),
+              //                 padding: EdgeInsets.symmetric(
+              //                   horizontal: 14.h,
+              //                   vertical: 10.h,
+              //                 ),
+              //                 decoration: AppDecoration.grayC2.copyWith(
+              //                   borderRadius: BorderRadiusStyle.roundedBorder18,
+              //                 ),
+              //                 child: Text(
+              //                   month,
+              //                   textAlign: TextAlign.center,
+              //                   style: theme.textTheme.labelLarge,
+              //                 ),
+              //               )
+              //               : Container(
+              //                 margin: EdgeInsets.only(left: 5.h, right: 5.h),
+              //                 padding: EdgeInsets.symmetric(
+              //                   horizontal: 14.h,
+              //                   vertical: 10.h,
+              //                 ),
+              //                 decoration: AppDecoration.grayC13.copyWith(
+              //                   borderRadius: BorderRadiusStyle.roundedBorder18,
+              //                 ),
+              //                 child: Text(
+              //                   month,
+              //                   textAlign: TextAlign.center,
+              //                   style: CustomTextStyles.bodySmallOnPrimary_1,
+              //                 ),
+              //               ),
+              //     );
+              //   }),
+              //   // [
+              //   // Container(
+              //   //   padding: EdgeInsets.symmetric(
+              //   //     horizontal: 14.h,
+              //   //     vertical: 10.h,
+              //   //   ),
+              //   //   decoration: AppDecoration.grayC13.copyWith(
+              //   //     borderRadius: BorderRadiusStyle.roundedBorder18,
+              //   //   ),
+              //   //   child: Text(
+              //   //     "lbl_jun_2025".tr,
+              //   //     textAlign: TextAlign.center,
+              //   //     style: CustomTextStyles.bodySmallOnPrimary_1,
+              //   //   ),
+              //   // ),
+              //   // Container(
+              //   //   margin: EdgeInsets.only(left: 4.h),
+              //   //   padding: EdgeInsets.symmetric(
+              //   //     horizontal: 14.h,
+              //   //     vertical: 10.h,
+              //   //   ),
+              //   //   decoration: AppDecoration.grayC13.copyWith(
+              //   //     borderRadius: BorderRadiusStyle.roundedBorder18,
+              //   //   ),
+              //   //   child: Text(
+              //   //     "lbl_jul_2025".tr,
+              //   //     textAlign: TextAlign.center,
+              //   //     style: CustomTextStyles.bodySmallOnPrimary_1,
+              //   //   ),
+              //   // ),
+              //   //   Container(
+              //   //     margin: EdgeInsets.only(left: 4.h),
+              //   //     padding: EdgeInsets.symmetric(
+              //   //       horizontal: 14.h,
+              //   //       vertical: 8.h,
+              //   //     ),
+              //   //     decoration: AppDecoration.grayC13.copyWith(
+              //   //       borderRadius: BorderRadiusStyle.roundedBorder18,
+              //   //     ),
+              //   //     child: Text(
+              //   //       "lbl_sept_2025".tr,
+              //   //       textAlign: TextAlign.center,
+              //   //       style: CustomTextStyles.bodySmallOnPrimary_1,
+              //   //     ),
+              //   //   ),
+              //   //   Container(
+              //   //     margin: EdgeInsets.only(left: 4.h),
+              //   //     padding: EdgeInsets.symmetric(
+              //   //       horizontal: 14.h,
+              //   //       vertical: 10.h,
+              //   //     ),
+              //   //     decoration: AppDecoration.grayC13.copyWith(
+              //   //       borderRadius: BorderRadiusStyle.roundedBorder18,
+              //   //     ),
+              //   //     child: Text(
+              //   //       "lbl_oct_2025".tr,
+              //   //       textAlign: TextAlign.center,
+              //   //       style: CustomTextStyles.bodySmallOnPrimary_1,
+              //   //     ),
+              //   //   ),
+              //   // Container(
+              //   //   margin: EdgeInsets.only(left: 4.h),
+              //   //   padding: EdgeInsets.symmetric(
+              //   //     horizontal: 14.h,
+              //   //     vertical: 10.h,
+              //   //   ),
+              //   //   decoration: AppDecoration.grayC2.copyWith(
+              //   //     borderRadius: BorderRadiusStyle.roundedBorder18,
+              //   //   ),
+              //   //   child: Text(
+              //   //     "lbl_nov_2025".tr,
+              //   //     textAlign: TextAlign.center,
+              //   //     style: theme.textTheme.labelLarge,
+              //   //   ),
+              //   // ),
+              //   // ],
+              // ),
+              Container(
+            height: 60,
+            child: ListView.builder(
+              controller: _scrollController,
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              itemCount: getMonths().length,
+              itemBuilder: (context, index) {
+                var month = getMonths()[index];
+                bool isSelected = index == controller.selectedMonth;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      controller.selectedMonth = index;
+                    });
+                    scrollToMonth(index);
+                    controller.getStudentAttendance();
+                  },
+                  child: isSelected
                             ? Container(
                               margin: EdgeInsets.only(left: 5.h, right: 5.h),
                               padding: EdgeInsets.symmetric(
@@ -230,85 +389,10 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
                                 style: CustomTextStyles.bodySmallOnPrimary_1,
                               ),
                             ),
-                  );
-                }),
-                // [
-                // Container(
-                //   padding: EdgeInsets.symmetric(
-                //     horizontal: 14.h,
-                //     vertical: 10.h,
-                //   ),
-                //   decoration: AppDecoration.grayC13.copyWith(
-                //     borderRadius: BorderRadiusStyle.roundedBorder18,
-                //   ),
-                //   child: Text(
-                //     "lbl_jun_2025".tr,
-                //     textAlign: TextAlign.center,
-                //     style: CustomTextStyles.bodySmallOnPrimary_1,
-                //   ),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.only(left: 4.h),
-                //   padding: EdgeInsets.symmetric(
-                //     horizontal: 14.h,
-                //     vertical: 10.h,
-                //   ),
-                //   decoration: AppDecoration.grayC13.copyWith(
-                //     borderRadius: BorderRadiusStyle.roundedBorder18,
-                //   ),
-                //   child: Text(
-                //     "lbl_jul_2025".tr,
-                //     textAlign: TextAlign.center,
-                //     style: CustomTextStyles.bodySmallOnPrimary_1,
-                //   ),
-                // ),
-                //   Container(
-                //     margin: EdgeInsets.only(left: 4.h),
-                //     padding: EdgeInsets.symmetric(
-                //       horizontal: 14.h,
-                //       vertical: 8.h,
-                //     ),
-                //     decoration: AppDecoration.grayC13.copyWith(
-                //       borderRadius: BorderRadiusStyle.roundedBorder18,
-                //     ),
-                //     child: Text(
-                //       "lbl_sept_2025".tr,
-                //       textAlign: TextAlign.center,
-                //       style: CustomTextStyles.bodySmallOnPrimary_1,
-                //     ),
-                //   ),
-                //   Container(
-                //     margin: EdgeInsets.only(left: 4.h),
-                //     padding: EdgeInsets.symmetric(
-                //       horizontal: 14.h,
-                //       vertical: 10.h,
-                //     ),
-                //     decoration: AppDecoration.grayC13.copyWith(
-                //       borderRadius: BorderRadiusStyle.roundedBorder18,
-                //     ),
-                //     child: Text(
-                //       "lbl_oct_2025".tr,
-                //       textAlign: TextAlign.center,
-                //       style: CustomTextStyles.bodySmallOnPrimary_1,
-                //     ),
-                //   ),
-                // Container(
-                //   margin: EdgeInsets.only(left: 4.h),
-                //   padding: EdgeInsets.symmetric(
-                //     horizontal: 14.h,
-                //     vertical: 10.h,
-                //   ),
-                //   decoration: AppDecoration.grayC2.copyWith(
-                //     borderRadius: BorderRadiusStyle.roundedBorder18,
-                //   ),
-                //   child: Text(
-                //     "lbl_nov_2025".tr,
-                //     textAlign: TextAlign.center,
-                //     style: theme.textTheme.labelLarge,
-                //   ),
-                // ),
-                // ],
-              ),
+                );
+              },
+            ),
+          ),
             ),
           ),
         ],

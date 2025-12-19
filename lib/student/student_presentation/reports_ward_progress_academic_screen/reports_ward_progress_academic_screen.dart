@@ -11,12 +11,12 @@ import '../reports_ward_progress_subject_page/reports_ward_progress_subject_page
 import 'controller/reports_ward_progress_academic_controller.dart';
 import 'scrollview_tab_page.dart'; // ignore_for_file: must_be_immutable
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
-class ReportsWardProgressAcademicScreen
-    extends GetWidget<ReportsWardProgressAcademicController> {
-  const ReportsWardProgressAcademicScreen({Key? key}) : super(key: key);
+class StudentReportsWardProgressAcademicScreen
+    extends GetWidget<StudentReportsWardProgressAcademicController> {
+  const StudentReportsWardProgressAcademicScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

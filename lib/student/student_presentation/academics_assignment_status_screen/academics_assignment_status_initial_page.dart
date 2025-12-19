@@ -215,8 +215,8 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import 'controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/widgets/listline_item_widget.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class AcademicsAssignmentStatusInitialPage extends StatefulWidget {
   AcademicsAssignmentStatusInitialPage({Key? key}) : super(key: key);
@@ -228,8 +228,8 @@ class AcademicsAssignmentStatusInitialPage extends StatefulWidget {
 
 class _AcademicsAssignmentStatusInitialPageState
     extends State<AcademicsAssignmentStatusInitialPage> {
-  AcademicsAssignmentStatusController controller = Get.put(
-    AcademicsAssignmentStatusController(),
+  StudentAcademicsAssignmentStatusController controller = Get.put(
+    StudentAcademicsAssignmentStatusController(),
   );
 
   @override

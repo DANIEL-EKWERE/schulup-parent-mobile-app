@@ -13,8 +13,8 @@ import '../news_all_variants_page/news_all_variants_page.dart';
 import '../reports_report_card_all_variants_page/reports_report_card_all_variants_page.dart';
 import 'controller/reports_report_card_downloading_controller.dart'; // ignore_for_file: must_be_immutable
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class ReportsReportCardDownloadingScreen
     extends GetWidget<ReportsReportCardDownloadingController> {

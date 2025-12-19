@@ -9,7 +9,7 @@ import '../models/scrollview_tab_model.dart';
 ///
 /// This class manages the state of the ReportsWardProgressAcademicScreen, including the
 /// current reportsWardProgressAcademicModelObj
-class ReportsWardProgressAcademicController extends GetxController
+class StudentReportsWardProgressAcademicController extends GetxController
     with GetSingleTickerProviderStateMixin {
   TextEditingController frame427321469Controller = TextEditingController();
 

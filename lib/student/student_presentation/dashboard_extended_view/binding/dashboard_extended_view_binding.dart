@@ -10,7 +10,7 @@ import 'package:schulupparent/student/student_presentation/dashboard_extended_vi
 class DashboardExtendedViewBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => DashboardExtendedViewController());
+    Get.lazyPut(() => StudentDashboardExtendedViewController());
     Get.put(
       AcademicsLessonAllLessonsController(AcademicsLessonAllLessonsModel().obs),
       permanent: true,

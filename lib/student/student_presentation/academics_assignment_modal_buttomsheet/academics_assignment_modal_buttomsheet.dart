@@ -13,14 +13,14 @@ import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_assignment_modal_controller.dart';
 
 // ignore_for_file: must_be_immutable
-AcademicsAssignmentStatusController controller1 = Get.put(
-  AcademicsAssignmentStatusController(),
+StudentAcademicsAssignmentStatusController controller1 = Get.put(
+  StudentAcademicsAssignmentStatusController(),
 );
 AcademicsLessonCbtTestController controls = Get.put(
   AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs),
 );
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 AcademicsLessonAllLessonsController lessonsController =
     Get.find<AcademicsLessonAllLessonsController>();
 AcademicsAssignmentController controllers = Get.put(

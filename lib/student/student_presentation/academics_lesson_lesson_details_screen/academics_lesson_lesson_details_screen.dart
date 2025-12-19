@@ -11,8 +11,8 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import 'controller/academics_lesson_lesson_details_controller.dart'; // ignore_for_file: must_be_immutable
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class AcademicsLessonLessonDetailsScreen
     extends GetWidget<AcademicsLessonLessonDetailsController> {

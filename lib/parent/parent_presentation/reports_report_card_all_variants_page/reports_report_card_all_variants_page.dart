@@ -16,7 +16,7 @@ import 'package:schulupparent/parent/parent_presentation/reports_report_card_mod
 import 'package:schulupparent/parent/parent_presentation/reports_report_card_modal_one_bottomsheet/reports_report_card_modal_one_bottomsheet.dart';
 import 'package:schulupparent/parent/parent_presentation/session_model_sheet/controller/session_modal_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/session_model_sheet/session_modal_bottom_sheet.dart';
-import 'package:schulupparent/parent/parent_presentation/signin_screen/shimmer_widget.dart';
+import 'package:schulupparent/signin_screen/shimmer_widget.dart';
 import 'package:schulupparent/parent/widgets/custom_text_form_field.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -123,6 +123,9 @@ class _ReportsReportCardAllVariantsPageState
             ),
             actions: [
               AppbarTrailingIconbutton(
+                onTap: () {
+                  Get.toNamed('/reports_ward_progress_academic_screen');
+                },
                 imagePath: ImageConstant.imgIconsSmallWardProgress,
                 margin: EdgeInsets.only(right: 25.h, bottom: 1.h),
               ),

@@ -26,8 +26,8 @@ class AcademicsAssignmentController extends GetxController {
 
   Rx<AcademicsAssignmentModel> academicsLessonAllLessonsModelObj;
 
-  AcademicsAssignmentStatusController controllerx =
-      Get.find<AcademicsAssignmentStatusController>();
+  StudentAcademicsAssignmentStatusController controllerx =
+      Get.find<StudentAcademicsAssignmentStatusController>();
   @override
   onInit() {
     super.onInit();
@@ -45,8 +45,8 @@ class AcademicsAssignmentController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   // Rx<bool> isLoading = false.obs;
-  DashboardExtendedViewController dashboardExtendedViewController =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<StudentDashboardExtendedViewController>();
   onSelected(dynamic value) {
     for (var element
         in academicsLessonAllLessonsModelObj.value.dropdownItemList.value) {
@@ -270,8 +270,8 @@ class AcademicsAssignmentController extends GetxController {
   //   }
   // }
 
-  AcademicsAssignmentStatusController controls = Get.put(
-    AcademicsAssignmentStatusController(),
+  StudentAcademicsAssignmentStatusController controls = Get.put(
+    StudentAcademicsAssignmentStatusController(),
   );
 
   Future<void> getAssignment() async {

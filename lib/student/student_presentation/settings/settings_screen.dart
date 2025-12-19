@@ -12,8 +12,8 @@ import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class SettingsScreen extends GetWidget<SettingsController> {
   const SettingsScreen({Key? key}) : super(key: key);

@@ -31,8 +31,8 @@ class AcademicsCbtTestPage extends StatelessWidget {
     AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs),
   );
 
-  AcademicsAssignmentStatusController controllerx = Get.put(
-    AcademicsAssignmentStatusController(),
+  StudentAcademicsAssignmentStatusController controllerx = Get.put(
+    StudentAcademicsAssignmentStatusController(),
   );
 
   @override

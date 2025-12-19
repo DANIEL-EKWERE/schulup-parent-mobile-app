@@ -8,9 +8,9 @@ import '../reports_report_card_all_variants_page/reports_report_card_all_variant
 import 'academics_assignment_status_initial_page.dart';
 import 'controller/academics_assignment_status_controller.dart'; // ignore_for_file: must_be_immutable
 
-class AcademicsAssignmentStatusScreen
-    extends GetWidget<AcademicsAssignmentStatusController> {
-  const AcademicsAssignmentStatusScreen({Key? key}) : super(key: key);
+class StudentAcademicsAssignmentStatusScreen
+    extends GetWidget<StudentAcademicsAssignmentStatusController> {
+  const StudentAcademicsAssignmentStatusScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

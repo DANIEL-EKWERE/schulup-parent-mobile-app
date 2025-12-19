@@ -42,7 +42,7 @@ class ChangePasswordController extends GetxController {
         currentPasswordController.clear();
         newPasswordController.clear();
         confirmPasswordController.clear();
-        Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen);
+        Get.offAllNamed(AppRoutes.studentAcademicsAssignmentStatusScreen);
         OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {

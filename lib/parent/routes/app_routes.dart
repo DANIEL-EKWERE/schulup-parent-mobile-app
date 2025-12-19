@@ -14,8 +14,8 @@ import 'package:schulupparent/parent/parent_presentation/direct_chat/binding/dir
 import 'package:schulupparent/parent/parent_presentation/direct_chat/direct_chat_screen.dart';
 import 'package:schulupparent/parent/parent_presentation/settings/binding/settings_binding.dart';
 import 'package:schulupparent/parent/parent_presentation/settings/settings_screen.dart';
-import 'package:schulupparent/parent/parent_presentation/signin_screen/binding/signin_binding.dart';
-import 'package:schulupparent/parent/parent_presentation/signin_screen/signin_screen.dart';
+import 'package:schulupparent/signin_screen/binding/signin_binding.dart';
+import 'package:schulupparent/signin_screen/signin_screen.dart';
 
 import '../core/app_export.dart';
 import '../parent_presentation/academics_assignment_a_teacher_screen/academics_assignment_a_teacher_screen.dart';

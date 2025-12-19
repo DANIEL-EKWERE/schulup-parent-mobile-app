@@ -43,8 +43,8 @@ class ReportsReportCardAllVariantsController extends GetxController
     getTermlyReports();
   }
 
-  DashboardExtendedViewController dashboardExtendedViewController =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardExtendedViewController =
+      Get.find<StudentDashboardExtendedViewController>();
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   DailyReport? dailyReports;

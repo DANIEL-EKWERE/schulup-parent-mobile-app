@@ -8,11 +8,13 @@ import 'package:schulupparent/student/core/utils/image_constant.dart';
 import 'package:schulupparent/student/core/utils/storage.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/academics_assignment_status_initial_model.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
+import 'package:schulupparent/student/student_presentation/dashboard_edit_ward_profile/dashboard_edit_ward_profile.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/base64.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/models/models.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/widget/chart_widget.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/widget/widget.dart';
+import 'package:schulupparent/student/student_presentation/reports_ward_progress_academic_screen/reports_ward_progress_academic_screen.dart';
 import 'package:schulupparent/student/theme/app_decoration.dart';
 import 'package:schulupparent/student/theme/custom_text_style.dart';
 import 'package:schulupparent/student/widgets/app_bar/appbar_subtitle_five.dart';
@@ -22,11 +24,10 @@ import 'package:schulupparent/student/widgets/app_bar/custom_app_bar.dart';
 import 'package:schulupparent/student/widgets/custom_image_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'dart:developer' as myLog;
-import '../../core/utils/size_utils.dart';
-import '../signalr_chat/signalr_chat_screen.dart';
+import '../../core/utils/size_utils.dart' hide ResponsiveExtension;
 
-DashboardExtendedViewController controller = Get.put(
-  DashboardExtendedViewController(),
+StudentDashboardExtendedViewController controller = Get.put(
+  StudentDashboardExtendedViewController(),
 );
 
 class DashboardExtendedView extends StatefulWidget {
@@ -45,9 +46,9 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
   }
 
   int _currentIndex = 0;
-  bool _isSelected = false;
-  int _selectedStudentIndex = 0;
-  Student? _selectedStudent;
+  // bool _isSelected = false;
+  // int _selectedStudentIndex = 0;
+  // Student? _selectedStudent;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -75,7 +76,9 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                             children: [
                               SizedBox(height: 20),
                               Padding(
-                                padding: EdgeInsetsGeometry.only(left: 10.h),
+                                padding: EdgeInsetsGeometry.only(
+                                  left: ResponsiveExtension(10).h,
+                                ),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -84,19 +87,36 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                   ),
                                 ),
                               ),
+
                               SizedBox(height: 10),
 
                               Obx(() {
                                 return controller.isLoading.value
                                     ? Center(child: CircularProgressIndicator())
                                     : controller.newsItems.isEmpty
-                                    ? Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Color(0xffFFEED4),
+                                    ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
                                       ),
-                                      height: 180,
-                                      width: double.infinity,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          color: Color(0xffFFEED4),
+                                        ),
+                                        height: 110,
+                                        width: double.infinity,
+                                        child: Center(
+                                          child: Text(
+                                            textAlign: TextAlign.center,
+                                            'Welcome Onboard!!! \nWhat would you love to do today?',
+                                            style:
+                                                CustomTextStyles
+                                                    .bodyMediumSecondaryContainer,
+                                          ),
+                                        ),
+                                      ),
                                     )
                                     : SizedBox(
                                       height: 106,
@@ -218,137 +238,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                                 ),
                                               );
                                             }).toList(),
-                                        // [
 
-                                        //   // Container(
-                                        //   //   width: double.maxFinite,
-                                        //   //   padding: EdgeInsets.symmetric(
-                                        //   //     horizontal: 20.h,
-                                        //   //     vertical: 15.h,
-                                        //   //   ),
-                                        //   //   decoration: AppDecoration.primaryC11.copyWith(
-                                        //   //     borderRadius:
-                                        //   //         BorderRadiusStyle.circleBorder12,
-                                        //   //     // borderRadius: BorderRadiusStyle.roundedBorder8,
-                                        //   //     border: Border.all(
-                                        //   //       color: Color(
-                                        //   //         0xffFF8D2A,
-                                        //   //       ).withValues(alpha: .1),
-                                        //   //     ),
-                                        //   //     boxShadow: [
-                                        //   //       BoxShadow(
-                                        //   //         color: Colors.grey[100]!,
-                                        //   //         offset: Offset(0.2, 0.2),
-                                        //   //         blurRadius: 20,
-                                        //   //         spreadRadius: 2,
-                                        //   //       ),
-                                        //   //     ],
-                                        //   //   ),
-                                        //   //   child: Row(
-                                        //   //     spacing: 10,
-                                        //   //     mainAxisSize: MainAxisSize.min,
-                                        //   //     crossAxisAlignment:
-                                        //   //         CrossAxisAlignment.start,
-                                        //   //     mainAxisAlignment:
-                                        //   //         MainAxisAlignment.start,
-                                        //   //     children: [
-                                        //   //       Row(
-                                        //   //         spacing: 10,
-                                        //   //         children: [
-                                        //   //           Container(
-                                        //   //             padding: EdgeInsets.all(5.h),
-                                        //   //             width: 40.h,
-                                        //   //             height: 40.h,
-                                        //   //             decoration: BoxDecoration(
-                                        //   //               color: Color(0xffFFEED4),
-                                        //   //               shape: BoxShape.circle,
-                                        //   //             ),
-                                        //   //             child: CustomImageView(
-                                        //   //               imagePath:
-                                        //   //                   ImageConstant
-                                        //   //                       .imgAssignments,
-                                        //   //               height: 20.h,
-                                        //   //               width: 20.h,
-                                        //   //               fit: BoxFit.contain,
-                                        //   //             ),
-                                        //   //           ),
-
-                                        //   //           Column(
-                                        //   //             spacing: 10.h,
-                                        //   //             crossAxisAlignment:
-                                        //   //                 CrossAxisAlignment.start,
-                                        //   //             mainAxisAlignment:
-                                        //   //                 MainAxisAlignment.center,
-                                        //   //             children: [
-                                        //   //               Padding(
-                                        //   //                 padding: EdgeInsets.only(
-                                        //   //                   left: 0.h,
-                                        //   //                 ),
-                                        //   //                 child:
-                                        //   //                 // Obx(
-                                        //   //                 //   () =>
-                                        //   //                 Text(
-                                        //   //                   'Word Problems',
-                                        //   //                   style: CustomTextStyles
-                                        //   //                       .titleMediumOnPrimary
-                                        //   //                       .copyWith(
-                                        //   //                         fontSize: 14.h,
-                                        //   //                       ),
-                                        //   //                   //theme.textTheme.bodyLarge,
-                                        //   //                 ),
-                                        //   //                 //   ),
-                                        //   //               ),
-                                        //   //               // Obx(
-                                        //   //               //   () =>
-                                        //   //               Text(
-                                        //   //                 'Mathematics • Posted on Nov. 3, 2025',
-                                        //   //                 style:
-                                        //   //                     CustomTextStyles
-                                        //   //                         .bodySmallSecondaryContainer10,
-                                        //   //               ),
-                                        //   //               //  ),
-                                        //   //               Container(
-                                        //   //                 padding:
-                                        //   //                     EdgeInsets.symmetric(
-                                        //   //                       horizontal: 6.h,
-                                        //   //                       vertical: 2.h,
-                                        //   //                     ),
-                                        //   //                 decoration: AppDecoration
-                                        //   //                     .grayC7
-                                        //   //                     .copyWith(
-                                        //   //                       borderRadius:
-                                        //   //                           BorderRadiusStyle
-                                        //   //                               .roundedBorder8,
-                                        //   //                     ),
-                                        //   //                 child:
-                                        //   //                 // Obx(
-                                        //   //                 //   () =>
-                                        //   //                 Text(
-                                        //   //                   'Due on Nov. 5, 2025',
-                                        //   //                   textAlign:
-                                        //   //                       TextAlign.center,
-                                        //   //                   style:
-                                        //   //                       CustomTextStyles
-                                        //   //                           .bodySmallWhiteA700,
-                                        //   //                 ),
-                                        //   //                 // ),
-                                        //   //               ),
-                                        //   //             ],
-                                        //   //           ),
-                                        //   //         ],
-                                        //   //       ),
-                                        //   //     ],
-                                        //   //   ),
-                                        //   // ),
-                                        // Container(
-                                        //   decoration: BoxDecoration(
-                                        //     borderRadius: BorderRadius.circular(12),
-                                        //     color: Color(0xffFFEED4),
-                                        //   ),
-                                        //   height: 180,
-                                        //   width: double.infinity,
-                                        // ),
-                                        // ],
                                         options: CarouselOptions(
                                           onPageChanged: (index, reason) {
                                             setState(() {
@@ -366,16 +256,18 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                               }),
                               const SizedBox(height: 8),
 
-                              AnimatedSmoothIndicator(
-                                activeIndex: _currentIndex,
-                                count: 3,
-                                effect: ExpandingDotsEffect(
-                                  dotHeight: 8,
-                                  dotWidth: 8,
-                                  activeDotColor: Color(0xffEF5A07),
-                                  dotColor: Colors.grey.shade300,
-                                ),
-                              ),
+                              controller.newsItems.isNotEmpty
+                                  ? AnimatedSmoothIndicator(
+                                    activeIndex: _currentIndex,
+                                    count: 3,
+                                    effect: ExpandingDotsEffect(
+                                      dotHeight: 8,
+                                      dotWidth: 8,
+                                      activeDotColor: Color(0xffEF5A07),
+                                      dotColor: Colors.grey.shade300,
+                                    ),
+                                  )
+                                  : SizedBox.shrink(),
                               SizedBox(height: 10),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -409,153 +301,9 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
             styleType: Style.bgFillPrimary,
             //centerTitle: true,
             title: GestureDetector(
-              onTap: () {
-                // showModalBottomSheet(
-                //   context: context,
-                //   backgroundColor: Colors.transparent,
-                //   isScrollControlled: true, // Important for dynamic height
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.vertical(
-                //       top: Radius.circular(20),
-                //     ),
-                //   ),
-                //   builder: (context) {
-                //     return Container(
-                //       width: double.infinity,
-                //       constraints: BoxConstraints(
-                //         maxHeight:
-                //             MediaQuery.of(context).size.height *
-                //             0.5, // Max 50% of screen
-                //       ),
-                //       padding: EdgeInsets.symmetric(
-                //         horizontal: 20,
-                //         vertical: 8,
-                //       ),
-                //       decoration: BoxDecoration(
-                //         color: Colors.white,
-                //         borderRadius: BorderRadius.vertical(
-                //           top: Radius.circular(20),
-                //         ),
-                //       ),
-                //       child: Column(
-                //         mainAxisSize: MainAxisSize.min,
-                //         children: [
-                //           // Drag handle
-                //           Container(
-                //             width: 50,
-                //             height: 5,
-                //             margin: EdgeInsets.only(bottom: 16),
-                //             decoration: BoxDecoration(
-                //               color: Colors.grey.shade300,
-                //               borderRadius: BorderRadius.circular(10),
-                //             ),
-                //           ),
-
-                //           // Title
-                //           Text(
-                //             "Switch Ward",
-                //             style: TextStyle(
-                //               fontSize: 12,
-                //               fontWeight: FontWeight.bold,
-                //             ),
-                //           ),
-
-                //           SizedBox(height: 10),
-
-                //           // List of students
-                //           Flexible(
-                //             child: ListView.builder(
-                //               shrinkWrap: true,
-                //               itemCount: controller.students.length,
-                //               itemBuilder: (context, index) {
-                //                 Student student = controller.students[index];
-                //                 return ListTile(
-                //                   contentPadding: EdgeInsets.symmetric(
-                //                     horizontal: 4,
-                //                     vertical: 2,
-                //                   ),
-                //                   leading: ClipRRect(
-                //                     borderRadius: BorderRadius.circular(25),
-                //                     child: Base64Image(
-                //                       base64String: student.profilePicBase64,
-                //                       width: 30,
-                //                       height: 30,
-                //                       fit: BoxFit.cover,
-                //                       placeholder: CircleAvatar(
-                //                         backgroundColor: Color(
-                //                           0xFFFF8D2A,
-                //                         ).withOpacity(0.2),
-                //                         child: Text(
-                //                           student.firstName?[0].toUpperCase() ??
-                //                               '?',
-                //                           style: TextStyle(
-                //                             color: Color(0xFFFF8D2A),
-                //                             fontWeight: FontWeight.bold,
-                //                           ),
-                //                         ),
-                //                       ),
-                //                     ),
-                //                   ),
-                //                   title: Text(
-                //                     '${student.firstName ?? ''} ${student.lastName ?? ''}',
-                //                     style: TextStyle(
-                //                       fontSize: 10,
-                //                       fontWeight: FontWeight.w500,
-                //                     ),
-                //                   ),
-                //                   subtitle: Text(
-                //                     student.admissionNo ?? '',
-                //                     style: TextStyle(
-                //                       fontSize: 12,
-                //                       color: Colors.grey,
-                //                     ),
-                //                   ),
-                //                   trailing: Radio<int>(
-                //                     value: index,
-                //                     groupValue: _selectedStudentIndex,
-                //                     activeColor: Color(0xFFFF8D2A),
-                //                     onChanged: (value) {
-                //                       setState(() {
-                //                         _selectedStudentIndex = value!;
-                //                       });
-                //                       // Optional: close after selection
-                //                       Navigator.pop(context, student);
-                //                       myLog.log(
-                //                         'Selected student: ${student.firstName} ${student.lastName}',
-                //                       );
-                //                       controller.selectedStudent1 = student;
-                //                       controller.getClass();
-                //                       controller.getBatch();
-                //                       controller.getAcademicSessions();
-                //                     },
-                //                   ),
-                //                   onTap: () {
-                //                     setState(() {
-                //                       _selectedStudentIndex = index;
-                //                     });
-                //                     Navigator.pop(context, student);
-                //                     controller.selectedStudent1 = student;
-                //                     controller.getClass();
-                //                     controller.getBatch();
-                //                     controller.getAcademicSessions();
-                //                     myLog.log(
-                //                       'Selected student1: ${student.firstName} ${student.lastName}',
-                //                     );
-                //                     _selectedStudent = student;
-                //                     controller.selectedStudent1 = student;
-                //                   },
-                //                 );
-                //               },
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     );
-                //   },
-                // );
-              },
+              onTap: () {},
               child: Container(
-                width: 125,
+                width: double.infinity,
                 // height: 150,
                 margin: EdgeInsets.only(left: 16),
                 padding: EdgeInsets.all(5),
@@ -577,15 +325,15 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                         borderRadius: BorderRadius.circular(25),
                         child: Base64Image(
                           base64String:
-                              controller.selectedStudent1?.profilePicBase64 ??
-                              '',
+                              controller.selectedStudent1.profilePicBase64 ??
+                              '?',
                           width: 30,
                           height: 30,
                           fit: BoxFit.cover,
                           placeholder: CircleAvatar(
                             backgroundColor: Color(0xFFFF8D2A).withOpacity(0.2),
                             child: Text(
-                              controller.selectedStudent1?.firstName?[0]
+                              controller.selectedStudent1.firstName!
                                       .toUpperCase() ??
                                   '?',
                               style: TextStyle(
@@ -599,15 +347,16 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                     ),
                     AppbarSubtitleFive(
                       text:
-                          controller.selectedStudent1?.firstName ??
+                          controller.selectedStudent1.firstName ??
                           "lbl_ogechi".tr,
+
                       margin: EdgeInsets.only(left: 8.h, right: 9.h),
                     ),
-                    CustomImageView(
-                      imagePath: ImageConstant.imgChevronDown,
-                      height: 17,
-                      width: 17,
-                    ),
+                    // CustomImageView(
+                    //   imagePath: ImageConstant.imgChevronDown,
+                    //   height: 17,
+                    //   width: 17,
+                    // ),
                   ],
                 ),
               ),
@@ -617,7 +366,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
             actions: [
               AppbarTrailingIconbutton(
                 onTap: () async {
-                  var token = await dataBase.getToken();
+                  var token = await studentDataBase.getToken();
                   print('chat');
                   // Get.to(() => ChatScreen());
                   print(token);
@@ -677,18 +426,30 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                       DashboardExtendedViewModel.getSampleList()[index];
                   return GestureDetector(
                     onTap: () {
-                      if (model.route == '/dashboard_editWard_profile_screen') {
-                        myLog.log('Navigating to Edit Ward Profile');
-                        Get.delete<
-                          DashboardEditWardProfileController
-                        >(); // Delete old instance
-                        Get.toNamed(
-                          model.route!,
-                          arguments: controller.selectedStudent1,
-                        );
-                      } else {
-                        Get.toNamed(model.route!);
-                      }
+                      // if (model.route ==
+                      //     '/student_dashboard_editWard_profile_screen') {
+                      //   myLog.log('Navigating to Edit Ward Profile');
+                      //   // Get.delete<
+                      //   //   StudentDashboardEditWardProfileController
+                      //   // >(); // Delete old instance
+                      //   // Get.toNamed(
+                      //   //   model.route!,
+                      //   //   arguments: controller.selectedStudent1,
+                      //   // );
+                      //   Get.to(() => StudentDashboardEditWardProfileScreen());
+                      // } else if (model.route ==
+                      //     '/student_reports_ward_progress_academic_screen') {
+                      //   myLog.log(
+                      //     'Navigating to reports ward progress academic screen',
+                      //   );
+                      //   Get.to(
+                      //     () => StudentReportsWardProgressAcademicScreen(),
+                      //   );
+                      // } else {
+                      //   Get.toNamed(model.route!);
+                      // }
+
+                      Get.to(() => StudentReportsWardProgressAcademicScreen());
                     },
                     child: DashboardItemWidget(model),
                   );

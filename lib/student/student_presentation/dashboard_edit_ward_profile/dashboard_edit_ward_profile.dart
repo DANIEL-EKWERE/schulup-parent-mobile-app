@@ -1,10 +1,10 @@
 // TODO Implement this library.
 import 'package:alert_info/alert_info.dart';
 import 'package:flutter/material.dart';
-import 'package:schulupparent/student/data/model/selectionPopupModel/selection_popup_model.dart';
+
 import 'package:schulupparent/student/student_presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
-import 'package:schulupparent/student/widgets/custom_drop_down.dart';
+
 import 'package:schulupparent/student/widgets/custom_text_form_field.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
@@ -13,27 +13,27 @@ import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
-DashboardEditWardProfileController controller = Get.put(
-  DashboardEditWardProfileController(),
+StudentDashboardEditWardProfileController studentController = Get.put(
+  StudentDashboardEditWardProfileController(),
 );
 
-class DashboardEditWardProfileScreen extends StatefulWidget {
-  const DashboardEditWardProfileScreen({Key? key}) : super(key: key);
+class StudentDashboardEditWardProfileScreen extends StatefulWidget {
+  const StudentDashboardEditWardProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<DashboardEditWardProfileScreen> createState() =>
+  State<StudentDashboardEditWardProfileScreen> createState() =>
       _DashboardEditWardProfileScreenState();
 }
 
 class _DashboardEditWardProfileScreenState
-    extends State<DashboardEditWardProfileScreen> {
+    extends State<StudentDashboardEditWardProfileScreen> {
   @override
   void initState() {
     super.initState();
-    controller.getStudentInfo();
+    studentController.getStudentInfo();
     print('calling init state here');
   }
 
@@ -51,7 +51,7 @@ class _DashboardEditWardProfileScreenState
             children: [
               Obx(
                 () =>
-                    controller.isLoading.value
+                    studentController.isLoading.value
                         ? Center(
                           child: Padding(
                             padding: EdgeInsets.only(top: 100.h),
@@ -101,7 +101,8 @@ class _DashboardEditWardProfileScreenState
                                 onChanged: (value) {
                                   setState(() {});
                                 },
-                                controller: controller.lastNameController,
+                                controller:
+                                    studentController.lastNameController,
                                 hintText: "Last Name",
                                 hintStyle:
                                     CustomTextStyles.labelLargeBluegray700,
@@ -148,7 +149,8 @@ class _DashboardEditWardProfileScreenState
                                 onChanged: (value) {
                                   setState(() {});
                                 },
-                                controller: controller.firstNameController,
+                                controller:
+                                    studentController.firstNameController,
                                 hintText: "First Name",
                                 hintStyle:
                                     CustomTextStyles.labelLargeBluegray700,
@@ -195,7 +197,8 @@ class _DashboardEditWardProfileScreenState
                                 onChanged: (value) {
                                   setState(() {});
                                 },
-                                controller: controller.middleNameController,
+                                controller:
+                                    studentController.middleNameController,
                                 hintText: "Middle Name",
                                 hintStyle:
                                     CustomTextStyles.labelLargeBluegray700,
@@ -297,9 +300,13 @@ class _DashboardEditWardProfileScreenState
                                   style: CustomTextStyles.bodyMediumOnPrimary,
                                   initialValue:
                                       ['Male', 'Female', 'Other'].contains(
-                                            controller.selectedGender.value,
+                                            studentController
+                                                .selectedGender
+                                                .value,
                                           )
-                                          ? controller.selectedGender.value
+                                          ? studentController
+                                              .selectedGender
+                                              .value
                                           : null,
                                   hint: Text('Select Gender'),
                                   items: const [
@@ -317,10 +324,10 @@ class _DashboardEditWardProfileScreenState
                                     ),
                                   ],
                                   onChanged: (String? value) {
-                                    controller.selectedGender.value =
+                                    studentController.selectedGender.value =
                                         value ?? '';
                                     print(
-                                      "${controller.selectedGender.value} selected",
+                                      "${studentController.selectedGender.value} selected",
                                     );
                                   },
                                 ),
@@ -336,7 +343,8 @@ class _DashboardEditWardProfileScreenState
                               ),
                               SizedBox(height: 10),
                               CustomTextFormField(
-                                controller: controller.dateOfBirthController,
+                                controller:
+                                    studentController.dateOfBirthController,
                                 onChanged: (value) {
                                   setState(() {});
                                 },
@@ -451,9 +459,13 @@ class _DashboardEditWardProfileScreenState
                                             'O+',
                                             'O-',
                                           ].contains(
-                                            controller.selectedBloodGroup.value,
+                                            studentController
+                                                .selectedBloodGroup
+                                                .value,
                                           )
-                                          ? controller.selectedBloodGroup.value
+                                          ? studentController
+                                              .selectedBloodGroup
+                                              .value
                                           : null,
                                   hint: Text('Blood Group'),
                                   items: const [
@@ -495,7 +507,7 @@ class _DashboardEditWardProfileScreenState
                                     ),
                                   ],
                                   onChanged: (String? value) {
-                                    controller.selectedBloodGroup.value =
+                                    studentController.selectedBloodGroup.value =
                                         value ?? '';
                                   },
                                 ),
@@ -570,9 +582,13 @@ class _DashboardEditWardProfileScreenState
                                   style: CustomTextStyles.bodyMediumOnPrimary,
                                   initialValue:
                                       ['AA', 'AS', 'SS'].contains(
-                                            controller.selectedGenotype.value,
+                                            studentController
+                                                .selectedGenotype
+                                                .value,
                                           )
-                                          ? controller.selectedGenotype.value
+                                          ? studentController
+                                              .selectedGenotype
+                                              .value
                                           : null,
                                   hint: Text('Genotype'),
                                   items: const [
@@ -590,7 +606,7 @@ class _DashboardEditWardProfileScreenState
                                     ),
                                   ],
                                   onChanged: (String? value) {
-                                    controller.selectedGenotype.value =
+                                    studentController.selectedGenotype.value =
                                         value ?? '';
                                   },
                                 ),
@@ -607,7 +623,8 @@ class _DashboardEditWardProfileScreenState
                               SizedBox(height: 10),
                               CustomTextFormField(
                                 controller:
-                                    controller.placeOfBirthNameController,
+                                    studentController
+                                        .placeOfBirthNameController,
                                 onChanged: (value) {
                                   setState(() {});
                                 },
@@ -654,7 +671,7 @@ class _DashboardEditWardProfileScreenState
                               ),
                               SizedBox(height: 10),
                               CustomTextFormField(
-                                controller: controller.stateController,
+                                controller: studentController.stateController,
                                 hintText: "State",
                                 hintStyle:
                                     CustomTextStyles.labelLargeBluegray700,
@@ -697,7 +714,7 @@ class _DashboardEditWardProfileScreenState
                               ),
                               SizedBox(height: 10),
                               CustomTextFormField(
-                                controller: controller.cityController,
+                                controller: studentController.cityController,
                                 onChanged: (value) {
                                   setState(() {});
                                 },
@@ -745,7 +762,7 @@ class _DashboardEditWardProfileScreenState
                               ),
                               SizedBox(height: 10),
                               CustomTextFormField(
-                                controller: controller.addressController,
+                                controller: studentController.addressController,
                                 onChanged: (value) {
                                   setState(() {});
                                 },
@@ -796,7 +813,7 @@ class _DashboardEditWardProfileScreenState
                                 onChanged: (value) {
                                   setState(() {});
                                 },
-                                controller: controller.phoneController,
+                                controller: studentController.phoneController,
                                 hintText: "Phone Number",
                                 hintStyle:
                                     CustomTextStyles.labelLargeBluegray700,
@@ -839,7 +856,8 @@ class _DashboardEditWardProfileScreenState
                               ),
                               SizedBox(height: 10),
                               CustomTextFormField(
-                                controller: controller.religionController,
+                                controller:
+                                    studentController.religionController,
                                 onChanged: (value) {
                                   setState(() {});
                                 },
@@ -927,37 +945,37 @@ class _DashboardEditWardProfileScreenState
         ],
       ),
       actions: [
-        (controller.lastNameController.text.isEmpty ||
-                controller.firstNameController.text.isEmpty ||
-                controller.middleNameController.text.isEmpty ||
-                controller.selectedGender.value.isEmpty ||
-                controller.dateOfBirthController.text.isEmpty ||
-                controller.selectedBloodGroup.value.isEmpty ||
-                controller.selectedGenotype.value.isEmpty ||
-                controller.placeOfBirthNameController.text.isEmpty ||
-                controller.stateController.text.isEmpty ||
-                controller.cityController.text.isEmpty ||
-                controller.addressController.text.isEmpty ||
-                controller.phoneController.text.isEmpty ||
-                controller.religionController.text.isEmpty)
+        (studentController.lastNameController.text.isEmpty ||
+                studentController.firstNameController.text.isEmpty ||
+                studentController.middleNameController.text.isEmpty ||
+                studentController.selectedGender.value.isEmpty ||
+                studentController.dateOfBirthController.text.isEmpty ||
+                studentController.selectedBloodGroup.value.isEmpty ||
+                studentController.selectedGenotype.value.isEmpty ||
+                studentController.placeOfBirthNameController.text.isEmpty ||
+                studentController.stateController.text.isEmpty ||
+                studentController.cityController.text.isEmpty ||
+                studentController.addressController.text.isEmpty ||
+                studentController.phoneController.text.isEmpty ||
+                studentController.religionController.text.isEmpty)
             ? SizedBox.shrink()
             : ElevatedButton(
               onPressed: () {
-                print(controller.lastNameController.text);
-                print(controller.firstNameController.text);
-                print(controller.middleNameController.text);
-                print(controller.selectedGender.value);
-                print(controller.dateOfBirthController.text);
-                print(controller.selectedBloodGroup.value);
-                print(controller.selectedGenotype.value);
-                print(controller.placeOfBirthNameController.text);
-                print(controller.stateController.text);
-                print(controller.cityController.text);
-                print(controller.addressController.text);
-                print(controller.phoneController.text);
-                print(controller.religionController.text);
+                print(studentController.lastNameController.text);
+                print(studentController.firstNameController.text);
+                print(studentController.middleNameController.text);
+                print(studentController.selectedGender.value);
+                print(studentController.dateOfBirthController.text);
+                print(studentController.selectedBloodGroup.value);
+                print(studentController.selectedGenotype.value);
+                print(studentController.placeOfBirthNameController.text);
+                print(studentController.stateController.text);
+                print(studentController.cityController.text);
+                print(studentController.addressController.text);
+                print(studentController.phoneController.text);
+                print(studentController.religionController.text);
 
-                controller.updateStudentInfo();
+                studentController.updateStudentInfo();
 
                 //controller.changePassword();
               },

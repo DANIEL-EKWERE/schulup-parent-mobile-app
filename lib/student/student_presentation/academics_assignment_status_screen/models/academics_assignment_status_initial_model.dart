@@ -58,7 +58,7 @@ class Student {
   final String? birthPlace;
   final String? language;
   final String? className;
-  final String? profilePicBase64;
+  String? profilePicBase64;
   final bool? hasProfilePic;
 
   Student({

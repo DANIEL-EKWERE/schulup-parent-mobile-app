@@ -8,8 +8,8 @@ import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/reports_report_card_modal_one_controller.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 // ignore_for_file: must_be_immutable
 class ReportsReportCardModalOneBottomsheet extends StatefulWidget {

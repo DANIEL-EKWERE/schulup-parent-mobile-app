@@ -9,8 +9,8 @@ import '../../widgets/custom_radio_button.dart';
 import 'controller/academics_cbt_test_test_result_controller.dart'; // ignore_for_file: must_be_immutable
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class AcademicsCbtTestTestResultScreen
     extends GetWidget<AcademicsCbtTestTestResultController> {
@@ -383,6 +383,6 @@ class AcademicsCbtTestTestResultScreen
   onTapCloseone() {
     // Get.back();s
     //Navigator.pop(Get.context!);
-    Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen);
+    Get.offAllNamed(AppRoutes.studentAcademicsAssignmentStatusScreen);
   }
 }

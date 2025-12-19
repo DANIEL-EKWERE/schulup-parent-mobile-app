@@ -11,8 +11,8 @@ import 'controller/reports_ward_progress_class_one_controller.dart';
 // ignore_for_file: must_be_immutable
 ReportsWardProgressClassController controller =
     Get.find<ReportsWardProgressClassController>();
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class ReportsWardProgressClassOneBottomsheet extends StatefulWidget {
   ReportsWardProgressClassOneBottomsheet(this.controller, {Key? key})

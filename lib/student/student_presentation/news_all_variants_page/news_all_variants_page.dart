@@ -16,8 +16,8 @@ import 'models/news_all_variants_model.dart';
 import 'widgets/news_all_item_widget.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 // ignore_for_file: must_be_immutable
 class NewsAllVariantsPage extends StatelessWidget {

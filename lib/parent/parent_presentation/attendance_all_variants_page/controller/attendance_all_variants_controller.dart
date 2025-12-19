@@ -107,7 +107,7 @@ class AttendanceAllVariantsController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
         attendance = attendanceFromJson(response.body);
-        attendanceData = attendance!.data;
+        attendanceData = attendance!.data!.reversed.toList();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         var responseData = jsonDecode(response.body);

@@ -18,8 +18,8 @@ class AcademicsCbtTestTestDetailsController extends GetxController {
   Rx<AcademicsCbtTestTestDetailsModel> academicsCbtTestTestDetailsModelObj =
       AcademicsCbtTestTestDetailsModel().obs;
 
-  DashboardExtendedViewController dashboardcontroller =
-      Get.find<DashboardExtendedViewController>();
+  StudentDashboardExtendedViewController dashboardcontroller =
+      Get.find<StudentDashboardExtendedViewController>();
 
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 

@@ -10,8 +10,8 @@ import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_assignment_modal_one_controller.dart';
 
 // ignore_for_file: must_be_immutable
-AcademicsAssignmentStatusController controller1 =
-    Get.find<AcademicsAssignmentStatusController>();
+StudentAcademicsAssignmentStatusController controller1 =
+    Get.find<StudentAcademicsAssignmentStatusController>();
 AcademicsAssignmentController controllers =
     Get.find<AcademicsAssignmentController>();
 AcademicsLessonAllLessonsController lessonsController =

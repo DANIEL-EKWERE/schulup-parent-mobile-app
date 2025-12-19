@@ -9,8 +9,8 @@ import 'controller/reports_ward_progress_subject_one_controller.dart';
 
 ReportsWardProgressSubjectController controlsx =
     Get.find<ReportsWardProgressSubjectController>();
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 // ReportsWardProgressSubjectController controller = Get.put(
 //   ReportsWardProgressSubjectController(ReportsWardProgressSubjectModel().obs),

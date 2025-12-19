@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-// DataBase get database => Get.find();
-DataBase dataBase = Get.put(DataBase());
+// StudentDataBase get database => Get.find();
+//StudentDataBase parentStudentDataBase = Get.put(StudentDataBase());
+StudentDataBase studentDataBase = Get.put(StudentDataBase());
 
-class DataBase extends GetxController {
+class StudentDataBase extends GetxController {
   final Future<SharedPreferences> _pref = SharedPreferences.getInstance();
 
   String _transactionPin = '';
@@ -40,7 +41,7 @@ class DataBase extends GetxController {
 
   int _userId = 0;
 
-  String _studentId = '';
+  int _studentId = 0;
 
   String _profileId = '';
 
@@ -96,7 +97,7 @@ class DataBase extends GetxController {
 
   String get brmName => _brmName;
 
-  String get studentId => _studentId;
+  int get studentId => _studentId;
 
   bool get isSet => _isSet;
 
@@ -362,7 +363,7 @@ class DataBase extends GetxController {
 
     return true;
   }
-//studentId
+  //studentId
 
   saveFullName(String full_name) async {
     SharedPreferences sharedPreferences = await _pref;
@@ -371,10 +372,9 @@ class DataBase extends GetxController {
     return true;
   }
 
-
-  saveStudent(String studentId) async {
+  saveStudent(int studentId) async {
     SharedPreferences sharedPreferences = await _pref;
-    await sharedPreferences.setString('studentId', studentId);
+    await sharedPreferences.setInt('studentId', studentId);
 
     return true;
   }
@@ -580,19 +580,18 @@ class DataBase extends GetxController {
     }
   }
 
-
-   Future<String> getStudentId() async {
+  Future<int> getStudentId() async {
     SharedPreferences sharedPreferences = await _pref;
 
     if (sharedPreferences.containsKey('studentId')) {
-      String data = sharedPreferences.getString('studentId')!;
+      int data = sharedPreferences.getInt('studentId')!;
       _studentId = data;
 
       return data;
     } else {
-      _studentId = '';
+      _studentId = 0;
 
-      return '';
+      return 0;
     }
   }
 

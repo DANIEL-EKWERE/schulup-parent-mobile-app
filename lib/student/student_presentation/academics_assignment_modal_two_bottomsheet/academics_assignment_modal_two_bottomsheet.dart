@@ -9,8 +9,8 @@ import 'controller/academics_assignment_modal_two_controller.dart';
 
 // ignore_for_file: must_be_immutable
 
-AcademicsAssignmentStatusController controller1 = Get.put(
-  AcademicsAssignmentStatusController(),
+StudentAcademicsAssignmentStatusController controller1 = Get.put(
+  StudentAcademicsAssignmentStatusController(),
 );
 
 class AcademicsAssignmentModalTwoBottomsheet extends StatefulWidget {

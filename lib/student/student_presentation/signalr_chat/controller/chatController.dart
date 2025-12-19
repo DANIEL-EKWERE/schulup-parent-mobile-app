@@ -41,7 +41,7 @@ class ChatController1 extends GetxController {
   }
 
   Future<String> getToken() async {
-    return await dataBase.getToken();
+    return await studentDataBase.getToken();
   }
 
   setValue() async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schulupparent/parent/core/utils/size_utils.dart';
 import 'package:schulupparent/parent/parent_presentation/news_events_screen/widgets/listline_item_widget.dart';
-import 'package:schulupparent/parent/parent_presentation/signin_screen/shimmer_widget.dart';
+import 'package:schulupparent/signin_screen/shimmer_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TestScreen extends StatefulWidget {

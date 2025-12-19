@@ -34,8 +34,8 @@ class AcademicsAssignmentPage extends StatelessWidget {
     AcademicsAssignmentController(AcademicsAssignmentModel().obs),
   );
 
-  AcademicsAssignmentStatusController controllerx = Get.put(
-    AcademicsAssignmentStatusController(),
+  StudentAcademicsAssignmentStatusController controllerx = Get.put(
+    StudentAcademicsAssignmentStatusController(),
   );
 
   @override

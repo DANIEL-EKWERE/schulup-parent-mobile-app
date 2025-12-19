@@ -9,8 +9,8 @@ import 'controller/academics_cbt_test_modal_one_controller.dart';
 
 // ignore_for_file: must_be_immutable
 
-AcademicsAssignmentStatusController controller1 = Get.put(
-  AcademicsAssignmentStatusController(),
+StudentAcademicsAssignmentStatusController controller1 = Get.put(
+  StudentAcademicsAssignmentStatusController(),
 );
 
 AcademicsLessonCbtTestController controls =

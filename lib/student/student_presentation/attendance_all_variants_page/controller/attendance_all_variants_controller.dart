@@ -15,8 +15,8 @@ import '../models/attendance_all_variants_model.dart';
 /// This class manages the state of the AttendanceAllVariantsPage, including the
 /// current attendanceAllVariantsModelObj
 
-DashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<DashboardExtendedViewController>();
+StudentDashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class AttendanceAllVariantsController extends GetxController {
   AttendanceAllVariantsController(this.attendanceAllVariantsModelObj);
