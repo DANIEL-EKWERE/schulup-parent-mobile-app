@@ -126,8 +126,8 @@ class AppRoutes {
   static const String academicsAssignmentStatusOneScreen =
       '/academics_assignment_status_one_screen';
 
-  static const String academicsAssignmentSearchScreen =
-      '/academics_assignment_search_screen';
+  static const String studentAcademicsAssignmentSearchScreen =
+      '/student_academics_assignment_search_screen';
 
   static const String academicsAssignmentSearchOneScreen =
       '/academics_assignment_search_one_screen';
@@ -138,8 +138,8 @@ class AppRoutes {
   static const String academicsAssignmentAssignmentScreen =
       '/academics_assignment_assignment_screen';
 
-  static const String academicsAssignmentAnswerScreen =
-      '/academics_assignment_answer_screen';
+  static const String studentAcademicsAssignmentAnswerScreen =
+      '/student_academics_assignment_answer_screen';
 
   static const String academicsAssignmentNotSubmittedScreen =
       '/academics_assignment_not_submitted_screen';
@@ -309,9 +309,9 @@ class AppRoutes {
       bindings: [DashboardExtendedViewBinding()],
     ),
     GetPage(
-      name: academicsAssignmentSearchScreen,
-      page: () => AcademicsAssignmentSearchScreen(),
-      bindings: [AcademicsAssignmentSearchBinding()],
+      name: studentAcademicsAssignmentSearchScreen,
+      page: () => StudentAcademicsAssignmentSearchScreen(),
+      bindings: [StudentAcademicsAssignmentSearchBinding()],
     ),
     GetPage(
       name: academicsAssignmentSearchOneScreen,
@@ -331,9 +331,9 @@ class AppRoutes {
 
     ///dashboardEditWardProfileScreen
     GetPage(
-      name: academicsAssignmentAnswerScreen,
-      page: () => AcademicsAssignmentAnswerScreen(),
-      bindings: [AcademicsAssignmentAnswerBinding()],
+      name: studentAcademicsAssignmentAnswerScreen,
+      page: () => StudentAcademicsAssignmentAnswerScreen(),
+      bindings: [StudentAcademicsAssignmentAnswerBinding()],
     ),
     GetPage(
       name: studentDashboardEditWardProfileScreen,

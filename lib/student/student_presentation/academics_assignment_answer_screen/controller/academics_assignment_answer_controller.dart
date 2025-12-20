@@ -17,9 +17,9 @@ import '../models/academics_assignment_answer_model.dart';
 ///
 /// This class manages the state of the AcademicsAssignmentAnswerScreen, including the
 /// current academicsAssignmentAnswerModelObj
-class AcademicsAssignmentAnswerController extends GetxController {
-  Rx<AcademicsAssignmentAnswerModel> academicsAssignmentAnswerModelObj =
-      AcademicsAssignmentAnswerModel().obs;
+class StudentAcademicsAssignmentAnswerController extends GetxController {
+  Rx<StudentAcademicsAssignmentAnswerModel> academicsAssignmentAnswerModelObj =
+      StudentAcademicsAssignmentAnswerModel().obs;
   StudentDashboardExtendedViewController controller =
       Get.find<StudentDashboardExtendedViewController>();
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));

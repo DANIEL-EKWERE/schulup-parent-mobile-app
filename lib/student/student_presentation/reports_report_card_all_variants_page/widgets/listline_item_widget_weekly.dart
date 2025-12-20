@@ -69,7 +69,9 @@ class _ListlineItemWeeklyWidgetState extends State<ListlineItemWeeklyWidget> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       widget.listlineItemModelObj.className ?? '',
-                      style: theme.textTheme.bodyMedium,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        fontSize: 16.h,
+                      ),
                       //  ),
                     ),
                   ),
@@ -78,22 +80,43 @@ class _ListlineItemWeeklyWidgetState extends State<ListlineItemWeeklyWidget> {
                 CustomImageView(
                   onTap: () {
                     setState(() {
-                      isDowloading = !isDowloading;
+                      // isDowloading = !isDowloading;
+                      controller.downloadAndOpen(
+                        widget.listlineItemModelObj.reportCardTypeID.toString(),
+                      );
                     });
                   },
                   imagePath:
-                      isDowloading
+                      controller.isDownloading.value
                           ? ImageConstant.imgIconsTinyDownloading
                           : ImageConstant.imgIconsTinyDownload,
                   height: 18.h,
                   width: 20.h,
                 ),
-                CustomImageView(
-                  imagePath: ImageConstant.imgIconsTinyShare,
-                  height: 18.h,
-                  width: 20.h,
-                  margin: EdgeInsets.only(left: 14.h),
-                ),
+
+                Obx(() {
+                  return !controller.isSharing.value
+                      ? CustomImageView(
+                        onTap: () {
+                          controller.sharePDF(
+                            widget.listlineItemModelObj.reportCardTypeID
+                                .toString(),
+                          );
+                        },
+                        imagePath: ImageConstant.imgIconsTinyShare,
+                        height: 18.h,
+                        width: 20.h,
+                        margin: EdgeInsets.only(left: 14.h),
+                      )
+                      : Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: SizedBox(
+                          width: 15,
+                          height: 15,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      );
+                }),
               ],
             ),
           ),

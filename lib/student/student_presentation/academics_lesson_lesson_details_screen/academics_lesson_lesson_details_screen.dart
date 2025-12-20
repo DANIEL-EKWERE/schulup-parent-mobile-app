@@ -41,7 +41,9 @@ class StudentAcademicsLessonLessonDetailsScreen
                     children: [
                       Text(
                         lessonData.title ?? '',
-                        style: CustomTextStyles.titleMediumOnPrimary,
+                        style: CustomTextStyles.titleMediumOnPrimary.copyWith(
+                          fontSize: 18.h,
+                        ),
                       ),
                       SizedBox(height: 20.h),
                       SizedBox(
@@ -76,7 +78,9 @@ class StudentAcademicsLessonLessonDetailsScreen
                       SizedBox(height: 20.h),
                       Text(
                         "Lesson Content",
-                        style: CustomTextStyles.bodyMediumOnPrimary,
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
                       ),
                       SizedBox(height: 6.h),
 
@@ -195,13 +199,22 @@ class StudentAcademicsLessonLessonDetailsScreen
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          postedonOne,
-          style: theme.textTheme.bodySmall!.copyWith(color: appTheme.gray600),
+        SizedBox(
+          width: 150,
+          child: Text(
+            postedonOne,
+            style: theme.textTheme.bodySmall!.copyWith(
+              color: appTheme.gray600,
+              fontSize: 14.h,
+            ),
+          ),
         ),
         Text(
           nov52025One,
-          style: theme.textTheme.bodySmall!.copyWith(color: appTheme.gray600),
+          style: theme.textTheme.bodySmall!.copyWith(
+            color: appTheme.gray600,
+            fontSize: 14.h,
+          ),
         ),
       ],
     );

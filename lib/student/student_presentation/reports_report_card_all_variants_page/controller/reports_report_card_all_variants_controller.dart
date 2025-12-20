@@ -1,13 +1,18 @@
 import 'dart:io';
-
+import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:schulupparent/student/core/utils/storage.dart';
 import 'package:schulupparent/student/data/apiClient/api_client.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_report_card_all_variants_page/models/comments_model.dart';
 import 'package:schulupparent/student/student_presentation/reports_report_card_all_variants_page/models/daily_report_model.dart';
 import 'package:schulupparent/student/student_presentation/reports_report_card_all_variants_page/models/report_model.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../core/app_export.dart';
 import '../models/reports_report_card_all_variants_model.dart';
 
@@ -347,7 +352,7 @@ class ReportsReportCardAllVariantsController extends GetxController
       Map<String, dynamic> body = {"messageText": messageText};
       final response = await _apiService.makeComment(
         body,
-        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+        dashboardExtendedViewController.selectedStudent1.studentID.toString(),
         formatDate1(datex.toString()),
       );
 
@@ -407,5 +412,164 @@ class ReportsReportCardAllVariantsController extends GetxController
   String formatDate1(String dateString) {
     DateTime dateTime = DateTime.parse(dateString);
     return DateFormat('yyyy-MM-dd').format(dateTime);
+  }
+
+  //TODO: STARTS HERE ==========================================
+
+  RxBool isLoadingx = false.obs;
+  RxBool isDownloading = false.obs;
+  RxBool isSharing = false.obs;
+  RxString localFilePath = ''.obs;
+
+  final String reportCardEndpoint = 'https://your-api.com/api/report-card';
+
+  // Get auth token from your storage
+  //String authToken =  studentDataBase.getToken() ?? '';
+
+  // Download PDF and open it with phone's default PDF viewer
+  Future<void> downloadAndOpen(String reportCardType) async {
+    print('object');
+    try {
+      isDownloading.value = true;
+
+      // // Request storage permission
+      // if (Platform.isAndroid) {
+      //   myLog.log('platform is android');
+      //   //await Permission.manageExternalStorage.request();
+      //   if (await Permission.manageExternalStorage.isDenied) {
+      //     await Permission.manageExternalStorage.request();
+      //     myLog.log('requesting permission');
+      //   }
+      //   if (await Permission.storage.isDenied) {
+      //     await Permission.storage.request();
+      //     myLog.log('requesting permission Denied');
+      //   }
+      // }
+
+      myLog.log(
+        'student id ${dashboardExtendedViewController.selectedStudent1.studentID.toString()}',
+      );
+      myLog.log(
+        'student batch id ${dashboardExtendedViewController.studentBatchObj.data!.first.batchID}',
+      );
+      myLog.log('student report card type $reportCardType,');
+
+      // Download the PDF
+      final response = await _apiService.downloadAndOpen(
+        dashboardExtendedViewController.selectedStudent1.studentID.toString(),
+        dashboardExtendedViewController.studentBatchObj.data!.first.batchID
+            .toString(),
+        reportCardType,
+      );
+
+      if (response.statusCode == 200) {
+        // Get downloads directory
+        Directory? directory;
+        if (Platform.isAndroid) {
+          directory = Directory('/storage/emulated/0/Download');
+          if (!await directory.exists()) {
+            directory = await getExternalStorageDirectory();
+          }
+        } else if (Platform.isIOS) {
+          directory = await getApplicationDocumentsDirectory();
+        }
+
+        final fileName =
+            'report_card_${DateTime.now().millisecondsSinceEpoch}.pdf';
+        final filePath = '${directory!.path}/$fileName';
+
+        // Write PDF bytes to file
+        final file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+
+        isDownloading.value = false;
+        localFilePath.value = filePath;
+
+        // Show success message
+        Get.snackbar(
+          'Success',
+          'Report card downloaded successfully',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: Duration(seconds: 2),
+        );
+
+        // Open the PDF with default viewer
+        await OpenFile.open(filePath);
+      } else {
+        isDownloading.value = false;
+        Get.snackbar(
+          'Error',
+          'Failed to download PDF. Status: ${response.statusCode}',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      myLog.log(e.toString());
+      isDownloading.value = false;
+      Get.snackbar(
+        'Error',
+        'Failed to download PDF: ${e.toString()}',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
+  // Share PDF via WhatsApp, Email, etc.
+  Future<void> sharePDF(String reportCardType) async {
+    try {
+      isSharing.value = true;
+
+      // Download the PDF to temp directory first
+      final response = await _apiService.downloadAndShare(
+        dashboardExtendedViewController.selectedStudent1.studentID.toString(),
+        dashboardExtendedViewController.studentBatchObj.data!.first.batchID
+            .toString(),
+        reportCardType,
+      );
+
+      if (response.statusCode == 200) {
+        // Get temp directory
+        final dir = await getTemporaryDirectory();
+        final fileName =
+            'report_card_${DateTime.now().millisecondsSinceEpoch}.pdf';
+        final file = File('${dir.path}/$fileName');
+
+        // Write PDF bytes to file
+        await file.writeAsBytes(response.bodyBytes);
+
+        isSharing.value = false;
+
+        // Share the PDF
+        await Share.shareXFiles(
+          [XFile(file.path)],
+          text: 'Report Card',
+          subject: 'Student Report Card',
+        );
+      } else {
+        isSharing.value = false;
+        Get.snackbar(
+          'Error',
+          'Failed to load PDF. Status: ${response.statusCode}',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      isSharing.value = false;
+      Get.snackbar(
+        'Error',
+        'Failed to share PDF: ${e.toString()}',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 }

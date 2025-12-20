@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:schulupparent/parent/parent_presentation/attendance_all_variants_page/models/attendance_model.dart';
 import 'package:schulupparent/parent/parent_presentation/attendance_all_variants_page/widgets/attendance_shimmer_widget.dart';
+import 'package:schulupparent/parent/parent_presentation/attendance_all_variants_page/widgets/custom_date_picker_model.dart';
 import 'package:schulupparent/parent/parent_presentation/attendance_filter_start_date_bottomsheet/attendance_filter_start_date_bottomsheet.dart';
 import 'package:schulupparent/parent/parent_presentation/attendance_filter_start_date_bottomsheet/controller/attendance_filter_start_date_controller.dart';
 import '../../core/app_export.dart';
@@ -175,6 +176,12 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
             actions: [
               GestureDetector(
                 onTap: () {
+                  showCustomDatePicker(context, controller.datex!, (newDate) {
+                    setState(() {
+                      controller.selectedMonth = newDate.month;
+                    });
+                    controller.getStudentAttendance();
+                  });
                   // AttendanceFilterStartDateBottomsheet(
                   //   AttendanceFilterStartDateController(),
                   // );
@@ -187,14 +194,12 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
                     //   AttendanceFilterStartDateController(),
                     // );
                     //controller.getStudentAttendance();
-                    showModalBottomSheet(
-                      context: Get.context!,
-                      builder: (context) {
-                        return AttendanceFilterStartDateBottomsheet(
-                          AttendanceFilterStartDateController(),
-                        );
-                      },
-                    );
+                    showCustomDatePicker(context, controller.datex!, (newDate) {
+                      setState(() {
+                        controller.selectedMonth = newDate.month;
+                      });
+                      controller.getStudentAttendance();
+                    });
                   },
                   imagePath: ImageConstant.imgUserWhiteA700,
                   margin: EdgeInsets.only(top: 1.h, right: 25.h, bottom: 2.h),

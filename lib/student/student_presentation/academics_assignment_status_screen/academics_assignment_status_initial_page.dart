@@ -197,6 +197,7 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_assignment_modal_two_bottomsheet/academics_assignment_modal_two_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_modal_two_bottomsheet/controller/academics_assignment_modal_two_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:schulupparent/student/student_presentation/academics_assignment_search_screen/academics_assignment_search_screen.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/assignment_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/cbt_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/lesson_model.dart';
@@ -205,6 +206,7 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_one_modal_bottomsheet/academics_cbt_test_modal_one_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_lesson_details_screen/academics_lesson_lesson_details_screen.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/student_presentation/signin_screen/shimmer_widget.dart';
 import '../../core/app_export.dart';
@@ -304,8 +306,12 @@ class _AcademicsAssignmentStatusInitialPageState
               ),
               AppbarTrailingIconbutton(
                 onTap: () {
-                  Get.toNamed(
-                    AppRoutes.academicsAssignmentSearchScreen,
+                  // Get.toNamed(
+                  //   AppRoutes.academicsAssignmentSearchScreen,
+                  //   arguments: {'value': controller.tabIndex},
+                  // );
+                  Get.to(
+                    () => StudentAcademicsAssignmentSearchScreen(),
                     arguments: {'value': controller.tabIndex},
                   );
                 },
@@ -319,7 +325,7 @@ class _AcademicsAssignmentStatusInitialPageState
             width: double.maxFinite,
             child: Obx(
               () => Container(
-                margin: EdgeInsets.symmetric(horizontal: 46.h),
+                margin: EdgeInsets.symmetric(horizontal: 35.h),
                 child: TabBar(
                   controller: controller.tabviewController,
                   isScrollable: true,
@@ -329,13 +335,13 @@ class _AcademicsAssignmentStatusInitialPageState
                   tabAlignment: TabAlignment.center,
                   labelColor: appTheme.whiteA700,
                   labelStyle: TextStyle(
-                    fontSize: 12.fSize,
+                    fontSize: 16.fSize,
                     fontFamily: 'Rubik',
                     fontWeight: FontWeight.w500,
                   ),
                   unselectedLabelColor: theme.colorScheme.onPrimary,
                   unselectedLabelStyle: TextStyle(
-                    fontSize: 12.fSize,
+                    fontSize: 16.fSize,
                     fontFamily: 'Rubik',
                     fontWeight: FontWeight.w400,
                   ),
@@ -454,7 +460,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                             .selectedClass
                                             .value
                                         : controller.classType.value,
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 14.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -483,7 +491,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                 Obx(() {
                                   return Text(
                                     "${controller.termType.value} Term",
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 14.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -513,7 +523,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                 Obx(() {
                                   return Text(
                                     controller.statusType.value,
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 14.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -570,7 +582,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                             .selectedClass
                                             .value
                                         : controller.classType.value,
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 14.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -600,7 +614,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                 Obx(() {
                                   return Text(
                                     controller.cbtType.value,
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 14.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -652,7 +668,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                       .classDataList
                                       .first
                                       .name!,
-                                  style: theme.textTheme.labelLarge,
+                                  style: theme.textTheme.labelLarge!.copyWith(
+                                    fontSize: 14.h,
+                                  ),
                                 ),
                                 //}),
                                 CustomImageView(
@@ -681,7 +699,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                 Obx(() {
                                   return Text(
                                     "${controller.termType.value} Term",
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 14.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -743,7 +763,11 @@ class _AcademicsAssignmentStatusInitialPageState
                           SizedBox(height: 150.h),
                           CustomImageView(imagePath: ImageConstant.imgObjects),
                           Text(
-                            'No Assignment for the selected filter condition',
+                            textAlign: TextAlign.center,
+                            'Opps,No Assignment for the selected filter condition!!!',
+                            style: CustomTextStyles.displayMediumBlack.copyWith(
+                              fontSize: 16.h,
+                            ),
                           ),
                         ],
                       ),
@@ -890,9 +914,16 @@ class _AcademicsAssignmentStatusInitialPageState
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: GestureDetector(
                             onTap: () {
-                              Get.toNamed(
-                                AppRoutes.studentAcademicsLessonLessonDetailsScreen,
-                                arguments: {'lessonData': listlineItemModelObj},
+                              // Get.toNamed(
+                              //   AppRoutes.studentAcademicsLessonLessonDetailsScreen,
+                              //   arguments: {'lessonData': listlineItemModelObj},
+                              // );
+                              Get.to(
+                                () =>
+                                    StudentAcademicsLessonLessonDetailsScreen(),
+                                arguments: {
+                                  'studentLessonData': listlineItemModelObj,
+                                },
                               );
                             },
                             child: ListlineItemLessonWidget(

@@ -6,9 +6,9 @@ import '../controller/academics_assignment_search_controller.dart';
 ///
 /// This class ensures that the AcademicsAssignmentSearchController is created when the
 /// AcademicsAssignmentSearchScreen is first loaded.
-class AcademicsAssignmentSearchBinding extends Bindings {
+class StudentAcademicsAssignmentSearchBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AcademicsAssignmentSearchController());
+    Get.lazyPut(() => StudentAcademicsAssignmentSearchController());
   }
 }

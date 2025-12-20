@@ -146,7 +146,7 @@ class _ReportsReportCardAllVariantsPageState
             width: double.maxFinite,
             child: Obx(
               () => Container(
-                margin: EdgeInsets.symmetric(horizontal: 86.h),
+                margin: EdgeInsets.symmetric(horizontal: 56.h),
                 child: TabBar(
                   labelPadding: EdgeInsets.symmetric(horizontal: 5),
                   dividerColor: Colors.transparent,
@@ -155,13 +155,13 @@ class _ReportsReportCardAllVariantsPageState
                   tabAlignment: TabAlignment.start,
                   labelColor: appTheme.whiteA700,
                   labelStyle: TextStyle(
-                    fontSize: 12.fSize,
+                    fontSize: 16.fSize,
                     fontFamily: 'Rubik',
                     fontWeight: FontWeight.w500,
                   ),
                   unselectedLabelColor: theme.colorScheme.onPrimary,
                   unselectedLabelStyle: TextStyle(
-                    fontSize: 12.fSize,
+                    fontSize: 16.fSize,
                     fontFamily: 'Rubik',
                     fontWeight: FontWeight.w400,
                   ),
@@ -308,7 +308,7 @@ class _ReportsReportCardAllVariantsPageState
                                         formatDate(controller.datex.toString()),
                                         style: CustomTextStyles
                                             .bodySmallWhiteA700_1
-                                            .copyWith(fontSize: 12),
+                                            .copyWith(fontSize: 16.h),
                                       ),
                                       CustomImageView(
                                         imagePath:
@@ -362,7 +362,8 @@ class _ReportsReportCardAllVariantsPageState
                                         return Text(
                                           // "lbl_first_term".tr,
                                           controller.session.value,
-                                          style: theme.textTheme.labelLarge,
+                                          style: theme.textTheme.labelLarge!
+                                              .copyWith(fontSize: 16.h),
                                         );
                                       }),
                                       CustomImageView(
@@ -447,7 +448,13 @@ class _ReportsReportCardAllVariantsPageState
                     children: [
                       SizedBox(height: 150.h),
                       CustomImageView(imagePath: ImageConstant.imgObjects),
-                      Text('No Report for the selected filter condition'),
+                      Text(
+                        textAlign: TextAlign.center,
+                        'Opps, Report for the selected filter condition!!!',
+                        style: CustomTextStyles.displayMediumBlack.copyWith(
+                          fontSize: 16.h,
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -739,7 +746,13 @@ class _ReportsReportCardAllVariantsPageState
                         children: [
                           SizedBox(height: 150.h),
                           CustomImageView(imagePath: ImageConstant.imgObjects),
-                          Text('No Report for the selected filter condition'),
+                          Text(
+                            textAlign: TextAlign.center,
+                            'Opps,No Report for the selected filter condition!!!',
+                            style: CustomTextStyles.displayMediumBlack.copyWith(
+                              fontSize: 16.h,
+                            ),
+                          ),
                         ],
                       ),
                     )
@@ -796,7 +809,13 @@ class _ReportsReportCardAllVariantsPageState
                         children: [
                           SizedBox(height: 150.h),
                           CustomImageView(imagePath: ImageConstant.imgObjects),
-                          Text('No report for the selected filter condition'),
+                          Text(
+                            textAlign: TextAlign.center,
+                            'Opps,No report for the selected filter condition!!!',
+                            style: CustomTextStyles.displayMediumBlack.copyWith(
+                              fontSize: 16.h,
+                            ),
+                          ),
                         ],
                       ),
                     )

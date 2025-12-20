@@ -51,6 +51,8 @@ class AttendanceAllVariantsController extends GetxController {
 
   Rx<bool> isLoading = false.obs;
 
+DateTime? datex;
+
   @override
   void onInit() {
     super.onInit();

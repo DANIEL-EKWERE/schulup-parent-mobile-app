@@ -31,9 +31,12 @@ StudentAcademicsAssignmentStatusController controller1 = Get.put(
   StudentAcademicsAssignmentStatusController(),
 );
 
-class AcademicsAssignmentSearchScreen
-    extends GetWidget<AcademicsAssignmentSearchController> {
-  const AcademicsAssignmentSearchScreen({Key? key}) : super(key: key);
+StudentAcademicsAssignmentSearchController controller = Get.put(
+  StudentAcademicsAssignmentSearchController(),
+);
+
+class StudentAcademicsAssignmentSearchScreen extends StatelessWidget {
+  const StudentAcademicsAssignmentSearchScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +146,9 @@ class AcademicsAssignmentSearchScreen
                                         .selectedClass
                                         .value
                                     : controller1.classType.value,
-                                style: theme.textTheme.labelLarge,
+                                style: theme.textTheme.labelLarge!.copyWith(
+                                  fontSize: 14.h,
+                                ),
                               );
                             }),
                             CustomImageView(
@@ -190,7 +195,9 @@ class AcademicsAssignmentSearchScreen
                             Obx(() {
                               return Text(
                                 "${controller1.termType.value} Term",
-                                style: theme.textTheme.labelLarge,
+                                style: theme.textTheme.labelLarge!.copyWith(
+                                  fontSize: 14.h,
+                                ),
                               );
                             }),
                             CustomImageView(
@@ -220,7 +227,9 @@ class AcademicsAssignmentSearchScreen
                             Obx(() {
                               return Text(
                                 controller1.searchStatus.value,
-                                style: theme.textTheme.labelLarge,
+                                style: theme.textTheme.labelLarge!.copyWith(
+                                  fontSize: 14.h,
+                                ),
                               );
                             }),
                             CustomImageView(
@@ -282,7 +291,11 @@ class AcademicsAssignmentSearchScreen
                           SizedBox(height: 150.h),
                           CustomImageView(imagePath: ImageConstant.imgObjects),
                           Text(
-                            'No Assignment for the selected filter condition',
+                            textAlign: TextAlign.center,
+                            'No Results for the selected filter condition',
+                            style: CustomTextStyles.displayMediumBlack.copyWith(
+                              fontSize: 16.h,
+                            ),
                           ),
                         ],
                       ),
@@ -430,7 +443,8 @@ class AcademicsAssignmentSearchScreen
                           child: GestureDetector(
                             onTap: () {
                               Get.toNamed(
-                                AppRoutes.studentAcademicsLessonLessonDetailsScreen,
+                                AppRoutes
+                                    .studentAcademicsLessonLessonDetailsScreen,
                                 arguments: {'lessonData': listlineItemModelObj},
                               );
                             },

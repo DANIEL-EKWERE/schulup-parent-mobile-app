@@ -21,9 +21,12 @@ import 'controller/academics_assignment_answer_controller.dart'; // ignore_for_f
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
 
-class AcademicsAssignmentAnswerScreen
-    extends GetWidget<AcademicsAssignmentAnswerController> {
-  const AcademicsAssignmentAnswerScreen({Key? key}) : super(key: key);
+StudentAcademicsAssignmentAnswerController controller = Get.put(
+  StudentAcademicsAssignmentAnswerController(),
+);
+
+class StudentAcademicsAssignmentAnswerScreen extends StatelessWidget {
+  const StudentAcademicsAssignmentAnswerScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

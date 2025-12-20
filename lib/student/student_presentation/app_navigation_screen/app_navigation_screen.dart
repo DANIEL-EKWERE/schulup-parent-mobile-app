@@ -169,7 +169,8 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                           screenTitle: "Academics - Assignment - Search",
                           onTapScreenTitle:
                               () => onTapScreenTitle(
-                                AppRoutes.academicsAssignmentSearchScreen,
+                                AppRoutes
+                                    .studentAcademicsAssignmentSearchScreen,
                               ),
                         ),
                         _buildScreenTitle(
@@ -210,7 +211,8 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                           screenTitle: "Academics - Assignment - Answer",
                           onTapScreenTitle:
                               () => onTapScreenTitle(
-                                AppRoutes.academicsAssignmentAnswerScreen,
+                                AppRoutes
+                                    .studentAcademicsAssignmentAnswerScreen,
                               ),
                         ),
                         _buildScreenTitle(

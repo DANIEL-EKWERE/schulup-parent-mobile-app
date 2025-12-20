@@ -23,7 +23,7 @@ import 'dart:developer' as myLog;
 ///
 /// This class manages the state of the AcademicsAssignmentSearchScreen, including the
 /// current academicsAssignmentSearchModelObj
-class AcademicsAssignmentSearchController extends GetxController {
+class StudentAcademicsAssignmentSearchController extends GetxController {
   TextEditingController searchController = TextEditingController();
 
   Rx<AcademicsAssignmentSearchModel> academicsAssignmentSearchModelObj =
@@ -524,7 +524,7 @@ class AcademicsAssignmentSearchController extends GetxController {
         isDetailLoading.value = false;
         assignmentDetails = assignmentDetailsFromJson(response.body);
         Get.toNamed(
-          AppRoutes.academicsAssignmentAnswerScreen,
+          AppRoutes.studentAcademicsAssignmentAnswerScreen,
           arguments: {'model': assignmentDetails},
         );
         myLog.log(assignmentDetails!.data!.subjectName!);

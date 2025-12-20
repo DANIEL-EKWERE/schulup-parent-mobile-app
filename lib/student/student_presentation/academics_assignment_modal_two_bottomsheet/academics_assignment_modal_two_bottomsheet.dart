@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_page/controller/academics_assignment_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_assignment_page/models/academics_assignment_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/student/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
@@ -28,8 +29,9 @@ class _AcademicsAssignmentModalTwoBottomsheetState
     extends State<AcademicsAssignmentModalTwoBottomsheet> {
   List<String> type = ["all", "pending", "submitted"];
   List<String> selectedType = [controller1.statusType.value];
-  AcademicsAssignmentController controllers =
-      Get.find<AcademicsAssignmentController>();
+  AcademicsAssignmentController controllers = Get.put(
+    AcademicsAssignmentController(AcademicsAssignmentModel().obs),
+  );
   @override
   Widget build(BuildContext context) {
     return Container(

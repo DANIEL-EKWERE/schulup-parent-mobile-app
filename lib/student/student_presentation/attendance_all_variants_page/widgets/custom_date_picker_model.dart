@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:schulupparent/student/core/utils/size_utils.dart';
-import 'package:schulupparent/student/student_presentation/reports_report_card_all_variants_page/controller/reports_report_card_all_variants_controller.dart';
+import 'package:schulupparent/parent/core/utils/size_utils.dart';
+import 'package:schulupparent/parent/parent_presentation/reports_report_card_all_variants_page/controller/reports_report_card_all_variants_controller.dart';
+import 'package:schulupparent/student/student_presentation/attendance_all_variants_page/controller/attendance_all_variants_controller.dart';
 
 class CustomDatePickerModal extends StatefulWidget {
   final DateTime initialDate;
@@ -22,8 +23,8 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
   late int selectedMonth;
   late int selectedDay;
 
-  ReportsReportCardAllVariantsController controller =
-      Get.find<ReportsReportCardAllVariantsController>();
+  AttendanceAllVariantsController controller =
+      Get.find<AttendanceAllVariantsController>();
 
   late FixedExtentScrollController yearController;
   late FixedExtentScrollController monthController;
@@ -116,7 +117,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                 SizedBox.shrink(),
                 Text(
                   'Jump to a Date',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 14.h, fontWeight: FontWeight.w600),
                 ),
                 GestureDetector(
                   onTap: () => Navigator.pop(context),

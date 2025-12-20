@@ -655,6 +655,62 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+
+
+  // download and share
+
+  Future<http.Response> downloadAndOpen(
+   
+    String studentID,
+    String batchID,
+    String reportCardType,
+    
+  ) async {
+    var token = await studentDataBase.getToken();
+    final url = Uri.parse(
+      '$baseUrl/students/$studentID/reportcard?batchId=$batchID&reportCardTypeId=$reportCardType&download=true',
+    );
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+     // body: jsonEncode(commentData),
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
+
+  Future<http.Response> downloadAndShare(
+   
+    String studentID,
+    String batchID,
+    String reportCardType,
+    
+  ) async {
+    var token = await studentDataBase.getToken();
+    final url = Uri.parse(
+      '$baseUrl/students/$studentID/reportcard?batchId=$batchID&reportCardTypeId=$reportCardType&download=true',
+    );
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+     // body: jsonEncode(commentData),
+    );
+    _logResponse(response);
+    return response;
+  }
+
   Future<http.Response> startConversation(
     Map<String, dynamic> startConversationData,
   ) async {

@@ -363,7 +363,7 @@ class AcademicsAssignmentController extends GetxController {
         // isDetailLoading.value = false;
         assignmentDetails = assignmentDetailsFromJson(response.body);
         Get.toNamed(
-          AppRoutes.academicsAssignmentAnswerScreen,
+          AppRoutes.studentAcademicsAssignmentAnswerScreen,
           arguments: {'model': assignmentDetails},
         );
         myLog.log(assignmentDetails!.data!.subjectName!);

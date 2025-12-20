@@ -533,8 +533,11 @@ import 'controller/academics_schular_ai_ongoing_controller.dart';
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
 
-class StudentAcademicsSchularAiOngoingScreen
-    extends GetWidget<StudentAcademicsSchularAiOngoingController> {
+StudentAcademicsSchularAiOngoingController controller = Get.put(
+  StudentAcademicsSchularAiOngoingController(),
+);
+
+class StudentAcademicsSchularAiOngoingScreen extends StatelessWidget {
   const StudentAcademicsSchularAiOngoingScreen({Key? key}) : super(key: key);
 
   @override

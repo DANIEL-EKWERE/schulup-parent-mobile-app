@@ -23,6 +23,7 @@ class AppbarSubtitleFive extends StatelessWidget {
           text,
           style: CustomTextStyles.bodySmallWhiteA700.copyWith(
             color: appTheme.whiteA700,
+            fontSize: 16.h,
           ),
         ),
       ),

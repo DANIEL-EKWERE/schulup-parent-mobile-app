@@ -39,16 +39,13 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
     AttendanceAllVariantsController(AttendanceAllVariantsModel().obs),
   );
 
-
   final ScrollController _scrollController = ScrollController();
-
- 
 
   void scrollToMonth(int index) {
     // Calculate the position to scroll to
     // itemWidth (120) + spacing (16)
     double position = index * 100.0;
-    
+
     _scrollController.animateTo(
       position,
       duration: Duration(milliseconds: 500),
@@ -60,7 +57,7 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
   //   AttendanceAllVariantsController(AttendanceAllVariantsModel().obs),
   // );
 
-    @override
+  @override
   void initState() {
     super.initState();
     // Scroll to current month after the widget is built
@@ -111,7 +108,11 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
                                       imagePath: ImageConstant.imgObjects,
                                     ),
                                     Text(
-                                      'No Record for the selected date found',
+                                      textAlign: TextAlign.center,
+                                      'Opps,No Attendance Record for the selected date found',
+                                      style: CustomTextStyles
+                                          .displayMediumBlack
+                                          .copyWith(fontSize: 16.h),
                                     ),
                                   ],
                                 ),
@@ -212,7 +213,7 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: IntrinsicWidth(
-              child: 
+              child:
               // Row(
               //   mainAxisSize: MainAxisSize.min,
               //   children: List.generate(getMonths().length, (index) {
@@ -341,59 +342,65 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
               //   // ],
               // ),
               Container(
-            height: 35,
-            width: 400.h,
-            child: ListView.builder(
-              controller: _scrollController,
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              itemCount: getMonths().length,
-              itemBuilder: (context, index) {
-                var month = getMonths()[index];
-                bool isSelected = index == controller.selectedMonth;
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      controller.selectedMonth = index;
-                    });
-                    scrollToMonth(index);
-                    controller.getStudentAttendance();
+                height: 35,
+                width: 400.h,
+                child: ListView.builder(
+                  controller: _scrollController,
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: getMonths().length,
+                  itemBuilder: (context, index) {
+                    var month = getMonths()[index];
+                    bool isSelected = index == controller.selectedMonth;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          controller.selectedMonth = index;
+                        });
+                        scrollToMonth(index);
+                        controller.getStudentAttendance();
+                      },
+                      child:
+                          isSelected
+                              ? Container(
+                                margin: EdgeInsets.only(left: 5.h, right: 5.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 14.h,
+                                  vertical: 10.h,
+                                ),
+                                decoration: AppDecoration.grayC2.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder18,
+                                ),
+                                child: Text(
+                                  month,
+                                  textAlign: TextAlign.center,
+                                  style: theme.textTheme.labelLarge!.copyWith(
+                                    fontSize: 14.h,
+                                  ),
+                                ),
+                              )
+                              : Container(
+                                margin: EdgeInsets.only(left: 5.h, right: 5.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 14.h,
+                                  vertical: 10.h,
+                                ),
+                                decoration: AppDecoration.grayC13.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder18,
+                                ),
+                                child: Text(
+                                  month,
+                                  textAlign: TextAlign.center,
+                                  style: CustomTextStyles.bodySmallOnPrimary_1
+                                      .copyWith(fontSize: 14.h),
+                                ),
+                              ),
+                    );
                   },
-                  child: isSelected
-                            ? Container(
-                              margin: EdgeInsets.only(left: 5.h, right: 5.h),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 14.h,
-                                vertical: 10.h,
-                              ),
-                              decoration: AppDecoration.grayC2.copyWith(
-                                borderRadius: BorderRadiusStyle.roundedBorder18,
-                              ),
-                              child: Text(
-                                month,
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.labelLarge,
-                              ),
-                            )
-                            : Container(
-                              margin: EdgeInsets.only(left: 5.h, right: 5.h),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 14.h,
-                                vertical: 10.h,
-                              ),
-                              decoration: AppDecoration.grayC13.copyWith(
-                                borderRadius: BorderRadiusStyle.roundedBorder18,
-                              ),
-                              child: Text(
-                                month,
-                                textAlign: TextAlign.center,
-                                style: CustomTextStyles.bodySmallOnPrimary_1,
-                              ),
-                            ),
-                );
-              },
-            ),
-          ),
+                ),
+              ),
             ),
           ),
         ],
@@ -431,7 +438,7 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
                   padding: EdgeInsets.only(left: 10.h),
                   child: Text(
                     model.formattedDate,
-                    style: theme.textTheme.bodyMedium,
+                    style: theme.textTheme.bodyMedium!.copyWith(fontSize: 14.h),
                   ),
                 ),
               ],

@@ -6,9 +6,9 @@ import '../controller/academics_assignment_answer_controller.dart';
 ///
 /// This class ensures that the AcademicsAssignmentAnswerController is created when the
 /// AcademicsAssignmentAnswerScreen is first loaded.
-class AcademicsAssignmentAnswerBinding extends Bindings {
+class StudentAcademicsAssignmentAnswerBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AcademicsAssignmentAnswerController());
+    Get.lazyPut(() => StudentAcademicsAssignmentAnswerController());
   }
 }
