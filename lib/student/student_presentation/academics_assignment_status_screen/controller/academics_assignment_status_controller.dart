@@ -13,6 +13,7 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/cbt_detail_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/cbt_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/lesson_model.dart';
+import 'package:schulupparent/student/student_presentation/academics_cbt_test_test_details_screen/academics_cbt_test_test_details_screen.dart';
 // import 'package:schulupparent/presentation/dashboard_extended_view/models/student_batch_model.dart';
 // import 'package:schulupparent/presentation/dashboard_extended_view/models/student_class_model.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
@@ -75,7 +76,7 @@ class StudentAcademicsAssignmentStatusController extends GetxController
       Get.find<StudentDashboardExtendedViewController>();
   Lesson lesson = Lesson();
 
-  List<LessonData> lessonList = [];
+  List<StudentLessonData> lessonList = [];
 
   Assignment? assignment;
   List<AssignmentData>? assignmentData;
@@ -472,8 +473,13 @@ class StudentAcademicsAssignmentStatusController extends GetxController
         OverlayLoadingProgress.stop();
         cbtDetail = cbtDetailFromJson(response.body);
 
-        Get.toNamed(
-          AppRoutes.academicsCbtTestTestDetailsScreen,
+        // Get.toNamed(
+        //   AppRoutes.academicsCbtTestTestDetailsScreen,
+        //   arguments: {'model': cbtDetail},
+        // );
+
+        Get.to(
+          () => StudentAcademicsCbtTestTestDetailsScreen(),
           arguments: {'model': cbtDetail},
         );
       } else if (response.statusCode == 404 || response.statusCode == 401) {

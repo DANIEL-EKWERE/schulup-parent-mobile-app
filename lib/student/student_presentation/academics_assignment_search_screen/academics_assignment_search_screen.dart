@@ -423,14 +423,14 @@ class AcademicsAssignmentSearchScreen
                     : ListView.builder(
                       itemCount: controller.lessonList.length,
                       itemBuilder: (context, index) {
-                        LessonData listlineItemModelObj =
+                        StudentLessonData listlineItemModelObj =
                             controller.lessonList[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: GestureDetector(
                             onTap: () {
                               Get.toNamed(
-                                AppRoutes.academicsLessonLessonDetailsScreen,
+                                AppRoutes.studentAcademicsLessonLessonDetailsScreen,
                                 arguments: {'lessonData': listlineItemModelObj},
                               );
                             },

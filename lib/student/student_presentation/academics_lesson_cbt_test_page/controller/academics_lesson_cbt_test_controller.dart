@@ -9,6 +9,7 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/cbt_detail_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/cbt_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/lesson_model.dart';
+import 'package:schulupparent/student/student_presentation/academics_cbt_test_test_details_screen/academics_cbt_test_test_details_screen.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../../core/app_export.dart';
 import '../models/academics_lesson_cbt_test_model.dart';
@@ -18,13 +19,16 @@ import 'dart:developer' as myLog;
 ///
 /// This class manages the state of the AcademicsLessonAllLessonsPage, including the
 /// current academicsLessonAllLessonsModelObj
-class AcademicsLessonCbtTestController extends GetxController {
-  AcademicsLessonCbtTestController(this.academicsLessonAllLessonsModelObj);
+class StudentAcademicsLessonCbtTestController extends GetxController {
+  StudentAcademicsLessonCbtTestController(
+    this.academicsLessonAllLessonsModelObj,
+  );
 
-  Rx<AcademicsLessonCbtTestModel> academicsLessonAllLessonsModelObj;
+  Rx<StudentAcademicsLessonCbtTestModel> academicsLessonAllLessonsModelObj;
 
-  StudentAcademicsAssignmentStatusController controllerx =
-      Get.find<StudentAcademicsAssignmentStatusController>();
+  StudentAcademicsAssignmentStatusController controllerx = Get.put(
+    StudentAcademicsAssignmentStatusController(),
+  );
   @override
   onInit() {
     super.onInit();
@@ -33,7 +37,7 @@ class AcademicsLessonCbtTestController extends GetxController {
 
   Lesson lesson = Lesson();
 
-  List<LessonData> lessonList = [];
+  List<StudentLessonData> lessonList = [];
   CbtDetail? cbtDetail;
 
   Cbt? cbt;
@@ -71,8 +75,13 @@ class AcademicsLessonCbtTestController extends GetxController {
         isLoading.value = false;
         cbtDetail = cbtDetailFromJson(response.body);
 
-        Get.toNamed(
-          AppRoutes.academicsCbtTestTestDetailsScreen,
+        // Get.toNamed(
+
+        //   AppRoutes.academicsCbtTestTestDetailsScreen,
+        //   arguments: {'model': cbtDetail},
+        // );
+        Get.to(
+          () => StudentAcademicsCbtTestTestDetailsScreen(),
           arguments: {'model': cbtDetail},
         );
       } else if (response.statusCode == 404 || response.statusCode == 401) {

@@ -1,4 +1,4 @@
-package com.schulup.app
+package com.schulupx.app
 
 import io.flutter.embedding.android.FlutterActivity
 

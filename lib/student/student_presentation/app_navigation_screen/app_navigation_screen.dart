@@ -312,14 +312,15 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                           screenTitle: "Academics - CBT test - Test details",
                           onTapScreenTitle:
                               () => onTapScreenTitle(
-                                AppRoutes.academicsCbtTestTestDetailsScreen,
+                                AppRoutes
+                                    .studentAcademicsCbtTestTestDetailsScreen,
                               ),
                         ),
                         _buildScreenTitle(
                           screenTitle: "Academics - CBT test - Ongoing",
                           onTapScreenTitle:
                               () => onTapScreenTitle(
-                                AppRoutes.academicsCbtTestOngoingScreen,
+                                AppRoutes.studentAcademicsCbtTestOngoingScreen,
                               ),
                         ),
                         _buildScreenTitle(
@@ -340,7 +341,8 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                           screenTitle: "Academics - CBT test - Test Result",
                           onTapScreenTitle:
                               () => onTapScreenTitle(
-                                AppRoutes.academicsCbtTestTestResultScreen,
+                                AppRoutes
+                                    .studentAcademicsCbtTestTestResultScreen,
                               ),
                         ),
                         _buildScreenTitle(
@@ -408,14 +410,16 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                           screenTitle: "Academics - Lesson - Lesson details",
                           onTapScreenTitle:
                               () => onTapScreenTitle(
-                                AppRoutes.academicsLessonLessonDetailsScreen,
+                                AppRoutes
+                                    .studentAcademicsLessonLessonDetailsScreen,
                               ),
                         ),
                         _buildScreenTitle(
                           screenTitle: "Academics - Schular AI - Ongoing",
                           onTapScreenTitle:
                               () => onTapScreenTitle(
-                                AppRoutes.academicsSchularAiOngoingScreen,
+                                AppRoutes
+                                    .studentAcademicsAssignmentStatusScreen,
                               ),
                         ),
                         _buildScreenTitle(

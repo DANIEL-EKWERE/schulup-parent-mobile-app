@@ -4,9 +4,11 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_assignment_modal_buttomsheet/controller/academics_assignment_modal_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_modal_one_bottomsheet/academics_assignment_modal_one_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_modal_one_bottomsheet/controller/academics_assignment_modal_one_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/academics_assignment_status_screen.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/lesson_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_lesson_details_screen/academics_lesson_lesson_details_screen.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_report_card_modal_bottomsheet/controller/reports_report_card_modal_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart';
@@ -20,24 +22,30 @@ import 'models/academics_lesson_all_lessons_model.dart';
 import 'models/listline_item_model.dart';
 import 'widgets/listline_item_widget.dart';
 
+StudentAcademicsAssignmentStatusController controllerx = Get.put(
+  StudentAcademicsAssignmentStatusController(),
+);
+
 // ignore_for_file: must_be_immutable
-class AcademicsLessonAllLessonsPage extends StatefulWidget {
-  AcademicsLessonAllLessonsPage({Key? key}) : super(key: key);
+class StudentAcademicsLessonAllLessonsPage extends StatefulWidget {
+  StudentAcademicsLessonAllLessonsPage({Key? key}) : super(key: key);
 
   @override
-  State<AcademicsLessonAllLessonsPage> createState() =>
+  State<StudentAcademicsLessonAllLessonsPage> createState() =>
       _AcademicsLessonAllLessonsPageState();
 }
 
 class _AcademicsLessonAllLessonsPageState
-    extends State<AcademicsLessonAllLessonsPage> {
-  AcademicsLessonAllLessonsController controller = Get.put(
-    AcademicsLessonAllLessonsController(AcademicsLessonAllLessonsModel().obs),
+    extends State<StudentAcademicsLessonAllLessonsPage> {
+  StudentAcademicsLessonAllLessonsController controller = Get.put(
+    StudentAcademicsLessonAllLessonsController(
+      StudentAcademicsLessonAllLessonsModel().obs,
+    ),
   );
 
-  StudentAcademicsAssignmentStatusController controllerx = Get.put(
-    StudentAcademicsAssignmentStatusController(),
-  );
+  // StudentAcademicsAssignmentStatusController controllerx = Get.put(
+  //   StudentAcademicsAssignmentStatusController(),
+  // );
 
   StudentDashboardExtendedViewController dashboardExtendedViewController =
       Get.find<StudentDashboardExtendedViewController>();
@@ -144,7 +152,9 @@ class _AcademicsLessonAllLessonsPageState
                                   .selectedClass
                                   .value
                               : controllerx.classType.value,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -175,7 +185,9 @@ class _AcademicsLessonAllLessonsPageState
                       Obx(() {
                         return Text(
                           "${controllerx.termType.value} Term",
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -219,29 +231,43 @@ class _AcademicsLessonAllLessonsPageState
                       },
                     ),
                   )
-                  : controller.lessonList.isEmpty
+                  : controller.studentLessonList.isEmpty
                   ? Center(
                     child: Column(
                       spacing: 30,
                       children: [
                         SizedBox(height: 150.h),
                         CustomImageView(imagePath: ImageConstant.imgObjects),
-                        Text('No cbt Test for the selected filter condition'),
+                        Text(
+                          textAlign: TextAlign.center,
+                          'Opps,No Lesson available for the selected class and term!!!',
+                          style: CustomTextStyles.displayMediumBlack,
+                        ),
                       ],
                     ),
                   )
                   : ListView.builder(
-                    itemCount: controller.lessonList.length,
+                    physics: BouncingScrollPhysics(),
+                    itemCount: controller.studentLessonList.length,
                     itemBuilder: (context, index) {
-                      LessonData listlineItemModelObj =
-                          controller.lessonList[index];
+                      StudentLessonData listlineItemModelObj =
+                          controller.studentLessonList[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: GestureDetector(
                           onTap: () {
-                            Get.toNamed(
-                              AppRoutes.academicsLessonLessonDetailsScreen,
-                              arguments: {'lessonData': listlineItemModelObj},
+                            // print('object');
+                            // Get.toNamed(
+                            //   AppRoutes.studentAcademicsLessonLessonDetailsScreen,
+                            //   arguments: {
+                            //     'studentLessonData': listlineItemModelObj,
+                            //   },
+                            // );
+                            Get.to(
+                              () => StudentAcademicsLessonLessonDetailsScreen(),
+                              arguments: {
+                                'studentLessonData': listlineItemModelObj,
+                              },
                             );
                           },
                           child: ListlineItemLessonWidget(listlineItemModelObj),
@@ -249,7 +275,6 @@ class _AcademicsLessonAllLessonsPageState
                       );
                     },
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
                   ),
         ),
       ),

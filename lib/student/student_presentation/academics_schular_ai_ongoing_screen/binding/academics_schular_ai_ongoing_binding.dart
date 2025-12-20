@@ -8,10 +8,10 @@ import '../controller/academics_schular_ai_ongoing_controller.dart';
 ///
 /// This class ensures that the AcademicsSchularAiOngoingController is created when the
 /// AcademicsSchularAiOngoingScreen is first loaded.
-class AcademicsSchularAiOngoingBinding extends Bindings {
+class StudentAcademicsSchularAiOngoingBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AcademicsSchularAiOngoingController());
+    Get.lazyPut(() => StudentAcademicsSchularAiOngoingController());
     Get.put(AcademicsSchularAiConversationController(), permanent: true);
   }
 }

@@ -12,11 +12,11 @@ class DashboardExtendedViewBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => StudentDashboardExtendedViewController());
     Get.put(
-      AcademicsLessonAllLessonsController(AcademicsLessonAllLessonsModel().obs),
+      StudentAcademicsLessonAllLessonsController(StudentAcademicsLessonAllLessonsModel().obs),
       permanent: true,
     );
     Get.put(
-      AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs),
+      StudentAcademicsLessonCbtTestController(StudentAcademicsLessonCbtTestModel().obs),
       permanent: true,
     );
     Get.put(

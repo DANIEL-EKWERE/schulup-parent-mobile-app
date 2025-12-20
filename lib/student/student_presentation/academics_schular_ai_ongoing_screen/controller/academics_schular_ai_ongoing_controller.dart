@@ -11,7 +11,7 @@ import '../../../core/app_export.dart';
 import '../models/academics_schular_ai_ongoing_model.dart';
 
 /// A controller class for the AcademicsSchularAiOngoingScreen.
-class AcademicsSchularAiOngoingController extends GetxController {
+class StudentAcademicsSchularAiOngoingController extends GetxController {
   TextEditingController vectoroneController = TextEditingController();
 
   Rx<AcademicsSchularAiOngoingModel> academicsSchularAiOngoingModelObj =

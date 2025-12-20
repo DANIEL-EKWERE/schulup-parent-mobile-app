@@ -4,11 +4,11 @@ import 'package:schulupparent/student/student_presentation/academics_lesson_all_
 import 'package:schulupparent/student/student_presentation/academics_lesson_cbt_test_page/controller/academics_lesson_cbt_test_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_cbt_test_page/models/academics_lesson_cbt_test_model.dart';
 
-class AcademicsCbtTestBinding extends Bindings {
+class StudentAcademicsCbtTestBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(
-      () => AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs),
+      () => StudentAcademicsLessonCbtTestController(StudentAcademicsLessonCbtTestModel().obs),
     );
   }
 }

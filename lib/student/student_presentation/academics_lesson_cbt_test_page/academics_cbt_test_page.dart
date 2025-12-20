@@ -24,11 +24,13 @@ import 'models/listline_item_model.dart';
 import 'widgets/listline_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
-class AcademicsCbtTestPage extends StatelessWidget {
-  AcademicsCbtTestPage({Key? key}) : super(key: key);
+class StudentAcademicsCbtTestPage extends StatelessWidget {
+  StudentAcademicsCbtTestPage({Key? key}) : super(key: key);
 
-  AcademicsLessonCbtTestController controller = Get.put(
-    AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs),
+  StudentAcademicsLessonCbtTestController controller = Get.put(
+    StudentAcademicsLessonCbtTestController(
+      StudentAcademicsLessonCbtTestModel().obs,
+    ),
   );
 
   StudentAcademicsAssignmentStatusController controllerx = Get.put(
@@ -105,7 +107,7 @@ class AcademicsCbtTestPage extends StatelessWidget {
   /// Section Widget
   Widget _buildRowprimarycount() {
     return Container(
-      decoration: AppDecoration.outline,
+      decoration: AppDecoration.primaryC7Main,
       width: double.maxFinite,
       child: ClipRect(
         child: BackdropFilter(
@@ -224,14 +226,15 @@ class AcademicsCbtTestPage extends StatelessWidget {
                   : ListView.builder(
                     itemCount: controller.lessonList.length,
                     itemBuilder: (context, index) {
-                      LessonData listlineItemModelObj =
+                      StudentLessonData listlineItemModelObj =
                           controller.lessonList[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: GestureDetector(
                           onTap: () {
                             Get.toNamed(
-                              AppRoutes.academicsLessonLessonDetailsScreen,
+                              AppRoutes
+                                  .studentAcademicsLessonLessonDetailsScreen,
                               arguments: {'lessonData': listlineItemModelObj},
                             );
                           },

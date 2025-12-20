@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-AcademicsCbtTestTestDetailsModel startTestFromJson(String str) =>
-    AcademicsCbtTestTestDetailsModel.fromJson(json.decode(str));
+StudentAcademicsCbtTestTestDetailsModel startTestFromJson(String str) =>
+    StudentAcademicsCbtTestTestDetailsModel.fromJson(json.decode(str));
 
-String startTestToJson(AcademicsCbtTestTestDetailsModel data) =>
+String startTestToJson(StudentAcademicsCbtTestTestDetailsModel data) =>
     json.encode(data.toJson());
 
-class AcademicsCbtTestTestDetailsModel {
+class StudentAcademicsCbtTestTestDetailsModel {
   final int? studentAttemptID;
   final int? quizID;
   final int? quizScheduleID;
@@ -19,7 +19,7 @@ class AcademicsCbtTestTestDetailsModel {
   final bool? showResult;
   final List<Questions>? questions;
 
-  AcademicsCbtTestTestDetailsModel({
+  StudentAcademicsCbtTestTestDetailsModel({
     this.studentAttemptID,
     this.quizID,
     this.quizScheduleID,
@@ -33,7 +33,7 @@ class AcademicsCbtTestTestDetailsModel {
     this.questions,
   });
 
-  AcademicsCbtTestTestDetailsModel.fromJson(Map<String, dynamic> json)
+  StudentAcademicsCbtTestTestDetailsModel.fromJson(Map<String, dynamic> json)
     : studentAttemptID = json['studentAttemptID'],
       quizID = json['quizID'],
       quizScheduleID = json['quizScheduleID'],

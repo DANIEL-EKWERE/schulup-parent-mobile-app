@@ -168,11 +168,11 @@ class AppRoutes {
   static const String academicsCbtTestSearchForTwoScreen =
       '/academics_cbt_test_search_for_two_screen';
 
-  static const String academicsCbtTestTestDetailsScreen =
-      '/academics_cbt_test_test_details_screen';
+  static const String studentAcademicsCbtTestTestDetailsScreen =
+      '/student_academics_cbt_test_test_details_screen';
 
-  static const String academicsCbtTestOngoingScreen =
-      '/academics_cbt_test_ongoing_screen';
+  static const String studentAcademicsCbtTestOngoingScreen =
+      '/student_academics_cbt_test_ongoing_screen';
 
   static const String academicsCbtTestOngoingOneScreen =
       '/academics_cbt_test_ongoing_one_screen';
@@ -180,8 +180,8 @@ class AppRoutes {
   static const String academicsCbtTestOngoingTwoScreen =
       '/academics_cbt_test_ongoing_two_screen';
 
-  static const String academicsCbtTestTestResultScreen =
-      '/academics_cbt_test_test_result_screen';
+  static const String studentAcademicsCbtTestTestResultScreen =
+      '/student_academics_cbt_test_test_result_screen';
 
   static const String academicsCbtTestTestResultOneScreen =
       '/academics_cbt_test_test_result_one_screen';
@@ -189,13 +189,14 @@ class AppRoutes {
   static const String academicsCbtTestTestResultTwoScreen =
       '/academics_cbt_test_test_result_two_screen';
 
-  static const String academicsCbtTestPage = '/academics_cbt_test_page';
+  static const String studentAcademicsCbtTestPage =
+      '/student_academics_cbt_test_page';
 
   //academicsAssignmentPage
 
   static const String academicsAssignmentPage = '/academics_assignment_page';
 
-  static const String academicsLessonAllLessonsPage =
+  static const String studentAcademicsLessonAllLessonsPage =
       '/academics_lesson_all_lessons_page';
 
   static const String academicsLessonSearchForScreen =
@@ -211,11 +212,11 @@ class AppRoutes {
   static const String academicsLessonSearchForTwoScreen =
       '/academics_lesson_search_for_two_screen';
 
-  static const String academicsLessonLessonDetailsScreen =
+  static const String studentAcademicsLessonLessonDetailsScreen =
       '/academics_lesson_lesson_details_screen';
 
-  static const String academicsSchularAiOngoingScreen =
-      '/academics_schular_ai_ongoing_screen';
+  static const String studentAcademicsSchularAiOngoingScreen =
+      '/student_academics_schular_ai_ongoing_screen';
 
   static const String attendanceAllVariantsPage =
       '/attendance_all_variants_page';
@@ -293,7 +294,7 @@ class AppRoutes {
     GetPage(
       name: studentAcademicsAssignmentStatusScreen,
       page: () => StudentAcademicsAssignmentStatusScreen(),
-      bindings: [AcademicsAssignmentStatusBinding()],
+      bindings: [StudentAcademicsAssignmentStatusBinding()],
     ),
     //dashboardExtendedView
     GetPage(
@@ -375,14 +376,14 @@ class AppRoutes {
       bindings: [AcademicsCbtTestSearchForTwoBinding()],
     ),
     GetPage(
-      name: academicsCbtTestTestDetailsScreen,
-      page: () => AcademicsCbtTestTestDetailsScreen(),
-      bindings: [AcademicsCbtTestTestDetailsBinding()],
+      name: studentAcademicsCbtTestTestDetailsScreen,
+      page: () => StudentAcademicsCbtTestTestDetailsScreen(),
+      bindings: [StudentAcademicsCbtTestTestDetailsBinding()],
     ),
     GetPage(
-      name: academicsCbtTestOngoingScreen,
-      page: () => AcademicsCbtTestOngoingScreen(),
-      bindings: [AcademicsCbtTestOngoingBinding()],
+      name: studentAcademicsCbtTestOngoingScreen,
+      page: () => StudentAcademicsCbtTestOngoingScreen(),
+      bindings: [StudentAcademicsCbtTestOngoingBinding()],
     ),
     GetPage(
       name: academicsCbtTestOngoingOneScreen,
@@ -416,9 +417,9 @@ class AppRoutes {
     ),
 
     GetPage(
-      name: academicsCbtTestTestResultScreen,
-      page: () => AcademicsCbtTestTestResultScreen(),
-      bindings: [AcademicsCbtTestTestResultBinding()],
+      name: studentAcademicsCbtTestTestResultScreen,
+      page: () => StudentAcademicsCbtTestTestResultScreen(),
+      bindings: [StudentAcademicsCbtTestTestResultBinding()],
     ),
     GetPage(
       name: academicsCbtTestTestResultOneScreen,
@@ -434,9 +435,9 @@ class AppRoutes {
     ),
     //AcademicsAssignmentPage
     GetPage(
-      name: academicsCbtTestPage,
-      page: () => AcademicsCbtTestPage(),
-      bindings: [AcademicsCbtTestBinding()],
+      name: studentAcademicsCbtTestPage,
+      page: () => StudentAcademicsCbtTestPage(),
+      bindings: [StudentAcademicsCbtTestBinding()],
     ),
     //academicsAssignmentPage
     GetPage(
@@ -445,9 +446,9 @@ class AppRoutes {
       bindings: [AcademicsAssignmentBinding()],
     ),
     GetPage(
-      name: academicsLessonAllLessonsPage,
-      page: () => AcademicsLessonAllLessonsPage(),
-      bindings: [AcademicsLessonAllLessonBinding()],
+      name: studentAcademicsLessonAllLessonsPage,
+      page: () => StudentAcademicsLessonAllLessonsPage(),
+      bindings: [StudentAcademicsLessonAllLessonBinding()],
     ),
     GetPage(
       name: academicsLessonSearchForScreen,
@@ -465,14 +466,14 @@ class AppRoutes {
       bindings: [AcademicsLessonSearchForTwoBinding()],
     ),
     GetPage(
-      name: academicsLessonLessonDetailsScreen,
-      page: () => AcademicsLessonLessonDetailsScreen(),
-      bindings: [AcademicsLessonLessonDetailsBinding()],
+      name: studentAcademicsLessonLessonDetailsScreen,
+      page: () => StudentAcademicsLessonLessonDetailsScreen(),
+      bindings: [StudentAcademicsLessonLessonDetailsBinding()],
     ),
     GetPage(
-      name: academicsSchularAiOngoingScreen,
-      page: () => AcademicsSchularAiOngoingScreen(),
-      bindings: [AcademicsSchularAiOngoingBinding()],
+      name: studentAcademicsSchularAiOngoingScreen,
+      page: () => StudentAcademicsSchularAiOngoingScreen(),
+      bindings: [StudentAcademicsSchularAiOngoingBinding()],
     ),
     GetPage(
       name: attendanceFilterStartDateOneScreen,

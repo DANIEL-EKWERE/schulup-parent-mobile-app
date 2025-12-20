@@ -10,7 +10,7 @@ String lessonToJson(Lesson data) =>
 class Lesson {
   bool? success;
   String? message;
-  List<LessonData>? data;
+  List<StudentLessonData>? data;
   Pagination? pagination;
 
   Lesson({
@@ -24,9 +24,9 @@ class Lesson {
     success = json['success'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <LessonData>[];
+      data = <StudentLessonData>[];
       json['data'].forEach((v) {
-        data!.add(LessonData.fromJson(v));
+        data!.add(StudentLessonData.fromJson(v));
       });
     }
     pagination = json['pagination'] != null
@@ -48,7 +48,7 @@ class Lesson {
   }
 }
 
-class LessonData {
+class StudentLessonData {
   int? id;
   String? title;
   String? lessonContent;
@@ -57,7 +57,7 @@ class LessonData {
   String? lastUpdated;
   List<LessonAttachment>? attachments;
 
-  LessonData({
+  StudentLessonData({
     this.id,
     this.title,
     this.lessonContent,
@@ -78,7 +78,7 @@ class LessonData {
     }
   }
 
-  LessonData.fromJson(Map<String, dynamic> json) {
+  StudentLessonData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     lessonContent = json['lessonContent'];

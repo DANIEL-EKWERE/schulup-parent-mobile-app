@@ -6,7 +6,16 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/student/core/app_export.dart';
 import 'package:schulupparent/student/core/utils/image_constant.dart';
 import 'package:schulupparent/student/core/utils/storage.dart';
+import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/academics_assignment_status_initial_model.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/academics_lesson_all_lessons_page.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_cbt_test_page/academics_cbt_test_page.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_cbt_test_page/controller/academics_lesson_cbt_test_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_cbt_test_page/models/academics_lesson_cbt_test_model.dart';
+import 'package:schulupparent/student/student_presentation/academics_schular_ai_ongoing_screen/academics_schular_ai_ongoing_screen.dart';
+import 'package:schulupparent/student/student_presentation/academics_schular_ai_ongoing_screen/controller/academics_schular_ai_ongoing_controller.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_edit_ward_profile/dashboard_edit_ward_profile.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/base64.dart';
@@ -14,6 +23,9 @@ import 'package:schulupparent/student/student_presentation/dashboard_extended_vi
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/models/models.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/widget/chart_widget.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/widget/widget.dart';
+import 'package:schulupparent/student/student_presentation/news_events_screen/controller/news_events_controller.dart';
+import 'package:schulupparent/student/student_presentation/news_events_screen/news_events_screen.dart';
+import 'package:schulupparent/student/student_presentation/reports_ward_progress_academic_screen/controller/reports_ward_progress_academic_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_ward_progress_academic_screen/reports_ward_progress_academic_screen.dart';
 import 'package:schulupparent/student/theme/app_decoration.dart';
 import 'package:schulupparent/student/theme/custom_text_style.dart';
@@ -28,6 +40,10 @@ import '../../core/utils/size_utils.dart' hide ResponsiveExtension;
 
 StudentDashboardExtendedViewController controller = Get.put(
   StudentDashboardExtendedViewController(),
+);
+
+StudentAcademicsAssignmentStatusController controllerx = Get.put(
+  StudentAcademicsAssignmentStatusController(),
 );
 
 class DashboardExtendedView extends StatefulWidget {
@@ -426,30 +442,94 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                       DashboardExtendedViewModel.getSampleList()[index];
                   return GestureDetector(
                     onTap: () {
-                      // if (model.route ==
-                      //     '/student_dashboard_editWard_profile_screen') {
-                      //   myLog.log('Navigating to Edit Ward Profile');
-                      //   // Get.delete<
-                      //   //   StudentDashboardEditWardProfileController
-                      //   // >(); // Delete old instance
-                      //   // Get.toNamed(
-                      //   //   model.route!,
-                      //   //   arguments: controller.selectedStudent1,
-                      //   // );
-                      //   Get.to(() => StudentDashboardEditWardProfileScreen());
-                      // } else if (model.route ==
-                      //     '/student_reports_ward_progress_academic_screen') {
-                      //   myLog.log(
-                      //     'Navigating to reports ward progress academic screen',
-                      //   );
-                      //   Get.to(
-                      //     () => StudentReportsWardProgressAcademicScreen(),
-                      //   );
-                      // } else {
-                      //   Get.toNamed(model.route!);
-                      // }
-
-                      Get.to(() => StudentReportsWardProgressAcademicScreen());
+                      if (model.route ==
+                          '/student_dashboard_editWard_profile_screen') {
+                        myLog.log('Navigating to Edit Ward Profile');
+                        // Get.delete<
+                        //   StudentDashboardEditWardProfileController
+                        // >(); // Delete old instance
+                        // Get.toNamed(
+                        //   model.route!,
+                        //   arguments: controller.selectedStudent1,
+                        // );
+                        Get.to(() => StudentDashboardEditWardProfileScreen());
+                      } else if (model.route ==
+                          '/student_reports_ward_progress_academic_screen') {
+                        myLog.log(
+                          'Navigating to reports ward progress academic screen',
+                        );
+                        Get.to(
+                          () => StudentReportsWardProgressAcademicScreen(),
+                          binding: BindingsBuilder(() {
+                            Get.lazyPut(
+                              () =>
+                                  StudentReportsWardProgressAcademicController(),
+                            );
+                          }),
+                        );
+                      } else if (model.route == '/news_events_screen') {
+                        Get.to(
+                          () => NewsEventsScreen(),
+                          binding: BindingsBuilder(() {
+                            Get.lazyPut(() => NewsEventsController());
+                          }),
+                        );
+                      } else if (model.route ==
+                          "/student_academics_schular_ai_ongoing_screen") {
+                        Get.to(
+                          () => StudentAcademicsSchularAiOngoingScreen(),
+                          binding: BindingsBuilder(() {
+                            Get.lazyPut(
+                              () =>
+                                  StudentAcademicsSchularAiOngoingController(),
+                            );
+                          }),
+                        );
+                      } else if (model.route ==
+                          '/student_academics_lesson_all_lessons_page') {
+                        myLog.log(
+                          'Navigating to academics lesson all lessons page',
+                        );
+                        Get.to(
+                          () => StudentAcademicsLessonAllLessonsPage(),
+                          binding: BindingsBuilder(() {
+                            Get.lazyPut(
+                              () => StudentAcademicsLessonAllLessonsController(
+                                StudentAcademicsLessonAllLessonsModel().obs,
+                              ),
+                            );
+                          }),
+                        );
+                      } else if (model.route ==
+                          '/student_academics_cbt_test_page') {
+                        myLog.log(
+                          'Navigating to student academics cbt test page',
+                        );
+                        Get.to(
+                          () => StudentAcademicsCbtTestPage(),
+                          binding: BindingsBuilder(() {
+                            Get.lazyPut(
+                              () => StudentAcademicsLessonCbtTestController(
+                                StudentAcademicsLessonCbtTestModel().obs,
+                              ),
+                            );
+                          }),
+                        );
+                      } else if (model.route ==
+                          '/student_academics_assignment_page') {
+                        Get.to(
+                          () => StudentAcademicsCbtTestPage(),
+                          binding: BindingsBuilder(() {
+                            Get.lazyPut(
+                              () => StudentAcademicsLessonCbtTestController(
+                                StudentAcademicsLessonCbtTestModel().obs,
+                              ),
+                            );
+                          }),
+                        );
+                      } else {
+                        Get.toNamed(model.route!);
+                      }
                     },
                     child: DashboardItemWidget(model),
                   );

@@ -14,8 +14,8 @@ StudentAcademicsAssignmentStatusController controller1 =
     Get.find<StudentAcademicsAssignmentStatusController>();
 AcademicsAssignmentController controllers =
     Get.find<AcademicsAssignmentController>();
-AcademicsLessonAllLessonsController lessonsController =
-    Get.find<AcademicsLessonAllLessonsController>();
+StudentAcademicsLessonAllLessonsController lessonsController =
+    Get.find<StudentAcademicsLessonAllLessonsController>();
 
 class AcademicsAssignmentModalOneBottomsheet extends StatefulWidget {
   AcademicsAssignmentModalOneBottomsheet(this.controller, {Key? key})

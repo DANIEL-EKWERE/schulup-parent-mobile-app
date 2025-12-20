@@ -6,9 +6,9 @@ import '../controller/academics_lesson_lesson_details_controller.dart';
 ///
 /// This class ensures that the AcademicsLessonLessonDetailsController is created when the
 /// AcademicsLessonLessonDetailsScreen is first loaded.
-class AcademicsLessonLessonDetailsBinding extends Bindings {
+class StudentAcademicsLessonLessonDetailsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AcademicsLessonLessonDetailsController());
+    Get.lazyPut(() => StudentAcademicsLessonLessonDetailsController());
   }
 }

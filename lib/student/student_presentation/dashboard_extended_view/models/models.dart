@@ -22,22 +22,22 @@ class DashboardExtendedViewModel {
       DashboardExtendedViewModel(
         title: "Assignments",
         imagePath: ImageConstant.imgAssignments,
-        route: '/academics_assignment_page',
+        route: '/student_academics_assignment_page',
       ),
       DashboardExtendedViewModel(
         title: "CBT Tests",
         imagePath: ImageConstant.imgCbttests,
-        route: '/academics_cbt_test_page',
+        route: '/student_academics_cbt_test_page',
       ),
       DashboardExtendedViewModel(
         title: "Lessons",
         imagePath: ImageConstant.imgLessons,
-        route: '/academics_lesson_all_lessons_page',
+        route: '/student_academics_lesson_all_lessons_page',
       ),
       DashboardExtendedViewModel(
         title: "Schular Ai",
         imagePath: ImageConstant.imgSchularai,
-        route: '/academics_schular_ai_ongoing_screen',
+        route: '/student_academics_schular_ai_ongoing_screen',
       ),
       DashboardExtendedViewModel(
         title: "Events",
@@ -47,7 +47,7 @@ class DashboardExtendedViewModel {
       DashboardExtendedViewModel(
         title: "Ward Progress",
         imagePath: ImageConstant.imgWardprogress,
-        route: '/reports_ward_progress_academic_screen',
+        route: '/student_reports_ward_progress_academic_screen',
       ),
       DashboardExtendedViewModel(
         title: "Ward Profile",

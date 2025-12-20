@@ -15,10 +15,13 @@ import '../controller/academics_assignment_status_controller.dart';
 ///
 /// This class ensures that the AcademicsAssignmentStatusController is created when the
 /// AcademicsAssignmentStatusScreen is first loaded.
-class AcademicsAssignmentStatusBinding extends Bindings {
+class StudentAcademicsAssignmentStatusBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => StudentAcademicsAssignmentStatusController());
+    Get.lazyPut(
+      () => StudentAcademicsAssignmentStatusController(),
+      fenix: true,
+    );
 
     // StudentDashboardExtendedViewController controller = Get.put(
     //   StudentDashboardExtendedViewController(),
@@ -29,7 +32,9 @@ class AcademicsAssignmentStatusBinding extends Bindings {
     Get.put(AttendanceFilterStartDateController(), permanent: true);
     Get.put(NewsModalJumpToADateController(), permanent: true);
     Get.put(
-      AcademicsLessonAllLessonsController(AcademicsLessonAllLessonsModel().obs),
+      StudentAcademicsLessonAllLessonsController(
+        StudentAcademicsLessonAllLessonsModel().obs,
+      ),
       permanent: true,
     );
     // Get.put(AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs), permanent: true);

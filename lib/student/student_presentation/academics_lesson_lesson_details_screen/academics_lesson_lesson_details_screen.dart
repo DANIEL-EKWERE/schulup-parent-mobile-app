@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart' as html;
 import 'package:intl/intl.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/lesson_model.dart';
+
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -14,13 +15,13 @@ import 'package:schulupparent/student/student_presentation/dashboard_extended_vi
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
 
-class AcademicsLessonLessonDetailsScreen
-    extends GetWidget<AcademicsLessonLessonDetailsController> {
-  const AcademicsLessonLessonDetailsScreen({Key? key}) : super(key: key);
+class StudentAcademicsLessonLessonDetailsScreen
+    extends GetWidget<StudentAcademicsLessonLessonDetailsController> {
+  const StudentAcademicsLessonLessonDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    LessonData lessonData = Get.arguments['lessonData'];
+    StudentLessonData lessonData = Get.arguments['studentLessonData'];
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       appBar: _buildAppbar(),

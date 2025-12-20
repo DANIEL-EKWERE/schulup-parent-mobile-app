@@ -237,9 +237,12 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_cbt_test_ongoing_controller.dart';
 
-class AcademicsCbtTestOngoingScreen
-    extends GetWidget<AcademicsCbtTestOngoingController> {
-  const AcademicsCbtTestOngoingScreen({Key? key}) : super(key: key);
+StudentAcademicsCbtTestOngoingController controller = Get.put(
+  StudentAcademicsCbtTestOngoingController(),
+);
+
+class StudentAcademicsCbtTestOngoingScreen extends StatelessWidget {
+  const StudentAcademicsCbtTestOngoingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

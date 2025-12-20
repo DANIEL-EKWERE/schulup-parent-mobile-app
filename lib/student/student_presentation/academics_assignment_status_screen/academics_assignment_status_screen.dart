@@ -8,10 +8,20 @@ import '../reports_report_card_all_variants_page/reports_report_card_all_variant
 import 'academics_assignment_status_initial_page.dart';
 import 'controller/academics_assignment_status_controller.dart'; // ignore_for_file: must_be_immutable
 
-class StudentAcademicsAssignmentStatusScreen
-    extends GetWidget<StudentAcademicsAssignmentStatusController> {
+StudentAcademicsAssignmentStatusController controller = Get.put(
+  StudentAcademicsAssignmentStatusController(),
+);
+
+class StudentAcademicsAssignmentStatusScreen extends StatefulWidget {
   const StudentAcademicsAssignmentStatusScreen({Key? key}) : super(key: key);
 
+  @override
+  State<StudentAcademicsAssignmentStatusScreen> createState() =>
+      _StudentAcademicsAssignmentStatusScreenState();
+}
+
+class _StudentAcademicsAssignmentStatusScreenState
+    extends State<StudentAcademicsAssignmentStatusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -14,6 +14,8 @@ import 'package:schulupparent/student/student_presentation/reports_report_card_m
 import 'package:schulupparent/student/student_presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/reports_report_card_modal_one_bottomsheet/controller/reports_report_card_modal_one_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_report_card_modal_one_bottomsheet/reports_report_card_modal_one_bottomsheet.dart';
+import 'package:schulupparent/student/student_presentation/reports_ward_progress_academic_screen/controller/reports_ward_progress_academic_controller.dart';
+import 'package:schulupparent/student/student_presentation/reports_ward_progress_academic_screen/reports_ward_progress_academic_screen.dart';
 import 'package:schulupparent/student/student_presentation/session_model_sheet/controller/session_modal_controller.dart';
 import 'package:schulupparent/student/student_presentation/session_model_sheet/session_modal_bottom_sheet.dart';
 import 'package:schulupparent/student/student_presentation/signin_screen/shimmer_widget.dart';
@@ -123,6 +125,18 @@ class _ReportsReportCardAllVariantsPageState
             ),
             actions: [
               AppbarTrailingIconbutton(
+                onTap: () {
+                  // Get.to(() => StudentReportsWardProgressAcademicScreen());
+                  // Get.toNamed('/student_reports_ward_progress_academic_screen');
+                  Get.to(
+                    () => StudentReportsWardProgressAcademicScreen(),
+                    binding: BindingsBuilder(() {
+                      Get.lazyPut(
+                        () => StudentReportsWardProgressAcademicController(),
+                      );
+                    }),
+                  );
+                },
                 imagePath: ImageConstant.imgIconsSmallWardProgress,
                 margin: EdgeInsets.only(right: 25.h, bottom: 1.h),
               ),

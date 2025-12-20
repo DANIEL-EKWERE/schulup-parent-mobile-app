@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/student/core/utils/storage.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/cbt_detail_model.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
@@ -11,12 +12,32 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_cbt_test_test_details_controller.dart'; // ignore_for_file: must_be_immutable
 
-StudentDashboardExtendedViewController dashboardExtendedViewController =
-    Get.find<StudentDashboardExtendedViewController>();
+// StudentDashboardExtendedViewController dashboardExtendedViewController =
+//     Get.find<StudentDashboardExtendedViewController>();
+StudentAcademicsCbtTestTestDetailsController controller = Get.put(
+  StudentAcademicsCbtTestTestDetailsController(),
+);
 
-class AcademicsCbtTestTestDetailsScreen
-    extends GetWidget<AcademicsCbtTestTestDetailsController> {
-  const AcademicsCbtTestTestDetailsScreen({Key? key}) : super(key: key);
+class StudentAcademicsCbtTestTestDetailsScreen extends StatefulWidget {
+  const StudentAcademicsCbtTestTestDetailsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<StudentAcademicsCbtTestTestDetailsScreen> createState() =>
+      _StudentAcademicsCbtTestTestDetailsScreenState();
+}
+
+class _StudentAcademicsCbtTestTestDetailsScreenState
+    extends State<StudentAcademicsCbtTestTestDetailsScreen> {
+  String userName = '';
+  @override
+  initState() {
+    super.initState();
+    getName();
+  }
+
+  void getName() async {
+    userName = await studentDataBase.getUserName();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +159,7 @@ class AcademicsCbtTestTestDetailsScreen
         children: [
           AppbarSubtitleOne(text: "lbl_cbt_test".tr),
           AppbarSubtitleFive(
-            text: dashboardExtendedViewController.selectedStudent1!.firstName!,
+            text: userName,
             margin: EdgeInsets.only(left: 19.h, right: 20.h),
           ),
         ],
@@ -158,7 +179,8 @@ class AcademicsCbtTestTestDetailsScreen
         children: [
           CustomElevatedButton(
             onPressed: () {
-              controller.startTest(model.quizScheduleID.toString());
+              print('object');
+             controller.startTest(model.quizScheduleID.toString());
             },
             height: 64.h,
             text: "lbl_start_test".tr,

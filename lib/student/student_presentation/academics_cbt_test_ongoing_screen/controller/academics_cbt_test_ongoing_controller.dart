@@ -21,15 +21,16 @@ import 'package:schulupparent/student/core/utils/size_utils.dart';
 import 'package:schulupparent/student/data/apiClient/api_client.dart';
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_test_details_screen/models/academics_cbt_test_test_details_model.dart';
 import 'package:schulupparent/student/routes/app_routes.dart';
+import 'package:schulupparent/student/student_presentation/academics_cbt_test_test_result_screen/academics_cbt_test_test_result_screen.dart';
 import 'package:schulupparent/student/theme/custom_button_style.dart';
 import 'package:schulupparent/student/theme/custom_text_style.dart';
 import 'package:schulupparent/student/widgets/custom_elevated_button.dart';
 // import '../models/academics_cbt_test_test_details_model.dart';
 
-class AcademicsCbtTestOngoingController extends GetxController {
+class StudentAcademicsCbtTestOngoingController extends GetxController {
   // Test data
-  Rx<AcademicsCbtTestTestDetailsModel> startTest =
-      AcademicsCbtTestTestDetailsModel().obs;
+  Rx<StudentAcademicsCbtTestTestDetailsModel> startTest =
+      StudentAcademicsCbtTestTestDetailsModel().obs;
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
   // Current question tracking
   var currentQuestionIndex = 0.obs;
@@ -354,7 +355,9 @@ class AcademicsCbtTestOngoingController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
-        Get.toNamed(AppRoutes.academicsCbtTestTestResultScreen);
+        // Get.toNamed(AppRoutes.academicsCbtTestTestResultScreen);
+
+        Get.to(() => StudentAcademicsCbtTestTestResultScreen());
       }
 
       // Navigate to results or home
@@ -403,7 +406,7 @@ class AcademicsCbtTestOngoingController extends GetxController {
         iconColor: Colors.red,
         title: Text(
           'Incomplete Test!',
-          style: CustomTextStyles.bodyMediumOnPrimary.copyWith(fontSize: 18.h),
+          style: CustomTextStyles.bodyMediumOnPrimary.copyWith(fontSize: 18),
         ),
         //contentTextStyle: TextStyle(al),
         content: Text(

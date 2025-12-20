@@ -7,8 +7,8 @@ import 'controller/academics_schular_ai_conversation_controller.dart';
 import 'models/listline_item_model.dart';
 import 'widgets/listline_item_widget.dart';
 
-AcademicsSchularAiOngoingController controller1 =
-    Get.find<AcademicsSchularAiOngoingController>();
+StudentAcademicsSchularAiOngoingController controller1 =
+    Get.find<StudentAcademicsSchularAiOngoingController>();
 
 // ignore_for_file: must_be_immutable
 class AcademicsSchularAiConversationBottomsheet extends StatelessWidget {

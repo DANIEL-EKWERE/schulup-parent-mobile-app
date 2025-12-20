@@ -13,8 +13,8 @@ StudentAcademicsAssignmentStatusController controller1 = Get.put(
   StudentAcademicsAssignmentStatusController(),
 );
 
-AcademicsLessonCbtTestController controls =
-    Get.find<AcademicsLessonCbtTestController>();
+StudentAcademicsLessonCbtTestController controls =
+    Get.find<StudentAcademicsLessonCbtTestController>();
 
 class AcademicsCbtTestModalOneBottomsheet extends StatefulWidget {
   AcademicsCbtTestModalOneBottomsheet(this.controller, {Key? key})

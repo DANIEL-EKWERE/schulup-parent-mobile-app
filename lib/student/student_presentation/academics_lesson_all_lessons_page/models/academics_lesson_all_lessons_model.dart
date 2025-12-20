@@ -8,7 +8,7 @@ import 'listline_item_model.dart';
 /// and is typically used to hold data that is passed between different parts of the application.
 
 // ignore_for_file: must_be_immutable
-class AcademicsLessonAllLessonsModel {
+class StudentAcademicsLessonAllLessonsModel {
   Rx<List<SelectionPopupModel>> dropdownItemList = Rx([
     SelectionPopupModel(id: 1, title: "Item One", isSelected: true),
     SelectionPopupModel(id: 2, title: "Item Two"),

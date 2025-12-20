@@ -16,13 +16,13 @@ import 'controller/academics_assignment_modal_controller.dart';
 StudentAcademicsAssignmentStatusController controller1 = Get.put(
   StudentAcademicsAssignmentStatusController(),
 );
-AcademicsLessonCbtTestController controls = Get.put(
-  AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs),
+StudentAcademicsLessonCbtTestController controls = Get.put(
+  StudentAcademicsLessonCbtTestController(StudentAcademicsLessonCbtTestModel().obs),
 );
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
-AcademicsLessonAllLessonsController lessonsController =
-    Get.find<AcademicsLessonAllLessonsController>();
+StudentAcademicsLessonAllLessonsController lessonsController =
+    Get.find<StudentAcademicsLessonAllLessonsController>();
 AcademicsAssignmentController controllers = Get.put(
   AcademicsAssignmentController(AcademicsAssignmentModel().obs),
 );

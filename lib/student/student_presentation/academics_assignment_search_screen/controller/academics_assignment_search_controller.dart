@@ -120,7 +120,7 @@ class AcademicsAssignmentSearchController extends GetxController {
       Get.find<StudentDashboardExtendedViewController>();
   Lesson lesson = Lesson();
 
-  List<LessonData> lessonList = [];
+  List<StudentLessonData> lessonList = [];
 
   Assignment? assignment;
   List<AssignmentData> assignmentData = <AssignmentData>[].obs;
@@ -387,7 +387,7 @@ class AcademicsAssignmentSearchController extends GetxController {
         cbtDetail = cbtDetailFromJson(response.body);
 
         Get.toNamed(
-          AppRoutes.academicsCbtTestTestDetailsScreen,
+          AppRoutes.studentAcademicsCbtTestTestDetailsScreen,
           arguments: {'model': cbtDetail},
         );
       } else if (response.statusCode == 404 || response.statusCode == 401) {

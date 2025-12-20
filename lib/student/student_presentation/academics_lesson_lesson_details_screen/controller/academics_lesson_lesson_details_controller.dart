@@ -7,7 +7,7 @@ import '../models/academics_lesson_lesson_details_model.dart';
 ///
 /// This class manages the state of the AcademicsLessonLessonDetailsScreen, including the
 /// current academicsLessonLessonDetailsModelObj
-class AcademicsLessonLessonDetailsController extends GetxController {
-  Rx<AcademicsLessonLessonDetailsModel> academicsLessonLessonDetailsModelObj =
-      AcademicsLessonLessonDetailsModel().obs;
+class StudentAcademicsLessonLessonDetailsController extends GetxController {
+  Rx<StudentAcademicsLessonLessonDetailsModel> academicsLessonLessonDetailsModelObj =
+      StudentAcademicsLessonLessonDetailsModel().obs;
 }

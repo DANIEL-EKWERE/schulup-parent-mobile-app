@@ -16,17 +16,20 @@ import 'dart:developer' as myLog;
 ///
 /// This class manages the state of the AcademicsLessonAllLessonsPage, including the
 /// current academicsLessonAllLessonsModelObj
-class AcademicsLessonAllLessonsController extends GetxController {
-  AcademicsLessonAllLessonsController(this.academicsLessonAllLessonsModelObj);
+class StudentAcademicsLessonAllLessonsController extends GetxController {
+  StudentAcademicsLessonAllLessonsController(
+    this.academicsLessonAllLessonsModelObj,
+  );
 
-  Rx<AcademicsLessonAllLessonsModel> academicsLessonAllLessonsModelObj;
+  Rx<StudentAcademicsLessonAllLessonsModel> academicsLessonAllLessonsModelObj;
 
-  StudentAcademicsAssignmentStatusController controllerx =
-      Get.find<StudentAcademicsAssignmentStatusController>();
+  StudentAcademicsAssignmentStatusController controllerx = Get.put(
+    StudentAcademicsAssignmentStatusController(),
+  );
 
   Lesson lesson = Lesson();
 
-  List<LessonData> lessonList = [];
+  List<StudentLessonData> studentLessonList = [];
 
   SelectionPopupModel? selectedDropDownValue;
 
@@ -74,8 +77,8 @@ class AcademicsLessonAllLessonsController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
 
-        lessonList = lessonFromJson(response.body).data!;
-        myLog.log('Lessons Length: ${lessonList.length}');
+        studentLessonList = lessonFromJson(response.body).data!;
+        myLog.log('Lessons Length: ${studentLessonList.length}');
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         // OverlayLoadingProgress.stop();

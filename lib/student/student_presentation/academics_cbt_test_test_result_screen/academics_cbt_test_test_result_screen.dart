@@ -12,9 +12,12 @@ import 'package:schulupparent/student/student_presentation/dashboard_extended_vi
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
 
-class AcademicsCbtTestTestResultScreen
-    extends GetWidget<AcademicsCbtTestTestResultController> {
-  const AcademicsCbtTestTestResultScreen({Key? key}) : super(key: key);
+StudentAcademicsCbtTestTestResultController controller = Get.put(
+  StudentAcademicsCbtTestTestResultController(),
+);
+
+class StudentAcademicsCbtTestTestResultScreen extends StatelessWidget {
+  const StudentAcademicsCbtTestTestResultScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -21,6 +21,7 @@ class AcademicsLessonLessonDetailsScreen
   @override
   Widget build(BuildContext context) {
     LessonData lessonData = Get.arguments['lessonData'];
+    print('========================');
     return Scaffold(
       backgroundColor: appTheme.whiteA700,
       appBar: _buildAppbar(),

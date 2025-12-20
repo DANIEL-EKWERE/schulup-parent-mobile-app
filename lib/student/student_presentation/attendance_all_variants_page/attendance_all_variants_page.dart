@@ -47,7 +47,7 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
   void scrollToMonth(int index) {
     // Calculate the position to scroll to
     // itemWidth (120) + spacing (16)
-    double position = index * 136.0;
+    double position = index * 100.0;
     
     _scrollController.animateTo(
       position,
@@ -341,7 +341,8 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
               //   // ],
               // ),
               Container(
-            height: 60,
+            height: 35,
+            width: 400.h,
             child: ListView.builder(
               controller: _scrollController,
               scrollDirection: Axis.horizontal,

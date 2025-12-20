@@ -7,9 +7,9 @@ import '../models/academics_cbt_test_test_result_model.dart';
 ///
 /// This class manages the state of the AcademicsCbtTestTestResultScreen, including the
 /// current academicsCbtTestTestResultModelObj
-class AcademicsCbtTestTestResultController extends GetxController {
-  Rx<AcademicsCbtTestTestResultModel> academicsCbtTestTestResultModelObj =
-      AcademicsCbtTestTestResultModel().obs;
+class StudentAcademicsCbtTestTestResultController extends GetxController {
+  Rx<StudentAcademicsCbtTestTestResultModel> academicsCbtTestTestResultModelObj =
+      StudentAcademicsCbtTestTestResultModel().obs;
 
   Rx<String> whowasthe = "".obs;
 
