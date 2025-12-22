@@ -26,6 +26,7 @@ class ReportsWardProgressSubjectPage extends StatefulWidget {
 ReportsWardProgressAcademicController controllerx = Get.put(
   ReportsWardProgressAcademicController(),
 );
+
 class _ReportsWardProgressSubjectPageState
     extends State<ReportsWardProgressSubjectPage> {
   ReportsWardProgressSubjectController controller = Get.put(
@@ -37,7 +38,7 @@ class _ReportsWardProgressSubjectPageState
     // TODO: implement initState
     super.initState();
     controller.getSubjects();
-    
+
     Timer(Duration(seconds: 3), () {
       controller.getSubjectProgress();
     });
@@ -119,7 +120,8 @@ class _ReportsWardProgressSubjectPageState
                             )
                             : Text(
                               "Showing averages for ${controller.selectedSubjectName.value ?? 'No Subject Selected'}",
-                              style: CustomTextStyles.bodySmallWhiteA700,
+                              style: CustomTextStyles.bodySmallWhiteA700
+                                  .copyWith(fontSize: 16.h),
                             ),
                   ),
                 ],

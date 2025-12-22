@@ -144,7 +144,9 @@ class _AcademicsLessonAllLessonsPageState
                                   .selectedClass
                                   .value
                               : controllerx.classType.value,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -175,7 +177,9 @@ class _AcademicsLessonAllLessonsPageState
                       Obx(() {
                         return Text(
                           "${controllerx.termType.value} Term",
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -226,7 +230,10 @@ class _AcademicsLessonAllLessonsPageState
                       children: [
                         SizedBox(height: 150.h),
                         CustomImageView(imagePath: ImageConstant.imgObjects),
-                        Text('No cbt Test for the selected filter condition'),
+                        Text(
+                          'No cbt Test for the selected filter condition',
+                          style: TextStyle(fontSize: 16.h),
+                        ),
                       ],
                     ),
                   )

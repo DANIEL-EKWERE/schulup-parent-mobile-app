@@ -21,8 +21,9 @@ class AcademicsLessonAllLessonsController extends GetxController {
 
   Rx<AcademicsLessonAllLessonsModel> academicsLessonAllLessonsModelObj;
 
-  AcademicsAssignmentStatusController controllerx =
-      Get.find<AcademicsAssignmentStatusController>();
+  AcademicsAssignmentStatusController controllerx = Get.put(
+    AcademicsAssignmentStatusController(),
+  );
 
   Lesson lesson = Lesson();
 

@@ -47,7 +47,15 @@ class _ReportsWardProgressSubjectOneBottomsheetState
         mainAxisSize: MainAxisSize.min,
         children: [
           
-          SizedBox(width: 52.h, child: Divider(color: appTheme.gray20001)),
+          Container(
+            margin: EdgeInsets.only(top: 12),
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
           
           SizedBox(height: 18.h),
           SizedBox(

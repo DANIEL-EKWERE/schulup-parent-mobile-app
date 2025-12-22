@@ -60,7 +60,7 @@ class ListlineItemLessonWidget extends StatelessWidget {
                   listlineItemModelObj.title!.length > 30
                       ? '${listlineItemModelObj.title!.substring(0, 30)}...'
                       : listlineItemModelObj.title!,
-                  style: theme.textTheme.bodyMedium,
+                  style: theme.textTheme.bodyMedium!.copyWith(fontSize: 16.h),
                 ),
                 //  ),
               ),
@@ -73,7 +73,7 @@ class ListlineItemLessonWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   "${listlineItemModelObj.subjectMasterName!} • ${formatDate(listlineItemModelObj.lastUpdated!)}",
 
-                  style: CustomTextStyles.bodySmallSecondaryContainer10,
+                  style: CustomTextStyles.bodySmallSecondaryContainer10.copyWith(fontSize: 16.h),
                 ),
               ),
               // ),

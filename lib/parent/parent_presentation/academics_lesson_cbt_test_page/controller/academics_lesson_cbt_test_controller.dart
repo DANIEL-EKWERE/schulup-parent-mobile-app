@@ -23,8 +23,10 @@ class AcademicsLessonCbtTestController extends GetxController {
 
   Rx<AcademicsLessonCbtTestModel> academicsLessonAllLessonsModelObj;
 
-  AcademicsAssignmentStatusController controllerx =
-      Get.find<AcademicsAssignmentStatusController>();
+  AcademicsAssignmentStatusController controllerx = Get.put(
+    AcademicsAssignmentStatusController(),
+  );
+
   @override
   onInit() {
     super.onInit();

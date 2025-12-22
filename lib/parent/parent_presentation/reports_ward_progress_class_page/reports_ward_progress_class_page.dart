@@ -179,7 +179,9 @@ class _ReportsWardProgressClassPageState
                   Obx(
                     () => Text(
                       controller.selectedBatch.value,
-                      style: CustomTextStyles.bodySmallWhiteA700,
+                      style: CustomTextStyles.bodySmallWhiteA700.copyWith(
+                        fontSize: 16.h,
+                      ),
                     ),
                   ),
                 ],
@@ -199,6 +201,7 @@ class _ReportsWardProgressClassPageState
         width: 182.h,
         controller: controller.frame427321469Controller,
         hintText: wardScore,
+        hintStyle: TextStyle(color: Colors.white, fontSize: 16.h),
         contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
         borderDecoration: TextFormFieldStyleHelper.fillGreen,
         fillColor: appTheme.green500,
@@ -214,6 +217,7 @@ class _ReportsWardProgressClassPageState
         width: 176.h,
         controller: controller.frame427321470Controller,
         hintText: classAverage,
+        hintStyle: TextStyle(color: Colors.white, fontSize: 16.h),
         contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
       ),
     );

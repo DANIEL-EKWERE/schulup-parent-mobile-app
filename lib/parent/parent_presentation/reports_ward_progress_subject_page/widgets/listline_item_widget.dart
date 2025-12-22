@@ -49,7 +49,12 @@ class ListlineItemWidget extends StatelessWidget {
               children: [
                 // Obx(
                 //   () =>
-                Text("Ward Score", style: CustomTextStyles.bodySmallGray700),
+                Text(
+                  "Ward Score",
+                  style: CustomTextStyles.bodySmallGray700.copyWith(
+                    fontSize: 16.h,
+                  ),
+                ),
                 // ),
                 _buildFrame427321469(listlineItemModelObj),
               ],
@@ -65,7 +70,9 @@ class ListlineItemWidget extends StatelessWidget {
                 //   () =>
                 Text(
                   "Class Average",
-                  style: CustomTextStyles.bodySmallGray700,
+                  style: CustomTextStyles.bodySmallGray700.copyWith(
+                    fontSize: 16.h,
+                  ),
                   // ),
                 ),
                 _buildFrame427321470(listlineItemModelObj),

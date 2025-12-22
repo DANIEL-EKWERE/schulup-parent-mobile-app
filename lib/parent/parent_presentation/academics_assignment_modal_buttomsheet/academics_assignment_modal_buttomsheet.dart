@@ -3,6 +3,7 @@ import 'package:schulupparent/parent/parent_presentation/academics_assignment_pa
 import 'package:schulupparent/parent/parent_presentation/academics_assignment_page/models/academics_assignment_model.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
+import 'package:schulupparent/parent/parent_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_lesson_cbt_test_page/controller/academics_lesson_cbt_test_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_lesson_cbt_test_page/models/academics_lesson_cbt_test_model.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
@@ -21,8 +22,10 @@ AcademicsLessonCbtTestController controls = Get.put(
 );
 DashboardExtendedViewController dashboardExtendedViewController =
     Get.find<DashboardExtendedViewController>();
-AcademicsLessonAllLessonsController lessonsController =
-    Get.find<AcademicsLessonAllLessonsController>();
+AcademicsLessonAllLessonsController lessonsController = Get.put(
+  AcademicsLessonAllLessonsController(AcademicsLessonAllLessonsModel().obs),
+);
+
 AcademicsAssignmentController controllers = Get.put(
   AcademicsAssignmentController(AcademicsAssignmentModel().obs),
 );
@@ -150,7 +153,7 @@ class _AcademicsAssignmentModalBottomsheetState
           CustomElevatedButton(
             onPressed: () {
               //Get.back();
-
+              Navigator.pop(context);
               print('object');
               setState(() {
                 controller1.classType.value = selectedType.first;
@@ -164,7 +167,6 @@ class _AcademicsAssignmentModalBottomsheetState
               });
               // Get.back();
               controllers.getAssignment();
-              Navigator.pop(context);
             },
             height: 64.h,
             text: "lbl_confirm".tr,
@@ -179,6 +181,7 @@ class _AcademicsAssignmentModalBottomsheetState
 
   /// Navigates to the previous screen.
   onTapImgCloseone() {
-    Get.back();
+    //Get.back();
+    Navigator.pop(context);
   }
 }

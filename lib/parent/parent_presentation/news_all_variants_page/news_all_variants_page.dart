@@ -115,6 +115,23 @@ class NewsAllVariantsPage extends StatelessWidget {
                     // return ListlineItemWidget(newsItems[index]);
                   },
                 )
+                : controller.newsItems!.isEmpty
+                ? Center(
+                  child: Column(
+                    spacing: 30,
+                    children: [
+                      SizedBox(height: 150.h),
+                      CustomImageView(imagePath: ImageConstant.imgObjects),
+                      Text(
+                        textAlign: TextAlign.center,
+                        'Opps,No News Found!!!',
+                        style: CustomTextStyles.displayMediumBlack.copyWith(
+                          fontSize: 16.h,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
                 : ListView.separated(
                   padding: EdgeInsets.zero,
                   physics: BouncingScrollPhysics(),

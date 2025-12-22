@@ -20,8 +20,38 @@ import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view
 DashboardExtendedViewController dashboardExtendedViewController =
     Get.find<DashboardExtendedViewController>();
 
-class NewsEventsScreen extends GetWidget<NewsEventsController> {
+NewsEventsController controller = Get.put(NewsEventsController());
+
+class NewsEventsScreen extends StatefulWidget {
   const NewsEventsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<NewsEventsScreen> createState() => _NewsEventsScreenState();
+}
+
+class _NewsEventsScreenState extends State<NewsEventsScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  void scrollToMonth(int index) {
+    // Calculate the position to scroll to
+    // itemWidth (120) + spacing (16)
+    double position = index * 100.0;
+
+    _scrollController.animateTo(
+      position,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Scroll to current month after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollToMonth(controller.selectedindex.value);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,24 +114,66 @@ class NewsEventsScreen extends GetWidget<NewsEventsController> {
             //   () =>
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Wrap(
-                direction: Axis.horizontal,
-                spacing: 4.h,
-                children: List.generate(getMonths().length, (index) {
-                  String model = getMonths()[index];
-                  return GestureDetector(
-                    onTap: () {
-                      controller.selectedMonth.value = model;
-                      print(model);
-                      controller.eventsByDateRange(model, '');
-                      // print(model);
-                      print(
-                        convertMonthYearToDateFormat(model.replaceAll(' ', '')),
-                      );
-                    },
-                    child: ListjuncounterItemWidget(model),
-                  );
-                }),
+              child: Container(
+                height: 35,
+                width: 400.h,
+                child: ListView.builder(
+                  controller: _scrollController,
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: getMonths().length,
+                  itemBuilder: (context, index) {
+                    var month = getMonths()[index];
+                    bool isSelected = index == controller.selectedindex.value;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          controller.selectedMonth.value = month;
+                          controller.selectedindex.value = index;
+                        });
+                        scrollToMonth(index);
+                        controller.getEvents();
+                      },
+                      child:
+                          isSelected
+                              ? Container(
+                                margin: EdgeInsets.only(left: 5.h, right: 5.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 14.h,
+                                  vertical: 10.h,
+                                ),
+                                decoration: AppDecoration.grayC2.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder18,
+                                ),
+                                child: Text(
+                                  month,
+                                  textAlign: TextAlign.center,
+                                  style: theme.textTheme.labelLarge!.copyWith(
+                                    fontSize: 14.h,
+                                  ),
+                                ),
+                              )
+                              : Container(
+                                margin: EdgeInsets.only(left: 5.h, right: 5.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 14.h,
+                                  vertical: 10.h,
+                                ),
+                                decoration: AppDecoration.grayC13.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder18,
+                                ),
+                                child: Text(
+                                  month,
+                                  textAlign: TextAlign.center,
+                                  style: CustomTextStyles.bodySmallOnPrimary_1
+                                      .copyWith(fontSize: 14.h),
+                                ),
+                              ),
+                    );
+                  },
+                ),
               ),
             ),
             // ),

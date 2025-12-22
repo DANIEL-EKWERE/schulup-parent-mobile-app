@@ -3,6 +3,7 @@ import 'package:alert_info/alert_info.dart';
 import 'package:flutter/material.dart';
 import 'package:schulupparent/parent/data/model/selectionPopupModel/selection_popup_model.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
+import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/base64.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/parent/widgets/custom_drop_down.dart';
 import 'package:schulupparent/parent/widgets/custom_text_form_field.dart';
@@ -72,12 +73,58 @@ class _DashboardEditWardProfileScreenState
                               SizedBox(height: 30),
                               Stack(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 60,
-                                    backgroundImage: AssetImage(
-                                      'assets/images/ward_image.png',
-                                    ),
-                                  ),
+                                  controller
+                                          .studentProfile!
+                                          .data!
+                                          .profilePicBase64!
+                                          .isEmpty
+                                      ? CircleAvatar(
+                                        radius: 60,
+                                        backgroundImage: AssetImage(
+                                          'assets/images/ward_image.png',
+                                        ),
+                                      )
+                                      : Container(
+                                        height: 150,
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                        ),
+
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            100,
+                                          ),
+                                          child: Base64Image(
+                                            base64String:
+                                                controller
+                                                    .studentProfile!
+                                                    .data!
+                                                    .profilePicBase64 ??
+                                                '?',
+                                            width: 30,
+                                            height: 30,
+                                            fit: BoxFit.cover,
+                                            placeholder: CircleAvatar(
+                                              backgroundColor: Color(
+                                                0xFFFF8D2A,
+                                              ).withOpacity(0.2),
+                                              child: Text(
+                                                controller
+                                                        .studentProfile!
+                                                        .data!
+                                                        .profilePicBase64!
+                                                        .toUpperCase() ??
+                                                    '?',
+                                                style: TextStyle(
+                                                  color: Color(0xFFFF8D2A),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                   Positioned(
                                     bottom: 0,
                                     right: 0,

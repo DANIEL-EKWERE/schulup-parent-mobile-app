@@ -71,6 +71,7 @@ class NewsAllItemWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodyMedium!.copyWith(
                         height: 1.50,
+                        fontSize: 16.h,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -89,6 +90,7 @@ class NewsAllItemWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: CustomTextStyles.bodySmallSecondaryContainer.copyWith(
               height: 1.50,
+              fontSize: 14.h,
             ),
           ),
           // Html(

@@ -24,12 +24,17 @@ class NewsEventsController extends GetxController {
   EventsResponse? eventsResponse;
   List<EventItem>? eventItems;
   Rx<String> selectedMonth = ''.obs;
+  Rx<int> selectedindex = 0.obs;
   Rx<bool> isLoading = false.obs;
+  DateTime? datex;
 
   @override
   void onInit() {
     super.onInit();
     getEvents();
+    datex = DateTime.now();
+    selectedindex.value = DateTime.now().month - 1;
+    selectedMonth.value = DateFormat('MMMM yyyy').format(datex!);
   }
 
   RefreshController refreshController = RefreshController(
@@ -38,6 +43,13 @@ class NewsEventsController extends GetxController {
   void onrefresh() {
     getEvents();
   }
+
+  //  RefreshController refreshController = RefreshController(
+  //     initialRefresh: false,
+  //   );
+  //   void onrefresh() {
+  //     getEvents();
+  //   }
 
   Future<void> getEvents() async {
     // OverlayLoadingProgress.start(

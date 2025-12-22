@@ -139,7 +139,9 @@ class AcademicsAssignmentPage extends StatelessWidget {
                                   .selectedClass
                                   .value
                               : controllerx.classType.value,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -168,7 +170,9 @@ class AcademicsAssignmentPage extends StatelessWidget {
                       Obx(() {
                         return Text(
                           "${controllerx.termType.value} Term",
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -198,7 +202,9 @@ class AcademicsAssignmentPage extends StatelessWidget {
                       Obx(() {
                         return Text(
                           controllerx.statusType.value,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -257,7 +263,10 @@ class AcademicsAssignmentPage extends StatelessWidget {
                           SizedBox(height: 150.h),
                           CustomImageView(imagePath: ImageConstant.imgObjects),
                           Text(
+                            textAlign: TextAlign.center,
+
                             'No Assignment for the selected filter condition',
+                            style: TextStyle(fontSize: 16.h),
                           ),
                         ],
                       ),

@@ -136,7 +136,9 @@ class AcademicsCbtTestPage extends StatelessWidget {
                                   .selectedClass
                                   .value
                               : controllerx.classType.value,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -166,7 +168,9 @@ class AcademicsCbtTestPage extends StatelessWidget {
                       Obx(() {
                         return Text(
                           controllerx.cbtType.value,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -217,7 +221,10 @@ class AcademicsCbtTestPage extends StatelessWidget {
                       children: [
                         SizedBox(height: 150.h),
                         CustomImageView(imagePath: ImageConstant.imgObjects),
-                        Text('No cbt Test for the selected filter condition'),
+                        Text(
+                          'No cbt Test for the selected filter condition',
+                          style: TextStyle(fontSize: 16.h),
+                        ),
                       ],
                     ),
                   )

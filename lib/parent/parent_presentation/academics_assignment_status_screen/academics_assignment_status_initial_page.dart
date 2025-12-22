@@ -251,6 +251,7 @@ class _AcademicsAssignmentStatusInitialPageState
           _buildColumnacademics(),
           Expanded(
             child: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
               controller: controller.tabviewController,
               children: [
                 // Assignment Tab Content
@@ -319,7 +320,7 @@ class _AcademicsAssignmentStatusInitialPageState
             width: double.maxFinite,
             child: Obx(
               () => Container(
-                margin: EdgeInsets.symmetric(horizontal: 46.h),
+                margin: EdgeInsets.symmetric(horizontal: 30.h),
                 child: TabBar(
                   controller: controller.tabviewController,
                   isScrollable: true,
@@ -329,13 +330,13 @@ class _AcademicsAssignmentStatusInitialPageState
                   tabAlignment: TabAlignment.center,
                   labelColor: appTheme.whiteA700,
                   labelStyle: TextStyle(
-                    fontSize: 12.fSize,
+                    fontSize: 16.fSize,
                     fontFamily: 'Rubik',
                     fontWeight: FontWeight.w500,
                   ),
                   unselectedLabelColor: theme.colorScheme.onPrimary,
                   unselectedLabelStyle: TextStyle(
-                    fontSize: 12.fSize,
+                    fontSize: 16.fSize,
                     fontFamily: 'Rubik',
                     fontWeight: FontWeight.w400,
                   ),
@@ -454,7 +455,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                             .selectedClass
                                             .value
                                         : controller.classType.value,
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 16.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -483,7 +486,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                 Obx(() {
                                   return Text(
                                     "${controller.termType.value} Term",
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 16.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -513,7 +518,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                 Obx(() {
                                   return Text(
                                     controller.statusType.value,
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 16.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -570,7 +577,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                             .selectedClass
                                             .value
                                         : controller.classType.value,
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 16.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -600,7 +609,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                 Obx(() {
                                   return Text(
                                     controller.cbtType.value,
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 16.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -652,7 +663,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                       .classDataList
                                       .first
                                       .name!,
-                                  style: theme.textTheme.labelLarge,
+                                  style: theme.textTheme.labelLarge!.copyWith(
+                                    fontSize: 16.h,
+                                  ),
                                 ),
                                 //}),
                                 CustomImageView(
@@ -681,7 +694,9 @@ class _AcademicsAssignmentStatusInitialPageState
                                 Obx(() {
                                   return Text(
                                     "${controller.termType.value} Term",
-                                    style: theme.textTheme.labelLarge,
+                                    style: theme.textTheme.labelLarge!.copyWith(
+                                      fontSize: 16.h,
+                                    ),
                                   );
                                 }),
                                 CustomImageView(
@@ -812,7 +827,10 @@ class _AcademicsAssignmentStatusInitialPageState
                         children: [
                           SizedBox(height: 150.h),
                           CustomImageView(imagePath: ImageConstant.imgObjects),
-                          Text('No Lessons for the selected filter condition'),
+                          Text(
+                            'No Lessons for the selected filter condition',
+                            style: TextStyle(fontSize: 16.h),
+                          ),
                         ],
                       ),
                     )

@@ -67,7 +67,9 @@ class ListlineItemCbtWidget extends StatelessWidget {
                     //   () =>
                     Text(
                       listlineItemModelObj.quizTitle!,
-                      style: theme.textTheme.bodyMedium,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        fontSize: 16.h,
+                      ),
                     ),
                     //),
                   ),
@@ -75,7 +77,8 @@ class ListlineItemCbtWidget extends StatelessWidget {
                   //   () =>
                   Text(
                     "${listlineItemModelObj.subjectName} • ${listlineItemModelObj.attemptsMade} of ${listlineItemModelObj.noOfQuestions}",
-                    style: CustomTextStyles.bodySmallSecondaryContainer10,
+                    style: CustomTextStyles.bodySmallSecondaryContainer10
+                        .copyWith(fontSize: 16.h),
                     //  ),
                   ),
                   Container(
@@ -111,7 +114,7 @@ class ListlineItemCbtWidget extends StatelessWidget {
                     //  Obx(
                     //   () =>
                     Text(
-                      "To ${formatDate(listlineItemModelObj.endDate.toString())}",
+                      "To: ${formatDate(listlineItemModelObj.endDate.toString())}",
                       textAlign: TextAlign.center,
                       style: CustomTextStyles.bodySmallWhiteA700.copyWith(
                         fontSize: 12.h,

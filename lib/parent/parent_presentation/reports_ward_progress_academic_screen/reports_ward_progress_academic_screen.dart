@@ -105,13 +105,13 @@ class _ReportsWardProgressAcademicScreenState
                 tabAlignment: TabAlignment.start,
                 labelColor: appTheme.whiteA700,
                 labelStyle: TextStyle(
-                  fontSize: 12.fSize,
+                  fontSize: 16.fSize,
                   fontFamily: 'Rubik',
                   fontWeight: FontWeight.w500,
                 ),
                 unselectedLabelColor: theme.colorScheme.onPrimary,
                 unselectedLabelStyle: TextStyle(
-                  fontSize: 12.fSize,
+                  fontSize: 16.fSize,
                   fontFamily: 'Rubik',
                   fontWeight: FontWeight.w400,
                 ),

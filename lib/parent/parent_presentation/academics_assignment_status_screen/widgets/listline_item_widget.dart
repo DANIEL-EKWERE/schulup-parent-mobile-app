@@ -56,7 +56,9 @@ class ListlineItemWidget extends StatelessWidget {
                     //   () =>
                     Text(
                       listlineItemModelObj.title!,
-                      style: theme.textTheme.bodyMedium,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        fontSize: 16.h,
+                      ),
                     ),
                     //  ),
                   ),
@@ -68,7 +70,8 @@ class ListlineItemWidget extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       "${listlineItemModelObj.subjectName!} • ${listlineItemModelObj.formattedDatePosted}",
-                      style: CustomTextStyles.bodySmallSecondaryContainer10,
+                      style: CustomTextStyles.bodySmallSecondaryContainer10
+                          .copyWith(fontSize: 16.h),
                       // ),
                     ),
                   ),
@@ -86,7 +89,9 @@ class ListlineItemWidget extends StatelessWidget {
                     Text(
                       listlineItemModelObj.formattedDueDateWithDay,
                       textAlign: TextAlign.center,
-                      style: CustomTextStyles.bodySmallWhiteA700,
+                      style: CustomTextStyles.bodySmallWhiteA700.copyWith(
+                        fontSize: 16.h,
+                      ),
                       //  ),
                     ),
                   ),
