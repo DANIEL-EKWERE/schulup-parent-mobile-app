@@ -54,11 +54,14 @@ class SchulupLogoSvgScreen extends GetWidget<SchulupLogoSvgController> {
               // ),
               // SizedBox(height: 36.h),
 
-              CustomImageView(
-                      imagePath: 'assets/images/img_schulup_icon.png',
-                      height: 150,
-                      width: 150,
-                    )
+              Hero(
+                tag: 'logo',
+                child: CustomImageView(
+                        imagePath: 'assets/images/img_schulup_icon.png',
+                        height: 150,
+                        width: 150,
+                      ),
+              )
             ],
           ),
         ),

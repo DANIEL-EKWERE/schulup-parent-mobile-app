@@ -184,6 +184,7 @@ import 'package:schulupparent/admin/presentation/home_screen/home_screen.dart';
 //TODO: PARENT ROUTING
 import 'package:schulupparent/parent/core/utils/storage.dart' as parent;
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
+import 'package:schulupparent/parent/parent_presentation/academics_assignment_status_screen/academics_assignment_status_screen.dart';
 import 'package:schulupparent/parent/routes/app_routes.dart';
 
 //TODO: STUDENT ROUTING
@@ -233,38 +234,47 @@ class SigninController extends GetxController {
         // Extract data
         var token = responseData['data']['token'] as String;
         var userId = responseData['data']['userID'] as int;
-        var studentID = responseData['data']['studentID'] as int;
-        
+        // var studentID = responseData['data']['studentID'] as int;
+
         var userName = responseData['data']['displayName'] as String;
         var userType = responseData['data']['userType'] as int;
-
-        myLog.log('Token: $token');
-        myLog.log('User ID: $userId');
-        myLog.log('User Name: $userName');
-        myLog.log('User Type: $userType');
 
         // Save common data
 
         // Clear controllers
-        usernameController.clear();
-        passwordController.clear();
-        schoolCodeController.clear();
+        // usernameController.clear();
+        // passwordController.clear();
+        // schoolCodeController.clear();
 
         // Route based on user type
         if (userType == 4) {
+          var token = responseData['data']['token'] as String;
+          var userId = responseData['data']['userID'] as int;
+
+          var userName = responseData['data']['displayName'] as String;
+          // var userType = responseData['data']['userType'] as int;
           // Parent/Guardian
-          var guardianID = responseData['data']['guardianID'];
+          var guardianID = responseData['data']['guardianID'] as int;
           await parent.dataBase.saveGuardianID(guardianID);
           await parent.dataBase.saveToken(token);
           await parent.dataBase.saveUserId(userId);
           await parent.dataBase.saveUserName(userName);
           await parent.dataBase.saveTransactionPin(passwordController.text);
           await parent.dataBase.saveBrmCode(schoolCodeController.text);
+          myLog.log(guardianID.toString());
+          myLog.log(token);
+          myLog.log(userId.toString());
+          myLog.log(userName);
+          myLog.log(passwordController.text);
+          myLog.log(schoolCodeController.text);
+
           myLog.log('Routing to Parent dashboard');
-          Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen);
+          //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen);
+          Get.offAll(() => AcademicsAssignmentStatusScreen());
         } else if (userType == 3) {
           // Student
           myLog.log('Routing to Student dashboard');
+          var studentID = responseData['data']['studentID'] as int;
           await student.studentDataBase.saveToken(token);
           myLog.log('save token');
           await student.studentDataBase.saveUserId(userId);

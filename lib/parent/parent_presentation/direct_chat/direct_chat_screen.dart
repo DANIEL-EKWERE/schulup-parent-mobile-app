@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/base64.dart';
 import 'package:schulupparent/parent/parent_presentation/direct_chat/controller/direct_chat_controller.dart';
@@ -24,192 +25,216 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
-        backgroundColor: appTheme.whiteA700,
-        appBar: _buildAppbar(),
-        body: Column(
-          children: [
-            /// --- TAB BAR ---
-            Container(
-              color: appTheme.whiteA700,
-              child: TabBar(
-                dividerColor: Colors.transparent,
-                indicatorColor: Color(0xFFFF8D2A),
-                labelColor: Color(0xFFFF8D2A),
-                unselectedLabelColor: Colors.grey,
-                tabs: [
-                  Tab(text: "Class Teachers"),
-                  Tab(text: "Ongiong Conversations"),
-                ],
+      child: SmartRefresher(
+        enablePullUp: true,
+        // dragStartBehavior: DragStartBehavior(),
+        controller: controller.refreshController,
+        onRefresh: controller.onrefresh,
+        child: Scaffold(
+          backgroundColor: appTheme.whiteA700,
+          appBar: _buildAppbar(),
+          body: Column(
+            children: [
+              /// --- TAB BAR ---
+              Container(
+                color: appTheme.whiteA700,
+                child: TabBar(
+                  dividerColor: Colors.transparent,
+                  indicatorColor: Color(0xFFFF8D2A),
+                  labelColor: Color(0xFFFF8D2A),
+                  unselectedLabelColor: Colors.grey,
+                  tabs: [
+                    Tab(text: "Class Teachers"),
+                    Tab(text: "Ongiong Conversations"),
+                  ],
+                ),
               ),
-            ),
 
-            /// --- TAB CONTENT ---
-            Expanded(
-              child: TabBarView(
-                children: [
-                  /// ---------------- TAB 1 CONTENT (Your existing UI) ----------------
-                  SafeArea(
-                    top: false,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: 24.h,
-                        top: 20.h,
-                        right: 24.h,
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Select a member of the school to chat with them directly',
-                            style: CustomTextStyles.bodyMediumGray700.copyWith(
-                              fontSize: 12.h,
+              /// --- TAB CONTENT ---
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    /// ---------------- TAB 1 CONTENT (Your existing UI) ----------------
+                    SafeArea(
+                      top: false,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 24.h,
+                          top: 20.h,
+                          right: 24.h,
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Select a member of the school to chat with them directly',
+                              style: CustomTextStyles.bodyMediumGray700
+                                  .copyWith(fontSize: 16.h),
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          Expanded(
-                            child: Obx(() {
-                              if (controller.isLoading.value) {
-                                return ListView.separated(
-                                  shrinkWrap: true,
-                                  itemCount: 5,
-                                  separatorBuilder:
-                                      (context, index) =>
-                                          SizedBox(height: 12.h),
-                                  itemBuilder: (context, index) {
-                                    return TeacherShimmerWidget();
-                                  },
-                                );
-                              } else {
-                                return ListView.separated(
-                                  itemCount:
-                                      controller.teacherData?.length ?? 0,
-                                  separatorBuilder:
-                                      (context, index) =>
-                                          SizedBox(height: 12.h),
-                                  itemBuilder: (context, index) {
-                                    TeacherData teacherData =
-                                        controller.teacherData![index];
-                                    return GestureDetector(
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                'Start New Conversation',
-                                                style:
-                                                    CustomTextStyles
-                                                        .titleMediumOnPrimary,
-                                              ),
-                                              content: SizedBox(
-                                                height: 40,
-                                                child: Column(
-                                                  children: [
-                                                    CustomTextFormField(
-                                                      controller:
-                                                          controller
-                                                              .subjectController,
-                                                      fillColor:
-                                                          appTheme.gray20001,
-                                                      hintText:
-                                                          'Enter Convsersation subject',
-                                                      hintStyle:
-                                                          CustomTextStyles
-                                                              .bodyMediumGray700,
-                                                    ),
-                                                  ],
+                            SizedBox(height: 20.h),
+                            Expanded(
+                              child: Obx(() {
+                                if (controller.isLoading.value) {
+                                  return ListView.separated(
+                                    shrinkWrap: true,
+                                    itemCount: 5,
+                                    separatorBuilder:
+                                        (context, index) =>
+                                            SizedBox(height: 12.h),
+                                    itemBuilder: (context, index) {
+                                      return TeacherShimmerWidget();
+                                    },
+                                  );
+                                } else if (controller.teacherData!.isEmpty &&
+                                    !controller.isLoading.value) {
+                                  return Center(
+                                    child: Column(
+                                      spacing: 30,
+                                      children: [
+                                        SizedBox(height: 150.h),
+                                        CustomImageView(
+                                          imagePath: ImageConstant.imgObjects,
+                                        ),
+                                        Text(
+                                          textAlign: TextAlign.center,
+                                          'Opps,No Assigned Teachers for the student, Contact Admin!!!',
+                                          style: CustomTextStyles
+                                              .displayMediumBlack
+                                              .copyWith(fontSize: 16.h),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  return ListView.separated(
+                                    itemCount:
+                                        controller.teacherData?.length ?? 0,
+                                    separatorBuilder:
+                                        (context, index) =>
+                                            SizedBox(height: 12.h),
+                                    itemBuilder: (context, index) {
+                                      TeacherData teacherData =
+                                          controller.teacherData![index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                  'Start New Conversation',
+                                                  style:
+                                                      CustomTextStyles
+                                                          .titleMediumOnPrimary,
                                                 ),
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text('Cancel'),
+                                                content: SizedBox(
+                                                  height: 40,
+                                                  child: Column(
+                                                    children: [
+                                                      CustomTextFormField(
+                                                        controller:
+                                                            controller
+                                                                .subjectController,
+                                                        fillColor:
+                                                            appTheme.gray20001,
+                                                        hintText:
+                                                            'Enter Convsersation subject',
+                                                        hintStyle:
+                                                            CustomTextStyles
+                                                                .bodyMediumGray700,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                                TextButton(
-                                                  onPressed: () {
-                                                    controller
-                                                        .startConversation(
-                                                          teacherData
-                                                              .teacherUserId
-                                                              .toString(),
-                                                        );
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text('Ok'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: _buildTeacherCard(teacherData),
-                                    );
-                                  },
-                                );
-                              }
-                            }),
-                          ),
-                        ],
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Cancel'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      controller
+                                                          .startConversation(
+                                                            teacherData
+                                                                .teacherUserId
+                                                                .toString(),
+                                                          );
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: _buildTeacherCard(teacherData),
+                                      );
+                                    },
+                                  );
+                                }
+                              }),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
 
-                  /// ---------------- TAB 2 CONTENT (EMPTY) ----------------
-                  SafeArea(
-                    top: false,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: 24.h,
-                        top: 20.h,
-                        right: 24.h,
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Select an ongoing conversation to continue from where you left!!!',
-                            style: CustomTextStyles.bodyMediumGray700.copyWith(
-                              fontSize: 12.h,
+                    /// ---------------- TAB 2 CONTENT (EMPTY) ----------------
+                    SafeArea(
+                      top: false,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 24.h,
+                          top: 20.h,
+                          right: 24.h,
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Select an ongoing conversation to continue from where you left!!!',
+                              style: CustomTextStyles.bodyMediumGray700
+                                  .copyWith(fontSize: 16.h),
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          Expanded(
-                            child: Obx(() {
-                              if (controller.isLoading.value) {
-                                return ListView.separated(
-                                  shrinkWrap: true,
-                                  itemCount: 5,
-                                  separatorBuilder:
-                                      (context, index) =>
-                                          SizedBox(height: 12.h),
-                                  itemBuilder: (context, index) {
-                                    return TeacherShimmerWidget();
-                                  },
-                                );
-                              } else {
-                                return ListView.separated(
-                                  itemCount: controller.conversations!.length,
-                                  separatorBuilder:
-                                      (context, index) =>
-                                          SizedBox(height: 12.h),
-                                  itemBuilder: (context, index) {
-                                    Conversations conversation =
-                                        controller.conversations![index];
-                                    return _buildTeacherCard1(conversation);
-                                  },
-                                );
-                              }
-                            }),
-                          ),
-                        ],
+                            SizedBox(height: 20.h),
+                            Expanded(
+                              child: Obx(() {
+                                if (controller.isLoading.value) {
+                                  return ListView.separated(
+                                    shrinkWrap: true,
+                                    itemCount: 5,
+                                    separatorBuilder:
+                                        (context, index) =>
+                                            SizedBox(height: 12.h),
+                                    itemBuilder: (context, index) {
+                                      return TeacherShimmerWidget();
+                                    },
+                                  );
+                                } else {
+                                  return ListView.separated(
+                                    itemCount: controller.conversations!.length,
+                                    separatorBuilder:
+                                        (context, index) =>
+                                            SizedBox(height: 12.h),
+                                    itemBuilder: (context, index) {
+                                      Conversations conversation =
+                                          controller.conversations![index];
+                                      return _buildTeacherCard1(conversation);
+                                    },
+                                  );
+                                }
+                              }),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -243,7 +268,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
                   style: TextStyle(
                     color: Color(0xFFFF8D2A),
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 16.h,
                   ),
                 ),
               ),
@@ -253,7 +278,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
           Expanded(
             child: Text(
               teacherData.teacherName ?? 'Unknown',
-              style: CustomTextStyles.bodySmallGray700,
+              style: CustomTextStyles.bodySmallGray700.copyWith(fontSize: 16.h),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -300,7 +325,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
           Expanded(
             child: Text(
               conversation.subject!,
-              style: CustomTextStyles.bodySmallGray700,
+              style: CustomTextStyles.bodySmallGray700.copyWith(fontSize: 16.h),
               overflow: TextOverflow.ellipsis,
             ),
           ),

@@ -31,6 +31,7 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
     super.initState();
     controller1.academicPerformance();
     controller1.classOverview();
+    //controller.tabIndex.value = 0;
   }
 
   @override
@@ -52,6 +53,7 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
                     // height: 400.h,
                     child: ListView.builder(
                       shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
                       itemCount: controller1.selectedPerformance!.length,
                       itemBuilder: (context, index) {
                         AcademicsPerformance model =
@@ -60,34 +62,7 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: _buildRowprimary5a(model),
                         );
-                        // Text(
-                        //   model.text!,
-                        //   style: CustomTextStyles.bodyMediumGray900,
-                        // );
                       },
-                      // Column(
-                      //   spacing: 4,
-                      //   children: [
-                      //     _buildRowprimary5a(),
-                      //     _buildRowprimary4a(),
-                      //     _buildRowprimary4a1(),
-                      //     _buildRowprimary4a2(),
-                      //     _buildRowprimary3a(),
-                      //     _buildRowprimary3a1(),
-                      //     _buildRowprimary3a2(),
-                      //     _buildRowprimary2a(),
-                      //     _buildRowprimary2a1(),
-                      //     _buildRowprimary2a2(),
-                      //     _buildRowprimary1a(),
-                      //     _buildRowprimary1a1(),
-                      //     _buildRowprimarya2(),
-                      //     _buildRownursery3a(),
-                      //     _buildRownursery3a1(),
-                      //     _buildRownursery3a2(),
-                      //     _buildRownursery2a(),
-                      //     _buildRownursery2a1(),
-                      //     _buildRownursery2a2(),
-                      //   ],
                     ),
                   ),
         ),
@@ -102,6 +77,8 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
       child: SizedBox(
         width: 150.h,
         child: CustomTextFormField(
+          textStyle: TextStyle(fontSize: 16.h),
+          hintStyle: TextStyle(fontSize: 16.h, color: Colors.white),
           readOnly: true,
           width:
               MediaQuery.of(Get.context!).size.width /
@@ -125,7 +102,10 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(model.className!, style: CustomTextStyles.bodySmallGray700),
+          Text(
+            model.className!,
+            style: CustomTextStyles.bodySmallGray700.copyWith(fontSize: 16.h),
+          ),
           _buildFrame427321469(model),
         ],
       ),

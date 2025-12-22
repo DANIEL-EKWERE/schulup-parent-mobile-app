@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:schulupparent/student/student_presentation/attendance_all_variants_page/models/attendance_model.dart';
 import 'package:schulupparent/student/student_presentation/attendance_all_variants_page/widgets/attendance_shimmer_widget.dart';
+import 'package:schulupparent/student/student_presentation/attendance_all_variants_page/widgets/custom_date_picker_model.dart';
 import 'package:schulupparent/student/student_presentation/attendance_filter_start_date_bottomsheet/attendance_filter_start_date_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/attendance_filter_start_date_bottomsheet/controller/attendance_filter_start_date_controller.dart';
 import '../../core/app_export.dart';
@@ -110,8 +111,7 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
                                     Text(
                                       textAlign: TextAlign.center,
                                       'Opps,No Attendance Record for the selected date found',
-                                      style: CustomTextStyles
-                                          .displayMediumBlack
+                                      style: CustomTextStyles.displayMediumBlack
                                           .copyWith(fontSize: 16.h),
                                     ),
                                   ],
@@ -195,14 +195,22 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
                     //   AttendanceFilterStartDateController(),
                     // );
                     //controller.getStudentAttendance();
-                    showModalBottomSheet(
-                      context: Get.context!,
-                      builder: (context) {
-                        return AttendanceFilterStartDateBottomsheet(
-                          AttendanceFilterStartDateController(),
-                        );
-                      },
-                    );
+                    // showModalBottomSheet(
+                    //   context: Get.context!,
+                    //   builder: (context) {
+                    //     return AttendanceFilterStartDateBottomsheet(
+                    //       AttendanceFilterStartDateController(),
+                    //     );
+                    //   },
+                    // );
+                    showCustomDatePicker(context, controller.datex!, (newDate) {
+                      setState(() {
+                        controller.selectedMonth = newDate.month - 1;
+                        controller.datex = newDate;
+                        scrollToMonth(newDate.month - 1);
+                      });
+                      controller.getStudentAttendance();
+                    });
                   },
                   imagePath: ImageConstant.imgUserWhiteA700,
                   margin: EdgeInsets.only(top: 1.h, right: 25.h, bottom: 2.h),
@@ -213,135 +221,7 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: IntrinsicWidth(
-              child:
-              // Row(
-              //   mainAxisSize: MainAxisSize.min,
-              //   children: List.generate(getMonths().length, (index) {
-              //     var month = getMonths()[index];
-              //     return
-              //     // month
-              //     GestureDetector(
-              //       onTap: () {
-              //         // print(month);
-              //         // print(index);
-              //         // print(selectedMonth);
-              //         setState(() {
-              //           controller.selectedMonth = index;
-              //         });
-              //         controller.getStudentAttendance();
-              //       },
-              //       child:
-              //           controller.selectedMonth == index
-              //               ? Container(
-              //                 margin: EdgeInsets.only(left: 5.h, right: 5.h),
-              //                 padding: EdgeInsets.symmetric(
-              //                   horizontal: 14.h,
-              //                   vertical: 10.h,
-              //                 ),
-              //                 decoration: AppDecoration.grayC2.copyWith(
-              //                   borderRadius: BorderRadiusStyle.roundedBorder18,
-              //                 ),
-              //                 child: Text(
-              //                   month,
-              //                   textAlign: TextAlign.center,
-              //                   style: theme.textTheme.labelLarge,
-              //                 ),
-              //               )
-              //               : Container(
-              //                 margin: EdgeInsets.only(left: 5.h, right: 5.h),
-              //                 padding: EdgeInsets.symmetric(
-              //                   horizontal: 14.h,
-              //                   vertical: 10.h,
-              //                 ),
-              //                 decoration: AppDecoration.grayC13.copyWith(
-              //                   borderRadius: BorderRadiusStyle.roundedBorder18,
-              //                 ),
-              //                 child: Text(
-              //                   month,
-              //                   textAlign: TextAlign.center,
-              //                   style: CustomTextStyles.bodySmallOnPrimary_1,
-              //                 ),
-              //               ),
-              //     );
-              //   }),
-              //   // [
-              //   // Container(
-              //   //   padding: EdgeInsets.symmetric(
-              //   //     horizontal: 14.h,
-              //   //     vertical: 10.h,
-              //   //   ),
-              //   //   decoration: AppDecoration.grayC13.copyWith(
-              //   //     borderRadius: BorderRadiusStyle.roundedBorder18,
-              //   //   ),
-              //   //   child: Text(
-              //   //     "lbl_jun_2025".tr,
-              //   //     textAlign: TextAlign.center,
-              //   //     style: CustomTextStyles.bodySmallOnPrimary_1,
-              //   //   ),
-              //   // ),
-              //   // Container(
-              //   //   margin: EdgeInsets.only(left: 4.h),
-              //   //   padding: EdgeInsets.symmetric(
-              //   //     horizontal: 14.h,
-              //   //     vertical: 10.h,
-              //   //   ),
-              //   //   decoration: AppDecoration.grayC13.copyWith(
-              //   //     borderRadius: BorderRadiusStyle.roundedBorder18,
-              //   //   ),
-              //   //   child: Text(
-              //   //     "lbl_jul_2025".tr,
-              //   //     textAlign: TextAlign.center,
-              //   //     style: CustomTextStyles.bodySmallOnPrimary_1,
-              //   //   ),
-              //   // ),
-              //   //   Container(
-              //   //     margin: EdgeInsets.only(left: 4.h),
-              //   //     padding: EdgeInsets.symmetric(
-              //   //       horizontal: 14.h,
-              //   //       vertical: 8.h,
-              //   //     ),
-              //   //     decoration: AppDecoration.grayC13.copyWith(
-              //   //       borderRadius: BorderRadiusStyle.roundedBorder18,
-              //   //     ),
-              //   //     child: Text(
-              //   //       "lbl_sept_2025".tr,
-              //   //       textAlign: TextAlign.center,
-              //   //       style: CustomTextStyles.bodySmallOnPrimary_1,
-              //   //     ),
-              //   //   ),
-              //   //   Container(
-              //   //     margin: EdgeInsets.only(left: 4.h),
-              //   //     padding: EdgeInsets.symmetric(
-              //   //       horizontal: 14.h,
-              //   //       vertical: 10.h,
-              //   //     ),
-              //   //     decoration: AppDecoration.grayC13.copyWith(
-              //   //       borderRadius: BorderRadiusStyle.roundedBorder18,
-              //   //     ),
-              //   //     child: Text(
-              //   //       "lbl_oct_2025".tr,
-              //   //       textAlign: TextAlign.center,
-              //   //       style: CustomTextStyles.bodySmallOnPrimary_1,
-              //   //     ),
-              //   //   ),
-              //   // Container(
-              //   //   margin: EdgeInsets.only(left: 4.h),
-              //   //   padding: EdgeInsets.symmetric(
-              //   //     horizontal: 14.h,
-              //   //     vertical: 10.h,
-              //   //   ),
-              //   //   decoration: AppDecoration.grayC2.copyWith(
-              //   //     borderRadius: BorderRadiusStyle.roundedBorder18,
-              //   //   ),
-              //   //   child: Text(
-              //   //     "lbl_nov_2025".tr,
-              //   //     textAlign: TextAlign.center,
-              //   //     style: theme.textTheme.labelLarge,
-              //   //   ),
-              //   // ),
-              //   // ],
-              // ),
-              Container(
+              child: Container(
                 height: 35,
                 width: 400.h,
                 child: ListView.builder(

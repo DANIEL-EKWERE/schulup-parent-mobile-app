@@ -3,22 +3,20 @@ import 'dart:convert';
 /// This class defines the variables used in the [reports_ward_progress_class_page],
 /// and is typically used to hold data that is passed between different parts of the application.
 
-ReportsWardProgressClassModel reportsWardProgressClassModelFromJson(String str) =>
-    ReportsWardProgressClassModel.fromJson(json.decode(str));
+ReportsWardProgressClassModel reportsWardProgressClassModelFromJson(
+  String str,
+) => ReportsWardProgressClassModel.fromJson(json.decode(str));
 
-String reportsWardProgressClassModelToJson(ReportsWardProgressClassModel data) =>
-    json.encode(data.toJson());
+String reportsWardProgressClassModelToJson(
+  ReportsWardProgressClassModel data,
+) => json.encode(data.toJson());
 
-  class ReportsWardProgressClassModel {
+class ReportsWardProgressClassModel {
   bool? success;
   String? message;
   List<AcademicsPerformance>? data;
 
-  ReportsWardProgressClassModel({
-    this.success,
-    this.message,
-    this.data,
-  });
+  ReportsWardProgressClassModel({this.success, this.message, this.data});
 
   ReportsWardProgressClassModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
@@ -44,12 +42,9 @@ String reportsWardProgressClassModelToJson(ReportsWardProgressClassModel data) =
 
 class AcademicsPerformance {
   String? className;
-  double? studentAverage;
+  dynamic studentAverage;
 
-  AcademicsPerformance({
-    this.className,
-    this.studentAverage,
-  });
+  AcademicsPerformance({this.className, this.studentAverage});
 
   AcademicsPerformance.fromJson(Map<String, dynamic> json) {
     className = json['className'];
@@ -63,4 +58,3 @@ class AcademicsPerformance {
     return data;
   }
 }
-

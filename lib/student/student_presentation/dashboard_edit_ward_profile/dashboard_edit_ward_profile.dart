@@ -3,6 +3,7 @@ import 'package:alert_info/alert_info.dart';
 import 'package:flutter/material.dart';
 
 import 'package:schulupparent/student/student_presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
+import 'package:schulupparent/student/student_presentation/dashboard_extended_view/base64.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
 import 'package:schulupparent/student/widgets/custom_text_form_field.dart';
@@ -72,10 +73,43 @@ class _DashboardEditWardProfileScreenState
                               SizedBox(height: 30),
                               Stack(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 60,
-                                    backgroundImage: AssetImage(
-                                      'assets/images/ward_image.png',
+                                  Container(
+                                    height: 150,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Base64Image(
+                                        base64String:
+                                            studentController
+                                                .studentProfile!
+                                                .data!
+                                                .profilePicBase64 ??
+                                            '?',
+                                        width: 30,
+                                        height: 30,
+                                        fit: BoxFit.cover,
+                                        placeholder: CircleAvatar(
+                                          backgroundColor: Color(
+                                            0xFFFF8D2A,
+                                          ).withOpacity(0.2),
+                                          child: Text(
+                                            studentController
+                                                    .studentProfile!
+                                                    .data!
+                                                    .profilePicBase64!
+                                                    .toUpperCase() ??
+                                                '?',
+                                            style: TextStyle(
+                                              color: Color(0xFFFF8D2A),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   Positioned(
@@ -93,7 +127,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'Last Name',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -104,8 +139,9 @@ class _DashboardEditWardProfileScreenState
                                 controller:
                                     studentController.lastNameController,
                                 hintText: "Last Name",
-                                hintStyle:
-                                    CustomTextStyles.labelLargeBluegray700,
+                                hintStyle: CustomTextStyles
+                                    .labelLargeBluegray700
+                                    .copyWith(fontSize: 18.h),
                                 // prefix: Container(
                                 //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                                 //   child: CustomImageView(
@@ -141,7 +177,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'First Name',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -152,8 +189,9 @@ class _DashboardEditWardProfileScreenState
                                 controller:
                                     studentController.firstNameController,
                                 hintText: "First Name",
-                                hintStyle:
-                                    CustomTextStyles.labelLargeBluegray700,
+                                hintStyle: CustomTextStyles
+                                    .labelLargeBluegray700
+                                    .copyWith(fontSize: 18.h),
                                 // prefix: Container(
                                 //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                                 //   child: CustomImageView(
@@ -189,7 +227,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'Middle Name',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -200,8 +239,9 @@ class _DashboardEditWardProfileScreenState
                                 controller:
                                     studentController.middleNameController,
                                 hintText: "Middle Name",
-                                hintStyle:
-                                    CustomTextStyles.labelLargeBluegray700,
+                                hintStyle: CustomTextStyles
+                                    .labelLargeBluegray700
+                                    .copyWith(fontSize: 16.h),
                                 // prefix: Container(
                                 //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                                 //   child: CustomImageView(
@@ -237,7 +277,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'Gender',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -297,7 +338,8 @@ class _DashboardEditWardProfileScreenState
                                       ),
                                     ),
                                   ),
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                   initialValue:
                                       ['Male', 'Female', 'Other'].contains(
                                             studentController
@@ -338,7 +380,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'Date Of Birth',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -349,8 +392,9 @@ class _DashboardEditWardProfileScreenState
                                   setState(() {});
                                 },
                                 hintText: "Date Of Birth",
-                                hintStyle:
-                                    CustomTextStyles.labelLargeBluegray700,
+                                hintStyle: CustomTextStyles
+                                    .labelLargeBluegray700
+                                    .copyWith(fontSize: 18.h),
                                 // prefix: Container(
                                 //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                                 //   child: CustomImageView(
@@ -392,7 +436,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'Blood Group',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -447,7 +492,8 @@ class _DashboardEditWardProfileScreenState
                                       ),
                                     ),
                                   ),
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                   initialValue:
                                       [
                                             'A+',
@@ -518,7 +564,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'Genotype',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -579,7 +626,8 @@ class _DashboardEditWardProfileScreenState
                                       ),
                                     ),
                                   ),
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                   initialValue:
                                       ['AA', 'AS', 'SS'].contains(
                                             studentController
@@ -617,7 +665,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'Place Of Birth',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -629,8 +678,9 @@ class _DashboardEditWardProfileScreenState
                                   setState(() {});
                                 },
                                 hintText: "Place Of Birth",
-                                hintStyle:
-                                    CustomTextStyles.labelLargeBluegray700,
+                                hintStyle: CustomTextStyles
+                                    .labelLargeBluegray700
+                                    .copyWith(fontSize: 16.h),
                                 // prefix: Container(
                                 //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                                 //   child: CustomImageView(
@@ -666,15 +716,17 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'State',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
                               CustomTextFormField(
                                 controller: studentController.stateController,
                                 hintText: "State",
-                                hintStyle:
-                                    CustomTextStyles.labelLargeBluegray700,
+                                hintStyle: CustomTextStyles
+                                    .labelLargeBluegray700
+                                    .copyWith(fontSize: 16.h),
                                 // prefix: Container(
                                 //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                                 //   child: CustomImageView(
@@ -709,7 +761,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'City',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -720,8 +773,9 @@ class _DashboardEditWardProfileScreenState
                                 },
                                 //  controller: controller.passwordController,
                                 hintText: "City",
-                                hintStyle:
-                                    CustomTextStyles.labelLargeBluegray700,
+                                hintStyle: CustomTextStyles
+                                    .labelLargeBluegray700
+                                    .copyWith(fontSize: 16.h),
                                 // prefix: Container(
                                 //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                                 //   child: CustomImageView(
@@ -757,7 +811,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'Address',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -768,8 +823,9 @@ class _DashboardEditWardProfileScreenState
                                 },
                                 //  controller: controller.passwordController,
                                 hintText: "Address",
-                                hintStyle:
-                                    CustomTextStyles.labelLargeBluegray700,
+                                hintStyle: CustomTextStyles
+                                    .labelLargeBluegray700
+                                    .copyWith(fontSize: 16.h),
                                 // prefix: Container(
                                 //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                                 //   child: CustomImageView(
@@ -805,7 +861,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'Phone Number',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -815,8 +872,9 @@ class _DashboardEditWardProfileScreenState
                                 },
                                 controller: studentController.phoneController,
                                 hintText: "Phone Number",
-                                hintStyle:
-                                    CustomTextStyles.labelLargeBluegray700,
+                                hintStyle: CustomTextStyles
+                                    .labelLargeBluegray700
+                                    .copyWith(fontSize: 16.h),
                                 // prefix: Container(
                                 //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                                 //   child: CustomImageView(
@@ -851,7 +909,8 @@ class _DashboardEditWardProfileScreenState
                                 alignment: AlignmentGeometry.centerLeft,
                                 child: Text(
                                   'Religion',
-                                  style: CustomTextStyles.bodyMediumOnPrimary,
+                                  style: CustomTextStyles.bodyMediumOnPrimary
+                                      .copyWith(fontSize: 16.h),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -863,8 +922,9 @@ class _DashboardEditWardProfileScreenState
                                 },
                                 //  controller: controller.passwordController,
                                 hintText: "Religion",
-                                hintStyle:
-                                    CustomTextStyles.labelLargeBluegray700,
+                                hintStyle: CustomTextStyles
+                                    .labelLargeBluegray700
+                                    .copyWith(fontSize: 16.h),
                                 // prefix: Container(
                                 //   margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                                 //   child: CustomImageView(

@@ -71,6 +71,7 @@ class _ReportsReportCardAllVariantsPageState
                     padding: EdgeInsets.symmetric(horizontal: 24.h),
                     child: Container(
                       child: TabBarView(
+                        physics: NeverScrollableScrollPhysics(),
                         controller: controller.tabviewController,
                         children: [
                           Column(

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:schulupparent/student/student_presentation/reports_ward_progress_academic_screen/controller/reports_ward_progress_academic_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_ward_progress_subject_one_bottomsheet/controller/reports_ward_progress_subject_one_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_ward_progress_subject_one_bottomsheet/reports_ward_progress_subject_one_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/reports_ward_progress_subject_page/models/subject_progress_model.dart';
@@ -14,6 +15,10 @@ import 'models/reports_ward_progress_subject_model.dart';
 import 'widgets/listline_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
+StudentReportsWardProgressAcademicController controllerx = Get.put(
+  StudentReportsWardProgressAcademicController(),
+);
+
 class ReportsWardProgressSubjectPage extends StatefulWidget {
   ReportsWardProgressSubjectPage({Key? key}) : super(key: key);
 
@@ -33,6 +38,7 @@ class _ReportsWardProgressSubjectPageState
     // TODO: implement initState
     super.initState();
     controller.getSubjects();
+    // controllerx.tabIndex.value = 1;
     Timer(Duration(seconds: 3), () {
       controller.getSubjectProgress();
     });
@@ -84,10 +90,11 @@ class _ReportsWardProgressSubjectPageState
         );
         // controller.subjectDataList.clear();
         // print(controller.subjectDataList.first);
-
-        for (var x in controller.subjectDataList) {
-          print(x.name);
-        }
+        // print('object');
+        // print(controller.subjectProgressDataList.length);
+        // for (var x in controller.subjectProgressDataList) {
+        //   print('subject ${x.className}');
+        // }
       },
       child: SizedBox(
         width: double.maxFinite,
@@ -114,7 +121,8 @@ class _ReportsWardProgressSubjectPageState
                             )
                             : Text(
                               "Showing averages for ${controller.selectedSubjectName.value ?? 'No Subject Selected'}",
-                              style: CustomTextStyles.bodySmallWhiteA700,
+                              style: CustomTextStyles.bodySmallWhiteA700
+                                  .copyWith(fontSize: 16.h),
                             ),
                   ),
                 ],
@@ -134,6 +142,7 @@ class _ReportsWardProgressSubjectPageState
             controller.isLoading.value
                 ? ListView.separated(
                   itemCount: 5,
+
                   //isLoading ? 5 : newsItems.length,
                   separatorBuilder: (context, index) => SizedBox(height: 12.h),
                   itemBuilder: (context, index) {
@@ -142,6 +151,23 @@ class _ReportsWardProgressSubjectPageState
                     // }
                     // return ListlineItemWidget(newsItems[index]);
                   },
+                )
+                : controller.subjectProgressDataList.isEmpty
+                ? Center(
+                  child: Column(
+                    spacing: 30,
+                    children: [
+                      SizedBox(height: 150.h),
+                      CustomImageView(imagePath: ImageConstant.imgObjects),
+                      Text(
+                        textAlign: TextAlign.center,
+                        'Opps,No Subject Progress for the selected Subject!!!',
+                        style: CustomTextStyles.displayMediumBlack.copyWith(
+                          fontSize: 16.h,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
                 : ListView.separated(
                   padding: EdgeInsets.zero,
@@ -154,7 +180,12 @@ class _ReportsWardProgressSubjectPageState
                   itemBuilder: (context, index) {
                     SubjectProgressData model =
                         controller.subjectProgressDataList[index];
-                    return ListlineItemWidget(model);
+                    return GestureDetector(
+                      onTap: () {
+                        //  print(model);
+                      },
+                      child: ListlineItemWidget(model),
+                    );
                   },
                 ),
       ),

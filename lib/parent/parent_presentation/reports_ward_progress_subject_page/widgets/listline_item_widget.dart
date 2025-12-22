@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/parent/parent_presentation/reports_ward_progress_class_page/models/class_overview_model.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_ward_progress_subject_page/models/subject_progress_model.dart';
 import '../../../core/app_export.dart';
 import '../../../widgets/custom_text_form_field.dart';
@@ -50,7 +51,7 @@ class ListlineItemWidget extends StatelessWidget {
                 //   () =>
                 Text("Ward Score", style: CustomTextStyles.bodySmallGray700),
                 // ),
-                _buildFrame427321469(),
+                _buildFrame427321469(listlineItemModelObj),
               ],
             ),
           ),
@@ -67,7 +68,7 @@ class ListlineItemWidget extends StatelessWidget {
                   style: CustomTextStyles.bodySmallGray700,
                   // ),
                 ),
-                _buildFrame427321470(),
+                _buildFrame427321470(listlineItemModelObj),
               ],
             ),
           ),
@@ -77,20 +78,29 @@ class ListlineItemWidget extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildFrame427321469() {
+  Widget _buildFrame427321469(SubjectProgressData model) {
     return Padding(
-      padding: EdgeInsets.only(right: 20.h),
+      padding: EdgeInsets.only(right: 10.h),
       child: Container(
-        width: 222.h,
+        padding: EdgeInsets.only(top: 5.h, left: 10.h),
+        width: model.studentScore != 0 ? model.classAverage! * 2 : 50.h,
         height: 30.h,
         decoration: BoxDecoration(
-          color: appTheme.green500,
+          color:
+              model.classAverage! <= 50
+                  ? appTheme.red500
+                  : (model.classAverage! > 50 && model.classAverage! < 70)
+                  ? appTheme.amber100
+                  : appTheme.green500,
           borderRadius: BorderRadius.circular(12.h),
         ),
         // controller: listlineItemModelObj.studentScore.toString(),
         child: Text(
           listlineItemModelObj.studentScore.toString(),
-          style: theme.textTheme.bodySmall,
+          style: theme.textTheme.bodySmall!.copyWith(
+            fontSize: 16.h,
+            color: Colors.white,
+          ),
         ),
         // hintText: "lbl_91".tr,
         // contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
@@ -101,20 +111,29 @@ class ListlineItemWidget extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildFrame427321470() {
+  Widget _buildFrame427321470(SubjectProgressData model) {
     return Padding(
-      padding: EdgeInsets.only(right: 30.h),
+      padding: EdgeInsets.only(right: 10.h),
       child: Container(
-        width: 222.h,
+        padding: EdgeInsets.only(top: 5.h, left: 10.h),
+        width: model.classAverage != 0 ? model.classAverage! * 2 : 50.h,
         height: 30.h,
         decoration: BoxDecoration(
-          color: appTheme.green500,
+          color:
+              model.classAverage! <= 50
+                  ? appTheme.red500
+                  : (model.classAverage! > 50 && model.classAverage! < 70)
+                  ? appTheme.amber100
+                  : appTheme.green500,
           borderRadius: BorderRadius.circular(12.h),
         ),
         // controller: listlineItemModelObj.studentScore.toString(),
         child: Text(
           listlineItemModelObj.classAverage.toString(),
-          style: theme.textTheme.bodySmall,
+          style: theme.textTheme.bodySmall!.copyWith(
+            fontSize: 16.h,
+            color: Colors.white,
+          ),
         ),
         // hintText: "lbl_91".tr,
         // contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),

@@ -14,10 +14,20 @@ import 'scrollview_tab_page.dart'; // ignore_for_file: must_be_immutable
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
 
-class StudentReportsWardProgressAcademicScreen
-    extends GetWidget<StudentReportsWardProgressAcademicController> {
+StudentReportsWardProgressAcademicController controller = Get.put(
+  StudentReportsWardProgressAcademicController(),
+);
+
+class StudentReportsWardProgressAcademicScreen extends StatefulWidget {
   const StudentReportsWardProgressAcademicScreen({Key? key}) : super(key: key);
 
+  @override
+  State<StudentReportsWardProgressAcademicScreen> createState() =>
+      _StudentReportsWardProgressAcademicScreenState();
+}
+
+class _StudentReportsWardProgressAcademicScreenState
+    extends State<StudentReportsWardProgressAcademicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +42,8 @@ class StudentReportsWardProgressAcademicScreen
               Expanded(
                 child: Container(
                   child: TabBarView(
+                    physics: NeverScrollableScrollPhysics(),
+                    //NeverScrollableScrollPhysics(),
                     controller: controller.tabviewController,
                     children: [
                       ScrollviewTabPage(),
@@ -94,13 +106,13 @@ class StudentReportsWardProgressAcademicScreen
                 tabAlignment: TabAlignment.start,
                 labelColor: appTheme.whiteA700,
                 labelStyle: TextStyle(
-                  fontSize: 12.fSize,
+                  fontSize: 16.fSize,
                   fontFamily: 'Rubik',
                   fontWeight: FontWeight.w500,
                 ),
                 unselectedLabelColor: theme.colorScheme.onPrimary,
                 unselectedLabelStyle: TextStyle(
-                  fontSize: 12.fSize,
+                  fontSize: 16.fSize,
                   fontFamily: 'Rubik',
                   fontWeight: FontWeight.w400,
                 ),
@@ -177,7 +189,9 @@ class StudentReportsWardProgressAcademicScreen
                 ],
                 indicatorColor: Colors.transparent,
                 onTap: (index) {
-                  controller.tabIndex.value = index;
+                  setState(() {
+                    controller.tabIndex.value = index;
+                  });
                 },
               ),
             ),

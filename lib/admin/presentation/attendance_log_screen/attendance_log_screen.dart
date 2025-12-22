@@ -16,7 +16,9 @@ import 'widgets/attendanceloglist_item_model.dart'; // ignore_for_file: must_be_
 
 HomeController controllerx = Get.put(HomeController());
 
-class AttendanceLogScreen extends GetWidget<AttendanceLogController> {
+AttendanceLogController controller = Get.put(AttendanceLogController());
+
+class AttendanceLogScreen extends StatelessWidget {
   const AttendanceLogScreen({Key? key}) : super(key: key);
 
   @override
@@ -149,7 +151,8 @@ class AttendanceLogScreen extends GetWidget<AttendanceLogController> {
         margin: EdgeInsets.only(left: 21.h, top: 4.h, bottom: 8.h),
         onTap: () {
           // onTapArrowleftone();
-          Get.back();
+          // Get.back();
+          Navigator.pop(Get.context!);
         },
       ),
       centerTitle: true,

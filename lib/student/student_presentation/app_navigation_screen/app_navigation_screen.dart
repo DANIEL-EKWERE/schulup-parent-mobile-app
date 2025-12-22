@@ -627,8 +627,9 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                         _buildScreenTitle(
                           screenTitle: "News - Events",
                           onTapScreenTitle:
-                              () =>
-                                  onTapScreenTitle(AppRoutes.newsEventsScreen),
+                              () => onTapScreenTitle(
+                                AppRoutes.studentNewsEventsScreen,
+                              ),
                         ),
                       ],
                     ),

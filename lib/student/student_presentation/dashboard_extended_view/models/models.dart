@@ -42,7 +42,7 @@ class DashboardExtendedViewModel {
       DashboardExtendedViewModel(
         title: "Events",
         imagePath: ImageConstant.imgEvents,
-        route: '/news_events_screen',
+        route: '/student_news_events_screen',
       ),
       DashboardExtendedViewModel(
         title: "Ward Progress",

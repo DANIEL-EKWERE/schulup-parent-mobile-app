@@ -197,8 +197,11 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
                     showCustomDatePicker(context, controller.datex!, (newDate) {
                       setState(() {
                         controller.selectedMonth = newDate.month;
+                        controller.datex = newDate;
+                        scrollToMonth(controller.selectedMonth!);
                       });
                       controller.getStudentAttendance();
+                      scrollToMonth(controller.selectedMonth!);
                     });
                   },
                   imagePath: ImageConstant.imgUserWhiteA700,

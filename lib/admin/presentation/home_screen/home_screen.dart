@@ -265,12 +265,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
+import 'package:schulupparent/admin/presentation/attendance_log_screen/attendance_log_screen.dart';
 import 'package:schulupparent/admin/presentation/change_school_code_dialog/change_school_code_dialog.dart';
 import 'package:schulupparent/admin/presentation/change_school_code_dialog/controller/change_school_code_controller.dart';
 import 'package:schulupparent/admin/presentation/drop_off_scan_screen/check_in_scan_screen.dart';
 import 'package:schulupparent/admin/presentation/drop_off_scan_screen/check_out_scan_screen.dart';
 import 'package:schulupparent/admin/presentation/drop_off_scan_screen/drop_off_scan_screen.dart';
 import 'package:schulupparent/admin/presentation/drop_off_scan_screen/pick_up_scan_screen.dart';
+import 'package:schulupparent/admin/presentation/register_card_screen/register_card_screen.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_image.dart';
 import '../../widgets/app_bar/appbar_subtitle_two.dart';
@@ -388,9 +390,11 @@ class HomeScreen extends GetWidget<HomeController> {
               ],
           onSelected: (value) {
             if (value == 0) {
-              Get.toNamed(AppRoutes.attendanceLogScreen);
+              // Get.toNamed(AppRoutes.attendanceLogScreen);
+              Get.to(() => AttendanceLogScreen());
             } else if (value == 1) {
-              Get.toNamed(AppRoutes.registerCardScreen);
+              //Get.toNamed(AppRoutes.registerCardScreen);
+               Get.to(() => RegisterCardScreen());
             } else if (value == 2) {
               Get.dialog(
                 AlertDialog(

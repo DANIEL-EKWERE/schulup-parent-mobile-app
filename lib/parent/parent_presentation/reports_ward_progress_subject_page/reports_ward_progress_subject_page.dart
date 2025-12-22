@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:schulupparent/parent/parent_presentation/reports_ward_progress_academic_screen/controller/reports_ward_progress_academic_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_ward_progress_subject_one_bottomsheet/controller/reports_ward_progress_subject_one_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_ward_progress_subject_one_bottomsheet/reports_ward_progress_subject_one_bottomsheet.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_ward_progress_subject_page/models/subject_progress_model.dart';
@@ -22,6 +23,9 @@ class ReportsWardProgressSubjectPage extends StatefulWidget {
       _ReportsWardProgressSubjectPageState();
 }
 
+ReportsWardProgressAcademicController controllerx = Get.put(
+  ReportsWardProgressAcademicController(),
+);
 class _ReportsWardProgressSubjectPageState
     extends State<ReportsWardProgressSubjectPage> {
   ReportsWardProgressSubjectController controller = Get.put(
@@ -33,6 +37,7 @@ class _ReportsWardProgressSubjectPageState
     // TODO: implement initState
     super.initState();
     controller.getSubjects();
+    
     Timer(Duration(seconds: 3), () {
       controller.getSubjectProgress();
     });

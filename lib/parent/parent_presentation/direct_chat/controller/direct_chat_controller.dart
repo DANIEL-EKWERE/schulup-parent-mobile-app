@@ -3,6 +3,7 @@ import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/direct_chat/models/models.dart';
@@ -17,6 +18,14 @@ class DirectChatController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   TextEditingController subjectController = TextEditingController();
+
+  RefreshController refreshController = RefreshController(
+    initialRefresh: false,
+  );
+  void onrefresh() {
+    getTeachers();
+    getUserConversations();
+  }
 
   ClassTeacher? classTeacher;
   List<TeacherData>? teacherData;

@@ -88,6 +88,11 @@ class CheckOutScanScreen extends GetWidget<DropOffScanController> {
                     }),
                     Spacer(flex: 57),
                     CustomElevatedButton(
+                      buttonStyle: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                          Color(0xFFFF8D2A),
+                        ),
+                      ),
                       text: "lbl_scan".tr,
                       margin: EdgeInsets.only(left: 12.h),
                       leftIcon: Container(
@@ -179,6 +184,11 @@ class CheckOutScanScreen extends GetWidget<DropOffScanController> {
                     }),
                     Spacer(flex: 57),
                     CustomElevatedButton(
+                      buttonStyle: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                          Color(0xFFFF8D2A),
+                        ),
+                      ),
                       text: "lbl_scan".tr,
                       margin: EdgeInsets.only(left: 12.h),
                       leftIcon: Container(
@@ -227,7 +237,8 @@ class CheckOutScanScreen extends GetWidget<DropOffScanController> {
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    //Get.back();
+    Navigator.pop(Get.context!);
   }
 
   /// Displays a dialog with the [DropOffScanSuccessModalDialog] content.

@@ -11,11 +11,7 @@ class SubjectProgressModel {
   String? message;
   List<SubjectProgressData>? data;
 
-  SubjectProgressModel({
-    this.success,
-    this.message,
-    this.data,
-  });
+  SubjectProgressModel({this.success, this.message, this.data});
 
   SubjectProgressModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
@@ -41,14 +37,10 @@ class SubjectProgressModel {
 
 class SubjectProgressData {
   String? className;
-  int? classAverage;
-  int? studentScore;
+  double? classAverage;
+  double? studentScore;
 
-  SubjectProgressData({
-    this.className,
-    this.classAverage,
-    this.studentScore,
-  });
+  SubjectProgressData({this.className, this.classAverage, this.studentScore});
 
   SubjectProgressData.fromJson(Map<String, dynamic> json) {
     className = json['className'];

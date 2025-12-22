@@ -8,7 +8,7 @@ import 'package:schulupparent/student/data/apiClient/api_client.dart';
 
 import '../../../core/app_export.dart';
 
-class SettingsController extends GetxController {
+class StudentSettingsController extends GetxController {
   
 ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
   

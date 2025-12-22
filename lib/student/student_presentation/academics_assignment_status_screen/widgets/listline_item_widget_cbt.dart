@@ -90,10 +90,31 @@ class ListlineItemCbtWidget extends StatelessWidget {
                     //  Obx(
                     //   () =>
                     Text(
-                      "Open: ${formatDate(listlineItemModelObj.startDate.toString())} to ${formatDate(listlineItemModelObj.endDate.toString())}",
+                      "Open: ${formatDate(listlineItemModelObj.startDate.toString())}",
                       textAlign: TextAlign.center,
                       style: CustomTextStyles.bodySmallWhiteA700.copyWith(
-                        fontSize: 8.h,
+                        fontSize: 12.h,
+                      ),
+                      //  ),
+                    ),
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 6.h,
+                      vertical: 2.h,
+                    ),
+                    decoration: AppDecoration.grayC7.copyWith(
+                      borderRadius: BorderRadiusStyle.roundedBorder8,
+                    ),
+                    child:
+                    //  Obx(
+                    //   () =>
+                    Text(
+                      "To ${formatDate(listlineItemModelObj.endDate.toString())}",
+                      textAlign: TextAlign.center,
+                      style: CustomTextStyles.bodySmallWhiteA700.copyWith(
+                        fontSize: 12.h,
                       ),
                       //  ),
                     ),

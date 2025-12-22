@@ -92,7 +92,33 @@ class SettingsScreen extends GetWidget<SettingsController> {
                       alignment: Alignment.bottomCenter,
                       child: GestureDetector(
                         onTap: () {
-                          controller.logOut();
+                          // controller.logOut();
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Log Out'),
+                                content: Text(
+                                  'Are you sure you want to log out?',
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      controller.logOut();
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Yes'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

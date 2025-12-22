@@ -54,7 +54,13 @@ class ChangeSchoolCodeDialog extends StatelessWidget {
                     ),
                     Spacer(),
                     CustomElevatedButton(
-                      onPressed: () =>  controller.logout(),   //controller.secondLogin(),
+                      buttonStyle: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                          Color(0xFFFF8D2A),
+                        ),
+                      ),
+                      onPressed:
+                          () => controller.logout(), //controller.secondLogin(),
                       height: 46.h,
                       width: 148.h,
                       text: "lbl_yes_continue".tr,

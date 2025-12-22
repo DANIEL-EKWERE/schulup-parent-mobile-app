@@ -9,7 +9,10 @@ class EventWidget extends StatelessWidget {
   EventWidget(this.eventItem, {Key? key}) : super(key: key);
 
   EventItem eventItem;
-  var controller = Get.find<NewsEventsController>();
+  //var controller = Get.find<StudentNewsEventsController>();
+  StudentNewsEventsController controller = Get.put(
+    StudentNewsEventsController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -47,26 +50,28 @@ class EventWidget extends StatelessWidget {
                     //   () =>
                     Text(
                       formatDate(eventItem.startDate!),
-                      style: theme.textTheme.bodyMedium,
+                      style: theme.textTheme.bodyMedium!.copyWith(
+                        fontSize: 16.h,
+                      ),
                       //   ),
                     ),
-                    Row(
-                      children: [
-                        CustomImageView(
-                          imagePath: ImageConstant.imgClosePrimary,
-                          height: 16.h,
-                          width: 16.h,
-                        ),
-                        SizedBox(width: 4.h),
-                        // Obx(
-                        //   () =>
-                        Text(
-                          'Add to Calendar',
-                          style: CustomTextStyles.labelMediumPrimary,
-                        ),
-                        //  ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     CustomImageView(
+                    //       imagePath: ImageConstant.imgClosePrimary,
+                    //       height: 16.h,
+                    //       width: 16.h,
+                    //     ),
+                    //     // SizedBox(width: 4.h),
+                    //     // // Obx(
+                    //     // //   () =>
+                    //     // Text(
+                    //     //   'Add to Calendar',
+                    //     //   style: CustomTextStyles.labelMediumPrimary,
+                    //     // ),
+                    //     // //  ),
+                    //   ],
+                    // ),
                   ],
                 ),
 
@@ -77,7 +82,9 @@ class EventWidget extends StatelessWidget {
                 //   () =>
                 Text(
                   eventItem.title!,
-                  style: CustomTextStyles.bodyMediumSecondaryContainer,
+                  style: CustomTextStyles.bodyMediumSecondaryContainer.copyWith(
+                    fontSize: 16.h,
+                  ),
                 ),
                 // ),
               ],

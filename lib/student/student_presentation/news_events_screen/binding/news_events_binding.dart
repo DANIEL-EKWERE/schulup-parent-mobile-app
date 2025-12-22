@@ -6,9 +6,9 @@ import '../controller/news_events_controller.dart';
 ///
 /// This class ensures that the NewsEventsController is created when the
 /// NewsEventsScreen is first loaded.
-class NewsEventsBinding extends Bindings {
+class StudentNewsEventsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => NewsEventsController());
+    Get.lazyPut(() => StudentNewsEventsController());
   }
 }

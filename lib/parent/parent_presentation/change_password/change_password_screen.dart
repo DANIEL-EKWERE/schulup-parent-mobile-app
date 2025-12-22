@@ -47,7 +47,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       alignment: AlignmentGeometry.centerLeft,
                       child: Text(
                         'Current Password',
-                        style: CustomTextStyles.bodyMediumOnPrimary,
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -57,7 +59,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       },
                       controller: controller.currentPasswordController,
                       hintText: "Current Password",
-                      hintStyle: CustomTextStyles.labelLargeBluegray700,
+                      hintStyle: CustomTextStyles.labelLargeBluegray700
+                          .copyWith(fontSize: 16.h),
                       prefix: Container(
                         margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                         child: CustomImageView(
@@ -87,7 +90,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       alignment: AlignmentGeometry.centerLeft,
                       child: Text(
                         'New Password',
-                        style: CustomTextStyles.bodyMediumOnPrimary,
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -97,7 +102,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       },
                       controller: controller.newPasswordController,
                       hintText: "New Password",
-                      hintStyle: CustomTextStyles.labelLargeBluegray700,
+                      hintStyle: CustomTextStyles.labelLargeBluegray700
+                          .copyWith(fontSize: 16.h),
                       prefix: Container(
                         margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                         child: CustomImageView(
@@ -127,7 +133,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       alignment: AlignmentGeometry.centerLeft,
                       child: Text(
                         'Confirm New Password',
-                        style: CustomTextStyles.bodyMediumOnPrimary,
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -137,7 +145,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       },
                       controller: controller.confirmPasswordController,
                       hintText: "Confirm New Password",
-                      hintStyle: CustomTextStyles.labelLargeBluegray700,
+                      hintStyle: CustomTextStyles.labelLargeBluegray700
+                          .copyWith(fontSize: 16.h),
                       prefix: Container(
                         margin: EdgeInsets.fromLTRB(14.h, 14.h, 4.h, 14.h),
                         child: CustomImageView(
@@ -389,6 +398,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    //  Get.back();
+    Navigator.pop(context);
   }
 }

@@ -77,22 +77,31 @@ class _ListlineItemWeeklyWidgetState extends State<ListlineItemWeeklyWidget> {
                   ),
                 ),
                 Spacer(),
-                CustomImageView(
-                  onTap: () {
-                    setState(() {
-                      // isDowloading = !isDowloading;
-                      controller.downloadAndOpen(
-                        widget.listlineItemModelObj.reportCardTypeID.toString(),
+                Obx(() {
+                  return controller.isDownloading.value
+                      ? SizedBox(
+                        width: 15,
+                        height: 15,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                      : CustomImageView(
+                        onTap: () {
+                          setState(() {
+                            // isDowloading = !isDowloading;
+                            controller.downloadAndOpen(
+                              widget.listlineItemModelObj.reportCardTypeID
+                                  .toString(),
+                            );
+                          });
+                        },
+                        imagePath:
+                            controller.isDownloading.value
+                                ? ImageConstant.imgIconsTinyDownloading
+                                : ImageConstant.imgIconsTinyDownload,
+                        height: 18.h,
+                        width: 20.h,
                       );
-                    });
-                  },
-                  imagePath:
-                      controller.isDownloading.value
-                          ? ImageConstant.imgIconsTinyDownloading
-                          : ImageConstant.imgIconsTinyDownload,
-                  height: 18.h,
-                  width: 20.h,
-                ),
+                }),
 
                 Obx(() {
                   return !controller.isSharing.value

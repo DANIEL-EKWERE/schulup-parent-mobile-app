@@ -121,7 +121,7 @@ class AppRoutes {
   static const String dashboardExtendedView = '/dashboard_extended_view';
   //DashboardExtendedView
 
-  static const String directChatScreen = '/direct_chat_screen';
+  static const String studentDirectChatScreen = '/student_direct_chat_screen';
 
   static const String academicsAssignmentStatusOneScreen =
       '/academics_assignment_status_one_screen';
@@ -205,9 +205,9 @@ class AppRoutes {
   static const String academicsLessonSearchForOneScreen =
       '/academics_lesson_search_for_one_screen';
 
-  static const String settingsScreen = '/settings_screen';
+  static const String studentSettingsScreen = '/settings_screen';
 
-  static const String changePasswordScreen = '/change_password_screen';
+  static const String studentChangePasswordScreen = '/student_change_password_screen';
 
   static const String academicsLessonSearchForTwoScreen =
       '/academics_lesson_search_for_two_screen';
@@ -274,7 +274,7 @@ class AppRoutes {
   static const String newsNewsContentDownloadingScreen =
       '/news_news_content_downloading_screen';
 
-  static const String newsEventsScreen = '/news_events_screen';
+  static const String studentNewsEventsScreen = '/student_news_events_screen';
 
   static const String appNavigationScreen = '/app_navigation_screen';
 
@@ -398,22 +398,22 @@ class AppRoutes {
     ),
 
     GetPage(
-      name: directChatScreen,
-      page: () => DirectChatScreen(),
-      bindings: [DirectChatBinding()],
+      name: studentDirectChatScreen,
+      page: () => StudentDirectChatScreen(),
+      bindings: [StudentDirectChatBinding()],
     ),
 
     //changePasswordScreen
     GetPage(
-      name: changePasswordScreen,
-      page: () => ChangePasswordScreen(),
-      bindings: [ChangePasswordBinding()],
+      name: studentChangePasswordScreen,
+      page: () => StudentChangePasswordScreen(),
+      bindings: [StudentChangePasswordBinding()],
     ),
 
     GetPage(
-      name: settingsScreen,
-      page: () => SettingsScreen(),
-      bindings: [SettingsBinding()],
+      name: studentSettingsScreen,
+      page: () => StudentSettingsScreen(),
+      bindings: [StudentSettingsBinding()],
     ),
 
     GetPage(
@@ -536,9 +536,9 @@ class AppRoutes {
       bindings: [NewsNewsContentDownloadingBinding()],
     ),
     GetPage(
-      name: newsEventsScreen,
-      page: () => NewsEventsScreen(),
-      bindings: [NewsEventsBinding()],
+      name: studentNewsEventsScreen,
+      page: () => StudentNewsEventsScreen(),
+      bindings: [StudentNewsEventsBinding()],
     ),
     GetPage(
       name: appNavigationScreen,

@@ -8,7 +8,7 @@ class ListlineItemWidget extends StatelessWidget {
   ListlineItemWidget(this.listlineItemModelObj, {Key? key}) : super(key: key);
 
   ListlineItemModel listlineItemModelObj;
-  var controller = Get.find<NewsEventsController>();
+  var controller = Get.find<StudentNewsEventsController>();
 
   @override
   Widget build(BuildContext context) {

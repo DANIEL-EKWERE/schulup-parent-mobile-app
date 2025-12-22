@@ -14,7 +14,9 @@ import 'controller/register_card_controller.dart'; // ignore_for_file: must_be_i
 HomeController textController = Get.put(HomeController());
 DropOffScanController dfController = Get.put(DropOffScanController());
 
-class RegisterCardScreen extends GetWidget<RegisterCardController> {
+RegisterCardController controller = Get.put(RegisterCardController());
+
+class RegisterCardScreen extends StatelessWidget {
   const RegisterCardScreen({Key? key}) : super(key: key);
 
   @override
@@ -94,6 +96,11 @@ class RegisterCardScreen extends GetWidget<RegisterCardController> {
                     // ),
                     Spacer(flex: 57),
                     CustomElevatedButton(
+                      buttonStyle: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                          Color(0xFFFF8D2A),
+                        ),
+                      ),
                       text: "lbl_register_card".tr,
                       margin: EdgeInsets.only(left: 10.h),
                       onPressed: () {
@@ -185,6 +192,11 @@ class RegisterCardScreen extends GetWidget<RegisterCardController> {
                     // ),
                     Spacer(flex: 57),
                     CustomElevatedButton(
+                      buttonStyle: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                          Color(0xFFFF8D2A),
+                        ),
+                      ),
                       text: "lbl_register_card".tr,
                       margin: EdgeInsets.only(left: 10.h),
                       onPressed: () {
@@ -239,7 +251,7 @@ class RegisterCardScreen extends GetWidget<RegisterCardController> {
             width: 26.h,
           ),
           GestureDetector(
-            onTap: () => Get.back(),
+            onTap: () => Navigator.pop(Get.context!),
             child: Padding(
               padding: EdgeInsets.only(left: 10.h),
               child: Text(
@@ -261,7 +273,8 @@ class RegisterCardScreen extends GetWidget<RegisterCardController> {
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    //Get.back();
+    Navigator.pop(Get.context!);
   }
 
   /// Navigates to the successModalScreen when the action is triggered.

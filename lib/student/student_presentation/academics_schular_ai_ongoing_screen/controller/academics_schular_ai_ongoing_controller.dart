@@ -53,7 +53,7 @@ class StudentAcademicsSchularAiOngoingController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    vectoroneController.dispose();
+    //vectoroneController.dispose();
   }
 
   /// Send message to AI

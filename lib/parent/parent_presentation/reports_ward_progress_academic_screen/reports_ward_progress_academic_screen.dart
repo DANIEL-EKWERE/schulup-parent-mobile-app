@@ -14,10 +14,20 @@ import 'scrollview_tab_page.dart'; // ignore_for_file: must_be_immutable
 DashboardExtendedViewController dashboardExtendedViewController =
     Get.find<DashboardExtendedViewController>();
 
-class ReportsWardProgressAcademicScreen
-    extends GetWidget<ReportsWardProgressAcademicController> {
+ReportsWardProgressAcademicController controller = Get.put(
+  ReportsWardProgressAcademicController(),
+);
+
+class ReportsWardProgressAcademicScreen extends StatefulWidget {
   const ReportsWardProgressAcademicScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ReportsWardProgressAcademicScreen> createState() =>
+      _ReportsWardProgressAcademicScreenState();
+}
+
+class _ReportsWardProgressAcademicScreenState
+    extends State<ReportsWardProgressAcademicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +42,7 @@ class ReportsWardProgressAcademicScreen
               Expanded(
                 child: Container(
                   child: TabBarView(
+                    physics: NeverScrollableScrollPhysics(),
                     controller: controller.tabviewController,
                     children: [
                       ScrollviewTabPage(),
@@ -177,7 +188,9 @@ class ReportsWardProgressAcademicScreen
                 ],
                 indicatorColor: Colors.transparent,
                 onTap: (index) {
-                  controller.tabIndex.value = index;
+                  setState(() {
+                    controller.tabIndex.value = index;
+                  });
                 },
               ),
             ),

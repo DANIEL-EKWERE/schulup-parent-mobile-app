@@ -1,7 +1,7 @@
 // TODO Implement this library.
 import 'dart:convert';
 import 'dart:io';
-
+import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
@@ -95,6 +95,7 @@ class ReportsWardProgressClassController extends GetxController {
     //   context: Get.context!,
     //   circularProgressColor: Color(0XFFFF8C42),
     // );
+    myLog.log('calling progress');
     isLoading.value = true;
     try {
       var studentID =
@@ -104,11 +105,12 @@ class ReportsWardProgressClassController extends GetxController {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
+        myLog.log(response.body);
         ReportsWardProgressClassModel reportsWardProgressClassModel =
             reportsWardProgressClassModelFromJson(response.body);
         selectedPerformance = reportsWardProgressClassModel.data;
         //var responseData = jsonDecode(response.body);
-
+        myLog.log('success =======================');
         // OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
@@ -154,6 +156,7 @@ class ReportsWardProgressClassController extends GetxController {
         colorText: Colors.white,
       );
       //OverlayLoadingProgress.stop();
+      myLog.log(e.toString());
     } finally {
       // OverlayLoadingProgress.stop();
       isLoading.value = false;
@@ -219,6 +222,7 @@ class ReportsWardProgressClassController extends GetxController {
         colorText: Colors.white,
       );
     } catch (e) {
+      myLog.log(e.toString());
       isLoading.value = false;
       Get.snackbar(
         'Error',

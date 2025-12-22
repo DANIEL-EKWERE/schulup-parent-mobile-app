@@ -75,12 +75,13 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                             children: [
                               SizedBox(height: 20),
                               Padding(
-                                padding: EdgeInsetsGeometry.only(left: 10.h),
+                                padding: EdgeInsetsGeometry.only(left: 16.h),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     'Latest Updates',
-                                    style: CustomTextStyles.bodyMediumOnPrimary,
+                                    style: CustomTextStyles.bodyMediumOnPrimary
+                                        .copyWith(fontSize: 16.h),
                                   ),
                                 ),
                               ),
@@ -90,13 +91,29 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                 return controller.isLoading.value
                                     ? Center(child: CircularProgressIndicator())
                                     : controller.newsItems.isEmpty
-                                    ? Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Color(0xffFFEED4),
+                                    ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
                                       ),
-                                      height: 180,
-                                      width: double.infinity,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          color: Color(0xffFFEED4),
+                                        ),
+                                        height: 110,
+                                        width: double.infinity,
+                                        child: Center(
+                                          child: Text(
+                                            textAlign: TextAlign.center,
+                                            'Welcome Onboard!!! \nWhat would you love to do today?',
+                                            style: CustomTextStyles
+                                                .bodyMediumSecondaryContainer
+                                                .copyWith(fontSize: 16.h),
+                                          ),
+                                        ),
+                                      ),
                                     )
                                     : SizedBox(
                                       height: 106,
@@ -218,137 +235,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                                 ),
                                               );
                                             }).toList(),
-                                        // [
 
-                                        //   // Container(
-                                        //   //   width: double.maxFinite,
-                                        //   //   padding: EdgeInsets.symmetric(
-                                        //   //     horizontal: 20.h,
-                                        //   //     vertical: 15.h,
-                                        //   //   ),
-                                        //   //   decoration: AppDecoration.primaryC11.copyWith(
-                                        //   //     borderRadius:
-                                        //   //         BorderRadiusStyle.circleBorder12,
-                                        //   //     // borderRadius: BorderRadiusStyle.roundedBorder8,
-                                        //   //     border: Border.all(
-                                        //   //       color: Color(
-                                        //   //         0xffFF8D2A,
-                                        //   //       ).withValues(alpha: .1),
-                                        //   //     ),
-                                        //   //     boxShadow: [
-                                        //   //       BoxShadow(
-                                        //   //         color: Colors.grey[100]!,
-                                        //   //         offset: Offset(0.2, 0.2),
-                                        //   //         blurRadius: 20,
-                                        //   //         spreadRadius: 2,
-                                        //   //       ),
-                                        //   //     ],
-                                        //   //   ),
-                                        //   //   child: Row(
-                                        //   //     spacing: 10,
-                                        //   //     mainAxisSize: MainAxisSize.min,
-                                        //   //     crossAxisAlignment:
-                                        //   //         CrossAxisAlignment.start,
-                                        //   //     mainAxisAlignment:
-                                        //   //         MainAxisAlignment.start,
-                                        //   //     children: [
-                                        //   //       Row(
-                                        //   //         spacing: 10,
-                                        //   //         children: [
-                                        //   //           Container(
-                                        //   //             padding: EdgeInsets.all(5.h),
-                                        //   //             width: 40.h,
-                                        //   //             height: 40.h,
-                                        //   //             decoration: BoxDecoration(
-                                        //   //               color: Color(0xffFFEED4),
-                                        //   //               shape: BoxShape.circle,
-                                        //   //             ),
-                                        //   //             child: CustomImageView(
-                                        //   //               imagePath:
-                                        //   //                   ImageConstant
-                                        //   //                       .imgAssignments,
-                                        //   //               height: 20.h,
-                                        //   //               width: 20.h,
-                                        //   //               fit: BoxFit.contain,
-                                        //   //             ),
-                                        //   //           ),
-
-                                        //   //           Column(
-                                        //   //             spacing: 10.h,
-                                        //   //             crossAxisAlignment:
-                                        //   //                 CrossAxisAlignment.start,
-                                        //   //             mainAxisAlignment:
-                                        //   //                 MainAxisAlignment.center,
-                                        //   //             children: [
-                                        //   //               Padding(
-                                        //   //                 padding: EdgeInsets.only(
-                                        //   //                   left: 0.h,
-                                        //   //                 ),
-                                        //   //                 child:
-                                        //   //                 // Obx(
-                                        //   //                 //   () =>
-                                        //   //                 Text(
-                                        //   //                   'Word Problems',
-                                        //   //                   style: CustomTextStyles
-                                        //   //                       .titleMediumOnPrimary
-                                        //   //                       .copyWith(
-                                        //   //                         fontSize: 14.h,
-                                        //   //                       ),
-                                        //   //                   //theme.textTheme.bodyLarge,
-                                        //   //                 ),
-                                        //   //                 //   ),
-                                        //   //               ),
-                                        //   //               // Obx(
-                                        //   //               //   () =>
-                                        //   //               Text(
-                                        //   //                 'Mathematics • Posted on Nov. 3, 2025',
-                                        //   //                 style:
-                                        //   //                     CustomTextStyles
-                                        //   //                         .bodySmallSecondaryContainer10,
-                                        //   //               ),
-                                        //   //               //  ),
-                                        //   //               Container(
-                                        //   //                 padding:
-                                        //   //                     EdgeInsets.symmetric(
-                                        //   //                       horizontal: 6.h,
-                                        //   //                       vertical: 2.h,
-                                        //   //                     ),
-                                        //   //                 decoration: AppDecoration
-                                        //   //                     .grayC7
-                                        //   //                     .copyWith(
-                                        //   //                       borderRadius:
-                                        //   //                           BorderRadiusStyle
-                                        //   //                               .roundedBorder8,
-                                        //   //                     ),
-                                        //   //                 child:
-                                        //   //                 // Obx(
-                                        //   //                 //   () =>
-                                        //   //                 Text(
-                                        //   //                   'Due on Nov. 5, 2025',
-                                        //   //                   textAlign:
-                                        //   //                       TextAlign.center,
-                                        //   //                   style:
-                                        //   //                       CustomTextStyles
-                                        //   //                           .bodySmallWhiteA700,
-                                        //   //                 ),
-                                        //   //                 // ),
-                                        //   //               ),
-                                        //   //             ],
-                                        //   //           ),
-                                        //   //         ],
-                                        //   //       ),
-                                        //   //     ],
-                                        //   //   ),
-                                        //   // ),
-                                        // Container(
-                                        //   decoration: BoxDecoration(
-                                        //     borderRadius: BorderRadius.circular(12),
-                                        //     color: Color(0xffFFEED4),
-                                        //   ),
-                                        //   height: 180,
-                                        //   width: double.infinity,
-                                        // ),
-                                        // ],
                                         options: CarouselOptions(
                                           onPageChanged: (index, reason) {
                                             setState(() {
@@ -398,7 +285,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
   Widget _buildColumnacademics() {
     return Container(
       width: double.maxFinite,
-      padding: EdgeInsets.symmetric(vertical: 18.h),
+      padding: EdgeInsets.symmetric(vertical: 15.h),
       decoration: AppDecoration.primaryC7Main,
       child: Column(
         spacing: 10,
@@ -555,7 +442,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                 );
               },
               child: Container(
-                width: 130,
+                width: 150,
                 // height: 150,
                 margin: EdgeInsets.only(left: 16),
                 padding: EdgeInsets.all(5),
@@ -612,17 +499,17 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
 
             // ),
             actions: [
-              AppbarTrailingIconbutton(
-                onTap: () async {
-                  var token = await dataBase.getToken();
-                  print('chat');
-                  // Get.to(() => ChatScreen());
-                  print(token);
-                  //controller.getAcademicSessions();
-                  controller.getClass();
-                },
-                imagePath: ImageConstant.imgNotification,
-              ),
+              // AppbarTrailingIconbutton(
+              //   onTap: () async {
+              //     var token = await dataBase.getToken();
+              //     print('chat');
+              //     // Get.to(() => ChatScreen());
+              //     print(token);
+              //     //controller.getAcademicSessions();
+              //     controller.getClass();
+              //   },
+              //   imagePath: ImageConstant.imgNotification,
+              // ),
               AppbarTrailingIconbutton(
                 onTap: () {
                   Get.toNamed(AppRoutes.directChatScreen);
@@ -651,7 +538,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: AppbarSubtitleOne(
-                onTap: () => controller.byGuardian(),
+                //  onTap: () => controller.byGuardian(),
                 text: "Quick Access",
               ),
             ),

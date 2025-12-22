@@ -17,8 +17,10 @@ import 'package:schulupparent/student/student_presentation/dashboard_extended_vi
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
 
-class DirectChatScreen extends GetWidget<DirectChatController> {
-  const DirectChatScreen({Key? key}) : super(key: key);
+StudentDirectChatController controller = Get.put(StudentDirectChatController());
+
+class StudentDirectChatScreen extends StatelessWidget {
+  const StudentDirectChatScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
                           Text(
                             'Select a member of the school to chat with them directly',
                             style: CustomTextStyles.bodyMediumGray700.copyWith(
-                              fontSize: 12.h,
+                              fontSize: 16.h,
                             ),
                           ),
                           SizedBox(height: 20.h),
@@ -170,7 +172,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
                           Text(
                             'Select an ongoing conversation to continue from where you left!!!',
                             style: CustomTextStyles.bodyMediumGray700.copyWith(
-                              fontSize: 12.h,
+                              fontSize: 16.h,
                             ),
                           ),
                           SizedBox(height: 20.h),
@@ -243,7 +245,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
                   style: TextStyle(
                     color: Color(0xFFFF8D2A),
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 16.h,
                   ),
                 ),
               ),
@@ -253,7 +255,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
           Expanded(
             child: Text(
               teacherData.teacherName ?? 'Unknown',
-              style: CustomTextStyles.bodySmallGray700,
+              style: CustomTextStyles.bodySmallGray700.copyWith(fontSize: 16.h),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -300,7 +302,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
           Expanded(
             child: Text(
               conversation.subject!,
-              style: CustomTextStyles.bodySmallGray700,
+              style: CustomTextStyles.bodySmallGray700.copyWith(fontSize: 16.h),
               overflow: TextOverflow.ellipsis,
             ),
           ),

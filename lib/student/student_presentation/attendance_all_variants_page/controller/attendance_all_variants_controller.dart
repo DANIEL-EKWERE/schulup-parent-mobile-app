@@ -57,6 +57,7 @@ DateTime? datex;
     selectedMonth = DateTime.now().month - 1;
     myLog.log("setting selected month to the current month $selectedMonth");
     getStudentAttendance();
+    datex = DateTime.now();
   }
 
   @override

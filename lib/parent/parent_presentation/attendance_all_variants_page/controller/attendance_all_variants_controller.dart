@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
 import 'package:schulupparent/parent/parent_presentation/attendance_all_variants_page/models/attendance_model.dart';
@@ -59,6 +60,8 @@ DateTime? datex;
     selectedMonth = DateTime.now().month - 1;
     myLog.log("setting selected month to the current month $selectedMonth");
     getStudentAttendance();
+    datex = DateTime.now();
+  //  date.value = formatDate(datex.toString());
   }
 
   @override
@@ -156,5 +159,10 @@ DateTime? datex;
       // OverlayLoadingProgress.stop();
       isLoading.value = false;
     }
+  }
+
+  String formatDate(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('MMM. d, yyyy').format(dateTime);
   }
 }

@@ -11,7 +11,7 @@ class ListjuncounterItemWidget extends StatelessWidget {
 
   String listjuncounterItemModelObj;
 
-  var controller = Get.find<NewsEventsController>();
+  var controller = Get.find<StudentNewsEventsController>();
 
   @override
   Widget build(BuildContext context) {

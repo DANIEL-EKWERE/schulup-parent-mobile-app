@@ -31,6 +31,7 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
     super.initState();
     controller1.academicPerformance();
     controller1.classOverview();
+    // controller.tabIndex.value = 0;
   }
 
   @override
@@ -47,10 +48,28 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
                   ? Center(
                     child: CircularProgressIndicator(color: Color(0XFFFF8C42)),
                   )
+                  : controller1.selectedPerformance!.length == []
+                  ? Center(
+                    child: Column(
+                      spacing: 30,
+                      children: [
+                        SizedBox(height: 150.h),
+                        CustomImageView(imagePath: ImageConstant.imgObjects),
+                        Text(
+                          textAlign: TextAlign.center,
+                          'Opps,No Assignment for the selected filter condition!!!',
+                          style: CustomTextStyles.displayMediumBlack.copyWith(
+                            fontSize: 16.h,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                   : Padding(
                     padding: EdgeInsetsGeometry.symmetric(vertical: 5),
                     // height: 400.h,
                     child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: controller1.selectedPerformance!.length,
                       itemBuilder: (context, index) {
@@ -98,7 +117,7 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
   /// Section Widget
   Widget _buildFrame427321469(AcademicsPerformance model) {
     return Padding(
-      padding: EdgeInsets.only(right: 28.h),
+      padding: EdgeInsets.only(right: 10.h),
       child: SizedBox(
         width: 150.h,
         child: CustomTextFormField(
@@ -110,6 +129,7 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
 
           controller: controller.frame427321469Controller,
           hintText: "${model.studentAverage!.toStringAsFixed(2)} %",
+          hintStyle: TextStyle(fontSize: 16.h, color: Colors.white),
           contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
           borderDecoration: TextFormFieldStyleHelper.fillGreen,
           fillColor: appTheme.green500,
@@ -125,7 +145,10 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(model.className!, style: CustomTextStyles.bodySmallGray700),
+          Text(
+            model.className!,
+            style: CustomTextStyles.bodySmallGray700.copyWith(fontSize: 16.h),
+          ),
           _buildFrame427321469(model),
         ],
       ),

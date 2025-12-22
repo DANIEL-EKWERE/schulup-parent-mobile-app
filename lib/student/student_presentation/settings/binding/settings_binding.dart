@@ -2,9 +2,9 @@ import 'package:schulupparent/student/student_presentation/settings/controller/s
 
 import '../../../core/app_export.dart';
 
-class SettingsBinding extends Bindings {
+class StudentSettingsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => SettingsController());
+    Get.lazyPut(() => StudentSettingsController());
   }
 }

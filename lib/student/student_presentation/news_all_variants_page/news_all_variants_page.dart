@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/student/student_presentation/news_all_variants_page/models/news_model.dart';
+import 'package:schulupparent/student/student_presentation/news_events_screen/news_events_screen.dart';
 import 'package:schulupparent/student/student_presentation/news_modal_jump_to_a_date_bottomsheet/controller/news_modal_jump_to_a_date_controller.dart';
 import 'package:schulupparent/student/student_presentation/news_modal_jump_to_a_date_bottomsheet/news_modal_jump_to_a_date_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/news_news_content_contains_screen/widgets/shimmer_widget.dart';
@@ -73,8 +74,9 @@ class NewsAllVariantsPage extends StatelessWidget {
       actions: [
         AppbarTrailingIconbutton(
           onTap: () {
-            Get.toNamed(AppRoutes.newsEventsScreen);
+            //Get.toNamed(AppRoutes.newsEventsScreen);
             // controller.getNews();
+            Get.to(() => StudentNewsEventsScreen());
           },
           imagePath: ImageConstant.imgIconsSmallEvents,
         ),
@@ -114,6 +116,23 @@ class NewsAllVariantsPage extends StatelessWidget {
                     // }
                     // return ListlineItemWidget(newsItems[index]);
                   },
+                )
+                : controller.newsItems!.isEmpty
+                ? Center(
+                  child: Column(
+                    spacing: 30,
+                    children: [
+                      SizedBox(height: 150.h),
+                      CustomImageView(imagePath: ImageConstant.imgObjects),
+                      Text(
+                        textAlign: TextAlign.center,
+                        'Opps,No News Found!!!',
+                        style: CustomTextStyles.displayMediumBlack.copyWith(
+                          fontSize: 16.h,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
                 : ListView.separated(
                   padding: EdgeInsets.zero,

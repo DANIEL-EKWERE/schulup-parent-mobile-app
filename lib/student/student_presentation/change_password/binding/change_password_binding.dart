@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:schulupparent/student/student_presentation/change_password/controller/change_password_controller.dart';
 
-class ChangePasswordBinding extends Bindings {
+class StudentChangePasswordBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ChangePasswordController());
+    Get.lazyPut(() => StudentChangePasswordController());
   }
 }

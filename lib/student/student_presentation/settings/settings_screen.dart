@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/student/student_presentation/change_password/change_password_screen.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/student_presentation/direct_chat/controller/direct_chat_controller.dart';
@@ -15,8 +16,10 @@ import '../../widgets/custom_icon_button.dart';
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
 
-class SettingsScreen extends GetWidget<SettingsController> {
-  const SettingsScreen({Key? key}) : super(key: key);
+StudentSettingsController controller = Get.put(StudentSettingsController());
+
+class StudentSettingsScreen extends StatelessWidget {
+  const StudentSettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,8 @@ class SettingsScreen extends GetWidget<SettingsController> {
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed(AppRoutes.changePasswordScreen);
+                        // Get.toNamed(AppRoutes.changePasswordScreen);
+                        Get.to(() => StudentChangePasswordScreen());
                       },
                       child: Container(
                         padding: EdgeInsets.all(12),

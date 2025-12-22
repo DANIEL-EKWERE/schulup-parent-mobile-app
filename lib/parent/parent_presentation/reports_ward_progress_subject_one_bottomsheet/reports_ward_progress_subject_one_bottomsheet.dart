@@ -145,10 +145,19 @@ class _ReportsWardProgressSubjectOneBottomsheetState
               // print(controlsx.selectedSubjectId);
               // controlsx.getSubjectProgress();
               // Navigator.pop(context);
-              print('object');
-              for (var x in widget.controller.subjectDataList) {
-                print("${x.name} anmes");
-              }
+              // print('object');
+              // for (var x in widget.controller.subjectDataList) {
+              //   print("${x.name} anmes");
+              // }
+              setState(() {
+                widget.controller.selectedSubjectName.value =
+                    selectedType.first;
+
+                widget.controller.selectedSubjectId =
+                    selectedTypeID.first.toString();
+              });
+              widget.controller.getSubjectProgress();
+              Navigator.pop(context);
             },
             height: 64.h,
             text: "lbl_go_to_subject".tr,
@@ -163,6 +172,7 @@ class _ReportsWardProgressSubjectOneBottomsheetState
 
   /// Navigates to the previous screen.
   onTapImgCloseone() {
-    Get.back();
+    //  Get.back();
+    Navigator.pop(context);
   }
 }

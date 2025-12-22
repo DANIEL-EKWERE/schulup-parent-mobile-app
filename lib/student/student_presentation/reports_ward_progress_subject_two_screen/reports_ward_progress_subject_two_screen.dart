@@ -177,6 +177,7 @@ class ReportsWardProgressSubjectTwoScreen
                   indicatorColor: Colors.transparent,
                   onTap: (index) {
                     controller.tabIndex.value = index;
+                    
                   },
                 ),
               ),

@@ -207,6 +207,7 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_one_modal_bottomsheet/academics_cbt_test_modal_one_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_lesson_details_screen/academics_lesson_lesson_details_screen.dart';
+import 'package:schulupparent/student/student_presentation/academics_schular_ai_ongoing_screen/academics_schular_ai_ongoing_screen.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/student_presentation/signin_screen/shimmer_widget.dart';
 import '../../core/app_export.dart';
@@ -253,6 +254,7 @@ class _AcademicsAssignmentStatusInitialPageState
           _buildColumnacademics(),
           Expanded(
             child: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
               controller: controller.tabviewController,
               children: [
                 // Assignment Tab Content
@@ -286,7 +288,7 @@ class _AcademicsAssignmentStatusInitialPageState
             centerTitle: true,
             title: Column(
               children: [
-                AppbarSubtitleOne(text: "lbl_academics".tr),
+                AppbarSubtitleOne(text: "Class Work"),
                 AppbarSubtitleFive(
                   text:
                       dashboardExtendedViewController
@@ -300,7 +302,8 @@ class _AcademicsAssignmentStatusInitialPageState
               AppbarTrailingIconbutton(
                 onTap: () {
                   // controller.getAssignment();
-                  Get.toNamed(AppRoutes.studentAcademicsSchularAiOngoingScreen);
+                  // Get.toNamed(AppRoutes.studentAcademicsSchularAiOngoingScreen);
+                  Get.to(() => StudentAcademicsSchularAiOngoingScreen());
                 },
                 imagePath: ImageConstant.imgIconsSmallSchularAi,
               ),
@@ -755,7 +758,8 @@ class _AcademicsAssignmentStatusInitialPageState
                         },
                       ),
                     )
-                    : controller.assignmentData!.isEmpty
+                    : controller.assignmentData!.isEmpty &&
+                        !controller.isLoading.value
                     ? Center(
                       child: Column(
                         spacing: 30,

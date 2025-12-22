@@ -2,6 +2,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:schulupparent/student/student_presentation/reports_ward_progress_academic_screen/controller/reports_ward_progress_academic_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_ward_progress_class_one_bottomsheet/controller/reports_ward_progress_class_one_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_ward_progress_class_one_bottomsheet/reports_ward_progress_class_one_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/reports_ward_progress_class_page/models/class_overview_model.dart';
@@ -16,6 +17,10 @@ import 'models/reports_ward_progress_class_model.dart';
 // ignore_for_file: must_be_immutable
 ReportsWardProgressClassController controller1 = Get.put(
   ReportsWardProgressClassController(Rx(ReportsWardProgressClassModel())),
+);
+
+StudentReportsWardProgressAcademicController controllerx = Get.put(
+  StudentReportsWardProgressAcademicController(),
 );
 
 class ReportsWardProgressClassPage extends StatefulWidget {
@@ -38,6 +43,7 @@ class _ReportsWardProgressClassPageState
     super.initState();
     controller1.academicPerformance();
     controller1.classOverview();
+    //controllerx.tabIndex.value = 2;
   }
 
   @override
@@ -53,31 +59,7 @@ class _ReportsWardProgressClassPageState
             child: SingleChildScrollView(
               child: SizedBox(
                 width: double.maxFinite,
-                child:
-                // Column(
-                //   mainAxisSize: MainAxisSize.max,
-                //   children: [
-                //     SizedBox(
-                //       width: double.maxFinite,
-                //       child: Column(
-                //         children: [
-                //           s
-                //           //selectedSubjectPerformance
-                //           // _buildColumnshowing(),
-                //           // SizedBox(height: 16.h),
-                //           // _buildColumnlinefour(),
-                //           // SizedBox(height: 10.h),
-                //           // _buildColumnlineone(),
-                //           // SizedBox(height: 10.h),
-                //           // _buildColumnlinetwo(),
-                //           // SizedBox(height: 10.h),
-                //           // _buildColumnline(),
-                //         ],
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                Obx(
+                child: Obx(
                   () =>
                       controller1.isLoading.value
                           ? Center(
@@ -92,6 +74,7 @@ class _ReportsWardProgressClassPageState
                               children: [
                                 _buildColumnshowing(),
                                 ListView.builder(
+                                  physics: BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount:
                                       controller1
@@ -107,34 +90,7 @@ class _ReportsWardProgressClassPageState
                                       ),
                                       child: _buildColumnlinefour(model),
                                     );
-                                    // Text(
-                                    //   model.text!,
-                                    //   style: CustomTextStyles.bodyMediumGray900,
-                                    // );
                                   },
-                                  // Column(
-                                  //   spacing: 4,
-                                  //   children: [
-                                  //     _buildRowprimary5a(),
-                                  //     _buildRowprimary4a(),
-                                  //     _buildRowprimary4a1(),
-                                  //     _buildRowprimary4a2(),
-                                  //     _buildRowprimary3a(),
-                                  //     _buildRowprimary3a1(),
-                                  //     _buildRowprimary3a2(),
-                                  //     _buildRowprimary2a(),
-                                  //     _buildRowprimary2a1(),
-                                  //     _buildRowprimary2a2(),
-                                  //     _buildRowprimary1a(),
-                                  //     _buildRowprimary1a1(),
-                                  //     _buildRowprimarya2(),
-                                  //     _buildRownursery3a(),
-                                  //     _buildRownursery3a1(),
-                                  //     _buildRownursery3a2(),
-                                  //     _buildRownursery2a(),
-                                  //     _buildRownursery2a1(),
-                                  //     _buildRownursery2a2(),
-                                  //   ],
                                 ),
                               ],
                             ),
@@ -178,7 +134,9 @@ class _ReportsWardProgressClassPageState
                   Obx(
                     () => Text(
                       controller.selectedBatch.value,
-                      style: CustomTextStyles.bodySmallWhiteA700,
+                      style: CustomTextStyles.bodySmallWhiteA700.copyWith(
+                        fontSize: 16.h,
+                      ),
                     ),
                   ),
                 ],
@@ -198,6 +156,7 @@ class _ReportsWardProgressClassPageState
         width: 182.h,
         controller: controller.frame427321469Controller,
         hintText: wardScore,
+        hintStyle: TextStyle(fontSize: 16.h, color: Colors.white),
         contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
         borderDecoration: TextFormFieldStyleHelper.fillGreen,
         fillColor: appTheme.green500,
@@ -213,6 +172,7 @@ class _ReportsWardProgressClassPageState
         width: 176.h,
         controller: controller.frame427321470Controller,
         hintText: classAverage,
+        hintStyle: TextStyle(fontSize: 16.h, color: Colors.white),
         contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
       ),
     );
@@ -246,7 +206,7 @@ class _ReportsWardProgressClassPageState
                   padding: EdgeInsets.only(left: 10.h),
                   child: Text(
                     model.subjectName ?? "N/A",
-                    style: theme.textTheme.bodyMedium,
+                    style: theme.textTheme.bodyMedium!.copyWith(fontSize: 16.h),
                   ),
                 ),
               ],
@@ -259,7 +219,9 @@ class _ReportsWardProgressClassPageState
               children: [
                 Text(
                   "lbl_ward_score".tr,
-                  style: CustomTextStyles.bodySmallGray700,
+                  style: CustomTextStyles.bodySmallGray700.copyWith(
+                    fontSize: 16.h,
+                  ),
                 ),
                 _buildFrame427321469(model.studentScore!.toString()),
               ],
@@ -272,7 +234,9 @@ class _ReportsWardProgressClassPageState
               children: [
                 Text(
                   "lbl_class_average".tr,
-                  style: CustomTextStyles.bodySmallGray700,
+                  style: CustomTextStyles.bodySmallGray700.copyWith(
+                    fontSize: 16.h,
+                  ),
                 ),
                 _buildFrame427321470(model.classAverage!.toString()),
               ],

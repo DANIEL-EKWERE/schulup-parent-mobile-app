@@ -33,7 +33,7 @@ class ListlineItemWidget extends StatelessWidget {
                   //   () =>
                   Text(
                     listlineItemModelObj.className!,
-                    style: theme.textTheme.bodyMedium,
+                    style: theme.textTheme.bodyMedium!.copyWith(fontSize: 16.h),
                   ),
                   // ),
                 ),
@@ -48,9 +48,14 @@ class ListlineItemWidget extends StatelessWidget {
               children: [
                 // Obx(
                 //   () =>
-                Text("Ward Score", style: CustomTextStyles.bodySmallGray700),
+                Text(
+                  "Ward Score",
+                  style: CustomTextStyles.bodySmallGray700.copyWith(
+                    fontSize: 16.h,
+                  ),
+                ),
                 // ),
-                _buildFrame427321469(),
+                _buildFrame427321469(listlineItemModelObj),
               ],
             ),
           ),
@@ -64,10 +69,12 @@ class ListlineItemWidget extends StatelessWidget {
                 //   () =>
                 Text(
                   "Class Average",
-                  style: CustomTextStyles.bodySmallGray700,
+                  style: CustomTextStyles.bodySmallGray700.copyWith(
+                    fontSize: 16.h,
+                  ),
                   // ),
                 ),
-                _buildFrame427321470(),
+                _buildFrame427321470(listlineItemModelObj),
               ],
             ),
           ),
@@ -77,20 +84,29 @@ class ListlineItemWidget extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildFrame427321469() {
+  Widget _buildFrame427321469(SubjectProgressData model) {
     return Padding(
-      padding: EdgeInsets.only(right: 20.h),
+      padding: EdgeInsets.only(right: 10.h),
       child: Container(
-        width: 222.h,
+        padding: EdgeInsets.only(left: 10, top: 5),
+        width: model.studentScore! * 2,
         height: 30.h,
         decoration: BoxDecoration(
-          color: appTheme.green500,
+          color:
+              model.studentScore! < 50
+                  ? appTheme.red500
+                  : (model.studentScore! > 50 && model.studentScore! < 70)
+                  ? appTheme.amber100
+                  : appTheme.green500,
           borderRadius: BorderRadius.circular(12.h),
         ),
         // controller: listlineItemModelObj.studentScore.toString(),
         child: Text(
           listlineItemModelObj.studentScore.toString(),
-          style: theme.textTheme.bodySmall,
+          style: theme.textTheme.bodySmall!.copyWith(
+            fontSize: 16.h,
+            color: Colors.white,
+          ),
         ),
         // hintText: "lbl_91".tr,
         // contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),
@@ -101,20 +117,29 @@ class ListlineItemWidget extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildFrame427321470() {
+  Widget _buildFrame427321470(SubjectProgressData model) {
     return Padding(
-      padding: EdgeInsets.only(right: 30.h),
+      padding: EdgeInsets.only(right: 10.h),
       child: Container(
-        width: 222.h,
+        padding: EdgeInsets.only(left: 10, top: 5),
+        width: model.classAverage! * 2,
         height: 30.h,
         decoration: BoxDecoration(
-          color: appTheme.green500,
+          color:
+              model.classAverage! < 50
+                  ? appTheme.red500
+                  : (model.classAverage! > 50 && model.classAverage! < 70)
+                  ? appTheme.amber100
+                  : appTheme.green500,
           borderRadius: BorderRadius.circular(12.h),
         ),
         // controller: listlineItemModelObj.studentScore.toString(),
         child: Text(
           listlineItemModelObj.classAverage.toString(),
-          style: theme.textTheme.bodySmall,
+          style: theme.textTheme.bodySmall!.copyWith(
+            fontSize: 16.h,
+            color: Colors.white,
+          ),
         ),
         // hintText: "lbl_91".tr,
         // contentPadding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.h),

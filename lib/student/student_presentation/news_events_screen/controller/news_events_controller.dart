@@ -16,7 +16,7 @@ import 'dart:developer' as myLog;
 ///
 /// This class manages the state of the NewsEventsScreen, including the
 /// current newsEventsModelObj
-class NewsEventsController extends GetxController {
+class StudentNewsEventsController extends GetxController {
   Rx<NewsEventsModel> newsEventsModelObj = NewsEventsModel().obs;
 
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
@@ -24,12 +24,16 @@ class NewsEventsController extends GetxController {
   EventsResponse? eventsResponse;
   List<EventItem>? eventItems;
   Rx<String> selectedMonth = ''.obs;
+  Rx<int> selectedindex = 0.obs;
   Rx<bool> isLoading = false.obs;
-
+  DateTime? datex;
   @override
   void onInit() {
     super.onInit();
     getEvents();
+    datex = DateTime.now();
+    selectedindex.value = DateTime.now().month - 1;
+    selectedMonth.value = DateFormat('MMMM yyyy').format(datex!);
   }
 
   RefreshController refreshController = RefreshController(

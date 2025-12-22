@@ -56,10 +56,13 @@ class _SigninScreenState extends State<SigninScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: 100),
-                    CustomImageView(
-                      imagePath: 'assets/images/img_schulup_icon.png',
-                      height: 100,
-                      width: 100,
+                    Hero(
+                      tag: 'logo',
+                      child: CustomImageView(
+                        imagePath: 'assets/images/img_schulup_icon.png',
+                        height: 100,
+                        width: 100,
+                      ),
                     ),
                     SizedBox(height: 30),
                     // Text(

@@ -13,16 +13,20 @@ import 'package:schulupparent/student/student_presentation/dashboard_extended_vi
 
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
-ChangePasswordController controller = Get.put(ChangePasswordController());
+StudentChangePasswordController controller = Get.put(
+  StudentChangePasswordController(),
+);
 
-class ChangePasswordScreen extends StatefulWidget {
-  const ChangePasswordScreen({Key? key}) : super(key: key);
+class StudentChangePasswordScreen extends StatefulWidget {
+  const StudentChangePasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
+  State<StudentChangePasswordScreen> createState() =>
+      _StudentChangePasswordScreenState();
 }
 
-class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+class _StudentChangePasswordScreenState
+    extends State<StudentChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -389,6 +393,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   /// Navigates to the previous screen.
   onTapArrowleftone() {
-    Get.back();
+    //Get.back();
+    Navigator.pop(context);
   }
 }

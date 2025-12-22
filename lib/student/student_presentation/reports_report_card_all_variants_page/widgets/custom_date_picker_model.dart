@@ -88,7 +88,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
     );
 
     return Container(
-      //height: 480.h,
+      //height: 480,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -135,7 +135,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                   child: Center(
                     child: Text(
                       'Year',
-                      style: TextStyle(fontSize: 12.h, color: Colors.grey[600]),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                   ),
                 ),
@@ -143,7 +143,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                   child: Center(
                     child: Text(
                       'Month',
-                      style: TextStyle(fontSize: 12.h, color: Colors.grey[600]),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                   ),
                 ),
@@ -151,7 +151,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                   child: Center(
                     child: Text(
                       'Day',
-                      style: TextStyle(fontSize: 12.h, color: Colors.grey[600]),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                   ),
                 ),
@@ -174,7 +174,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                       alignment: Alignment.centerLeft,
                       child: Container(
                         width: 70,
-                        height: 40.h,
+                        height: 40,
                         margin: EdgeInsets.symmetric(horizontal: 20),
                         decoration: BoxDecoration(
                           color: Color(0xFFFFE5CC),
@@ -188,7 +188,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                       alignment: Alignment.centerRight,
                       child: Container(
                         width: 70,
-                        height: 40.h,
+                        height: 40,
                         margin: EdgeInsets.symmetric(horizontal: 20),
                         decoration: BoxDecoration(
                           color: Color(0xFFFFE5CC),
@@ -200,7 +200,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                   Center(
                     child: Container(
                       width: 70,
-                      height: 40.h,
+                      height: 40,
                       margin: EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
                         color: Color(0xFFFFE5CC),
@@ -240,7 +240,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                                 child: Text(
                                   years[index].toString(),
                                   style: TextStyle(
-                                    fontSize: 16.h,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -278,7 +278,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                                 child: Text(
                                   months[index],
                                   style: TextStyle(
-                                    fontSize: 16.h,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -307,7 +307,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                                 child: Text(
                                   days[index].toString(),
                                   style: TextStyle(
-                                    fontSize: 16.h,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -327,7 +327,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
 
           // Jump to Date button
           Padding(
-            padding: EdgeInsets.fromLTRB(25.h, 0, 25.h, 10.h),
+            padding: EdgeInsets.fromLTRB(25, 0, 25, 10),
             child: SizedBox(
               width: double.infinity,
               height: 50,
@@ -354,7 +354,7 @@ class _CustomDatePickerModalState extends State<CustomDatePickerModal> {
                 child: Text(
                   'Jump to Date',
                   style: TextStyle(
-                    fontSize: 14.h,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),

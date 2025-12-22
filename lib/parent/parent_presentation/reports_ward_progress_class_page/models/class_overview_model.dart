@@ -11,11 +11,7 @@ class ClassOverview {
   String? message;
   List<SubjectData>? data;
 
-  ClassOverview({
-    this.success,
-    this.message,
-    this.data,
-  });
+  ClassOverview({this.success, this.message, this.data});
 
   ClassOverview.fromJson(Map<String, dynamic> json) {
     success = json['success'];
@@ -44,11 +40,7 @@ class SubjectData {
   double? classAverage;
   double? studentScore;
 
-  SubjectData({
-    this.subjectName,
-    this.classAverage,
-    this.studentScore,
-  });
+  SubjectData({this.subjectName, this.classAverage, this.studentScore});
 
   SubjectData.fromJson(Map<String, dynamic> json) {
     subjectName = json['subjectName'];

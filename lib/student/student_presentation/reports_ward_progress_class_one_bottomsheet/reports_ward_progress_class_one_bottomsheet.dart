@@ -157,6 +157,7 @@ class _ReportsWardProgressClassOneBottomsheetState
 
   /// Navigates to the previous screen.
   onTapImgCloseone() {
-    Get.back();
+    //Get.back();
+    Navigator.pop(context);
   }
 }

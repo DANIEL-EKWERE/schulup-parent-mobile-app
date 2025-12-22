@@ -9,7 +9,7 @@ import 'package:schulupparent/student/student_presentation/direct_chat/models/mo
 import 'package:schulupparent/student/student_presentation/direct_chat/models/ongoing_conversation_model.dart';
 import 'package:schulupparent/student/student_presentation/direct_message_screen/direct_message_screen.dart';
 
-class DirectChatController extends GetxController {
+class StudentDirectChatController extends GetxController {
   //students/47135/classteachers
   StudentDashboardExtendedViewController dashboardcontroller =
       Get.find<StudentDashboardExtendedViewController>();

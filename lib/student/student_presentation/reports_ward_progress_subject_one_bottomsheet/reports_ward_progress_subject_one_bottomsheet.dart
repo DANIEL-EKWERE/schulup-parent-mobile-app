@@ -6,6 +6,7 @@ import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/reports_ward_progress_subject_one_controller.dart';
+import 'dart:developer' as myLog;
 
 ReportsWardProgressSubjectController controlsx =
     Get.find<ReportsWardProgressSubjectController>();
@@ -45,7 +46,9 @@ class _ReportsWardProgressSubjectOneBottomsheetState
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          
           SizedBox(width: 52.h, child: Divider(color: appTheme.gray20001)),
+          
           SizedBox(height: 18.h),
           SizedBox(
             width: double.maxFinite,
@@ -145,10 +148,22 @@ class _ReportsWardProgressSubjectOneBottomsheetState
               // print(controlsx.selectedSubjectId);
               // controlsx.getSubjectProgress();
               // Navigator.pop(context);
-              print('object');
-              for (var x in widget.controller.subjectDataList) {
-                print("${x.name} anmes");
-              }
+              // print('object');
+              // for (var x in widget.controller.subjectDataList) {
+              //   print("${x.name} anmes");
+              // }
+              myLog.log(selectedType.first);
+              myLog.log(selectedTypeID.first.toString());
+              //widget.controller.selectedSubjectName.value = selectedType.first;
+              setState(() {
+                widget.controller.selectedSubjectName.value =
+                    selectedType.first;
+
+                widget.controller.selectedSubjectId =
+                    selectedTypeID.first.toString();
+              });
+              widget.controller.getSubjectProgress();
+              Navigator.pop(context);
             },
             height: 64.h,
             text: "lbl_go_to_subject".tr,
@@ -163,6 +178,7 @@ class _ReportsWardProgressSubjectOneBottomsheetState
 
   /// Navigates to the previous screen.
   onTapImgCloseone() {
-    Get.back();
+    //  Get.back();
+    Navigator.pop(Get.context!);
   }
 }

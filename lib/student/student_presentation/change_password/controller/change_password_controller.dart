@@ -9,7 +9,9 @@ import 'package:schulupparent/student/data/apiClient/api_client.dart';
 import 'package:schulupparent/student/routes/app_routes.dart';
 import 'dart:developer' as myLog;
 
-class ChangePasswordController extends GetxController {
+import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/academics_assignment_status_screen.dart';
+
+class StudentChangePasswordController extends GetxController {
   TextEditingController currentPasswordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -42,7 +44,8 @@ class ChangePasswordController extends GetxController {
         currentPasswordController.clear();
         newPasswordController.clear();
         confirmPasswordController.clear();
-        Get.offAllNamed(AppRoutes.studentAcademicsAssignmentStatusScreen);
+        //Get.offAllNamed(AppRoutes.studentAcademicsAssignmentStatusScreen);
+        Get.offAll(() => StudentAcademicsAssignmentStatusScreen());
         OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {

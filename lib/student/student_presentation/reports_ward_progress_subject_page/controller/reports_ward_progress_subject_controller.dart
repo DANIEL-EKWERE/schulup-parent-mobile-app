@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/student/data/apiClient/api_client.dart';
@@ -38,7 +38,7 @@ class ReportsWardProgressSubjectController extends GetxController {
   void onInit() {
     super.onInit();
     getSubjects();
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 1), () {
       getSubjectProgress();
     });
   }
@@ -109,15 +109,19 @@ class ReportsWardProgressSubjectController extends GetxController {
 
   Future<void> getSubjectProgress() async {
     isLoading.value = true;
+    myLog.log('calling subject progress method');
     try {
       final response = await _apiService.getSubjectProgress(
         dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
         selectedSubjectId ?? subjectDataList.first.subjectMasterID.toString(),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
+        myLog.log(response.body);
         isLoading.value = false;
         subjectProgress = subjectProgressFromJson(response.body);
+        myLog.log('message :${subjectProgress!.data!.length}');
         subjectProgressDataList = subjectProgress!.data!;
+        myLog.log(subjectProgress!.data!.toString());
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
       } else {
@@ -142,6 +146,7 @@ class ReportsWardProgressSubjectController extends GetxController {
       );
     } catch (e) {
       isLoading.value = false;
+      myLog.log(e.toString());
       Get.snackbar(
         'Error',
         e.toString(),
