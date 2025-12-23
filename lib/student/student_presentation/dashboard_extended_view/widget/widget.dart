@@ -9,7 +9,7 @@ class DashboardItemWidget extends StatelessWidget {
 
   DashboardExtendedViewModel dashboardItemModelObj;
 
-  var controller = Get.find<StudentDashboardExtendedViewController>();
+  var controller = Get.put(StudentDashboardExtendedViewController());
 
   @override
   Widget build(BuildContext context) {

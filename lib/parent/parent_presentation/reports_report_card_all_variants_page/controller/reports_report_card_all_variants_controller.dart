@@ -81,10 +81,41 @@ class ReportsReportCardAllVariantsController extends GetxController
     getTermlyReports();
     datex = DateTime.now();
     date.value = formatDate(datex.toString());
-    // getTermlyReports();
-    // Timer(Duration(seconds: 3), (){
-    //   getSubjectProgress();
-    // });
+
+    // termType.value =
+    //     dashboardExtendedViewController.selectedTerm1.value!.termID == 1
+    //         ? "First"
+    //         : dashboardExtendedViewController.selectedTerm1.value!.termID == 2
+    //         ? "Second"
+    //         : "Third";
+    // selectedTermId.value =
+    //     dashboardExtendedViewController.selectedTerm1.value!.termID == 1
+    //         ? 1
+    //         : dashboardExtendedViewController.selectedTerm1.value!.termID == 2
+    //         ? 2
+    //         : 3;
+    // // getTermlyReports();
+    // // Timer(Duration(seconds: 3), (){
+    // //   getSubjectProgress();
+    // // });
+    // session.value =
+    //     dashboardExtendedViewController.selectedAcademicSessionData!.name!;
+    setValues();
+  }
+
+  void setValues () {
+    termType.value =
+        dashboardExtendedViewController.selectedTerm1.value!.termID == 1
+            ? "First"
+            : dashboardExtendedViewController.selectedTerm1.value!.termID == 2
+                ? "Second"
+                : "Third";
+    selectedTermId.value =
+        dashboardExtendedViewController.selectedTerm1.value!.termID == 1
+            ? 1
+            : dashboardExtendedViewController.selectedTerm1.value!.termID == 2
+                ? 2
+                : 3;
     session.value =
         dashboardExtendedViewController.selectedAcademicSessionData!.name!;
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_page/controller/academics_assignment_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
 import 'package:schulupparent/student/student_presentation/attendance_all_variants_page/controller/attendance_all_variants_controller.dart';
 import 'package:schulupparent/student/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
@@ -14,8 +15,11 @@ StudentAcademicsAssignmentStatusController controller1 =
     Get.find<StudentAcademicsAssignmentStatusController>();
 AcademicsAssignmentController controllers =
     Get.find<AcademicsAssignmentController>();
-StudentAcademicsLessonAllLessonsController lessonsController =
-    Get.find<StudentAcademicsLessonAllLessonsController>();
+StudentAcademicsLessonAllLessonsController lessonsController = Get.put(
+  StudentAcademicsLessonAllLessonsController(
+    StudentAcademicsLessonAllLessonsModel().obs,
+  ),
+);
 
 class AcademicsAssignmentModalOneBottomsheet extends StatefulWidget {
   AcademicsAssignmentModalOneBottomsheet(this.controller, {Key? key})
@@ -158,6 +162,7 @@ class _AcademicsAssignmentModalOneBottomsheetState
           SizedBox(height: 30.h),
           CustomElevatedButton(
             onPressed: () {
+              Navigator.pop(context);
               setState(() {
                 controller1.termType.value = selectedType.first;
                 if (controller1.termType.value.contains('First Term')) {
@@ -177,7 +182,6 @@ class _AcademicsAssignmentModalOneBottomsheetState
                 controllers.getAssignment();
               });
               lessonsController.allLessons();
-              Navigator.pop(context);
             },
             height: 64.h,
             text: "lbl_confirm".tr,

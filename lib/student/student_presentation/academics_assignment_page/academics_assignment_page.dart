@@ -109,7 +109,7 @@ class AcademicsAssignmentPage extends StatelessWidget {
   /// Section Widget
   Widget _buildRowprimarycount() {
     return Container(
-      decoration: AppDecoration.outline,
+      decoration: AppDecoration.primaryC7Main,
       width: double.maxFinite,
       child: ClipRect(
         child: BackdropFilter(
@@ -139,7 +139,9 @@ class AcademicsAssignmentPage extends StatelessWidget {
                                   .selectedClass
                                   .value
                               : controllerx.classType.value,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -168,7 +170,9 @@ class AcademicsAssignmentPage extends StatelessWidget {
                       Obx(() {
                         return Text(
                           "${controllerx.termType.value} Term",
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -198,7 +202,9 @@ class AcademicsAssignmentPage extends StatelessWidget {
                       Obx(() {
                         return Text(
                           controllerx.statusType.value,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16.h,
+                          ),
                         );
                       }),
                       CustomImageView(

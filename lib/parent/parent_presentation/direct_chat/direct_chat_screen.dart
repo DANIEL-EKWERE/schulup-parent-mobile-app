@@ -359,7 +359,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
       centerTitle: true,
       title: Column(
         children: [
-          AppbarSubtitleOne(text: "Direct Chat"),
+          AppbarSubtitleOne(text: "Instant Chat"),
           AppbarSubtitleFive(
             text: dashboardExtendedViewController.selectedStudent1!.firstName!,
             margin: EdgeInsets.symmetric(horizontal: 33.h),

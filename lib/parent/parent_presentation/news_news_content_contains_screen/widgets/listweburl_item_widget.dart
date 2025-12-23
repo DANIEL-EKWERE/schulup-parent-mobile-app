@@ -33,11 +33,29 @@ class ListweburlItemWidget extends StatelessWidget {
       prefixConstraints: BoxConstraints(maxHeight: 44.h),
       suffix: Container(
         margin: EdgeInsets.fromLTRB(16.h, 14.h, 14.h, 14.h),
-        child: CustomImageView(
-          imagePath: ImageConstant.imgIconsTinyDownload,
-          height: 16.h,
-          width: 16.h,
-          fit: BoxFit.contain,
+        child: Obx(
+          () =>
+              controller.isLoading.value
+                  ? SizedBox(
+                    height: 16.h,
+                    width: 16.h,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.h,
+                      //color: appTheme.blueA700,
+                    ),
+                  )
+                  : CustomImageView(
+                    onTap: () {
+                      controller.downloadAndOpenAttachment(
+                        listweburlItemModelObj.downloadUrl,
+                        listweburlItemModelObj.fileNameAndExtention,
+                      );
+                    },
+                    imagePath: ImageConstant.imgIconsTinyDownload,
+                    height: 16.h,
+                    width: 16.h,
+                    fit: BoxFit.contain,
+                  ),
         ),
       ),
       suffixConstraints: BoxConstraints(maxHeight: 44.h),

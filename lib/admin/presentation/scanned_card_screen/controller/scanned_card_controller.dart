@@ -30,7 +30,7 @@ class ScannedCardController extends GetxController {
       context: Get.context!,
       circularProgressColor: Color(0XFFFF8C42),
     );
-    var schoolCode = await dataBase.getBrmCode();
+    var schoolCode = await adminDataBase.getBrmCode();
     try {
       final body = {
         "schoolCode": schoolCode,

@@ -240,8 +240,10 @@ class _AcademicsLessonAllLessonsPageState
                         CustomImageView(imagePath: ImageConstant.imgObjects),
                         Text(
                           textAlign: TextAlign.center,
-                          'Opps,No Lesson available for the selected class and term!!!',
-                          style: CustomTextStyles.displayMediumBlack,
+                          '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
                         ),
                       ],
                     ),

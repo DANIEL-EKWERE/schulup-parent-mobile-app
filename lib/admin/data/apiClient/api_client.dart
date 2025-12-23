@@ -28,7 +28,7 @@ class ApiClient extends GetConnect {
   static const Duration retryDelay = Duration(seconds: 2);
 
   Future<String?> fn_getCurrentBearerToken() async {
-    return await 'dataBase.getToken()';
+    return await 'adminDataBase.getToken()';
   }
 
   fn_generateCacheBuster([int length = 30]) {
@@ -188,15 +188,15 @@ class ApiClient extends GetConnect {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         OverlayLoadingProgress.stop();
-        await dataBase.saveFirstName(
+        await adminDataBase.saveFirstName(
           firstName,
         ); //  unawaited(loginOneSignalUser(id, email, token, basePath));
-        await dataBase.saveLastName(lastName);
-        await dataBase.savePhoneNumber(phoneNumber);
-        //await dataBase.saveRecommendedBy(recommended_by)
+        await adminDataBase.saveLastName(lastName);
+        await adminDataBase.savePhoneNumber(phoneNumber);
+        //await adminDataBase.saveRecommendedBy(recommended_by)
         // final prefs = await SharedPreferences.getInstance();
         //     final token = prefs.setString('token') ?? '';
-        await dataBase.saveEmail(email);
+        await adminDataBase.saveEmail(email);
 
         Get.toNamed(
           '/email-verification',
@@ -297,7 +297,7 @@ class ApiClient extends GetConnect {
 
   Future<http.Response> regCard(Map<String, dynamic> customerData) async {
     final url = Uri.parse('$baseUrl/attendance/assign-uid');
-    var token = await dataBase.getToken();
+    var token = await adminDataBase.getToken();
     _logRequest('POST', url, body: customerData);
     final response = await http.post(
       url,
@@ -313,7 +313,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> getSchoolLogo() async {
-    var schoolId = await dataBase.getBrmCode();
+    var schoolId = await adminDataBase.getBrmCode();
     final url = Uri.parse('$baseUrl/school/$schoolId/logo');
     _logRequest('GET', url);
     final response = await http.get(
@@ -328,7 +328,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> getSchoolName() async {
-    var schoolId = await dataBase.getBrmCode();
+    var schoolId = await adminDataBase.getBrmCode();
     final url = Uri.parse('$baseUrl/school/$schoolId/name');
     _logRequest('GET', url);
     final response = await http.get(
@@ -343,7 +343,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> fetchCountry() async {
-    // var token = await dataBase.getToken();
+    // var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/country');
@@ -361,7 +361,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> fetchVendorCategories() async {
-    var email = await dataBase.getEmail();
+    var email = await adminDataBase.getEmail();
     final url = Uri.parse('$baseUrl/vendors/categories');
     _logRequest('GET', url);
     final response = await http.get(
@@ -377,7 +377,7 @@ class ApiClient extends GetConnect {
 
   Future<http.Response> saveVendorCategories(List<dynamic> category_ids) async {
     myLog.log('from api client class $category_ids');
-    var email = await dataBase.getEmail();
+    var email = await adminDataBase.getEmail();
 
     final url = Uri.parse('$baseUrl/update-vendor-categories/$email');
     _logRequest('POST', url);
@@ -395,7 +395,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> fetchTransactions() async {
-    // var token = await dataBase.getToken();
+    // var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/payments');
@@ -413,7 +413,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> fetchReferal() async {
-    var token = await dataBase.getToken();
+    var token = await adminDataBase.getToken();
     final url = Uri.parse('$baseUrl/my-referrals');
     _logRequest('GET', url);
     final response = await http.get(
@@ -429,7 +429,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> fetchTransaction(int id) async {
-    // var token = await dataBase.getToken();
+    // var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/payments/$id');
@@ -447,7 +447,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> fetchWallet() async {
-    // var token = await dataBase.getToken();
+    // var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/fetch-wallet');
@@ -465,7 +465,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> fetchState() async {
-    //var token = await dataBase.getToken();
+    //var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/states');
@@ -483,7 +483,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> fetchLgas(String name) async {
-    // var token = await dataBase.getToken();
+    // var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/lgas?state=$name');
@@ -503,7 +503,7 @@ class ApiClient extends GetConnect {
   Future<http.Response> updateCheckoutAddress(
     Map<String, dynamic> addressData,
   ) async {
-    // var token = await dataBase.getToken();
+    // var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/addresses/1');
@@ -524,7 +524,7 @@ class ApiClient extends GetConnect {
   Future<http.Response> addCheckoutAddress(
     Map<String, dynamic> addressData,
   ) async {
-    //var token = await dataBase.getToken();
+    //var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/addresses');
@@ -543,7 +543,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> getCheckoutAddress() async {
-    //var token = await dataBase.getToken();
+    //var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/addresses');
@@ -655,7 +655,7 @@ class ApiClient extends GetConnect {
     _logRequest('GET', url);
     // final prefs = await SharedPreferences.getInstance();
     // final token = prefs.getString('token');
-    // var token = await dataBase.getToken();
+    // var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     return _retryRequest(() async {
@@ -704,7 +704,7 @@ class ApiClient extends GetConnect {
   // Fetch available orders
   Future<http.Response> fetchorders() async {
     final url = Uri.parse('$baseUrl/vendor/orders');
-    var token = await dataBase.getToken();
+    var token = await adminDataBase.getToken();
     _logRequest('GET', url);
     return _retryRequest(() async {
       final response = await http
@@ -728,7 +728,7 @@ class ApiClient extends GetConnect {
 
   Future<http.Response> fetchAcceptedOrders() async {
     final url = Uri.parse('$baseUrl/vendor/orders/accepted');
-    var token = await dataBase.getToken();
+    var token = await adminDataBase.getToken();
     _logRequest('GET', url);
     return _retryRequest(() async {
       final response = await http
@@ -754,7 +754,7 @@ class ApiClient extends GetConnect {
   Future<http.Response> acceptedOrders(String itemId, int vendorId) async {
     print(vendorId);
     final url = Uri.parse('$baseUrl/vendor/orders/item/$itemId/decision');
-    var token = await dataBase.getToken();
+    var token = await adminDataBase.getToken();
     _logRequest('POST', url);
     return _retryRequest(() async {
       final response = await http
@@ -784,7 +784,7 @@ class ApiClient extends GetConnect {
   Future<http.Response> rejectedOrders(String itemId, int vendorId) async {
     print(vendorId);
     final url = Uri.parse('$baseUrl/vendor/orders/item/$itemId/decision');
-    var token = await dataBase.getToken();
+    var token = await adminDataBase.getToken();
     _logRequest('POST', url);
     return _retryRequest(() async {
       final response = await http
@@ -813,7 +813,7 @@ class ApiClient extends GetConnect {
   // Fetch ingredients
   Future<http.Response> fetchIngredients() async {
     final url = Uri.parse('$baseUrl/fetch/ingredients');
-    // var token = await dataBase.getToken();
+    // var token = await adminDataBase.getToken();
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     _logRequest('GET', url);
@@ -895,7 +895,7 @@ class ApiClient extends GetConnect {
     final url = Uri.parse('$baseUrl/fetch-user');
     _logRequest('GET', url);
     //final prefs = await SharedPreferences.getInstance();
-    //  final token = await dataBase.getToken();  //prefs.getString('token');
+    //  final token = await adminDataBase.getToken();  //prefs.getString('token');
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final response = await http.get(
@@ -954,7 +954,7 @@ class ApiClient extends GetConnect {
 
   Future<http.Response> attendance(Map<String, dynamic> body) async {
     final url = Uri.parse('$baseUrl/attendance/record');
-    var token = await dataBase.getToken();
+    var token = await adminDataBase.getToken();
     _logRequest('POST', url);
     final response = await http.post(
       url,

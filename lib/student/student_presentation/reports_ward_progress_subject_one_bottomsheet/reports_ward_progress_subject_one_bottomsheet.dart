@@ -46,7 +46,6 @@ class _ReportsWardProgressSubjectOneBottomsheetState
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          
           Container(
             margin: EdgeInsets.only(top: 12),
             width: 40,
@@ -56,7 +55,7 @@ class _ReportsWardProgressSubjectOneBottomsheetState
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-          
+
           SizedBox(height: 18.h),
           SizedBox(
             width: double.maxFinite,
@@ -103,7 +102,7 @@ class _ReportsWardProgressSubjectOneBottomsheetState
                       : widget.controller.subjectDataList.isEmpty
                       ? Text('Subject List is Empty!!!')
                       : ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: BouncingScrollPhysics(),
                         itemCount: widget.controller.subjectDataList.length,
                         itemBuilder: (context, index) {
                           final subject =

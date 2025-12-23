@@ -53,7 +53,7 @@ class _AcademicsAssignmentModalBottomsheetState
     dashboardExtendedViewController.selectedClassID ?? 0,
   ];
 
-  List<String> selectedType = [controller1.classType!.value];
+  List<String> selectedType = [controller1.classType.value];
 
   @override
   Widget build(BuildContext context) {

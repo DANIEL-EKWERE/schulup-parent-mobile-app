@@ -25,9 +25,9 @@ class ChangeSchoolCodeController extends GetxController {
       context: Get.context!,
       circularProgressColor: Color(0XFFFF8C42),
     );
-    var schoolcode = await dataBase.getBrmCode();
-    var username = await dataBase.getUserName();
-    var password = await dataBase.getTransactionPin();
+    var schoolcode = await adminDataBase.getBrmCode();
+    var username = await adminDataBase.getUserName();
+    var password = await adminDataBase.getTransactionPin();
     myLog.log('school code: $schoolcode');
 
     try {
@@ -41,7 +41,7 @@ class ChangeSchoolCodeController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         myLog.log('login successful: ${response.body}');
         schoolCodeController.clear();
-        dataBase.logOut();
+        adminDataBase.logOut();
         Get.offAllNamed(AppRoutes.loginScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.loginScreen);
@@ -91,7 +91,7 @@ class ChangeSchoolCodeController extends GetxController {
           context: Get.context!,
           circularProgressColor: Color(0XFFFF8C42),
         );
-        dataBase.logOut();
+        adminDataBase.logOut();
         Get.offAllNamed(AppRoutes.loginScreen);
       } else {
         OverlayLoadingProgress.stop();

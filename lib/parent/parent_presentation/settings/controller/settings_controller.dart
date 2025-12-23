@@ -4,15 +4,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:schulupparent/parent/core/utils/storage.dart';
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
 
 import '../../../core/app_export.dart';
 
 class SettingsController extends GetxController {
-  
-ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
-  
- 
+  ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   Future<void> logOut() async {
     OverlayLoadingProgress.start(
@@ -20,8 +18,6 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
       circularProgressColor: Color(0XFFFF8C42),
     );
     try {
-      
-      
       final response = await _apiService.logOut();
       if (response.statusCode == 200 || response.statusCode == 201) {
         // OverlayLoadingProgress.stop();
@@ -42,8 +38,10 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
         // usernameController.clear();
         // passwordController.clear();
         // schoolCodeController.clear();
-        Get.offAllNamed(AppRoutes.signinScreen,);
+        dataBase.logOut();
+        Get.offAllNamed(AppRoutes.signinScreen);
         OverlayLoadingProgress.stop();
+
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
@@ -88,5 +86,4 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
       OverlayLoadingProgress.stop();
     }
   }
-
 }

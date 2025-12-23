@@ -126,8 +126,8 @@ class NewsAllVariantsPage extends StatelessWidget {
                       CustomImageView(imagePath: ImageConstant.imgObjects),
                       Text(
                         textAlign: TextAlign.center,
-                        'Opps,No News Found!!!',
-                        style: CustomTextStyles.displayMediumBlack.copyWith(
+                        '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
                           fontSize: 16.h,
                         ),
                       ),

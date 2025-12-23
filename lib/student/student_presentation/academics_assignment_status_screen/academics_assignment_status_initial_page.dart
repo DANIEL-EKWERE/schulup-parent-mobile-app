@@ -768,10 +768,9 @@ class _AcademicsAssignmentStatusInitialPageState
                           CustomImageView(imagePath: ImageConstant.imgObjects),
                           Text(
                             textAlign: TextAlign.center,
-                            'Opps,No Assignment for the selected filter condition!!!',
-                            style: CustomTextStyles.displayMediumBlack.copyWith(
-                              fontSize: 16.h,
-                            ),
+                            '🔍 No results found Try adjusting your search or filters',
+                            style: CustomTextStyles.bodyMediumOnPrimary
+                                .copyWith(fontSize: 16.h),
                           ),
                         ],
                       ),
@@ -840,7 +839,12 @@ class _AcademicsAssignmentStatusInitialPageState
                         children: [
                           SizedBox(height: 150.h),
                           CustomImageView(imagePath: ImageConstant.imgObjects),
-                          Text('No Lessons for the selected filter condition'),
+                          Text(
+                            textAlign: TextAlign.center
+                            ,'🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),),
                         ],
                       ),
                     )
@@ -905,7 +909,11 @@ class _AcademicsAssignmentStatusInitialPageState
                         children: [
                           SizedBox(height: 150.h),
                           CustomImageView(imagePath: ImageConstant.imgObjects),
-                          Text('No cbt Test for the selected filter condition'),
+                          Text(
+                            '🔍 No results found Try adjusting your search or filters',
+                            style: CustomTextStyles.bodyMediumOnPrimary
+                                .copyWith(fontSize: 16.h),
+                          ),
                         ],
                       ),
                     )

@@ -7,6 +7,7 @@ import 'package:schulupparent/admin/core/network/connectivity_service.dart';
 import 'package:schulupparent/admin/core/utils/storage.dart';
 import 'package:schulupparent/admin/data/apiClient/api_client.dart';
 import '../../../core/app_export.dart';
+import 'package:schulupparent/parent/routes/app_routes.dart' as parent_routes;
 import '../models/home_model.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 
@@ -48,7 +49,7 @@ class HomeController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   void getUser() async {
-    var name = await dataBase.getUserName();
+    var name = await adminDataBase.getUserName();
     userName.value = name;
     update();
   }
@@ -63,8 +64,9 @@ class HomeController extends GetxController {
       final response = await _apiService.logOut();
       if (response.statusCode == 200) {
         OverlayLoadingProgress.stop();
-        //dataBase.logOut();
-        Get.offAllNamed(AppRoutes.secondLoginScreen);
+        adminDataBase.logOut();
+        //Get.offAllNamed(AppRoutes.secondLoginScreen);
+        Get.offAllNamed(parent_routes.AppRoutes.signinScreen);
       } else {
         OverlayLoadingProgress.stop();
         Get.snackbar("Error", "Unable to logout");

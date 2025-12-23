@@ -77,9 +77,10 @@ class _ReportsWardProgressClassPageState
                                 ),
                                 Text(
                                   textAlign: TextAlign.center,
-                                  'Opps,No Class Overview for the selected Batch!!!',
-                                  style: CustomTextStyles.displayMediumBlack
-                                      .copyWith(fontSize: 16.h),
+                                  '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
                                 ),
                               ],
                             ),

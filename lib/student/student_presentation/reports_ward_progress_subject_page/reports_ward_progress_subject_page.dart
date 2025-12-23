@@ -161,8 +161,8 @@ class _ReportsWardProgressSubjectPageState
                       CustomImageView(imagePath: ImageConstant.imgObjects),
                       Text(
                         textAlign: TextAlign.center,
-                        'Opps,No Subject Progress for the selected Subject!!!',
-                        style: CustomTextStyles.displayMediumBlack.copyWith(
+                        '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
                           fontSize: 16.h,
                         ),
                       ),

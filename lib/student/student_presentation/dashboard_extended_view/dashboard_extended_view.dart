@@ -6,6 +6,9 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/student/core/app_export.dart';
 import 'package:schulupparent/student/core/utils/image_constant.dart';
 import 'package:schulupparent/student/core/utils/storage.dart';
+import 'package:schulupparent/student/student_presentation/academics_assignment_page/academics_assignment_page.dart';
+import 'package:schulupparent/student/student_presentation/academics_assignment_page/controller/academics_assignment_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_assignment_page/models/academics_assignment_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/academics_assignment_status_initial_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/academics_lesson_all_lessons_page.dart';
@@ -523,11 +526,12 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                       } else if (model.route ==
                           '/student_academics_assignment_page') {
                         Get.to(
-                          () => StudentAcademicsCbtTestPage(),
+                          () => AcademicsAssignmentPage(),
                           binding: BindingsBuilder(() {
                             Get.lazyPut(
-                              () => StudentAcademicsLessonCbtTestController(
-                                StudentAcademicsLessonCbtTestModel().obs,
+                              () => AcademicsAssignmentController(
+                                AcademicsAssignmentModel().obs,
+                                // StudentAcademicsLessonCbtTestModel().obs,
                               ),
                             );
                           }),

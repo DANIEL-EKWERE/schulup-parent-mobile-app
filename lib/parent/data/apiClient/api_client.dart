@@ -655,15 +655,12 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-
-// download and share
+  // download and share
 
   Future<http.Response> downloadAndOpen(
-   
     String studentID,
     String batchID,
     String reportCardType,
-    
   ) async {
     var token = await dataBase.getToken();
     final url = Uri.parse(
@@ -677,19 +674,35 @@ class ApiClient extends GetConnect {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
-     // body: jsonEncode(commentData),
+      // body: jsonEncode(commentData),
     );
     _logResponse(response);
     return response;
   }
 
+  // download and view attechment
+
+  Future<http.Response> downloadAndViewAttachment(String downloadUrl) async {
+    var token = await dataBase.getToken();
+    final url = Uri.parse(downloadUrl);
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      // body: jsonEncode(commentData),
+    );
+    _logResponse(response);
+    return response;
+  }
 
   Future<http.Response> downloadAndShare(
-   
     String studentID,
     String batchID,
     String reportCardType,
-    
   ) async {
     var token = await dataBase.getToken();
     final url = Uri.parse(
@@ -703,7 +716,7 @@ class ApiClient extends GetConnect {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
-     // body: jsonEncode(commentData),
+      // body: jsonEncode(commentData),
     );
     _logResponse(response);
     return response;
@@ -1952,6 +1965,24 @@ class ApiClient extends GetConnect {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/news/my-news');
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        "Authorization": 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+  // Get all terms
+  Future<http.Response> getTerms() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final url = Uri.parse('$baseUrl/lookups/terms');
     _logRequest('GET', url);
     final response = await http.get(
       url,

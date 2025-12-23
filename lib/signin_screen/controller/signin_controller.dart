@@ -195,6 +195,7 @@ import 'package:schulupparent/student/routes/app_routes.dart' as studentRoutes;
 
 //TODO: ADMIN ROUTING
 import 'package:schulupparent/admin/routes/app_routes.dart' as admin;
+import 'package:schulupparent/admin/core/utils/storage.dart' as admin;
 
 import 'dart:developer' as myLog;
 
@@ -242,9 +243,9 @@ class SigninController extends GetxController {
         // Save common data
 
         // Clear controllers
-        // usernameController.clear();
-        // passwordController.clear();
-        // schoolCodeController.clear();
+        usernameController.clear();
+        passwordController.clear();
+        schoolCodeController.clear();
 
         // Route based on user type
         if (userType == 4) {
@@ -259,8 +260,8 @@ class SigninController extends GetxController {
           await parent.dataBase.saveToken(token);
           await parent.dataBase.saveUserId(userId);
           await parent.dataBase.saveUserName(userName);
-          await parent.dataBase.saveTransactionPin(passwordController.text);
-          await parent.dataBase.saveBrmCode(schoolCodeController.text);
+          // await parent.dataBase.saveTransactionPin(passwordController.text);
+          // await parent.dataBase.saveBrmCode(schoolCodeController.text);
           myLog.log(guardianID.toString());
           myLog.log(token);
           myLog.log(userId.toString());
@@ -296,6 +297,11 @@ class SigninController extends GetxController {
           Get.offAll(() => StudentAcademicsAssignmentStatusScreen());
         } else {
           // Admin or other user type
+          await admin.adminDataBase.saveToken(token);
+          await admin.adminDataBase.saveUserId(userId);
+          await admin.adminDataBase.saveUserName(userName);
+          await admin.adminDataBase.saveTransactionPin(passwordController.text);
+          await admin.adminDataBase.saveBrmCode(schoolCodeController.text);
           myLog.log('Routing to Admin dashboard');
           //Get.offAllNamed(admin.AppRoutes.homeScreen);
           Get.offAll(() => HomeScreen());
@@ -360,11 +366,11 @@ class SigninController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    passwordController.dispose();
-    usernameController.dispose();
-    schoolCodeController.dispose();
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   passwordController.dispose();
+  //   usernameController.dispose();
+  //   schoolCodeController.dispose();
+  //   super.onClose();
+  // }
 }

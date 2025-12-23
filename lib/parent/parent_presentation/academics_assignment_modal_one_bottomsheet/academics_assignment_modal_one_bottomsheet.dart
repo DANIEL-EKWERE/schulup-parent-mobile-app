@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_assignment_page/controller/academics_assignment_controller.dart';
+import 'package:schulupparent/parent/parent_presentation/academics_assignment_page/models/academics_assignment_model.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
+import 'package:schulupparent/parent/parent_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
 import 'package:schulupparent/parent/parent_presentation/attendance_all_variants_page/controller/attendance_all_variants_controller.dart';
 import 'package:schulupparent/parent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
@@ -12,10 +14,12 @@ import 'controller/academics_assignment_modal_one_controller.dart';
 // ignore_for_file: must_be_immutable
 AcademicsAssignmentStatusController controller1 =
     Get.find<AcademicsAssignmentStatusController>();
-AcademicsAssignmentController controllers =
-    Get.find<AcademicsAssignmentController>();
-AcademicsLessonAllLessonsController lessonsController =
-    Get.find<AcademicsLessonAllLessonsController>();
+AcademicsAssignmentController controllers = Get.put(
+  AcademicsAssignmentController(AcademicsAssignmentModel().obs),
+);
+AcademicsLessonAllLessonsController lessonsController = Get.put(
+  AcademicsLessonAllLessonsController(AcademicsLessonAllLessonsModel().obs),
+);
 
 class AcademicsAssignmentModalOneBottomsheet extends StatefulWidget {
   AcademicsAssignmentModalOneBottomsheet(this.controller, {Key? key})
@@ -158,6 +162,7 @@ class _AcademicsAssignmentModalOneBottomsheetState
           SizedBox(height: 30.h),
           CustomElevatedButton(
             onPressed: () {
+              Navigator.pop(context);
               setState(() {
                 controller1.termType.value = selectedType.first;
                 if (controller1.termType.value.contains('First Term')) {
@@ -177,7 +182,6 @@ class _AcademicsAssignmentModalOneBottomsheetState
                 controllers.getAssignment();
               });
               lessonsController.allLessons();
-              Navigator.pop(context);
             },
             height: 64.h,
             text: "lbl_confirm".tr,

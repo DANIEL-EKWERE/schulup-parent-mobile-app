@@ -71,11 +71,11 @@ class LoginController extends GetxController {
         var userId = responseData['data']['userID'];
         var userName = responseData['data']['displayName'];
         myLog.log('Token: $token');
-        dataBase.saveToken(token);
-        dataBase.saveUserId(userId);
-        dataBase.saveUserName(userName);
-        dataBase.saveTransactionPin(passwordInputController.text);
-        dataBase.saveBrmCode(schoolCodeInputController.text);
+        adminDataBase.saveToken(token);
+        adminDataBase.saveUserId(userId);
+        adminDataBase.saveUserName(userName);
+        adminDataBase.saveTransactionPin(passwordInputController.text);
+        adminDataBase.saveBrmCode(schoolCodeInputController.text);
         usernameInputController.clear();
         passwordInputController.clear();
         schoolCodeInputController.clear();
@@ -131,9 +131,9 @@ class LoginController extends GetxController {
       context: Get.context!,
       circularProgressColor: Color(0XFFFF8C42),
     );
-    var schoolcode = await dataBase.getBrmCode();
-    var username = await dataBase.getUserName();
-    var password = await dataBase.getTransactionPin();
+    var schoolcode = await adminDataBase.getBrmCode();
+    var username = await adminDataBase.getUserName();
+    var password = await adminDataBase.getTransactionPin();
     myLog.log('school code: $schoolcode');
     try {
       final networkInfo = NetworkInfo();
@@ -179,7 +179,7 @@ class LoginController extends GetxController {
                 );
                 Timer(Duration(seconds: 5), () {
                   homeController.logout();
-                  dataBase.logOut();
+                  adminDataBase.logOut();
 
                   Get.offAllNamed(AppRoutes.loginScreen);
                 });

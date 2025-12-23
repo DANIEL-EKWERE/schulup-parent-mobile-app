@@ -110,9 +110,10 @@ class _AttendanceAllVariantsPageState extends State<AttendanceAllVariantsPage> {
                                     ),
                                     Text(
                                       textAlign: TextAlign.center,
-                                      'Opps,No Attendance Record for the selected date found',
-                                      style: CustomTextStyles.displayMediumBlack
-                                          .copyWith(fontSize: 16.h),
+                                      '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
                                     ),
                                   ],
                                 ),

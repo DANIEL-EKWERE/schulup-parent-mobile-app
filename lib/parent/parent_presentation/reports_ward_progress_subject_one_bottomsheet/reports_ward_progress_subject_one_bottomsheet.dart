@@ -92,7 +92,7 @@ class _ReportsWardProgressSubjectOneBottomsheetState
                       : widget.controller.subjectDataList.isEmpty
                       ? Text('Subject List is Empty!!!')
                       : ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: BouncingScrollPhysics(),
                         itemCount: widget.controller.subjectDataList.length,
                         itemBuilder: (context, index) {
                           final subject =

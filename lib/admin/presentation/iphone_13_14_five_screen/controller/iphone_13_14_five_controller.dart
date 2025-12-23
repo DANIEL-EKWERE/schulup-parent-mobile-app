@@ -19,7 +19,7 @@ class Iphone1314FiveController extends GetxController {
   }
 
   void navigate() async {
-    var token = await dataBase.getToken();
+    var token = await adminDataBase.getToken();
     print('token: $token');
     token.isEmpty
         ?

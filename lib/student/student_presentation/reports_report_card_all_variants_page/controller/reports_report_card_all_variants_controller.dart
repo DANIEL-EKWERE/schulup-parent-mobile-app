@@ -87,6 +87,19 @@ class ReportsReportCardAllVariantsController extends GetxController
     // Timer(Duration(seconds: 3), (){
     //   getSubjectProgress();
     // });
+
+    termType.value =
+        dashboardExtendedViewController.selectedTerm1.value!.termID == 1
+            ? "First"
+            : dashboardExtendedViewController.selectedTerm1.value!.termID == 2
+            ? "Second"
+            : "Third";
+    selectedTermId.value =
+        dashboardExtendedViewController.selectedTerm1.value!.termID == 1
+            ? 1
+            : dashboardExtendedViewController.selectedTerm1.value!.termID == 2
+            ? 2
+            : 3;
     session.value =
         dashboardExtendedViewController.selectedAcademicSessionData!.name!;
   }

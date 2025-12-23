@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:schulupparent/student/core/utils/storage.dart';
 import 'package:schulupparent/student/data/apiClient/api_client.dart';
 
 import '../../../core/app_export.dart';
@@ -42,6 +43,7 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
         // usernameController.clear();
         // passwordController.clear();
         // schoolCodeController.clear();
+        studentDataBase.logOut();
         Get.offAllNamed(AppRoutes.signinScreen,);
         OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);

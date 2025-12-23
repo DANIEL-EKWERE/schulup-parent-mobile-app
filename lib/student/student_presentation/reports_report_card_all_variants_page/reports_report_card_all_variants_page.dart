@@ -451,8 +451,8 @@ class _ReportsReportCardAllVariantsPageState
                       CustomImageView(imagePath: ImageConstant.imgObjects),
                       Text(
                         textAlign: TextAlign.center,
-                        'Opps, Report for the selected filter condition!!!',
-                        style: CustomTextStyles.displayMediumBlack.copyWith(
+                        '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
                           fontSize: 16.h,
                         ),
                       ),
@@ -749,10 +749,10 @@ class _ReportsReportCardAllVariantsPageState
                           CustomImageView(imagePath: ImageConstant.imgObjects),
                           Text(
                             textAlign: TextAlign.center,
-                            'Opps,No Report for the selected filter condition!!!',
-                            style: CustomTextStyles.displayMediumBlack.copyWith(
-                              fontSize: 16.h,
-                            ),
+                            '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
                           ),
                         ],
                       ),
@@ -812,10 +812,10 @@ class _ReportsReportCardAllVariantsPageState
                           CustomImageView(imagePath: ImageConstant.imgObjects),
                           Text(
                             textAlign: TextAlign.center,
-                            'Opps,No report for the selected filter condition!!!',
-                            style: CustomTextStyles.displayMediumBlack.copyWith(
-                              fontSize: 16.h,
-                            ),
+                            '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
                           ),
                         ],
                       ),

@@ -153,7 +153,7 @@ class _StudentNewsEventsScreenState extends State<StudentNewsEventsScreen> {
                           controller.selectedindex.value = index;
                         });
                         scrollToMonth(index);
-                        controller.getEvents();
+                        controller.eventsByDateRange(month, month);
                       },
                       child:
                           isSelected
@@ -220,6 +220,23 @@ class _StudentNewsEventsScreenState extends State<StudentNewsEventsScreen> {
                     // }
                     // return ListlineItemWidget(newsItems[index]);
                   },
+                )
+                : controller.eventItems!.isEmpty
+                ? Center(
+                  child: Column(
+                    spacing: 30,
+                    children: [
+                      SizedBox(height: 150.h),
+                      CustomImageView(imagePath: ImageConstant.imgObjects),
+                      Text(
+                        textAlign: TextAlign.center,
+                        '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
                 : ListView.separated(
                   padding: EdgeInsets.zero,

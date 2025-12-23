@@ -57,10 +57,10 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
                         CustomImageView(imagePath: ImageConstant.imgObjects),
                         Text(
                           textAlign: TextAlign.center,
-                          'Opps,No Assignment for the selected filter condition!!!',
-                          style: CustomTextStyles.displayMediumBlack.copyWith(
-                            fontSize: 16.h,
-                          ),
+                          '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
                         ),
                       ],
                     ),

@@ -394,7 +394,7 @@ class HomeScreen extends GetWidget<HomeController> {
               Get.to(() => AttendanceLogScreen());
             } else if (value == 1) {
               //Get.toNamed(AppRoutes.registerCardScreen);
-               Get.to(() => RegisterCardScreen());
+              Get.to(() => RegisterCardScreen());
             } else if (value == 2) {
               Get.dialog(
                 AlertDialog(
@@ -415,7 +415,7 @@ class HomeScreen extends GetWidget<HomeController> {
                     content: Text("Are you sure you want to logout?"),
                     actions: [
                       TextButton(
-                        onPressed: () => Get.back(),
+                        onPressed: () => Navigator.pop(context),
                         child: Text("Cancel"),
                       ),
                       TextButton(

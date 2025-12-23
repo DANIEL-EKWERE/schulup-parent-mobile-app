@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-// DataBase get database => Get.find();
-DataBase dataBase = Get.put(DataBase());
+// AdminDataBase get database => Get.find();
+AdminDataBase adminDataBase = Get.put(AdminDataBase());
 
-class DataBase extends GetxController {
+class AdminDataBase extends GetxController {
   final Future<SharedPreferences> _pref = SharedPreferences.getInstance();
 
   String _transactionPin = '';

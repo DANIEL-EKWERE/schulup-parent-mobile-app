@@ -285,7 +285,7 @@ class _AcademicsAssignmentStatusInitialPageState
             centerTitle: true,
             title: Column(
               children: [
-                AppbarSubtitleOne(text: "lbl_academics".tr),
+                AppbarSubtitleOne(text: "Class Work"),
                 AppbarSubtitleFive(
                   text:
                       dashboardExtendedViewController
@@ -750,7 +750,8 @@ class _AcademicsAssignmentStatusInitialPageState
                         },
                       ),
                     )
-                    : controller.assignmentData!.isEmpty
+                    : controller.assignmentData!.isEmpty &&
+                        controller.isLoading.value == false
                     ? Center(
                       child: Column(
                         spacing: 30,

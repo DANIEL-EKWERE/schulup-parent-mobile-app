@@ -655,16 +655,12 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-
-
   // download and share
 
   Future<http.Response> downloadAndOpen(
-   
     String studentID,
     String batchID,
     String reportCardType,
-    
   ) async {
     var token = await studentDataBase.getToken();
     final url = Uri.parse(
@@ -678,20 +674,16 @@ class ApiClient extends GetConnect {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
-     // body: jsonEncode(commentData),
+      // body: jsonEncode(commentData),
     );
     _logResponse(response);
     return response;
   }
 
-
-
   Future<http.Response> downloadAndShare(
-   
     String studentID,
     String batchID,
     String reportCardType,
-    
   ) async {
     var token = await studentDataBase.getToken();
     final url = Uri.parse(
@@ -705,7 +697,7 @@ class ApiClient extends GetConnect {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
-     // body: jsonEncode(commentData),
+      // body: jsonEncode(commentData),
     );
     _logResponse(response);
     return response;
@@ -1967,6 +1959,24 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+  // Get all terms
+  Future<http.Response> getTerms() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final url = Uri.parse('$baseUrl/lookups/terms');
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        "Authorization": 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
   // Get all Events
   Future<http.Response> getEvents(String page) async {
     final prefs = await SharedPreferences.getInstance();
@@ -1992,7 +2002,7 @@ class ApiClient extends GetConnect {
     String page,
   ) async {
     final url = Uri.parse(
-      '$baseUrl/events/my-events?startDate=$startDate&endDate=$endDate&page=$page&pageSize=20',
+      '$baseUrl/events/by-date-range?startDate=$startDate&endDate=${DateTime.now().year}-12-31&page=$page&pageSize=20',
     );
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';

@@ -13,6 +13,7 @@ import 'package:schulupparent/parent/parent_presentation/academics_assignment_st
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/academics_session_model.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/student_batch_model.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/student_class_model.dart';
+import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/term_model.dart';
 import 'package:schulupparent/parent/parent_presentation/news_all_variants_page/models/news_model.dart';
 
 class DashboardExtendedViewController extends GetxController {
@@ -42,6 +43,10 @@ class DashboardExtendedViewController extends GetxController {
 
   int? selectedClassID;
   int? selectedTerm;
+
+  RxList<Term> terms = <Term>[].obs;
+  Rx<Term?> selectedTerm1 = Rx<Term?>(null);
+  //RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -87,6 +92,7 @@ class DashboardExtendedViewController extends GetxController {
         await getClass();
         await getAcademicSessions();
         await getNews();
+        await fetchTerms();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //Get.offAllNamed(AppRoutes.signTwoScreen);
@@ -491,6 +497,50 @@ class DashboardExtendedViewController extends GetxController {
     } finally {
       // OverlayLoadingProgress.stop();
       isLoading.value = false;
+    }
+  }
+
+  Future<void> fetchTerms() async {
+    try {
+      isLoading.value = true;
+
+      final response = await _apiService.getTerms(); // Your endpoint
+
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        final termsResponse = TermsResponse.fromJson(jsonData);
+
+        terms.value = termsResponse.data;
+
+        // Automatically select the active term
+        selectedTerm1.value = terms.firstWhere(
+          (term) => term.isActive,
+          orElse: () => terms.first,
+        );
+        myLog.log('Selected Term: ${selectedTerm1.value?.name}');
+        myLog.log('Selected Term ID: ${selectedTerm1.value?.termID}');
+        selectedTerm = selectedTerm1.value!.termID;
+
+        isLoading.value = false;
+      } else {
+        isLoading.value = false;
+        Get.snackbar(
+          'Error',
+          'Failed to load terms',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        'Failed to load terms: ${e.toString()}',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 }

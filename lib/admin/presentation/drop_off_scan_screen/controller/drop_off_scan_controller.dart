@@ -1021,7 +1021,7 @@ class DropOffScanController extends GetxController {
       context: Get.context!,
       circularProgressColor: Color(0XFFFF8C42),
     );
-    var schoolCode = await dataBase.getBrmCode();
+    var schoolCode = await adminDataBase.getBrmCode();
     final body = {
       "schoolCode": schoolCode,
       "cardUID": cardId,
@@ -1105,7 +1105,7 @@ class DropOffScanController extends GetxController {
       context: Get.context!,
       circularProgressColor: Color(0XFFFF8C42),
     );
-    var schoolCode = await dataBase.getBrmCode();
+    var schoolCode = await adminDataBase.getBrmCode();
     final body = {
       "schoolCode": schoolCode,
       "cardUID": cardId,
@@ -1187,7 +1187,7 @@ class DropOffScanController extends GetxController {
       context: Get.context!,
       circularProgressColor: Color(0XFFFF8C42),
     );
-    var schoolCode = await dataBase.getBrmCode();
+    var schoolCode = await adminDataBase.getBrmCode();
     myLog.log("school code here ============ ${schoolCode}");
     final body = {
       "schoolCode": schoolCode,
@@ -1270,7 +1270,7 @@ class DropOffScanController extends GetxController {
       context: Get.context!,
       circularProgressColor: Color(0XFFFF8C42),
     );
-    var schoolCode = await dataBase.getBrmCode();
+    var schoolCode = await adminDataBase.getBrmCode();
     final body = {
       "schoolCode": schoolCode,
       "cardUID": cardId,

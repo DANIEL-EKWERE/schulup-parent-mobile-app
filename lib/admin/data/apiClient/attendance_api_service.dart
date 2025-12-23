@@ -41,7 +41,7 @@
 //       final uri = Uri.parse(
 //         '$baseUrl/attendance/logs',
 //       ).replace(queryParameters: queryParams);
-//       var token = await dataBase.getToken();
+//       var token = await adminDataBase.getToken();
 //       // Make API call
 //       final response = await http.get(
 //         uri,
@@ -108,7 +108,7 @@ class AttendanceApiService {
       ).replace(queryParameters: queryParams);
 
       print('Fetching: $uri'); // Debug log
-      var token = await dataBase.getToken();
+      var token = await adminDataBase.getToken();
 
       final response = await http.get(
         uri,

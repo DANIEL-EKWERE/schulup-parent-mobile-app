@@ -134,9 +134,10 @@ class AcademicsLessonCbtTestController extends GetxController {
         classId.toString(),
         dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
       );
-      // myLog.log(
-      //   "classId: ${classId}, studentId: ${controller.selectedStudent1!.studentID}",
-      // );
+
+      myLog.log(
+        "classId: ${classId}, studentId: ${dashboardExtendedViewController.selectedStudent1!.studentID}",
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
 

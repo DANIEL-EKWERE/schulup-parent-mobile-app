@@ -49,6 +49,19 @@ class StudentAcademicsAssignmentStatusController extends GetxController
 
     setVAlue();
 
+    termType.value =
+        dashboardExtendedViewController.selectedTerm1.value!.termID == 1
+            ? 'First'
+            : dashboardExtendedViewController.selectedTerm1.value!.termID == 2
+            ? 'Second'
+            : 'Third';
+    termTypeId.value =
+        dashboardExtendedViewController.selectedTerm1.value!.termID == 1
+            ? '1'
+            : dashboardExtendedViewController.selectedTerm1.value!.termID == 2
+            ? '2'
+            : '3';
+
     // getAssignment();
     // classType.value =
     //     dashboardExtendedViewController.selectedClass!.value.isEmpty
@@ -619,7 +632,10 @@ class StudentAcademicsAssignmentStatusController extends GetxController
         //   AppRoutes.academicsAssignmentAnswerScreen,
         //   arguments: {'model': assignmentDetails},
         // );
-        Get.to(() => StudentAcademicsAssignmentAnswerScreen(), arguments: {'model': assignmentDetails},);
+        Get.to(
+          () => StudentAcademicsAssignmentAnswerScreen(),
+          arguments: {'model': assignmentDetails},
+        );
 
         myLog.log(assignmentDetails!.data!.subjectName!);
       } else if (response.statusCode == 404 || response.statusCode == 401) {

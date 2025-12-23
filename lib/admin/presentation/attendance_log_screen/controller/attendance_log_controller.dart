@@ -96,7 +96,7 @@
 
 //   // Fetch attendance logs from API
 //   Future<void> fetchAttendanceLogs({bool isRefresh = false}) async {
-//     var schoolCode = await dataBase.getBrmCode();
+//     var schoolCode = await adminDataBase.getBrmCode();
 //     try {
 //       if (isRefresh) {
 //         currentPage.value = 1;
@@ -328,7 +328,7 @@ class AttendanceLogController extends GetxController {
   }
 
   Future<void> fetchAttendanceLogs({bool isRefresh = false}) async {
-    var schoolCode = await dataBase.getBrmCode();
+    var schoolCode = await adminDataBase.getBrmCode();
     try {
       if (isRefresh) {
         currentPage.value = 1;
