@@ -320,6 +320,27 @@ class AcademicsCbtTestOngoingScreen
                 ],
               ),
               actions: [
+                controller.isLastQuestion
+                    ? SizedBox.shrink()
+                    : ElevatedButton(
+                      onPressed: () => controller.submitTest(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: appTheme.cyan400,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.h,
+                          vertical: 8.h,
+                        ),
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.h,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      child: Text(
+                        "Submit Test",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                 IconButton(
                   icon: Icon(Icons.grid_view, color: Colors.white),
                   onPressed: controller.showQuestionNavigator,
