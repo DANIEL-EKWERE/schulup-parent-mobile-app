@@ -15,6 +15,7 @@ import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/student_class_model.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/term_model.dart';
 import 'package:schulupparent/parent/parent_presentation/news_all_variants_page/models/news_model.dart';
+import 'package:schulupparent/signin_screen/signin_screen.dart';
 
 class DashboardExtendedViewController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
@@ -97,6 +98,7 @@ class DashboardExtendedViewController extends GetxController {
         isLoading.value = false;
         //Get.offAllNamed(AppRoutes.signTwoScreen);
         // OverlayLoadingProgress.stop();
+        Get.offAll(()=> SigninScreen());
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         Get.snackbar(

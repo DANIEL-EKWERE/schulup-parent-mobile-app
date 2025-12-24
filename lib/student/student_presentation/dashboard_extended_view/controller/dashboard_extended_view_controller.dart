@@ -6,6 +6,7 @@ import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:schulupparent/signin_screen/signin_screen.dart';
 import 'package:schulupparent/student/core/utils/storage.dart';
 import 'package:schulupparent/student/data/apiClient/api_client.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
@@ -117,6 +118,7 @@ class StudentDashboardExtendedViewController extends GetxController {
         //OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
+        Get.offAll(()=> SigninScreen());
         Get.snackbar(
           'Error',
           message,
@@ -467,6 +469,7 @@ class StudentDashboardExtendedViewController extends GetxController {
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
         // OverlayLoadingProgress.stop();
+        Get.offAll(()=> SigninScreen());
         isLoading.value = false;
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
