@@ -380,6 +380,7 @@ class StudentAcademicsAssignmentStatusController extends GetxController
       );
       isLoading.value = false;
     } catch (e) {
+      myLog.log(e.toString());
       Get.snackbar(
         'Error',
         e.toString(),
@@ -397,6 +398,9 @@ class StudentAcademicsAssignmentStatusController extends GetxController
 
   //cbtDetails()
   Future<void> getCbtResult() async {
+    myLog.log(
+      'controller1 calling results ===================================================',
+    );
     isLoading.value = true;
     // OverlayLoadingProgress.start(
     //   context: Get.context!,
@@ -405,18 +409,23 @@ class StudentAcademicsAssignmentStatusController extends GetxController
     // );a
     try {
       var classId = dashboardExtendedViewController.selectedClassID;
-      final response = await _apiService.cbt(
+      var studentId =
+          dashboardExtendedViewController.selectedStudent1.studentID;
+      final response = await _apiService.cbtResults(
         controller.selectedClassID.toString(),
-        classId.toString(),
+        studentId.toString(),
       );
       myLog.log(
         "classId: ${classId}, studentId: ${controller.selectedClassID}",
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
-
+        myLog.log("controller1 ${response.body} ");
         cbt = cbtFromJson(response.body);
         cbtData = cbt!.data;
+        myLog.log(
+          "${cbtData!.length} ========================================",
+        );
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         // OverlayLoadingProgress.stop();
@@ -455,6 +464,7 @@ class StudentAcademicsAssignmentStatusController extends GetxController
       );
       isLoading.value = false;
     } catch (e) {
+      myLog.log(e.toString());
       Get.snackbar(
         'Error',
         e.toString(),

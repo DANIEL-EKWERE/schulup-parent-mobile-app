@@ -1200,6 +1200,29 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+
+/// student scheduled cbt test
+  Future<http.Response> cbtResults(String classId, String studentId) async {
+    final url = Uri.parse(
+      '$baseUrl/quiz/history/students/$studentId?classI=$classId&page=1&pageSize=20',
+    );
+    //10291
+    //2
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
   /// student search cbt test
   Future<http.Response> serachCbt(
     String classId,

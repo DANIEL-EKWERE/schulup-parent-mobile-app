@@ -38,16 +38,21 @@ class Cbt {
 }
 
 class CbtData {
-  final int? quizScheduleID;
+   final int? quizScheduleID;
   final int? quizID;
   final String? quizTitle;
   final String? batchName;
   final String? subjectName;
+  final double? percentageScore;
+  final double? maximumScore;
+  final double? totalScore;
   final int? noOfQuestions;
   final int? timeLimit;
   final String? allowedAttempts;
   final int? attemptsMade;
   final String? startDate;
+  final String? dateStarted;
+  final String? dateSubmitted;
   final String? endDate;
   final bool? showResult;
   final bool? isTimed;
@@ -57,14 +62,19 @@ class CbtData {
     this.quizID,
     this.quizTitle,
     this.batchName,
+    this.percentageScore,
     this.subjectName,
     this.noOfQuestions,
+    this.totalScore,
     this.timeLimit,
     this.allowedAttempts,
+    this.maximumScore,
     this.attemptsMade,
     this.startDate,
     this.endDate,
     this.showResult,
+    this.dateStarted,
+    this.dateSubmitted,
     this.isTimed,
   });
 
@@ -72,6 +82,7 @@ class CbtData {
       : quizScheduleID = json['quizScheduleID'],
         quizID = json['quizID'],
         quizTitle = json['quizTitle'],
+        maximumScore = json['maximumScore'],
         batchName = json['batchName'],
         subjectName = json['subjectName'],
         noOfQuestions = json['noOfQuestions'],
@@ -79,9 +90,13 @@ class CbtData {
         allowedAttempts = json['allowedAttempts'],
         attemptsMade = json['attemptsMade'],
         startDate = json['startDate'],
+        totalScore = json["totalScore"],
+        percentageScore = json['percentageScore'],
         endDate = json['endDate'],
         showResult = json['showResult'],
-        isTimed = json['isTimed'];
+        isTimed = json['isTimed'],
+        dateStarted = json['dateStarted'],
+        dateSubmitted = json["dateSubmitted"];
 
   Map<String, dynamic> toJson() {
     return {
@@ -90,14 +105,18 @@ class CbtData {
       'quizTitle': quizTitle,
       'batchName': batchName,
       'subjectName': subjectName,
+      'maximumScore': maximumScore,
       'noOfQuestions': noOfQuestions,
       'timeLimit': timeLimit,
+      'percentageScore': percentageScore,
       'allowedAttempts': allowedAttempts,
       'attemptsMade': attemptsMade,
       'startDate': startDate,
       'endDate': endDate,
       'showResult': showResult,
       'isTimed': isTimed,
+      'dateStarted': dateStarted,
+      'dateSubmitted': dateSubmitted
     };
   }
 }

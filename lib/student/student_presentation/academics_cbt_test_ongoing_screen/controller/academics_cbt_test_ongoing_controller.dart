@@ -15,6 +15,7 @@
 // }
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schulupparent/student/core/utils/size_utils.dart';
@@ -348,6 +349,7 @@ class StudentAcademicsCbtTestOngoingController extends GetxController {
       // await Future.delayed(Duration(seconds: 2));
       if (response.statusCode == 200 || response.statusCode == 201) {
         isSubmitting.value = false;
+        var responseBody = jsonDecode(response.body);
         Get.snackbar(
           'Success',
           'Test submitted successfully!',
@@ -357,7 +359,9 @@ class StudentAcademicsCbtTestOngoingController extends GetxController {
         );
         // Get.toNamed(AppRoutes.academicsCbtTestTestResultScreen);
 
-        Get.to(() => StudentAcademicsCbtTestTestResultScreen());
+        Get.to(() => StudentAcademicsCbtTestTestResultScreen(), arguments: {
+          'id': responseBody['responseBody']
+        });
       }
 
       // Navigate to results or home

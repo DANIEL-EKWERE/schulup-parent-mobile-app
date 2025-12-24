@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_lesson_cbt_test_page/controller/academics_lesson_cbt_test_controller.dart';
+import 'package:schulupparent/parent/parent_presentation/academics_lesson_cbt_test_page/models/academics_lesson_cbt_test_model.dart';
 import 'package:schulupparent/parent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
@@ -13,8 +14,9 @@ AcademicsAssignmentStatusController controller1 = Get.put(
   AcademicsAssignmentStatusController(),
 );
 
-AcademicsLessonCbtTestController controls =
-    Get.find<AcademicsLessonCbtTestController>();
+AcademicsLessonCbtTestController controls = Get.put(
+  AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs),
+);
 
 class AcademicsCbtTestModalOneBottomsheet extends StatefulWidget {
   AcademicsCbtTestModalOneBottomsheet(this.controller, {Key? key})
@@ -125,17 +127,36 @@ class _AcademicsCbtTestModalOneBottomsheetState
           SizedBox(height: 30.h),
           CustomElevatedButton(
             onPressed: () {
+              // setState(() {
+              //   controller1.cbtType.value = selectedType.first;
+              // });
+              // controller1.getCbt();
+              // if (controller1.cbtType.value == 'Test Result') {
+              //   controller1.getCbtResult();
+              //   controls.getCbtResult();
+              //   return;
+              // }
+              // controls.getCbt();
+              // Navigator.pop(context);
+              Navigator.pop(context);
               setState(() {
                 controller1.cbtType.value = selectedType.first;
               });
-              controller1.getCbt();
-              if (controller1.cbtType.value == 'Test Result') {
+              print(controller1.cbtType.value);
+              if (controller1.cbtType.value == 'Test Result ') {
+                print(
+                  'object============================================================',
+                );
                 controller1.getCbtResult();
                 controls.getCbtResult();
                 return;
+              } else {
+                print(
+                  'it\'s not test result it\'s ${controller1.cbtType.value}',
+                );
+                controller1.getCbt();
+                controls.getCbt();
               }
-              controls.getCbt();
-              Navigator.pop(context);
             },
             height: 64.h,
             text: "lbl_confirm".tr,

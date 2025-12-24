@@ -383,9 +383,11 @@ class AcademicsAssignmentStatusController extends GetxController
     // );a
     try {
       var classId = dashboardExtendedViewController.selectedClassID;
-      final response = await _apiService.cbt(
+      var studentId =
+          dashboardExtendedViewController.selectedStudent1!.studentID;
+      final response = await _apiService.cbtResults(
         controller.selectedClassID.toString(),
-        classId.toString(),
+        studentId.toString(),
       );
       myLog.log(
         "classId: ${classId}, studentId: ${controller.selectedClassID}",

@@ -75,12 +75,20 @@ class ListlineItemCbtWidget extends StatelessWidget {
                   ),
                   // Obx(
                   //   () =>
-                  Text(
-                    "${listlineItemModelObj.subjectName} • ${listlineItemModelObj.attemptsMade} of ${listlineItemModelObj.noOfQuestions}",
-                    style: CustomTextStyles.bodySmallSecondaryContainer10
-                        .copyWith(fontSize: 16.h),
-                    //  ),
-                  ),
+                  controller.cbtType.value == "Scheduled Test"
+                      ? Text(
+                        "${listlineItemModelObj.subjectName} • ${listlineItemModelObj.attemptsMade} of ${listlineItemModelObj.noOfQuestions}",
+                        style: CustomTextStyles.bodySmallSecondaryContainer10
+                            .copyWith(fontSize: 16.h),
+                        //  ),
+                      )
+                      : Text(
+                        "${listlineItemModelObj.subjectName} • ${listlineItemModelObj.percentageScore}% • ${listlineItemModelObj.totalScore} / ${listlineItemModelObj.maximumScore}",
+                        style: CustomTextStyles.bodySmallSecondaryContainer10
+                            .copyWith(fontSize: 16.h),
+                        //  ),
+                      ),
+                  //${listlineItemModelObj.percentageScore}% ${listlineItemModelObj.totalScore} / ${listlineItemModelObj.percentageScore}% ${listlineItemModelObj.maximumScore}
                   Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 6.h,
@@ -90,16 +98,23 @@ class ListlineItemCbtWidget extends StatelessWidget {
                       borderRadius: BorderRadiusStyle.roundedBorder8,
                     ),
                     child:
-                    //  Obx(
-                    //   () =>
-                    Text(
-                      "Open: ${formatDate(listlineItemModelObj.startDate.toString())}",
-                      textAlign: TextAlign.center,
-                      style: CustomTextStyles.bodySmallWhiteA700.copyWith(
-                        fontSize: 12.h,
-                      ),
-                      //  ),
-                    ),
+                        //  Obx(
+                        //   () =>
+                        controller.cbtType.value == 'Scheduled Test'
+                            ? Text(
+                              "Open: ${formatDate(listlineItemModelObj.startDate.toString())}",
+                              textAlign: TextAlign.center,
+                              style: CustomTextStyles.bodySmallWhiteA700
+                                  .copyWith(fontSize: 12.h),
+                              //  ),
+                            )
+                            : Text(
+                              "Start Date: ${formatDate(listlineItemModelObj.dateStarted.toString())}",
+                              textAlign: TextAlign.center,
+                              style: CustomTextStyles.bodySmallWhiteA700
+                                  .copyWith(fontSize: 12.h),
+                              //  ),
+                            ),
                   ),
 
                   Container(
@@ -111,16 +126,23 @@ class ListlineItemCbtWidget extends StatelessWidget {
                       borderRadius: BorderRadiusStyle.roundedBorder8,
                     ),
                     child:
-                    //  Obx(
-                    //   () =>
-                    Text(
-                      "To: ${formatDate(listlineItemModelObj.endDate.toString())}",
-                      textAlign: TextAlign.center,
-                      style: CustomTextStyles.bodySmallWhiteA700.copyWith(
-                        fontSize: 12.h,
-                      ),
-                      //  ),
-                    ),
+                        //  Obx(
+                        //   () =>
+                        controller.cbtType.value == 'Scheduled Test'
+                            ? Text(
+                              "To: ${formatDate(listlineItemModelObj.endDate.toString())}",
+                              textAlign: TextAlign.center,
+                              style: CustomTextStyles.bodySmallWhiteA700
+                                  .copyWith(fontSize: 12.h),
+                              //  ),
+                            )
+                            : Text(
+                              "Submitted On: ${formatDate(listlineItemModelObj.dateSubmitted.toString())}",
+                              textAlign: TextAlign.center,
+                              style: CustomTextStyles.bodySmallWhiteA700
+                                  .copyWith(fontSize: 12.h),
+                              //  ),
+                            ),
                   ),
                 ],
               ),
@@ -133,6 +155,10 @@ class ListlineItemCbtWidget extends StatelessWidget {
 
   String formatDate(String dateString) {
     // Parse the ISO 8601 date string
+    print(dateString);
+    var value =
+        dateString.length > 20 ? "${dateString.substring(0, 20)}Z" : dateString;
+    print(value);
     DateTime dateTime = DateTime.parse(dateString);
 
     // Format it to "Monday, Nov. 3, 2025"

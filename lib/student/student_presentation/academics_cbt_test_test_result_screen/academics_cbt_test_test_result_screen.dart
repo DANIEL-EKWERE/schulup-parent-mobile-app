@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -16,8 +17,26 @@ StudentAcademicsCbtTestTestResultController controller = Get.put(
   StudentAcademicsCbtTestTestResultController(),
 );
 
-class StudentAcademicsCbtTestTestResultScreen extends StatelessWidget {
+class StudentAcademicsCbtTestTestResultScreen extends StatefulWidget {
   const StudentAcademicsCbtTestTestResultScreen({Key? key}) : super(key: key);
+
+  @override
+  State<StudentAcademicsCbtTestTestResultScreen> createState() =>
+      _StudentAcademicsCbtTestTestResultScreenState();
+}
+
+class _StudentAcademicsCbtTestTestResultScreenState
+    extends State<StudentAcademicsCbtTestTestResultScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getValue();
+  }
+
+  void getValue() {
+    var id = Get.arguments['id'];
+    controller.studentQuizResult(id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,52 +50,67 @@ class StudentAcademicsCbtTestTestResultScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: SizedBox(
               width: double.maxFinite,
-              child: Column(
-                spacing: 30,
-                children: [
-                  _buildColumncurrentaf(),
-                  Container(
-                    width: double.maxFinite,
-                    margin: EdgeInsets.symmetric(horizontal: 24.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "lbl_question_1_10".tr,
-                          style: theme.textTheme.bodySmall,
+              child: Obx(
+                () =>
+                    controller.isLoading.value
+                        ? Padding(
+                          padding: EdgeInsets.only(top: 300.h),
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                        : Column(
+                          spacing: 30,
+                          children: [
+                            _buildColumncurrentaf(),
+                            Container(
+                              //  height: 200,
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              width: double.maxFinite,
+                              margin: EdgeInsets.symmetric(horizontal: 24.h),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return Container();
+                                },
+                              ),
+                              // Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+                              //     Text(
+                              //       "lbl_question_1_10".tr,
+                              //       style: theme.textTheme.bodySmall,
+                              //     ),
+                              //     SizedBox(height: 10.h),
+                              //     Text(
+                              //       "msg_who_was_the_first".tr,
+                              //       maxLines: 2,
+                              //       overflow: TextOverflow.ellipsis,
+                              //       style: CustomTextStyles.bodyMediumOnPrimary
+                              //           .copyWith(height: 1.50),
+                              //     ),
+                              //     SizedBox(height: 18.h),
+                              //     _buildWhowasthe(),
+
+                              //     // SizedBox(height: 30.h),
+                              //     // Text(
+                              //     //   "lbl_question_2_10".tr,
+                              //     //   style: theme.textTheme.bodySmall,
+                              //     // ),
+                              //     // SizedBox(height: 10.h),
+                              //     // Text(
+                              //     //   "msg_in_what_year_did".tr,
+                              //     //   maxLines: 2,
+                              //     //   overflow: TextOverflow.ellipsis,
+                              //     //   style: CustomTextStyles.bodyMediumOnPrimary
+                              //     //       .copyWith(height: 1.50),
+                              //     // ),
+                              //     // SizedBox(height: 18.h),
+                              //     // _buildInwhatyear(),
+                              //   ],
+                              // ),
+                            ),
+                            SizedBox(height: 40.h),
+                          ],
                         ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "msg_who_was_the_first".tr,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
-                            height: 1.50,
-                          ),
-                        ),
-                        SizedBox(height: 18.h),
-                        _buildWhowasthe(),
-                        SizedBox(height: 30.h),
-                        Text(
-                          "lbl_question_2_10".tr,
-                          style: theme.textTheme.bodySmall,
-                        ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "msg_in_what_year_did".tr,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
-                            height: 1.50,
-                          ),
-                        ),
-                        SizedBox(height: 18.h),
-                        _buildInwhatyear(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 40.h),
-                ],
               ),
             ),
           ),
@@ -121,7 +155,7 @@ class StudentAcademicsCbtTestTestResultScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "lbl_current_affairs".tr,
+            controller.quizResult!.quizTitle!,
             style: CustomTextStyles.titleMediumOnPrimary,
           ),
           SizedBox(
@@ -137,14 +171,14 @@ class StudentAcademicsCbtTestTestResultScreen extends StatelessWidget {
                   width: double.maxFinite,
                   child: _buildRowduration(
                     durationOne: "lbl_subject".tr,
-                    durationTwo: "lbl_history".tr,
+                    durationTwo: controller.quizResult!.subjectName!,
                   ),
                 ),
                 SizedBox(
                   width: double.maxFinite,
                   child: _buildRowduration(
                     durationOne: "lbl_duration".tr,
-                    durationTwo: "lbl_2_minutes".tr,
+                    durationTwo: controller.quizResult!.duration!,
                   ),
                 ),
                 SizedBox(
@@ -162,7 +196,8 @@ class StudentAcademicsCbtTestTestResultScreen extends StatelessWidget {
                           borderRadius: BorderRadiusStyle.roundedBorder8,
                         ),
                         child: Text(
-                          "lbl_10".tr,
+                          controller.quizResult!.maximumMarksObtainable!
+                              .toString(),
                           textAlign: TextAlign.center,
                           style: CustomTextStyles.bodySmallWhiteA700_1,
                         ),
@@ -185,7 +220,7 @@ class StudentAcademicsCbtTestTestResultScreen extends StatelessWidget {
                           borderRadius: BorderRadiusStyle.roundedBorder8,
                         ),
                         child: Text(
-                          "lbl_4".tr,
+                          controller.quizResult!.marksObtained.toString(),
                           textAlign: TextAlign.center,
                           style: CustomTextStyles.bodySmallWhiteA700_1,
                         ),
@@ -208,7 +243,7 @@ class StudentAcademicsCbtTestTestResultScreen extends StatelessWidget {
                           borderRadius: BorderRadiusStyle.roundedBorder8,
                         ),
                         child: Text(
-                          "lbl_40".tr,
+                          controller.quizResult!.percentageScore.toString(),
                           textAlign: TextAlign.center,
                           style: CustomTextStyles.bodySmallWhiteA700_1,
                         ),
@@ -220,14 +255,14 @@ class StudentAcademicsCbtTestTestResultScreen extends StatelessWidget {
                   width: double.maxFinite,
                   child: _buildRowduration(
                     durationOne: "lbl_started".tr,
-                    durationTwo: "msg_nov_08_2025".tr,
+                    durationTwo: formatDate(controller.quizResult!.started!),
                   ),
                 ),
                 SizedBox(
                   width: double.maxFinite,
                   child: _buildRowduration(
                     durationOne: "lbl_submitted2".tr,
-                    durationTwo: "msg_nov_08_2025_19_56".tr,
+                    durationTwo: formatDate(controller.quizResult!.submitted!),
                   ),
                 ),
               ],
@@ -236,6 +271,16 @@ class StudentAcademicsCbtTestTestResultScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String formatDate(String dateString) {
+    // Parse the ISO 8601 date string
+    DateTime dateTime = DateTime.parse(dateString);
+
+    // Format it to "Monday, Nov. 3, 2025"
+    String formatted = DateFormat('MMM. EEE, d, yyyy | h:m a').format(dateTime);
+
+    return formatted;
   }
 
   /// Section Widget

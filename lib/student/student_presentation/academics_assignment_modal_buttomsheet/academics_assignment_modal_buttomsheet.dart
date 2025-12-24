@@ -17,7 +17,9 @@ StudentAcademicsAssignmentStatusController controller1 = Get.put(
   StudentAcademicsAssignmentStatusController(),
 );
 StudentAcademicsLessonCbtTestController controls = Get.put(
-  StudentAcademicsLessonCbtTestController(StudentAcademicsLessonCbtTestModel().obs),
+  StudentAcademicsLessonCbtTestController(
+    StudentAcademicsLessonCbtTestModel().obs,
+  ),
 );
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
@@ -150,7 +152,7 @@ class _AcademicsAssignmentModalBottomsheetState
           CustomElevatedButton(
             onPressed: () {
               //Get.back();
-
+              Navigator.pop(context);
               print('object');
               setState(() {
                 controller1.classType.value = selectedType.first;
@@ -164,7 +166,6 @@ class _AcademicsAssignmentModalBottomsheetState
               });
               // Get.back();
               controllers.getAssignment();
-              Navigator.pop(context);
             },
             height: 64.h,
             text: "lbl_confirm".tr,

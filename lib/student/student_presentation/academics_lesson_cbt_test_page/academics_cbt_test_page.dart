@@ -11,6 +11,8 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_one_modal_bottomsheet/academics_cbt_test_modal_one_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_cbt_test_test_result_screen/academics_cbt_test_test_result_screen.dart'
+    hide dashboardExtendedViewController;
 import 'package:schulupparent/student/student_presentation/reports_report_card_modal_bottomsheet/controller/reports_report_card_modal_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/signin_screen/shimmer_widget.dart';
@@ -232,11 +234,21 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: GestureDetector(
                           onTap: () {
-                            Get.toNamed(
-                              AppRoutes
-                                  .studentAcademicsLessonLessonDetailsScreen,
-                              arguments: {'lessonData': listlineItemModelObj},
-                            );
+                            controllerx.cbtType.value == "Test Result"
+                                ? Get.to(
+                                  () =>
+                                      StudentAcademicsCbtTestTestResultScreen(),
+                                  arguments: {
+                                    'lessonData': listlineItemModelObj,
+                                  },
+                                )
+                                : Get.toNamed(
+                                  AppRoutes
+                                      .studentAcademicsLessonLessonDetailsScreen,
+                                  arguments: {
+                                    'lessonData': listlineItemModelObj,
+                                  },
+                                );
                           },
                           child: ListlineItemLessonWidget(listlineItemModelObj),
                         ),

@@ -10,22 +10,19 @@ class Cbt {
   final List<CbtData>? data;
   final Pagination? pagination;
 
-  Cbt({
-    this.success,
-    this.message,
-    this.data,
-    this.pagination,
-  });
+  Cbt({this.success, this.message, this.data, this.pagination});
 
   Cbt.fromJson(Map<String, dynamic> json)
-      : success = json['success'],
-        message = json['message'],
-        data = json['data'] != null
-            ? (json['data'] as List).map((v) => CbtData.fromJson(v)).toList()
-            : null,
-        pagination = json['pagination'] != null
-            ? Pagination.fromJson(json['pagination'])
-            : null;
+    : success = json['success'],
+      message = json['message'],
+      data =
+          json['data'] != null
+              ? (json['data'] as List).map((v) => CbtData.fromJson(v)).toList()
+              : null,
+      pagination =
+          json['pagination'] != null
+              ? Pagination.fromJson(json['pagination'])
+              : null;
 
   Map<String, dynamic> toJson() {
     return {
@@ -38,66 +35,89 @@ class Cbt {
 }
 
 class CbtData {
+  final int? studentAttemptID;
   final int? quizScheduleID;
   final int? quizID;
   final String? quizTitle;
   final String? batchName;
   final String? subjectName;
+  final double? percentageScore;
+  final double? maximumScore;
+  final double? totalScore;
   final int? noOfQuestions;
   final int? timeLimit;
   final String? allowedAttempts;
   final int? attemptsMade;
   final String? startDate;
+  final String? dateStarted;
+  final String? dateSubmitted;
   final String? endDate;
   final bool? showResult;
   final bool? isTimed;
 
   CbtData({
     this.quizScheduleID,
+    this.studentAttemptID,
     this.quizID,
     this.quizTitle,
     this.batchName,
+    this.percentageScore,
     this.subjectName,
     this.noOfQuestions,
+    this.totalScore,
     this.timeLimit,
     this.allowedAttempts,
+    this.maximumScore,
     this.attemptsMade,
     this.startDate,
     this.endDate,
     this.showResult,
+    this.dateStarted,
+    this.dateSubmitted,
     this.isTimed,
   });
 
   CbtData.fromJson(Map<String, dynamic> json)
-      : quizScheduleID = json['quizScheduleID'],
-        quizID = json['quizID'],
-        quizTitle = json['quizTitle'],
-        batchName = json['batchName'],
-        subjectName = json['subjectName'],
-        noOfQuestions = json['noOfQuestions'],
-        timeLimit = json['timeLimit'],
-        allowedAttempts = json['allowedAttempts'],
-        attemptsMade = json['attemptsMade'],
-        startDate = json['startDate'],
-        endDate = json['endDate'],
-        showResult = json['showResult'],
-        isTimed = json['isTimed'];
+    : quizScheduleID = json['quizScheduleID'],
+      quizID = json['quizID'],
+      studentAttemptID = json['studentAttemptID'],
+      quizTitle = json['quizTitle'],
+      maximumScore = json['maximumScore'],
+      batchName = json['batchName'],
+      subjectName = json['subjectName'],
+      noOfQuestions = json['noOfQuestions'],
+      timeLimit = json['timeLimit'],
+      allowedAttempts = json['allowedAttempts'],
+      attemptsMade = json['attemptsMade'],
+      startDate = json['startDate'],
+      totalScore = json["totalScore"]?.toDouble() ?? 0.0,
+      percentageScore = json['percentageScore']?.toDouble() ?? 0.0,
+      endDate = json['endDate'],
+      showResult = json['showResult'],
+      isTimed = json['isTimed'],
+      dateStarted = json['dateStarted'],
+      dateSubmitted = json["dateSubmitted"];
 
   Map<String, dynamic> toJson() {
     return {
       'quizScheduleID': quizScheduleID,
+      'studentAttemptID': studentAttemptID,
       'quizID': quizID,
       'quizTitle': quizTitle,
       'batchName': batchName,
       'subjectName': subjectName,
+      'maximumScore': maximumScore,
       'noOfQuestions': noOfQuestions,
       'timeLimit': timeLimit,
+      'percentageScore': percentageScore,
       'allowedAttempts': allowedAttempts,
       'attemptsMade': attemptsMade,
       'startDate': startDate,
       'endDate': endDate,
       'showResult': showResult,
       'isTimed': isTimed,
+      'dateStarted': dateStarted,
+      'dateSubmitted': dateSubmitted,
     };
   }
 }
@@ -120,12 +140,12 @@ class Pagination {
   });
 
   Pagination.fromJson(Map<String, dynamic> json)
-      : currentPage = json['currentPage'],
-        pageSize = json['pageSize'],
-        totalCount = json['totalCount'],
-        totalPages = json['totalPages'],
-        hasNextPage = json['hasNextPage'],
-        hasPreviousPage = json['hasPreviousPage'];
+    : currentPage = json['currentPage'],
+      pageSize = json['pageSize'],
+      totalCount = json['totalCount'],
+      totalPages = json['totalPages'],
+      hasNextPage = json['hasNextPage'],
+      hasPreviousPage = json['hasPreviousPage'];
 
   Map<String, dynamic> toJson() {
     return {

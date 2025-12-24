@@ -204,6 +204,7 @@ class StudentAcademicsLessonCbtTestController extends GetxController {
 
   //cbtDetails()
   Future<void> getCbtResult() async {
+    myLog.log('result ===============');
     isLoading.value = true;
     // OverlayLoadingProgress.start(
     //   context: Get.context!,
@@ -212,7 +213,7 @@ class StudentAcademicsLessonCbtTestController extends GetxController {
     // );a
     try {
       var classId = dashboardExtendedViewController.selectedClassID;
-      final response = await _apiService.cbt(
+      final response = await _apiService.cbtResults(
         // controller.selectedClassID.toString(),
         classId.toString(),
         dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
@@ -222,7 +223,7 @@ class StudentAcademicsLessonCbtTestController extends GetxController {
       // );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
-
+        myLog.log(response.body);
         cbt = cbtFromJson(response.body);
         cbtData = cbt!.data;
 

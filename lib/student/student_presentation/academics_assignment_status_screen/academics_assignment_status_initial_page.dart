@@ -206,6 +206,7 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_one_modal_bottomsheet/academics_cbt_test_modal_one_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_cbt_test_test_result_screen/academics_cbt_test_test_result_screen.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_lesson_details_screen/academics_lesson_lesson_details_screen.dart';
 import 'package:schulupparent/student/student_presentation/academics_schular_ai_ongoing_screen/academics_schular_ai_ongoing_screen.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
@@ -840,11 +841,11 @@ class _AcademicsAssignmentStatusInitialPageState
                           SizedBox(height: 150.h),
                           CustomImageView(imagePath: ImageConstant.imgObjects),
                           Text(
-                            textAlign: TextAlign.center
-                            ,'🔍 No results found Try adjusting your search or filters',
-                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
-                          fontSize: 16.h,
-                        ),),
+                            textAlign: TextAlign.center,
+                            '🔍 No results found Try adjusting your search or filters',
+                            style: CustomTextStyles.bodyMediumOnPrimary
+                                .copyWith(fontSize: 16.h),
+                          ),
                         ],
                       ),
                     )
@@ -858,9 +859,17 @@ class _AcademicsAssignmentStatusInitialPageState
                           child: GestureDetector(
                             onTap: () {
                               // Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
-                              controller.getCbtDetails(
-                                listlineItemModelObj.quizScheduleID.toString(),
-                              );
+                              controller.cbtType.value == 'Test Result '
+                                  ? Get.to(
+                                    () =>
+                                        StudentAcademicsCbtTestTestResultScreen(), arguments: {
+                                          'id': listlineItemModelObj.studentAttemptID.toString(),
+                                        }
+                                  )
+                                  : controller.getCbtDetails(
+                                    listlineItemModelObj.quizScheduleID
+                                        .toString(),
+                                  );
                             },
                             child: ListlineItemCbtWidget(listlineItemModelObj),
                           ),
