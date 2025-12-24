@@ -377,6 +377,25 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+   // download and view attechment
+
+  Future<http.Response> downloadAndViewAttachment(String downloadUrl) async {
+  //  var token = await studentDataBase.getToken();
+    final url = Uri.parse(downloadUrl);
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+       // 'Authorization': 'Bearer $token',
+      },
+      // body: jsonEncode(commentData),
+    );
+    _logResponse(response);
+    return response;
+  }
+
   Future<http.Response> saveVendorCategories(List<dynamic> category_ids) async {
     myLog.log('from api client class $category_ids');
     var email = await studentDataBase.getEmail();

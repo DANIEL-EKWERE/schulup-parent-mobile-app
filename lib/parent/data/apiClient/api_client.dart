@@ -691,7 +691,7 @@ class ApiClient extends GetConnect {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
+       // 'Authorization': 'Bearer $token',
       },
       // body: jsonEncode(commentData),
     );

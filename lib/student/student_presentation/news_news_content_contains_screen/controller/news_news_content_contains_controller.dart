@@ -1,4 +1,9 @@
+import 'dart:io';
+import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:schulupparent/student/data/apiClient/api_client.dart';
 import '../../../core/app_export.dart';
 import '../models/news_news_content_contains_model.dart';
 
@@ -9,4 +14,119 @@ import '../models/news_news_content_contains_model.dart';
 class NewsNewsContentContainsController extends GetxController {
   Rx<NewsNewsContentContainsModel> newsNewsContentContainsModelObj =
       NewsNewsContentContainsModel().obs;
+
+      Rx<bool> isLoading = false.obs;
+
+  ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
+
+  final String baseUrl = 'https://your-api.com'; // Your base URL
+  RxMap<String, bool> downloadingMap = <String, bool>{}.obs;
+
+  // Download and open attachment
+  Future<void> downloadAndOpenAttachment(
+    String downloadUrl,
+    String attachmentName,
+  ) async {
+    //  String authToken = await dataBase.getToken() ?? '';
+    try {
+      //  downloadingMap[attachment.fileName!] = true;
+      isLoading.value = true;
+      // Construct full URL
+      // final fullUrl = '$baseUrl/${downloadUrl}';
+
+      // Download the file
+      final response = await _apiService.downloadAndViewAttachment(downloadUrl);
+
+      if (response.statusCode == 200) {
+        isLoading.value = false;
+        // Get app's directory
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/${attachmentName}';
+
+        // Write file bytes
+        final file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+        await OpenFile.open(filePath);
+        // downloadingMap[attachment.fileNameAndExtention] = false;
+        //  await Share.shareXFiles([XFile(filePath)], text: attachmentName);
+        // Show success with option to open
+        // Get.snackbar(
+        //   'Success',
+        //   'File downloaded successfully',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.green,
+        //   colorText: Colors.white,
+        //   duration: Duration(seconds: 3),
+        //   mainButton: TextButton(
+        //     onPressed: () async {
+        //       // Share to open with any app
+        //       await Share.shareXFiles(
+        //         [XFile(filePath)],
+        //         text: attachmentName,
+        //       );
+        //     },
+        //     child: Text('OPEN', style: TextStyle(color: Colors.white)),
+        //   ),
+        // );
+        //   if (response.statusCode == 200) {
+        //   // Get downloads directory
+        //   Directory? directory;
+        //   if (Platform.isAndroid) {
+        //     directory = Directory('/storage/emulated/0/Download');
+        //     if (!await directory.exists()) {
+        //       directory = await getExternalStorageDirectory();
+        //     }
+        //   } else if (Platform.isIOS) {
+        //     directory = await getApplicationDocumentsDirectory();
+        //   }
+
+        //   final fileName =
+        //       'report_card_${DateTime.now().millisecondsSinceEpoch}.pdf';
+        //   final filePath = '${directory!.path}/$fileName';
+
+        //   // Write PDF bytes to file
+        //   final file = File(filePath);
+        //   await file.writeAsBytes(response.bodyBytes);
+
+        //   isDownloading.value = false;
+        //   localFilePath.value = filePath;
+
+        //   // Show success message
+        //   Get.snackbar(
+        //     'Success',
+        //     'Report card downloaded successfully',
+        //     snackPosition: SnackPosition.BOTTOM,
+        //     backgroundColor: Colors.green,
+        //     colorText: Colors.white,
+        //     duration: Duration(seconds: 2),
+        //   );
+
+        //   // Open the PDF with default viewer
+        //   await OpenFile.open(filePath);
+        // }
+      } else {
+        isLoading.value = false;
+        // downloadingMap[attachment.fileNameAndExtention] = false;
+        Get.snackbar(
+          'Error',
+          'Failed to download file. Status: ${response.statusCode}',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      isLoading.value = false;
+      myLog.log("Download error: ${e.toString()}");
+      // downloadingMap[attachment.fileNameAndExtention] = false;
+      Get.snackbar(
+        'Error',
+        'Failed to download: ${e.toString()}',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
 }
