@@ -442,6 +442,7 @@ class AcademicsAssignmentStatusController extends GetxController
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+      myLog.log(e.toString());
       isLoading.value = false;
       //OverlayLoadingProgress.stop();
     } finally {

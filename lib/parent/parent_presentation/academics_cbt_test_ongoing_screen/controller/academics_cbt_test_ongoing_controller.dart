@@ -15,11 +15,13 @@
 // }
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:schulupparent/parent/core/utils/size_utils.dart';
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_cbt_test_test_details_screen/models/academics_cbt_test_test_details_model.dart';
+import 'package:schulupparent/parent/parent_presentation/academics_cbt_test_test_result_screen/academics_cbt_test_test_result_screen.dart';
 import 'package:schulupparent/parent/routes/app_routes.dart';
 import 'package:schulupparent/parent/theme/custom_button_style.dart';
 import 'package:schulupparent/parent/theme/custom_text_style.dart';
@@ -347,6 +349,7 @@ class AcademicsCbtTestOngoingController extends GetxController {
       // await Future.delayed(Duration(seconds: 2));
       if (response.statusCode == 200 || response.statusCode == 201) {
         isSubmitting.value = false;
+        var resposeBody = jsonDecode(response.body);
         Get.snackbar(
           'Success',
           'Test submitted successfully!',
@@ -354,7 +357,11 @@ class AcademicsCbtTestOngoingController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
-        Get.toNamed(AppRoutes.academicsCbtTestTestResultScreen);
+        // Get.toNamed(AppRoutes.academicsCbtTestTestResultScreen);
+        Get.to(
+          () => AcademicsCbtTestTestResultScreen(),
+          arguments: {'id': resposeBody['studentAttemptId'].toString()},
+        );
       }
 
       // Navigate to results or home

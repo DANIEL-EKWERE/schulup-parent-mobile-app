@@ -359,9 +359,10 @@ class StudentAcademicsCbtTestOngoingController extends GetxController {
         );
         // Get.toNamed(AppRoutes.academicsCbtTestTestResultScreen);
 
-        Get.to(() => StudentAcademicsCbtTestTestResultScreen(), arguments: {
-          'id': responseBody['responseBody']
-        });
+        Get.offAll(
+          () => StudentAcademicsCbtTestTestResultScreen(),
+          arguments: {'id': responseBody['studentAttemptId'].toString()},
+        );
       }
 
       // Navigate to results or home

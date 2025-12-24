@@ -10,22 +10,19 @@ class Cbt {
   final List<CbtData>? data;
   final Pagination? pagination;
 
-  Cbt({
-    this.success,
-    this.message,
-    this.data,
-    this.pagination,
-  });
+  Cbt({this.success, this.message, this.data, this.pagination});
 
   Cbt.fromJson(Map<String, dynamic> json)
-      : success = json['success'],
-        message = json['message'],
-        data = json['data'] != null
-            ? (json['data'] as List).map((v) => CbtData.fromJson(v)).toList()
-            : null,
-        pagination = json['pagination'] != null
-            ? Pagination.fromJson(json['pagination'])
-            : null;
+    : success = json['success'],
+      message = json['message'],
+      data =
+          json['data'] != null
+              ? (json['data'] as List).map((v) => CbtData.fromJson(v)).toList()
+              : null,
+      pagination =
+          json['pagination'] != null
+              ? Pagination.fromJson(json['pagination'])
+              : null;
 
   Map<String, dynamic> toJson() {
     return {
@@ -38,18 +35,19 @@ class Cbt {
 }
 
 class CbtData {
-   final int? quizScheduleID;
-  final int? quizID;
+  final dynamic quizScheduleID;
+  final dynamic studentAttemptID;
+  final dynamic quizID;
   final String? quizTitle;
   final String? batchName;
   final String? subjectName;
-  final double? percentageScore;
-  final double? maximumScore;
-  final double? totalScore;
-  final int? noOfQuestions;
-  final int? timeLimit;
+  final dynamic percentageScore;
+  final dynamic maximumScore;
+  final dynamic totalScore;
+  final dynamic noOfQuestions;
+  final dynamic timeLimit;
   final String? allowedAttempts;
-  final int? attemptsMade;
+  final dynamic attemptsMade;
   final String? startDate;
   final String? dateStarted;
   final String? dateSubmitted;
@@ -59,6 +57,7 @@ class CbtData {
 
   CbtData({
     this.quizScheduleID,
+    this.studentAttemptID,
     this.quizID,
     this.quizTitle,
     this.batchName,
@@ -79,30 +78,32 @@ class CbtData {
   });
 
   CbtData.fromJson(Map<String, dynamic> json)
-      : quizScheduleID = json['quizScheduleID'],
-        quizID = json['quizID'],
-        quizTitle = json['quizTitle'],
-        maximumScore = json['maximumScore'],
-        batchName = json['batchName'],
-        subjectName = json['subjectName'],
-        noOfQuestions = json['noOfQuestions'],
-        timeLimit = json['timeLimit'],
-        allowedAttempts = json['allowedAttempts'],
-        attemptsMade = json['attemptsMade'],
-        startDate = json['startDate'],
-        totalScore = json["totalScore"],
-        percentageScore = json['percentageScore'],
-        endDate = json['endDate'],
-        showResult = json['showResult'],
-        isTimed = json['isTimed'],
-        dateStarted = json['dateStarted'],
-        dateSubmitted = json["dateSubmitted"];
+    : quizScheduleID = json['quizScheduleID'],
+      quizID = json['quizID'],
+      studentAttemptID = json['studentAttemptID'],
+      quizTitle = json['quizTitle'],
+      maximumScore = json['maximumScore'],
+      batchName = json['batchName'],
+      subjectName = json['subjectName'],
+      noOfQuestions = json['noOfQuestions'],
+      timeLimit = json['timeLimit'],
+      allowedAttempts = json['allowedAttempts'],
+      attemptsMade = json['attemptsMade'],
+      startDate = json['startDate'],
+      totalScore = json["totalScore"],
+      percentageScore = json['percentageScore'],
+      endDate = json['endDate'],
+      showResult = json['showResult'],
+      isTimed = json['isTimed'],
+      dateStarted = json['dateStarted'],
+      dateSubmitted = json["dateSubmitted"];
 
   Map<String, dynamic> toJson() {
     return {
       'quizScheduleID': quizScheduleID,
       'quizID': quizID,
       'quizTitle': quizTitle,
+      'studentAttemptID': studentAttemptID,
       'batchName': batchName,
       'subjectName': subjectName,
       'maximumScore': maximumScore,
@@ -116,16 +117,16 @@ class CbtData {
       'showResult': showResult,
       'isTimed': isTimed,
       'dateStarted': dateStarted,
-      'dateSubmitted': dateSubmitted
+      'dateSubmitted': dateSubmitted,
     };
   }
 }
 
 class Pagination {
-  final int? currentPage;
-  final int? pageSize;
-  final int? totalCount;
-  final int? totalPages;
+  final dynamic currentPage;
+  final dynamic pageSize;
+  final dynamic totalCount;
+  final dynamic totalPages;
   final bool? hasNextPage;
   final bool? hasPreviousPage;
 
@@ -139,12 +140,12 @@ class Pagination {
   });
 
   Pagination.fromJson(Map<String, dynamic> json)
-      : currentPage = json['currentPage'],
-        pageSize = json['pageSize'],
-        totalCount = json['totalCount'],
-        totalPages = json['totalPages'],
-        hasNextPage = json['hasNextPage'],
-        hasPreviousPage = json['hasPreviousPage'];
+    : currentPage = json['currentPage'],
+      pageSize = json['pageSize'],
+      totalCount = json['totalCount'],
+      totalPages = json['totalPages'],
+      hasNextPage = json['hasNextPage'],
+      hasPreviousPage = json['hasPreviousPage'];
 
   Map<String, dynamic> toJson() {
     return {

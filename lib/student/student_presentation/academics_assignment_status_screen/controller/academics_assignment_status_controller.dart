@@ -537,6 +537,7 @@ class StudentAcademicsAssignmentStatusController extends GetxController
         colorText: Colors.white,
       );
     } catch (e) {
+      myLog.log(e.toString());
       OverlayLoadingProgress.stop();
       Get.snackbar(
         'Error',

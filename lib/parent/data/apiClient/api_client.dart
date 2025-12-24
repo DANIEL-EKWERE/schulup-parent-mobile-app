@@ -263,6 +263,23 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+  // get Students linked to a guardian
+  Future<http.Response> getQuizResult(String studentAttemptId) async {
+    final url = Uri.parse('$baseUrl/quiz/result/$studentAttemptId');
+    var token = await dataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
   Future<http.Response> forgotPassword(
     Map<String, dynamic> customerData,
   ) async {
@@ -691,7 +708,7 @@ class ApiClient extends GetConnect {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-       // 'Authorization': 'Bearer $token',
+        // 'Authorization': 'Bearer $token',
       },
       // body: jsonEncode(commentData),
     );
@@ -1200,8 +1217,7 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-
-/// student scheduled cbt test
+  /// student scheduled cbt test
   Future<http.Response> cbtResults(String classId, String studentId) async {
     final url = Uri.parse(
       '$baseUrl/quiz/history/students/$studentId?classI=$classId&page=1&pageSize=20',
@@ -1221,7 +1237,6 @@ class ApiClient extends GetConnect {
     _logResponse(response);
     return response;
   }
-
 
   /// student search cbt test
   Future<http.Response> serachCbt(

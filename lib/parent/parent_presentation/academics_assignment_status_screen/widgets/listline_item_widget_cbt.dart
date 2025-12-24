@@ -4,6 +4,7 @@ import 'package:schulupparent/parent/parent_presentation/academics_assignment_st
 import '../../../core/app_export.dart';
 import '../controller/academics_assignment_status_controller.dart';
 import '../models/listline_item_model.dart';
+import 'dart:developer' as myLog;
 
 // ignore_for_file: must_be_immutable
 class ListlineItemCbtWidget extends StatelessWidget {
@@ -75,17 +76,19 @@ class ListlineItemCbtWidget extends StatelessWidget {
                   ),
                   // Obx(
                   //   () =>
-                  controller.cbtType.value == "Scheduled Test" ?   Text(
-                    "${listlineItemModelObj.subjectName} • ${listlineItemModelObj.attemptsMade} of ${listlineItemModelObj.noOfQuestions}",
-                    style: CustomTextStyles.bodySmallSecondaryContainer10
-                        .copyWith(fontSize: 16.h),
-                    //  ),
-                  ) : Text(
-                    "${listlineItemModelObj.subjectName} • ${listlineItemModelObj.percentageScore}% ${listlineItemModelObj.totalScore} / ${listlineItemModelObj.percentageScore}% ${listlineItemModelObj.maximumScore}",
-                    style: CustomTextStyles.bodySmallSecondaryContainer10
-                        .copyWith(fontSize: 16.h),
-                    //  ),
-                  ),
+                  controller.cbtType.value == "Scheduled Test"
+                      ? Text(
+                        "${listlineItemModelObj.subjectName} • ${listlineItemModelObj.attemptsMade} of ${listlineItemModelObj.noOfQuestions}",
+                        style: CustomTextStyles.bodySmallSecondaryContainer10
+                            .copyWith(fontSize: 16.h),
+                        //  ),
+                      )
+                      : Text(
+                        "${listlineItemModelObj.subjectName} • ${listlineItemModelObj.percentageScore}% ${listlineItemModelObj.totalScore} / ${listlineItemModelObj.maximumScore}",
+                        style: CustomTextStyles.bodySmallSecondaryContainer10
+                            .copyWith(fontSize: 16.h),
+                        //  ),
+                      ),
                   //${listlineItemModelObj.percentageScore}% ${listlineItemModelObj.totalScore} / ${listlineItemModelObj.percentageScore}% ${listlineItemModelObj.maximumScore}
                   Container(
                     padding: EdgeInsets.symmetric(
@@ -152,6 +155,7 @@ class ListlineItemCbtWidget extends StatelessWidget {
   }
 
   String formatDate(String dateString) {
+    myLog.log(dateString);
     // Parse the ISO 8601 date string
     DateTime dateTime = DateTime.parse(dateString);
 
