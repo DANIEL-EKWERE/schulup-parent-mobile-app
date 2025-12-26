@@ -50,7 +50,7 @@ class AttendanceAllVariantsController extends GetxController {
   Rx<AttendanceAllVariantsModel> attendanceAllVariantsModelObj;
 
   Rx<bool> isLoading = false.obs;
-DateTime? datex;
+  DateTime? datex;
   @override
   void onInit() {
     super.onInit();
@@ -114,13 +114,15 @@ DateTime? datex;
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
 
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         // OverlayLoadingProgress.stop();
         isLoading.value = false;
@@ -143,13 +145,15 @@ DateTime? datex;
       );
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       //OverlayLoadingProgress.stop();
     } finally {
       // OverlayLoadingProgress.stop();

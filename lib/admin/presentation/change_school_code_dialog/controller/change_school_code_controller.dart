@@ -48,13 +48,15 @@ class ChangeSchoolCodeController extends GetxController {
 
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         Get.snackbar(
           'Error',
@@ -66,13 +68,15 @@ class ChangeSchoolCodeController extends GetxController {
       }
     } catch (e) {
       // OverlayLoadingProgress.stop();
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
     } finally {
       OverlayLoadingProgress.stop();
     }

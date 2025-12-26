@@ -54,22 +54,26 @@ class StudentAcademicsCbtTestTestResultController extends GetxController {
         isLoading.value = false;
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         isLoading.value = false;
-        Get.snackbar(
-          'Error',
-          'Login failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            'Login failed. Please try again.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       }
     } on SocketException {
       isLoading.value = false;
@@ -83,13 +87,15 @@ class StudentAcademicsCbtTestTestResultController extends GetxController {
     } catch (e) {
       isLoading.value = false;
       myLog.log(e.toString());
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
     } finally {
       isLoading.value = false;
     }

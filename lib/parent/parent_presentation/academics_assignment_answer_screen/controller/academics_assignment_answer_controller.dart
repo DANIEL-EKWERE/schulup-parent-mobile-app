@@ -89,13 +89,15 @@ class AcademicsAssignmentAnswerController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
 
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         // OverlayLoadingProgress.stop();
         isCommentsSendLoading.value = false;
@@ -117,13 +119,15 @@ class AcademicsAssignmentAnswerController extends GetxController {
       );
       isCommentsSendLoading.value = false;
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       isCommentsSendLoading.value = false;
       //OverlayLoadingProgress.stop();
     } finally {
@@ -159,13 +163,15 @@ class AcademicsAssignmentAnswerController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
 
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         // OverlayLoadingProgress.stop();
         isLoading.value = false;
@@ -187,13 +193,15 @@ class AcademicsAssignmentAnswerController extends GetxController {
       );
       isLoading.value = false;
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       isLoading.value = false;
       //OverlayLoadingProgress.stop();
     } finally {

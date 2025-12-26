@@ -259,6 +259,7 @@ class SigninController extends GetxController {
           await parent.dataBase.saveGuardianID(guardianID);
           await parent.dataBase.saveToken(token);
           await parent.dataBase.saveUserId(userId);
+          await parent.dataBase.saveUserType(userType);
           await parent.dataBase.saveUserName(userName);
           // await parent.dataBase.saveTransactionPin(passwordController.text);
           // await parent.dataBase.saveBrmCode(schoolCodeController.text);
@@ -279,6 +280,7 @@ class SigninController extends GetxController {
           await student.studentDataBase.saveToken(token);
           myLog.log('save token');
           await student.studentDataBase.saveUserId(userId);
+          await student.studentDataBase.saveUserType(userType);
           await student.studentDataBase.saveStudent(studentID);
           myLog.log('save user id');
           await student.studentDataBase.saveUserName(userName);
@@ -299,6 +301,7 @@ class SigninController extends GetxController {
           // Admin or other user type
           await admin.adminDataBase.saveToken(token);
           await admin.adminDataBase.saveUserId(userId);
+          await admin.adminDataBase.saveUserType(userType);
           await admin.adminDataBase.saveUserName(userName);
           await admin.adminDataBase.saveTransactionPin(passwordController.text);
           await admin.adminDataBase.saveBrmCode(schoolCodeController.text);
@@ -323,23 +326,27 @@ class SigninController extends GetxController {
         var message = responseData['message'] ?? 'Invalid credentials';
         errorMessage.value = message;
 
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         OverlayLoadingProgress.stop();
 
-        Get.snackbar(
-          'Error',
-          'Login failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            'Login failed. Please try again.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       }
     } on SocketException {
       OverlayLoadingProgress.stop();

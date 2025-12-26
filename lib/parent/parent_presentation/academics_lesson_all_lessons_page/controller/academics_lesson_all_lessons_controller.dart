@@ -87,23 +87,27 @@ class AcademicsLessonAllLessonsController extends GetxController {
         // OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         isLoading.value = false;
         // OverlayLoadingProgress.stop();
-        Get.snackbar(
-          'Error',
-          'Login failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            'Login failed. Please try again.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       }
     } on SocketException {
       Get.snackbar(
@@ -115,13 +119,15 @@ class AcademicsLessonAllLessonsController extends GetxController {
       );
       isLoading.value = false;
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       isLoading.value = false;
       //OverlayLoadingProgress.stop();
     } finally {

@@ -33,6 +33,8 @@ class StudentDataBase extends GetxController {
 
   String _token = '';
 
+  String _refreshToken = '';
+
   String _location = '';
 
   String _state = '';
@@ -84,6 +86,8 @@ class StudentDataBase extends GetxController {
   String get token => _token;
 
   bool get isSeen => _isSeen;
+
+  String get refreshToken => _refreshToken;
 
   String get address => _address;
 
@@ -156,6 +160,13 @@ class StudentDataBase extends GetxController {
   saveToken(String token) async {
     SharedPreferences sharedPreferences = await _pref;
     await sharedPreferences.setString('token', token);
+
+    return true;
+  }
+
+    saveRefreshToken(String refreshToken) async {
+    SharedPreferences sharedPreferences = await _pref;
+    await sharedPreferences.setString('refreshToken', refreshToken);
 
     return true;
   }
@@ -259,6 +270,15 @@ class StudentDataBase extends GetxController {
 
     return true;
   }
+
+
+  saveUserType(int userType) async {
+    SharedPreferences sharedPreferences = await _pref;
+    await sharedPreferences.setInt('userType', userType);
+
+    return true;
+  }
+
 
   saveProfileId(String profileId) async {
     SharedPreferences sharedPreferences = await _pref;
@@ -565,6 +585,22 @@ class StudentDataBase extends GetxController {
     }
   }
 
+
+
+    Future<String> getRefreshToken() async {
+    SharedPreferences sharedPreferences = await _pref;
+
+    if (sharedPreferences.containsKey('refreshToken')) {
+      String data = sharedPreferences.getString('refreshToken')!;
+      _refreshToken = data;
+
+      return data;
+    } else {
+      _refreshToken = '';
+      return '';
+    }
+  }
+
   Future<String> getAddress() async {
     SharedPreferences sharedPreferences = await _pref;
 
@@ -787,6 +823,21 @@ class StudentDataBase extends GetxController {
       _phone = '';
 
       return '';
+    }
+  }
+
+  Future<int> getUserType() async {
+    SharedPreferences sharedPreferences = await _pref;
+
+    if (sharedPreferences.containsKey('userType')) {
+      int data = sharedPreferences.getInt('userType')!;
+      //_userId = data;
+
+      return data;
+    } else {
+      //data = 0;
+
+      return 0;
     }
   }
 

@@ -39,7 +39,7 @@ class _ReportsWardProgressSubjectPageState
     super.initState();
     controller.getSubjects();
     // controllerx.tabIndex.value = 1;
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 1), () {
       controller.getSubjectProgress();
     });
   }

@@ -20,6 +20,8 @@ class DataBase extends GetxController {
 
   String _isSeeen = '';
 
+  String _refreshToken = '';
+
   Color? _color;
 
   bool _isLoading = false;
@@ -88,6 +90,8 @@ class DataBase extends GetxController {
 
   String get isSeeen => _isSeeen;
 
+  String get refreshToken => _refreshToken;
+
   String get brm => _brmId;
 
   String get brmCode => _brmCode;
@@ -155,6 +159,13 @@ class DataBase extends GetxController {
     return true;
   }
 
+  saveRefreshToken(String refreshToken) async {
+    SharedPreferences sharedPreferences = await _pref;
+    await sharedPreferences.setString('refreshToken', refreshToken);
+
+    return true;
+  }
+
   Future<bool> saveTransactionPin(String transactionPin) async {
     SharedPreferences sharedPreferences = await _pref;
     if (await sharedPreferences.setString('transactionPin', transactionPin)) {
@@ -178,8 +189,7 @@ class DataBase extends GetxController {
     return true;
   }
 
-
-    saveGuardianID(int guardianID) async {
+  saveGuardianID(int guardianID) async {
     SharedPreferences sharedPreferences = await _pref;
     await sharedPreferences.setInt('guardianID', guardianID);
 
@@ -259,6 +269,13 @@ class DataBase extends GetxController {
   saveUserId(int userId) async {
     SharedPreferences sharedPreferences = await _pref;
     await sharedPreferences.setInt('userId', userId);
+
+    return true;
+  }
+
+  saveUserType(int userType) async {
+    SharedPreferences sharedPreferences = await _pref;
+    await sharedPreferences.setInt('userType', userType);
 
     return true;
   }
@@ -514,9 +531,9 @@ class DataBase extends GetxController {
       return ''; // Return an empty string if no cover photo is saved
     }
   }
-//guardianID
+  //guardianID
 
- // Get guardian id
+  // Get guardian id
   Future<int> getGuardianId() async {
     SharedPreferences sharedPreferences = await _pref;
     if (sharedPreferences.containsKey('guardianID')) {
@@ -526,7 +543,6 @@ class DataBase extends GetxController {
       return 0; // Return an empty string if no cover photo is saved
     }
   }
-
 
   // Get vendor status
   Future<bool> getStatus() async {
@@ -569,6 +585,20 @@ class DataBase extends GetxController {
     } else {
       _token = '';
 
+      return '';
+    }
+  }
+
+  Future<String> getRefreshToken() async {
+    SharedPreferences sharedPreferences = await _pref;
+
+    if (sharedPreferences.containsKey('refreshToken')) {
+      String data = sharedPreferences.getString('refreshToken')!;
+      _refreshToken = data;
+
+      return data;
+    } else {
+      _refreshToken = '';
       return '';
     }
   }
@@ -793,6 +823,21 @@ class DataBase extends GetxController {
       return data;
     } else {
       _userId = 0;
+
+      return 0;
+    }
+  }
+
+  Future<int> getUserType() async {
+    SharedPreferences sharedPreferences = await _pref;
+
+    if (sharedPreferences.containsKey('userType')) {
+      int data = sharedPreferences.getInt('userType')!;
+      //_userId = data;
+
+      return data;
+    } else {
+      //data = 0;
 
       return 0;
     }

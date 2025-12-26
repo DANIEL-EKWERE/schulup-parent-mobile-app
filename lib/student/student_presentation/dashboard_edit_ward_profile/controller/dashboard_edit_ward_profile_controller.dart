@@ -3,6 +3,8 @@ import 'dart:io';
 import 'dart:developer' as myLog;
 import 'package:alert_info/alert_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/student/data/apiClient/api_client.dart';
@@ -121,13 +123,13 @@ class StudentDashboardEditWardProfileController extends GetxController {
         //   context: Get.context!,
         //   text: 'Profile updated successfully!!!',
         // );
-        Get.snackbar(
-          'Success',
-          'Student information updated successfully',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          AlertInfo.show(
+            context: Get.context!,
+            text: 'Profile updated successfully!!!',
+          );
+        });
+        //
         Get.back(); // Go back after successful update
         Navigator.pop(Get.context!);
         myLog.log("profile updated successfully");
@@ -135,41 +137,49 @@ class StudentDashboardEditWardProfileController extends GetxController {
         OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         OverlayLoadingProgress.stop();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            'Update failed. Please try again.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
+      }
+    } on SocketException {
+      // OverlayLoadingProgress.stop();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Opps!!!',
+          'Check your internet connection and try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0XFFFF8C42),
+          colorText: Colors.white,
+        );
+      });
+    } catch (e) {
+      OverlayLoadingProgress.stop();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         Get.snackbar(
           'Error',
-          'Update failed. Please try again.',
+          e.toString(),
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-      }
-    } on SocketException {
-      OverlayLoadingProgress.stop();
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
-      );
-    } catch (e) {
-      OverlayLoadingProgress.stop();
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      });
     }
   }
 
@@ -201,56 +211,120 @@ class StudentDashboardEditWardProfileController extends GetxController {
         religionController.text = studentProfile!.data!.religion!;
         languageController.text = studentProfile!.data!.language!;
         //   OverlayLoadingProgress.stop();
-        Get.snackbar(
-          'Success',
-          'Student information retrived successfully',
-          snackPosition: SnackPosition.BOTTOM,
+        // Get.snackbar(
+        //   'Success',
+        //   'Student information retrived successfully',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.green,
+        //   colorText: Colors.white,
+        // );
+        // In dashboard_edit_ward_profile_controller.dart at line 223
+        // SchedulerBinding.instance.addPostFrameCallback((_) {
+        //   Future.delayed(Duration(milliseconds: 50), () {
+        //     final overlayContext = Get.overlayContext;
+        //     if (overlayContext != null) {
+        //       AlertInfo.show(
+        //         context: overlayContext,
+        //         text: 'Student info loaded successfully',
+        //         typeInfo: TypeInfo.success,
+        //       );
+        //     }
+        //   });
+        // });
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: "Student information loaded successfully",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.green,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
+        // For success messages:
+        // Show snackbar after frame is rendered
+        // SchedulerBinding.instance.addPostFrameCallback((_) {
+        //   Get.snackbar(
+        //     'Success',
+        //     'Student information loaded',
+        //     snackPosition: SnackPosition.TOP,
+        //     backgroundColor: Colors.green,
+        //     colorText: Colors.white,
+        //     icon: Icon(Icons.check_circle, color: Colors.white),
+        //     duration: Duration(seconds: 3),
+        //   );
+        // });
         //Get.back(); // Go back after successful update
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
+        // WidgetsBinding.instance.addPostFrameCallback((_) {
+        //   Get.snackbar(
+        //     'Error',
+        //     message,
+        //     snackPosition: SnackPosition.BOTTOM,
+        //     backgroundColor: Colors.red,
+        //     colorText: Colors.white,
+        //   );
+        // });
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: message,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       } else {
         //  OverlayLoadingProgress.stop();
         isLoading.value = false;
-        Get.snackbar(
-          'Error',
-          'Update failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: "Update failed. Please try again.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       }
     } on SocketException {
       //  OverlayLoadingProgress.stop();
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      // Get.snackbar(
+      //   'Opps!!!',
+      //   'Check your internet connection and try again.',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Color(0XFFFF8C42),
+      //   colorText: Colors.white,
+      // );
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Check your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       // OverlayLoadingProgress.stop();
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
         backgroundColor: Colors.red,
-        colorText: Colors.white,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } finally {
       isLoading.value = false;

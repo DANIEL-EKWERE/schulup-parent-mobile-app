@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'dart:developer' as myLog;
+import 'package:alert_info/alert_info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
@@ -105,27 +106,35 @@ class StudentDashboardExtendedViewController extends GetxController {
         // religionController.text = studentProfile!.data!.religion!;
         // languageController.text = studentProfile!.data!.language!;
         //   OverlayLoadingProgress.stop();
-        Get.snackbar(
-          'Success',
-          'Student information retrived successfully',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          AlertInfo.show(
+            context: Get.context!,
+            text: 'Student information retrived successfully',
+          );
+        });
+        // Get.snackbar(
+        //   'Success',
+        //   'Student information retrived successfully',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.green,
+        //   colorText: Colors.white,
+        // );
         //Get.back(); // Go back after successful update
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.offAll(()=> SigninScreen());
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        Get.offAll(() => SigninScreen());
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         //  OverlayLoadingProgress.stop();
         isLoading.value = false;
@@ -150,13 +159,15 @@ class StudentDashboardExtendedViewController extends GetxController {
     } catch (e) {
       // OverlayLoadingProgress.stop();
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
     } finally {
       isLoading.value = false;
     }
@@ -203,23 +214,27 @@ class StudentDashboardExtendedViewController extends GetxController {
         // OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         isLoading.value = false;
         // OverlayLoadingProgress.stop();
-        Get.snackbar(
-          'Error',
-          'Login failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            'Login failed. Please try again.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       }
     } on SocketException {
       isLoading.value = false;
@@ -232,13 +247,15 @@ class StudentDashboardExtendedViewController extends GetxController {
       );
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       //OverlayLoadingProgress.stop();
       myLog.log('Error: ${e.toString()}');
     } finally {
@@ -294,23 +311,27 @@ class StudentDashboardExtendedViewController extends GetxController {
         // OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         isLoading.value = false;
         // OverlayLoadingProgress.stop();
-        Get.snackbar(
-          'Error',
-          'Login failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            'Login failed. Please try again.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       }
     } on SocketException {
       isLoading.value = false;
@@ -323,13 +344,15 @@ class StudentDashboardExtendedViewController extends GetxController {
       );
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       //OverlayLoadingProgress.stop();
       myLog.log('Error: ${e.toString()}');
     } finally {
@@ -396,23 +419,27 @@ class StudentDashboardExtendedViewController extends GetxController {
         // OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         isLoading.value = false;
         // OverlayLoadingProgress.stop();
-        Get.snackbar(
-          'Error',
-          'Login failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            'Login failed. Please try again.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       }
     } on SocketException {
       isLoading.value = false;
@@ -426,13 +453,15 @@ class StudentDashboardExtendedViewController extends GetxController {
     } catch (e) {
       myLog.log(e.toString());
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       //OverlayLoadingProgress.stop();
     } finally {
       // OverlayLoadingProgress.stop();
@@ -469,46 +498,54 @@ class StudentDashboardExtendedViewController extends GetxController {
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
         // OverlayLoadingProgress.stop();
-        Get.offAll(()=> SigninScreen());
+        Get.offAll(() => SigninScreen());
         isLoading.value = false;
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         // OverlayLoadingProgress.stop();
         isLoading.value = false;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            'Something went wrong. Please try again.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
+      }
+    } on SocketException {
+      isLoading.value = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Opps!!!',
+          'Check your internet connection and try again.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Color(0XFFFF8C42),
+          colorText: Colors.white,
+        );
+      });
+    } catch (e) {
+      isLoading.value = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         Get.snackbar(
           'Error',
-          'Login failed. Please try again.',
+          e.toString(),
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-      }
-    } on SocketException {
-      isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
-      );
-    } catch (e) {
-      isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      });
       //OverlayLoadingProgress.stop();
     } finally {
       // OverlayLoadingProgress.stop();
@@ -562,13 +599,15 @@ class StudentDashboardExtendedViewController extends GetxController {
         isLoading.value = false;
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         // OverlayLoadingProgress.stop();
         isLoading.value = false;
@@ -591,13 +630,15 @@ class StudentDashboardExtendedViewController extends GetxController {
       );
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       //OverlayLoadingProgress.stop();
     } finally {
       // OverlayLoadingProgress.stop();

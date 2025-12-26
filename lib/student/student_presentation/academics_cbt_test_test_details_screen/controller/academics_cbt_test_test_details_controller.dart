@@ -17,7 +17,8 @@ import 'dart:developer' as myLog;
 /// This class manages the state of the AcademicsCbtTestTestDetailsScreen, including the
 /// current academicsCbtTestTestDetailsModelObj
 class StudentAcademicsCbtTestTestDetailsController extends GetxController {
-  Rx<StudentAcademicsCbtTestTestDetailsModel> academicsCbtTestTestDetailsModelObj =
+  Rx<StudentAcademicsCbtTestTestDetailsModel>
+  academicsCbtTestTestDetailsModelObj =
       StudentAcademicsCbtTestTestDetailsModel().obs;
 
   // StudentDashboardExtendedViewController dashboardcontroller =
@@ -56,13 +57,15 @@ class StudentAcademicsCbtTestTestDetailsController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
 
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         OverlayLoadingProgress.stop();
         Get.snackbar(
@@ -83,13 +86,15 @@ class StudentAcademicsCbtTestTestDetailsController extends GetxController {
       );
     } catch (e) {
       myLog.log(e.toString());
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       //OverlayLoadingProgress.stop();
     } finally {
       OverlayLoadingProgress.stop();

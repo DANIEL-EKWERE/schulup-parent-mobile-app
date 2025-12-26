@@ -104,13 +104,15 @@ class StudentAcademicsSchularAiOngoingController extends GetxController {
         // Remove the user message on error
         messageList.removeWhere((msg) => msg.id == userMessage.id);
 
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         // Remove the user message on error
         messageList.removeWhere((msg) => msg.id == userMessage.id);
@@ -143,13 +145,15 @@ class StudentAcademicsSchularAiOngoingController extends GetxController {
       // Hide typing indicator
       isAiTyping.value = false;
 
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
     } finally {
       isSending.value = false;
       isAiTyping.value = false;

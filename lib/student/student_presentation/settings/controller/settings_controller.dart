@@ -10,10 +10,7 @@ import 'package:schulupparent/student/data/apiClient/api_client.dart';
 import '../../../core/app_export.dart';
 
 class StudentSettingsController extends GetxController {
-  
-ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
-  
- 
+  ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
 
   Future<void> logOut() async {
     OverlayLoadingProgress.start(
@@ -21,8 +18,6 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
       circularProgressColor: Color(0XFFFF8C42),
     );
     try {
-      
-      
       final response = await _apiService.logOut();
       if (response.statusCode == 200 || response.statusCode == 201) {
         // OverlayLoadingProgress.stop();
@@ -44,7 +39,7 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
         // passwordController.clear();
         // schoolCodeController.clear();
         studentDataBase.logOut();
-        Get.offAllNamed(AppRoutes.signinScreen,);
+        Get.offAllNamed(AppRoutes.signinScreen);
         OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
@@ -52,13 +47,15 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
         OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         OverlayLoadingProgress.stop();
         Get.snackbar(
@@ -78,17 +75,18 @@ ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
         colorText: Colors.white,
       );
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       //OverlayLoadingProgress.stop();
     } finally {
       OverlayLoadingProgress.stop();
     }
   }
-
 }

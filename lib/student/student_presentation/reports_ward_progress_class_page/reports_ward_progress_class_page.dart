@@ -67,7 +67,24 @@ class _ReportsWardProgressClassPageState
                               color: Color(0XFFFF8C42),
                             ),
                           )
-                          : Padding(
+                          : controller1.selectedSubjectPerformance!.isEmpty
+                          ? Center(
+                    child: Column(
+                      spacing: 30,
+                      children: [
+                        SizedBox(height: 150.h),
+                        CustomImageView(imagePath: ImageConstant.imgObjects),
+                        Text(
+                          textAlign: TextAlign.center,
+                          '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
+                        ),
+                      ],
+                    ),
+                  ) :
+                          Padding(
                             padding: EdgeInsets.symmetric(vertical: 5),
                             // height: 400.h,
                             child: Column(

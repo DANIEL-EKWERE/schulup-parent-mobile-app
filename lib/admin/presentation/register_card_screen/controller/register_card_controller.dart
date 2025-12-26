@@ -5,6 +5,7 @@ import 'dart:typed_data';
 // import 'package:nfc_manager_ndef/nfc_manager_ndef.dart';
 import 'package:flutter/material.dart';
 import 'package:schulupparent/admin/presentation/drop_off_scan_screen/models/card_model.dart';
+import 'package:schulupparent/admin/presentation/scanned_card_screen/scanned_card_screen.dart';
 
 import '../../../core/app_export.dart';
 import '../models/register_card_model.dart';
@@ -221,7 +222,8 @@ class RegisterCardController extends GetxController {
                 .stopSession(); // stop cleanly before showing dialog
 
             // Show dialog after stopping NFC
-            Get.toNamed(AppRoutes.scannedCardScreen, arguments: decimal);
+         //   Get.toNamed(AppRoutes.scannedCardScreen, arguments: decimal);
+            Get.to(()=> ScannedCardScreen(), arguments: decimal);
           } catch (e) {
             print('❌ Error processing NFC tag: $e');
             await NfcManager.instance.stopSession(

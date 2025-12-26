@@ -48,6 +48,23 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
                   ? Center(
                     child: CircularProgressIndicator(color: Color(0XFFFF8C42)),
                   )
+                  : controller1.selectedPerformance!.isEmpty
+                  ? Center(
+                    child: Column(
+                      spacing: 30,
+                      children: [
+                        SizedBox(height: 150.h),
+                        CustomImageView(imagePath: ImageConstant.imgObjects),
+                        Text(
+                          textAlign: TextAlign.center,
+                          '🔍 No results found Try adjusting your search or filters',
+                          style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                            fontSize: 16.h,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                   : Padding(
                     padding: EdgeInsetsGeometry.symmetric(vertical: 5),
                     // height: 400.h,

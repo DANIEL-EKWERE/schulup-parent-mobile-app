@@ -57,7 +57,7 @@ class SigninController extends GetxController {
         AlertInfo.show(context: Get.context!, text: 'Login Successful');
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //Get.offAllNamed(AppRoutes.signTwoScreen);
-        
+
         OverlayLoadingProgress.stop();
         AlertInfo.show(
           context: Get.context!,
@@ -67,13 +67,15 @@ class SigninController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         errorMessage.value = message;
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       } else {
         OverlayLoadingProgress.stop();
         AlertInfo.show(
@@ -81,13 +83,15 @@ class SigninController extends GetxController {
           text: 'Somehting went wrong',
           typeInfo: TypeInfo.error,
         );
-        Get.snackbar(
-          'Error',
-          'Login failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            'Login failed. Please try again.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
       }
     } on SocketException {
       OverlayLoadingProgress.stop();
@@ -110,13 +114,15 @@ class SigninController extends GetxController {
       //   text: e.toString(),
       //   typeInfo: TypeInfo.error,
       // );
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
       //OverlayLoadingProgress.stop();
     } finally {
       OverlayLoadingProgress.stop();

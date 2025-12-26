@@ -34,7 +34,9 @@ class _DashboardEditWardProfileScreenState
   @override
   void initState() {
     super.initState();
-    studentController.getStudentInfo();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      studentController.getStudentInfo();
+    });
     print('calling init state here');
   }
 

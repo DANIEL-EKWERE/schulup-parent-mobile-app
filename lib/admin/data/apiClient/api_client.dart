@@ -12,6 +12,7 @@ import 'dart:developer' as myLog;
 
 import 'package:schulupparent/admin/core/utils/storage.dart';
 import 'package:schulupparent/admin/core/utils/snackbar_utils.dart';
+import 'package:schulupparent/signin_screen/signin_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const API_TIMEOUT_INT_SECONDS = 60 * 5;
@@ -26,6 +27,10 @@ class ApiClient extends GetConnect {
   var baseUrl = 'https://api.schulup.com/api';
   static const int maxRetries = 3;
   static const Duration retryDelay = Duration(seconds: 2);
+
+  static bool _isRefreshing = false;
+  static List<Function> _pendingRequests = [];
+
 
   Future<String?> fn_getCurrentBearerToken() async {
     return await 'adminDataBase.getToken()';
@@ -313,6 +318,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> getSchoolLogo() async {
+    return await _makeAuthenticatedRequest(() async {
     var schoolId = await adminDataBase.getBrmCode();
     final url = Uri.parse('$baseUrl/school/$schoolId/logo');
     _logRequest('GET', url);
@@ -325,9 +331,11 @@ class ApiClient extends GetConnect {
     );
     _logResponse(response);
     return response;
+    });
   }
 
   Future<http.Response> getSchoolName() async {
+    return await _makeAuthenticatedRequest(() async {
     var schoolId = await adminDataBase.getBrmCode();
     final url = Uri.parse('$baseUrl/school/$schoolId/name');
     _logRequest('GET', url);
@@ -340,6 +348,7 @@ class ApiClient extends GetConnect {
     );
     _logResponse(response);
     return response;
+    });
   }
 
   Future<http.Response> fetchCountry() async {
@@ -411,6 +420,104 @@ class ApiClient extends GetConnect {
     _logResponse(response);
     return response;
   }
+
+
+  // TODO: REFRESH FUNCTIONS HERE
+
+  Future<bool> refreshToken() async {
+    if (_isRefreshing) {
+      // Wait for ongoing refresh to complete
+      await Future.delayed(Duration(milliseconds: 500));
+      return await adminDataBase.getToken() != null;
+    }
+
+    _isRefreshing = true;
+
+    try {
+      final refreshToken = await adminDataBase.getRefreshToken();
+
+      if (refreshToken == null || refreshToken.isEmpty) {
+        if (kDebugMode) print('❌ No refresh token found');
+        return false;
+      }
+
+      if (kDebugMode) print('🔄 Refreshing access token...');
+
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/auth/refresh-token'),
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: json.encode({'refresh_token': refreshToken}),
+          )
+          .timeout(const Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        await adminDataBase.saveToken(data['token'] ?? data['access_token']);
+
+        if (data['refreshToken'] != null || data['refresh_token'] != null) {
+          await adminDataBase.saveRefreshToken(
+            data['refreshToken'] ?? data['refresh_token'],
+          );
+        }
+
+        if (kDebugMode) print('✅ Tokens refreshed successfully');
+        return true;
+      } else if (response.statusCode == 401 || response.statusCode == 403) {
+        if (kDebugMode) print('❌ Refresh token expired');
+        await _handleSessionExpired();
+        return false;
+      }
+
+      return false;
+    } catch (e) {
+      if (kDebugMode) print('❌ Refresh error: $e');
+      return false;
+    } finally {
+      _isRefreshing = false;
+    }
+  }
+
+  Future<http.Response> _makeAuthenticatedRequest(
+    Future<http.Response> Function() request,
+  ) async {
+    http.Response response = await request();
+
+    if (response.statusCode == 401) {
+      if (kDebugMode) print('🔄 Token expired, refreshing...');
+
+      final refreshed = await refreshToken();
+
+      if (refreshed) {
+        response = await request();
+
+        if (response.statusCode == 401) {
+          await _handleSessionExpired();
+          throw Exception('Session expired');
+        }
+      } else {
+        await _handleSessionExpired();
+        throw Exception('Session expired');
+      }
+    }
+
+    return response;
+  }
+
+  Future<void> _handleSessionExpired() async {
+    await adminDataBase.logOut();
+    Get.offAll(() => SigninScreen());
+    SnackbarUtils.showSnackbarError(
+      'Session Expired',
+      'Please login again to continue',
+    );
+  }
+
+
 
   Future<http.Response> fetchReferal() async {
     var token = await adminDataBase.getToken();
@@ -953,6 +1060,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> attendance(Map<String, dynamic> body) async {
+    return await _makeAuthenticatedRequest(() async {
     final url = Uri.parse('$baseUrl/attendance/record');
     var token = await adminDataBase.getToken();
     _logRequest('POST', url);
@@ -966,6 +1074,7 @@ class ApiClient extends GetConnect {
     );
     _logResponse(response);
     return response;
+    });
   }
 
   // Get cart by ID

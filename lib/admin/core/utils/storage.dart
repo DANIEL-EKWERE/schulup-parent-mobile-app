@@ -18,6 +18,8 @@ class AdminDataBase extends GetxController {
 
   String _reqMessage = '';
 
+  String _refreshToken = '';
+
   String _isSeeen = '';
 
   Color? _color;
@@ -96,6 +98,8 @@ class AdminDataBase extends GetxController {
 
   bool get isSet => _isSet;
 
+  String get refreshToken => _refreshToken;
+
   String get brmAddress => _brmAddress;
 
   String get brmPhone => _brmPhone;
@@ -151,6 +155,13 @@ class AdminDataBase extends GetxController {
   saveToken(String token) async {
     SharedPreferences sharedPreferences = await _pref;
     await sharedPreferences.setString('token', token);
+
+    return true;
+  }
+
+  saveRefreshToken(String refreshToken) async {
+    SharedPreferences sharedPreferences = await _pref;
+    await sharedPreferences.setString('refreshToken', refreshToken);
 
     return true;
   }
@@ -251,6 +262,13 @@ class AdminDataBase extends GetxController {
   saveUserId(int userId) async {
     SharedPreferences sharedPreferences = await _pref;
     await sharedPreferences.setInt('userId', userId);
+
+    return true;
+  }
+
+  saveUserType(int userType) async {
+    SharedPreferences sharedPreferences = await _pref;
+    await sharedPreferences.setInt('userType', userType);
 
     return true;
   }
@@ -536,6 +554,20 @@ class AdminDataBase extends GetxController {
   //   }
   //   return [];
   // }
+
+  Future<String> getRefreshToken() async {
+    SharedPreferences sharedPreferences = await _pref;
+
+    if (sharedPreferences.containsKey('refreshToken')) {
+      String data = sharedPreferences.getString('refreshToken')!;
+      _refreshToken = data;
+
+      return data;
+    } else {
+      _refreshToken = '';
+      return '';
+    }
+  }
 
   Future<String> getToken() async {
     SharedPreferences sharedPreferences = await _pref;
@@ -864,6 +896,21 @@ class AdminDataBase extends GetxController {
       _bankName = '';
 
       return '';
+    }
+  }
+
+  Future<int> getUserType() async {
+    SharedPreferences sharedPreferences = await _pref;
+
+    if (sharedPreferences.containsKey('userType')) {
+      int data = sharedPreferences.getInt('userType')!;
+      //_userId = data;
+
+      return data;
+    } else {
+      //data = 0;
+
+      return 0;
     }
   }
 

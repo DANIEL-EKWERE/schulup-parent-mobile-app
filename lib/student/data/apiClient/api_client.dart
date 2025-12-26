@@ -8,6 +8,7 @@ import 'package:get/get_connect/connect.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:schulupparent/signin_screen/signin_screen.dart';
 import 'dart:developer' as myLog;
 
 import 'package:schulupparent/student/core/utils/storage.dart';
@@ -26,6 +27,9 @@ class ApiClient extends GetConnect {
   var baseUrl = 'https://api.schulup.com/api';
   static const int maxRetries = 3;
   static const Duration retryDelay = Duration(seconds: 2);
+
+  static bool _isRefreshing = false;
+  static List<Function> _pendingRequests = [];
 
   Future<String?> fn_getCurrentBearerToken() async {
     return await 'studentDataBase.getToken()';
@@ -377,10 +381,10 @@ class ApiClient extends GetConnect {
     return response;
   }
 
-   // download and view attechment
+  // download and view attechment
 
   Future<http.Response> downloadAndViewAttachment(String downloadUrl) async {
-  //  var token = await studentDataBase.getToken();
+    //  var token = await studentDataBase.getToken();
     final url = Uri.parse(downloadUrl);
     _logRequest('GET', url);
     final response = await http.get(
@@ -388,7 +392,7 @@ class ApiClient extends GetConnect {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-       // 'Authorization': 'Bearer $token',
+        // 'Authorization': 'Bearer $token',
       },
       // body: jsonEncode(commentData),
     );
@@ -825,37 +829,40 @@ class ApiClient extends GetConnect {
 
   // get Students linked to a guardian
   Future<http.Response> byGuardian(String userId) async {
-    final url = Uri.parse('$baseUrl/students/by-guardian/$userId');
-    var token = await studentDataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse('$baseUrl/students/by-guardian/$userId');
+      var token = await studentDataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
-
 
   // get Students linked to a guardian
   Future<http.Response> getQuizResult(String studentAttemptId) async {
-    final url = Uri.parse('$baseUrl/quiz/result/$studentAttemptId');
-    var token = await studentDataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse('$baseUrl/quiz/result/$studentAttemptId');
+      var token = await studentDataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   // get Students assignments
@@ -865,21 +872,23 @@ class ApiClient extends GetConnect {
     String termID,
     String submissionStatus,
   ) async {
-    final url = Uri.parse(
-      '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&submissionStatus=$submissionStatus&page=1&pageSize=10',
-    );
-    var token = await studentDataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse(
+        '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&submissionStatus=$submissionStatus&page=1&pageSize=10',
+      );
+      var token = await studentDataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   // get Students assignments
@@ -890,21 +899,23 @@ class ApiClient extends GetConnect {
     String submissionStatus,
     String searchTerm,
   ) async {
-    final url = Uri.parse(
-      '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&searchTerm=$searchTerm&submissionStatus=$submissionStatus&page=1&pageSize=10',
-    );
-    var token = await studentDataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse(
+        '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&searchTerm=$searchTerm&submissionStatus=$submissionStatus&page=1&pageSize=10',
+      );
+      var token = await studentDataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   // get ai conversations
@@ -1006,6 +1017,7 @@ class ApiClient extends GetConnect {
 
   // get Student's subjects
   Future<http.Response> getSubjects(String studentID) async {
+     return await _makeAuthenticatedRequest(() async {
     final url = Uri.parse('$baseUrl/students/$studentID/subjects');
     var token = await studentDataBase.getToken();
     _logRequest('GET', url);
@@ -1019,6 +1031,7 @@ class ApiClient extends GetConnect {
     );
     _logResponse(response);
     return response;
+     });
   }
 
   // get termly report
@@ -1999,6 +2012,101 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+  // TODO: REFRESH FUNCTIONS HERE
+
+  Future<bool> refreshToken() async {
+    if (_isRefreshing) {
+      // Wait for ongoing refresh to complete
+      await Future.delayed(Duration(milliseconds: 500));
+      return await studentDataBase.getToken() != null;
+    }
+
+    _isRefreshing = true;
+
+    try {
+      final refreshToken = await studentDataBase.getRefreshToken();
+
+      if (refreshToken == null || refreshToken.isEmpty) {
+        if (kDebugMode) print('❌ No refresh token found');
+        return false;
+      }
+
+      if (kDebugMode) print('🔄 Refreshing access token...');
+
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/auth/refresh-token'),
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: json.encode({'refresh_token': refreshToken}),
+          )
+          .timeout(const Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        await studentDataBase.saveToken(data['token'] ?? data['access_token']);
+
+        if (data['refreshToken'] != null || data['refresh_token'] != null) {
+          await studentDataBase.saveRefreshToken(
+            data['refreshToken'] ?? data['refresh_token'],
+          );
+        }
+
+        if (kDebugMode) print('✅ Tokens refreshed successfully');
+        return true;
+      } else if (response.statusCode == 401 || response.statusCode == 403) {
+        if (kDebugMode) print('❌ Refresh token expired');
+        await _handleSessionExpired();
+        return false;
+      }
+
+      return false;
+    } catch (e) {
+      if (kDebugMode) print('❌ Refresh error: $e');
+      return false;
+    } finally {
+      _isRefreshing = false;
+    }
+  }
+
+  Future<http.Response> _makeAuthenticatedRequest(
+    Future<http.Response> Function() request,
+  ) async {
+    http.Response response = await request();
+
+    if (response.statusCode == 401) {
+      if (kDebugMode) print('🔄 Token expired, refreshing...');
+
+      final refreshed = await refreshToken();
+
+      if (refreshed) {
+        response = await request();
+
+        if (response.statusCode == 401) {
+          await _handleSessionExpired();
+          throw Exception('Session expired');
+        }
+      } else {
+        await _handleSessionExpired();
+        throw Exception('Session expired');
+      }
+    }
+
+    return response;
+  }
+
+  Future<void> _handleSessionExpired() async {
+    await studentDataBase.logOut();
+    Get.offAll(() => SigninScreen());
+    SnackbarUtils.showSnackbarError(
+      'Session Expired',
+      'Please login again to continue',
+    );
+  }
+
   // Get all news
   Future<http.Response> getNews() async {
     final prefs = await SharedPreferences.getInstance();
@@ -2019,6 +2127,7 @@ class ApiClient extends GetConnect {
 
   // Get all terms
   Future<http.Response> getTerms() async {
+    return await _makeAuthenticatedRequest(() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final url = Uri.parse('$baseUrl/lookups/terms');
@@ -2033,6 +2142,7 @@ class ApiClient extends GetConnect {
     );
     _logResponse(response);
     return response;
+    });
   }
 
   // Get all Events
@@ -2122,6 +2232,7 @@ class ApiClient extends GetConnect {
   }
 
   Future<http.Response> getStudentsByGuardian() async {
+    return await _makeAuthenticatedRequest(() async {
     final url = Uri.parse('$baseUrl/students/by-guardian/88460');
     _logRequest('GET', url);
     final response = await http.get(
@@ -2132,23 +2243,26 @@ class ApiClient extends GetConnect {
     );
     _logResponse(response);
     return response;
+    });
   }
 
   Future<http.Response> getStudentsById(String studentId) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token') ?? '';
-    final url = Uri.parse('$baseUrl/students/$studentId');
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
+    return await _makeAuthenticatedRequest(() async {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token') ?? '';
+      final url = Uri.parse('$baseUrl/students/$studentId');
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   // Create a new category
