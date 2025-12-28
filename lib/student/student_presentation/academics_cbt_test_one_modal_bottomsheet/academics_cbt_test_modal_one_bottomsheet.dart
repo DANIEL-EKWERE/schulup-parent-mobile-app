@@ -10,9 +10,9 @@ import 'controller/academics_cbt_test_modal_one_controller.dart';
 
 // ignore_for_file: must_be_immutable
 
-StudentAcademicsAssignmentStatusController controller1 = Get.put(
-  StudentAcademicsAssignmentStatusController(),
-);
+// StudentAcademicsAssignmentStatusController controller1 = Get.put(
+//   StudentAcademicsAssignmentStatusController(),
+// );
 
 StudentAcademicsLessonCbtTestController controls = Get.put(
   StudentAcademicsLessonCbtTestController(
@@ -21,10 +21,14 @@ StudentAcademicsLessonCbtTestController controls = Get.put(
 );
 
 class AcademicsCbtTestModalOneBottomsheet extends StatefulWidget {
-  AcademicsCbtTestModalOneBottomsheet(this.controller, {Key? key})
-    : super(key: key);
+  AcademicsCbtTestModalOneBottomsheet(
+    this.controller,
+    this.controller1, {
+    Key? key,
+  }) : super(key: key);
 
   AcademicsCbtTestModalOneController controller;
+  StudentAcademicsAssignmentStatusController controller1;
 
   @override
   State<AcademicsCbtTestModalOneBottomsheet> createState() =>
@@ -34,7 +38,13 @@ class AcademicsCbtTestModalOneBottomsheet extends StatefulWidget {
 class _AcademicsCbtTestModalOneBottomsheetState
     extends State<AcademicsCbtTestModalOneBottomsheet> {
   List<String> type = ["lbl_scheduled_test".tr, "lbl_test_result".tr];
-  List<String> selectedType = [controller1.cbtType.value];
+  late List<String> selectedType;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedType = [widget.controller1.cbtType.value];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,21 +141,22 @@ class _AcademicsCbtTestModalOneBottomsheetState
             onPressed: () {
               Navigator.pop(context);
               setState(() {
-                controller1.cbtType.value = selectedType.first;
+                widget.controller1.cbtType.value = selectedType.first;
               });
-              print(controller1.cbtType.value);
-              if (controller1.cbtType.value == 'Test Result ') {
+              print(widget.controller1.cbtType.value);
+              if (widget.controller1.cbtType.value == 'Test Result ') {
                 print(
                   'object============================================================',
                 );
-                controller1.getCbtResult();
+                print(selectedType);
+                widget.controller1.getCbtResult();
                 controls.getCbtResult();
                 return;
               } else {
                 print(
-                  'it\'s not test result it\'s ${controller1.cbtType.value}',
+                  'it\'s not test result it\'s ${widget.controller1.cbtType.value}',
                 );
-                controller1.getCbt();
+                widget.controller1.getCbt();
                 controls.getCbt();
               }
             },

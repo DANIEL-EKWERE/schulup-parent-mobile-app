@@ -10,7 +10,9 @@ import 'package:schulupparent/parent/core/utils/storage.dart';
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_assignment_status_screen/models/academics_assignment_status_initial_model.dart';
+import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/error_page.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/academics_session_model.dart';
+import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/dashboardStats.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/student_batch_model.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/student_class_model.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/term_model.dart';
@@ -45,6 +47,9 @@ class DashboardExtendedViewController extends GetxController {
   int? selectedClassID;
   int? selectedTerm;
 
+  DashBoardStats? dashboardStats;
+  List<DashboardData> dashboardDataList = [];
+
   RxList<Term> terms = <Term>[].obs;
   Rx<Term?> selectedTerm1 = Rx<Term?>(null);
   //RxBool isLoading = false.obs;
@@ -52,7 +57,9 @@ class DashboardExtendedViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    byGuardian();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      byGuardian();
+    });
     // Timer(Duration(seconds: 3), () {
 
     // });
@@ -61,17 +68,17 @@ class DashboardExtendedViewController extends GetxController {
   Future<void> byGuardian() async {
     // getBatch();
     // getClass();
-    // OverlayLoadingProgress.start(
-    //   context: Get.context!,
-    //   circularProgressColor: Color(0XFFFF8C42),
-    // );
+    OverlayLoadingProgress.start(
+      context: Get.context!,
+      circularProgressColor: Color(0XFFFF8C42),
+    );
     isLoading.value = true;
     try {
       var userId = await dataBase.getUserId();
       myLog.log('User ID: $userId');
       final response = await _apiService.byGuardian(userId.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // // OverlayLoadingProgress.stop();
+        OverlayLoadingProgress.stop();
         // // myLog.log('Login successful: ${response.body}');
         // // schoolCodeInputController.dispose();
         // // usernameInputController.dispose();
@@ -94,10 +101,11 @@ class DashboardExtendedViewController extends GetxController {
         await getAcademicSessions();
         await getNews();
         await fetchTerms();
+        await getDashBoardStats();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //Get.offAllNamed(AppRoutes.signTwoScreen);
-        // OverlayLoadingProgress.stop();
+        OverlayLoadingProgress.stop();
         Get.offAll(() => SigninScreen());
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
@@ -112,7 +120,7 @@ class DashboardExtendedViewController extends GetxController {
         });
       } else {
         isLoading.value = false;
-        // OverlayLoadingProgress.stop();
+        OverlayLoadingProgress.stop();
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Get.snackbar(
             'Error',
@@ -124,6 +132,7 @@ class DashboardExtendedViewController extends GetxController {
         });
       }
     } on SocketException {
+      OverlayLoadingProgress.stop();
       isLoading.value = false;
       Get.snackbar(
         'Opps!!!',
@@ -132,7 +141,9 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
+      Get.to(()=> ErrorPage());
     } catch (e) {
+      OverlayLoadingProgress.stop();
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Get.snackbar(
@@ -143,11 +154,11 @@ class DashboardExtendedViewController extends GetxController {
           colorText: Colors.white,
         );
       });
-      //OverlayLoadingProgress.stop();
+      OverlayLoadingProgress.stop();
       myLog.log('Error: ${e.toString()}');
     } finally {
       isLoading.value = false;
-      //OverlayLoadingProgress.stop();
+      OverlayLoadingProgress.stop();
     }
   }
 
@@ -229,6 +240,91 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
+      Get.to(()=> ErrorPage());
+    } catch (e) {
+      isLoading.value = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.snackbar(
+          'Error',
+          e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      });
+      //OverlayLoadingProgress.stop();
+      myLog.log('Error: ${e.toString()}');
+    } finally {
+      isLoading.value = false;
+      //OverlayLoadingProgress.stop();
+    }
+  }
+
+  Future<void> getDashBoardStats() async {
+    // getBatch();
+    // getClass();
+    // OverlayLoadingProgress.start(
+    //   context: Get.context!,
+    //   circularProgressColor: Color(0XFFFF8C42),
+    // );
+    isLoading.value = true;
+    try {
+      // var userId = await dataBase.getUserId();
+      // myLog.log('User ID: $userId');
+      final response = await _apiService.getDashboardStats(
+        // selectedStudent1!.studentID.toString(),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // // OverlayLoadingProgress.stop();
+        // // myLog.log('Login successful: ${response.body}');
+        // // schoolCodeInputController.dispose();
+        // // usernameInputController.dispose();
+        // // passwordInputController.dispose();
+        // var responseData = jsonDecode(response.body);
+        // myLog.log(responseData.toString());
+        isLoading.value = false;
+        dashboardStats = dashBoardStatsFromJson(response.body);
+        dashboardDataList = dashboardStats?.data ?? [];
+
+        myLog.log("seesion List ${dashboardDataList.first}");
+      } else if (response.statusCode == 404 || response.statusCode == 401) {
+        isLoading.value = false;
+        //Get.offAllNamed(AppRoutes.signTwoScreen);
+        // OverlayLoadingProgress.stop();
+        var responseData = jsonDecode(response.body);
+        var message = responseData['message'];
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
+      } else {
+        isLoading.value = false;
+        // OverlayLoadingProgress.stop();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.snackbar(
+            'Error',
+            'Login failed. Please try again.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        });
+      }
+    } on SocketException {
+      isLoading.value = false;
+      Get.snackbar(
+        'Opps!!!',
+        'Check your internet connection and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Color(0XFFFF8C42),
+        colorText: Colors.white,
+      );
+      Get.to(()=> ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -337,6 +433,7 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
+      Get.to(()=> ErrorPage());
     } catch (e) {
       myLog.log(e.toString());
       isLoading.value = false;
@@ -419,6 +516,7 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
+      Get.to(()=> ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -512,6 +610,7 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
+      Get.to(()=> ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {

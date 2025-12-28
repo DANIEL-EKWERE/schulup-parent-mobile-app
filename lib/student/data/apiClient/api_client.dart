@@ -2107,6 +2107,24 @@ class ApiClient extends GetConnect {
     );
   }
 
+// get Student's subjects progress
+  Future<http.Response> getDashboardStats() async {
+    final url = Uri.parse('$baseUrl/students/dashboard/analytics');
+    var token = await studentDataBase.getToken();
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
   // Get all news
   Future<http.Response> getNews() async {
     final prefs = await SharedPreferences.getInstance();

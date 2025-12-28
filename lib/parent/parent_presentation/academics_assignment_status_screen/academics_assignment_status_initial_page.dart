@@ -206,6 +206,8 @@ import 'package:schulupparent/parent/parent_presentation/academics_assignment_st
 import 'package:schulupparent/parent/parent_presentation/academics_cbt_test_one_modal_bottomsheet/academics_cbt_test_modal_one_bottomsheet.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_cbt_test_test_result_screen/academics_cbt_test_test_result_screen.dart';
+import 'package:schulupparent/parent/parent_presentation/academics_lesson_cbt_test_page/controller/academics_lesson_cbt_test_controller.dart';
+import 'package:schulupparent/parent/parent_presentation/academics_lesson_cbt_test_page/models/academics_lesson_cbt_test_model.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/signin_screen/shimmer_widget.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_answer_screen/binding/academics_assignment_answer_binding.dart';
@@ -602,6 +604,10 @@ class _AcademicsAssignmentStatusInitialPageState
                                   //cbt tab
                                   return AcademicsCbtTestModalOneBottomsheet(
                                     AcademicsCbtTestModalOneController(),
+                                    AcademicsAssignmentStatusController(),
+                                    AcademicsLessonCbtTestController(
+                                      AcademicsLessonCbtTestModel().obs,
+                                    ),
                                   );
                                 },
                               );
@@ -752,7 +758,7 @@ class _AcademicsAssignmentStatusInitialPageState
                         },
                       ),
                     )
-                    : controller.assignmentData!.isEmpty &&
+                    : controller.assignmentData.isEmpty &&
                         controller.isLoading.value == false
                     ? Center(
                       child: Column(
@@ -767,10 +773,10 @@ class _AcademicsAssignmentStatusInitialPageState
                       ),
                     )
                     : ListView.builder(
-                      itemCount: controller.assignmentData!.length,
+                      itemCount: controller.assignmentData.length,
                       itemBuilder: (context, index) {
                         AssignmentData listlineItemModelObj =
-                            controller.assignmentData![index];
+                            controller.assignmentData[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: GestureDetector(

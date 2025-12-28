@@ -131,7 +131,7 @@ class AttendanceLog {
   final String cardUID;
   final String personName;
   final String personType;
-  final String eventTypeText;
+  final String eventType;
   final String eventDateTime;
 
   AttendanceLog({
@@ -139,7 +139,7 @@ class AttendanceLog {
     required this.cardUID,
     required this.personName,
     required this.personType,
-    required this.eventTypeText,
+    required this.eventType,
     required this.eventDateTime,
   });
 
@@ -149,7 +149,7 @@ class AttendanceLog {
       cardUID: json['cardUID'] ?? '',
       personName: json['personName'] ?? '',
       personType: json['personType'] ?? '',
-      eventTypeText: json['eventTypeText'] ?? '',
+      eventType: json['eventType'] ?? '',
       eventDateTime: json['eventDateTime'] ?? '',
     );
   }

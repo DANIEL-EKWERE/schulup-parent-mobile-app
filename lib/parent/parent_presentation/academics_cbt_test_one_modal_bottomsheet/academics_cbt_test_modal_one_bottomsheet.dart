@@ -19,10 +19,16 @@ AcademicsLessonCbtTestController controls = Get.put(
 );
 
 class AcademicsCbtTestModalOneBottomsheet extends StatefulWidget {
-  AcademicsCbtTestModalOneBottomsheet(this.controller, {Key? key})
-    : super(key: key);
+  AcademicsCbtTestModalOneBottomsheet(
+    this.controller,
+    this.controller11,
+    this.controllerxx, {
+    Key? key,
+  }) : super(key: key);
 
   AcademicsCbtTestModalOneController controller;
+  AcademicsLessonCbtTestController controllerxx;
+  AcademicsAssignmentStatusController controller11;
 
   @override
   State<AcademicsCbtTestModalOneBottomsheet> createState() =>
@@ -141,14 +147,19 @@ class _AcademicsCbtTestModalOneBottomsheetState
               Navigator.pop(context);
               setState(() {
                 controller1.cbtType.value = selectedType.first;
+                widget.controller11.cbtType.value = selectedType.first;
               });
-              print(controller1.cbtType.value);
-              if (controller1.cbtType.value == 'Test Result ') {
+              print(widget.controller11.cbtType.value);
+              if (widget.controller11.cbtType.value == 'Test Result ') {
                 print(
                   'object============================================================',
                 );
+
                 controller1.getCbtResult();
                 controls.getCbtResult();
+                // widget.controllerxx.getCbtResult();
+                controller1.getCbtResult();
+                widget.controller11.getCbtResult();
                 return;
               } else {
                 print(
@@ -156,6 +167,8 @@ class _AcademicsCbtTestModalOneBottomsheetState
                 );
                 controller1.getCbt();
                 controls.getCbt();
+                widget.controllerxx.getCbt();
+                widget.controller11.getCbt();
               }
             },
             height: 64.h,

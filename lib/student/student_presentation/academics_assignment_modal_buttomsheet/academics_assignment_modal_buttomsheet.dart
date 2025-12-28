@@ -3,6 +3,7 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_assignment_page/models/academics_assignment_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_cbt_test_page/controller/academics_lesson_cbt_test_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_cbt_test_page/models/academics_lesson_cbt_test_model.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
@@ -23,8 +24,11 @@ StudentAcademicsLessonCbtTestController controls = Get.put(
 );
 StudentDashboardExtendedViewController dashboardExtendedViewController =
     Get.find<StudentDashboardExtendedViewController>();
-StudentAcademicsLessonAllLessonsController lessonsController =
-    Get.find<StudentAcademicsLessonAllLessonsController>();
+StudentAcademicsLessonAllLessonsController lessonsController = Get.put(
+  StudentAcademicsLessonAllLessonsController(
+    StudentAcademicsLessonAllLessonsModel().obs,
+  ),
+);
 AcademicsAssignmentController controllers = Get.put(
   AcademicsAssignmentController(AcademicsAssignmentModel().obs),
 );

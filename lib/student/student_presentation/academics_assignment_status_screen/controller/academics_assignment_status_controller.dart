@@ -93,7 +93,7 @@ class StudentAcademicsAssignmentStatusController extends GetxController
   List<StudentLessonData> lessonList = [];
 
   Assignment? assignment;
-  List<AssignmentData>? assignmentData;
+  List<AssignmentData> assignmentData = <AssignmentData>[];
 
   Cbt? cbt;
   List<CbtData>? cbtData;
@@ -597,7 +597,7 @@ class StudentAcademicsAssignmentStatusController extends GetxController
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
         assignment = assignmentFromJson(response.body);
-        assignmentData = assignment!.data;
+        assignmentData = assignment!.data!;
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
 

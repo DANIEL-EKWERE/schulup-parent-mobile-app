@@ -1,4 +1,4 @@
-package com.schulupx.schulupparent
+package com.schulup.app
 
 import io.flutter.embedding.android.FlutterActivity
 

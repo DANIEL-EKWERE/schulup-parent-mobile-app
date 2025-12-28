@@ -7,6 +7,8 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_assignment_modal_two_bottomsheet/academics_assignment_modal_two_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_modal_two_bottomsheet/controller/academics_assignment_modal_two_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
 // import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/cbt_model.dart';
 // import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/lesson_model.dart';
 // import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/widgets/listline_item_widget_cbt.dart';
@@ -160,7 +162,7 @@ class AcademicsAssignmentPage extends StatelessWidget {
                       context: Get.context!,
                       builder: (context) {
                         return AcademicsAssignmentModalOneBottomsheet(
-                          AcademicsAssignmentModalOneController(),
+                          AcademicsAssignmentModalOneController(),StudentAcademicsLessonAllLessonsController(StudentAcademicsLessonAllLessonsModel().obs),
                         );
                       },
                     );

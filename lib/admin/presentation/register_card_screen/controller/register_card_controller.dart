@@ -222,8 +222,8 @@ class RegisterCardController extends GetxController {
                 .stopSession(); // stop cleanly before showing dialog
 
             // Show dialog after stopping NFC
-         //   Get.toNamed(AppRoutes.scannedCardScreen, arguments: decimal);
-            Get.to(()=> ScannedCardScreen(), arguments: decimal);
+            //   Get.toNamed(AppRoutes.scannedCardScreen, arguments: decimal);
+            Get.to(() => ScannedCardScreen(), arguments: decimal);
           } catch (e) {
             print('❌ Error processing NFC tag: $e');
             await NfcManager.instance.stopSession(

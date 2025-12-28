@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"schulup-app","appId":"1:108335505394:android:9f51edad0192b0e407156b","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"schulup-app","configurations":{"android":"1:108335505394:android:9f51edad0192b0e407156b","ios":"1:108335505394:ios:41fa5e0ed738edbc07156b"}}}}}}

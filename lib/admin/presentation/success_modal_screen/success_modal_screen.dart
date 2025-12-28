@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schulupparent/admin/presentation/home_screen/home_screen.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
@@ -22,9 +23,14 @@ class SuccessModalScreen extends GetWidget<SuccessModalController> {
               _buildConfirmationMessage(),
               Spacer(flex: 40),
               CustomElevatedButton(
+                buttonStyle: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Color(0xFFFF8D2A)),
+                ),
                 onPressed: () {
-                  Get.back();
-                  Get.back();
+                  // Get.back();
+                  // Get.back();
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 text: "lbl_scan_another2".tr,
                 leftIcon: Container(
@@ -48,7 +54,7 @@ class SuccessModalScreen extends GetWidget<SuccessModalController> {
                     width: 24.h,
                   ),
                   GestureDetector(
-                    onTap: () => Get.offAllNamed(AppRoutes.homeScreen),
+                    onTap: () => Get.offAll(() => HomeScreen()),
                     child: Text(
                       "lbl_back_to_home".tr,
                       style: CustomTextStyles.titleMediumPrimary,

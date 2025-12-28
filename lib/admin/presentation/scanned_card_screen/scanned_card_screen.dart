@@ -13,7 +13,9 @@ import 'controller/scanned_card_controller.dart'; // ignore_for_file: must_be_im
 
 RegisterCardController controllerx = Get.put(RegisterCardController());
 
-class ScannedCardScreen extends GetWidget<ScannedCardController> {
+ScannedCardController controller = Get.put(ScannedCardController());
+
+class ScannedCardScreen extends StatelessWidget {
   const ScannedCardScreen({Key? key}) : super(key: key);
 
   @override

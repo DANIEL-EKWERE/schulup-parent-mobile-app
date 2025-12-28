@@ -71,7 +71,7 @@ class AcademicsAssignmentStatusController extends GetxController
   List<LessonData> lessonList = [];
 
   Assignment? assignment;
-  List<AssignmentData>? assignmentData;
+  List<AssignmentData> assignmentData = <AssignmentData>[];
 
   Cbt? cbt;
   List<CbtData>? cbtData;
@@ -392,6 +392,7 @@ class AcademicsAssignmentStatusController extends GetxController
   //cbtDetails()
   Future<void> getCbtResult() async {
     isLoading.value = true;
+    myLog.log('calling results======================');
     // OverlayLoadingProgress.start(
     //   context: Get.context!,
     //   circularProgressColor: Color(0XFFFF8C42),
@@ -562,7 +563,7 @@ class AcademicsAssignmentStatusController extends GetxController
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
         assignment = assignmentFromJson(response.body);
-        assignmentData = assignment!.data;
+        assignmentData = assignment!.data!;
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
 

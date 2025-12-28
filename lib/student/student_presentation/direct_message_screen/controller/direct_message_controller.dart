@@ -1,318 +1,325 @@
-// import 'package:get/get.dart';
+import 'package:get/get.dart';
+import 'package:schulupparent/student/core/utils/storage.dart';
+import 'package:schulupparent/student/student_presentation/direct_message_screen/controller/signal_r_chat_service.dart';
 // import 'package:schulupparent/adminparent/core/utils/storage.dart';
 // import 'package:schulupparent/adminparent/presentation/direct_message_screen/controller/signal_r_chat_service.dart';
-// import 'dart:async';
+//import 'package:schulupparent/student/student_presentation/signalr_chat/controller/signalr_service.dart';
+import 'dart:async';
 
-// import 'package:signalr_netcore/hub_connection.dart';
+import 'package:schulupparent/student/student_presentation/signalr_chat/message_bubble.dart' hide ChatMessage;
+import 'package:signalr_netcore3/signalr_client.dart';
 
-// class ChatController extends GetxController {
-//   late SignalRChatService _signalRService;
+//import 'package:signalr_netcore/hub_connection.dart';
 
-//   // Observable lists
-//   var conversations = <Conversation>[].obs;
-//   var messages = <ChatMessage>[].obs;
-//   var isConnected = false.obs;
-//   var isLoadingMessages = false.obs;
-//   var isSendingMessage = false.obs;
+class ChatController extends GetxController {
+  late StudentSignalRChatService _signalRService;
 
-//   // Current conversation
-//   var currentConversationId = ''.obs;
-//   var isTyping = false.obs;
+  // Observable lists
+  var conversations = <Conversation>[].obs;
+  var messages = <ChatMessage>[].obs;
+  var isConnected = false.obs;
+  var isLoadingMessages = false.obs;
+  var isSendingMessage = false.obs;
 
-//   // Typing timer
-//   Timer? _typingTimer;
+  // Current conversation
+  var currentConversationId = ''.obs;
+  var isTyping = false.obs;
 
-//   // Stream subscriptions
-//   StreamSubscription? _messageSubscription;
-//   StreamSubscription? _connectionSubscription;
-//   StreamSubscription? _readSubscription;
+  // Typing timer
+  Timer? _typingTimer;
 
-//   @override
-//   void onInit() {
-//     super.onInit();
-//     _initializeSignalR();
-//   }
+  // Stream subscriptions
+  StreamSubscription? _messageSubscription;
+  StreamSubscription? _connectionSubscription;
+  StreamSubscription? _readSubscription;
 
-//   /// Initialize SignalR service
-//   void _initializeSignalR() async {
-//     // Get token from storage (adjust based on your auth implementation)
-//     // final token = Get.find<AuthController>().token.value; // or from SharedPreferences
-//     final token = await dataBase.getToken(); // or from SharedPreferences
-//     final baseUrl =
-//         'https://api.schulup.com/hubs/conversation'; // Your API base URL
+  @override
+  void onInit() {
+    super.onInit();
+    _initializeSignalR();
+  }
 
-//     _signalRService = SignalRChatService(baseUrl: baseUrl, token: token);
+  /// Initialize SignalR service
+  void _initializeSignalR() async {
+    // Get token from storage (adjust based on your auth implementation)
+    // final token = Get.find<AuthController>().token.value; // or from SharedPreferences
+    final token = await studentDataBase.getToken(); // or from SharedPreferences
+    final baseUrl =
+        'https://api.schulup.com/hubs/conversation'; // Your API base URL
 
-//     _connectToSignalR();
-//   }
+    _signalRService = StudentSignalRChatService(baseUrl: baseUrl, token: token);
 
-//   /// Connect to SignalR hub
-//   Future<void> _connectToSignalR() async {
-//     try {
-//       await _signalRService.connect();
-//       isConnected.value = true;
+    _connectToSignalR();
+  }
 
-//       // Setup event listeners
-//       _setupEventListeners();
+  /// Connect to SignalR hub
+  Future<void> _connectToSignalR() async {
+    try {
+      await _signalRService.connect();
+      isConnected.value = true;
 
-//       Get.snackbar(
-//         'Connected',
-//         'Real-time chat enabled',
-//         snackPosition: SnackPosition.TOP,
-//         duration: Duration(seconds: 2),
-//       );
-//     } catch (e) {
-//       isConnected.value = false;
-//       Get.snackbar(
-//         'Connection Error',
-//         'Failed to connect to chat: $e',
-//         snackPosition: SnackPosition.TOP,
-//       );
-//     }
-//   }
+      // Setup event listeners
+      _setupEventListeners();
 
-//   /// Setup SignalR event listeners
-//   void _setupEventListeners() {
-//     // Listen for new messages
-//     _messageSubscription = _signalRService.onNewMessage.listen((message) {
-//       _handleNewMessage(message);
-//     });
+      Get.snackbar(
+        'Connected',
+        'Real-time chat enabled',
+        snackPosition: SnackPosition.TOP,
+        duration: Duration(seconds: 2),
+      );
+    } catch (e) {
+      isConnected.value = false;
+      Get.snackbar(
+        'Connection Error',
+        'Failed to connect to chat: $e',
+        snackPosition: SnackPosition.TOP,
+      );
+    }
+  }
 
-//     // Listen for connection state changes
-//     _connectionSubscription = _signalRService.onConnectionStateChanged.listen((
-//       state,
-//     ) {
-//       isConnected.value = (state == HubConnectionState.Connected);
-//     });
+  /// Setup SignalR event listeners
+  void _setupEventListeners() {
+    // Listen for new messages
+    _messageSubscription = _signalRService.onNewMessage.listen((message) {
+      _handleNewMessage(message);
+    });
 
-//     // Listen for message read events
-//     _readSubscription = _signalRService.onMessageRead.listen((event) {
-//       if (event.conversationId == currentConversationId.value) {
-//         _updateMessagesReadStatus();
-//       }
-//     });
-//   }
+    // Listen for connection state changes
+    _connectionSubscription = _signalRService.onConnectionStateChanged.listen((
+      state,
+    ) {
+      isConnected.value = (state == HubConnectionState.Connected);
+    });
 
-//   /// Handle incoming message
-//   void _handleNewMessage(ChatMessage message) {
-//     // If it's for the current conversation, add to messages list
-//     if (message.conversationId == currentConversationId.value) {
-//       messages.insert(0, message);
+    // Listen for message read events
+    _readSubscription = _signalRService.onMessageRead.listen((event) {
+      if (event.conversationId == currentConversationId.value) {
+        _updateMessagesReadStatus();
+      }
+    });
+  }
 
-//       // Mark as read if conversation is open
-//       _signalRService.markConversationAsRead(message.conversationId);
-//     }
+  /// Handle incoming message
+  void _handleNewMessage(ChatMessage message) {
+    // If it's for the current conversation, add to messages list
+    if (message.conversationId == currentConversationId.value) {
+      messages.insert(0, message);
 
-//     // Update conversation list
-//     _updateConversationWithNewMessage(message);
+      // Mark as read if conversation is open
+      _signalRService.markConversationAsRead(message.conversationId);
+    }
 
-//     // Show notification if not in current conversation
-//     if (message.conversationId != currentConversationId.value) {
-//       Get.snackbar(
-//         message.senderName,
-//         message.content,
-//         snackPosition: SnackPosition.TOP,
-//         duration: Duration(seconds: 3),
-//       );
-//     }
-//   }
+    // Update conversation list
+    _updateConversationWithNewMessage(message);
 
-//   /// Update messages read status
-//   void _updateMessagesReadStatus() {
-//     for (var i = 0; i < messages.length; i++) {
-//       messages[i] = ChatMessage(
-//         id: messages[i].id,
-//         conversationId: messages[i].conversationId,
-//         senderId: messages[i].senderId,
-//         senderName: messages[i].senderName,
-//         senderAvatar: messages[i].senderAvatar,
-//         content: messages[i].content,
-//         sentAt: messages[i].sentAt,
-//         isRead: true,
-//         attachments: messages[i].attachments,
-//       );
-//     }
-//     messages.refresh();
-//   }
+    // Show notification if not in current conversation
+    if (message.conversationId != currentConversationId.value) {
+      Get.snackbar(
+        message.senderName,
+        message.content,
+        snackPosition: SnackPosition.TOP,
+        duration: Duration(seconds: 3),
+      );
+    }
+  }
 
-//   /// Update conversation list with new message
-//   void _updateConversationWithNewMessage(ChatMessage message) {
-//     final index = conversations.indexWhere(
-//       (c) => c.id == message.conversationId,
-//     );
+  /// Update messages read status
+  void _updateMessagesReadStatus() {
+    for (var i = 0; i < messages.length; i++) {
+      messages[i] = ChatMessage(
+        id: messages[i].id,
+        senderType: messages[i].senderType,
+        conversationId: messages[i].conversationId,
+        senderId: messages[i].senderId,
+        senderName: messages[i].senderName,
+        senderAvatar: messages[i].senderAvatar,
+        content: messages[i].content,
+        sentAt: messages[i].sentAt,
+        isRead: true,
+        attachments: messages[i].attachments,
+      );
+    }
+    messages.refresh();
+  }
 
-//     if (index != -1) {
-//       final conv = conversations[index];
-//       conversations[index] = Conversation(
-//         id: conv.id,
-//         participantId: conv.participantId,
-//         participantName: conv.participantName,
-//         participantAvatar: conv.participantAvatar,
-//         lastMessage: message.content,
-//         lastMessageTime: message.sentAt,
-//         unreadCount:
-//             message.conversationId == currentConversationId.value
-//                 ? 0
-//                 : conv.unreadCount + 1,
-//         isArchived: conv.isArchived,
-//       );
-//       conversations.refresh();
-//     }
-//   }
+  /// Update conversation list with new message
+  void _updateConversationWithNewMessage(ChatMessage message) {
+    final index = conversations.indexWhere(
+      (c) => c.id == message.conversationId,
+    );
 
-//   /// Open conversation
-//   Future<void> openConversation(String conversationId) async {
-//     try {
-//       currentConversationId.value = conversationId;
+    if (index != -1) {
+      final conv = conversations[index];
+      conversations[index] = Conversation(
+        id: conv.id,
+        participantId: conv.participantId,
+        participantName: conv.participantName,
+        participantAvatar: conv.participantAvatar,
+        lastMessage: message.content,
+        lastMessageTime: message.sentAt,
+        unreadCount:
+            message.conversationId == currentConversationId.value
+                ? 0
+                : conv.unreadCount + 1,
+        isArchived: conv.isArchived,
+      );
+      conversations.refresh();
+    }
+  }
 
-//       // Join SignalR conversation room
-//       await _signalRService.joinConversation(conversationId);
+  /// Open conversation
+  Future<void> openConversation(String conversationId) async {
+    try {
+      currentConversationId.value = conversationId;
 
-//       // Load messages
-//       await loadMessages(conversationId);
+      // Join SignalR conversation room
+      await _signalRService.joinConversation(conversationId);
 
-//       // Mark as read
-//       await _signalRService.markConversationAsRead(conversationId);
-//     } catch (e) {
-//       Get.snackbar('Error', 'Failed to open conversation: $e');
-//     }
-//   }
+      // Load messages
+      await loadMessages(conversationId);
 
-//   /// Close conversation
-//   Future<void> closeConversation() async {
-//     if (currentConversationId.value.isNotEmpty) {
-//       await _signalRService.leaveConversation(currentConversationId.value);
-//       currentConversationId.value = '';
-//       messages.clear();
-//     }
-//   }
+      // Mark as read
+      await _signalRService.markConversationAsRead(conversationId);
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to open conversation: $e');
+    }
+  }
 
-//   /// Load messages
-//   Future<void> loadMessages(
-//     String conversationId, {
-//     bool loadMore = false,
-//   }) async {
-//     if (isLoadingMessages.value) return;
+  /// Close conversation
+  Future<void> closeConversation() async {
+    if (currentConversationId.value.isNotEmpty) {
+      await _signalRService.leaveConversation(currentConversationId.value);
+      currentConversationId.value = '';
+      messages.clear();
+    }
+  }
 
-//     try {
-//       isLoadingMessages.value = true;
+  /// Load messages
+  Future<void> loadMessages(
+    String conversationId, {
+    bool loadMore = false,
+  }) async {
+    if (isLoadingMessages.value) return;
 
-//       final loadedMessages = await _signalRService.getMessages(
-//         conversationId: conversationId,
-//         page: loadMore ? (messages.length ~/ 50) + 1 : 1,
-//         pageSize: 50,
-//       );
+    try {
+      isLoadingMessages.value = true;
 
-//       if (loadMore) {
-//         messages.addAll(loadedMessages);
-//       } else {
-//         messages.value = loadedMessages;
-//       }
-//     } catch (e) {
-//       Get.snackbar('Error', 'Failed to load messages: $e');
-//     } finally {
-//       isLoadingMessages.value = false;
-//     }
-//   }
+      final loadedMessages = await _signalRService.getMessages(
+        conversationId: conversationId,
+        page: loadMore ? (messages.length ~/ 50) + 1 : 1,
+        pageSize: 50,
+      );
 
-//   /// Send message
-//   Future<void> sendMessage(
-//     String content, {
-//     List<String>? attachmentIds,
-//   }) async {
-//     if (content.trim().isEmpty && (attachmentIds?.isEmpty ?? true)) return;
-//     if (currentConversationId.value.isEmpty) return;
+      if (loadMore) {
+        messages.addAll(loadedMessages);
+      } else {
+        messages.value = loadedMessages;
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to load messages: $e');
+    } finally {
+      isLoadingMessages.value = false;
+    }
+  }
 
-//     try {
-//       isSendingMessage.value = true;
+  /// Send message
+  Future<void> sendMessage(
+    String content, {
+    List<String>? attachmentIds,
+  }) async {
+    if (content.trim().isEmpty && (attachmentIds?.isEmpty ?? true)) return;
+    if (currentConversationId.value.isEmpty) return;
 
-//       final message = await _signalRService.sendMessage(
-//         conversationId: currentConversationId.value,
-//         content: content,
-//         attachmentIds: attachmentIds,
-//       );
+    try {
+      isSendingMessage.value = true;
 
-//       // Message will be added via SignalR event
-//       // But add optimistically for better UX
-//       messages.insert(0, message);
-//     } catch (e) {
-//       Get.snackbar('Error', 'Failed to send message: $e');
-//     } finally {
-//       isSendingMessage.value = false;
-//     }
-//   }
+      final message = await _signalRService.sendMessage(
+        conversationId: currentConversationId.value,
+        content: content,
+        attachmentIds: attachmentIds,
+      );
 
-//   /// Handle typing
-//   void handleTyping() {
-//     if (currentConversationId.value.isEmpty) return;
+      // Message will be added via SignalR event
+      // But add optimistically for better UX
+      messages.insert(0, message);
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to send message: $e');
+    } finally {
+      isSendingMessage.value = false;
+    }
+  }
 
-//     // Cancel previous timer
-//     _typingTimer?.cancel();
+  /// Handle typing
+  void handleTyping() {
+    if (currentConversationId.value.isEmpty) return;
 
-//     // Send typing indicator
-//     if (!isTyping.value) {
-//       isTyping.value = true;
-//       _signalRService.sendTypingIndicator(currentConversationId.value);
-//     }
+    // Cancel previous timer
+    _typingTimer?.cancel();
 
-//     // Reset typing after 3 seconds
-//     _typingTimer = Timer(Duration(seconds: 3), () {
-//       isTyping.value = false;
-//     });
-//   }
+    // Send typing indicator
+    if (!isTyping.value) {
+      isTyping.value = true;
+      _signalRService.sendTypingIndicator(currentConversationId.value);
+    }
 
-//   /// Reconnect to SignalR
-//   Future<void> reconnect() async {
-//     await _connectToSignalR();
-//   }
+    // Reset typing after 3 seconds
+    _typingTimer = Timer(Duration(seconds: 3), () {
+      isTyping.value = false;
+    });
+  }
 
-//   @override
-//   void onClose() {
-//     _typingTimer?.cancel();
-//     _messageSubscription?.cancel();
-//     _connectionSubscription?.cancel();
-//     _readSubscription?.cancel();
-//     _signalRService.dispose();
-//     super.onClose();
-//   }
-// }
+  /// Reconnect to SignalR
+  Future<void> reconnect() async {
+    await _connectToSignalR();
+  }
 
-// // ============ Conversation Model ============
+  @override
+  void onClose() {
+    _typingTimer?.cancel();
+    _messageSubscription?.cancel();
+    _connectionSubscription?.cancel();
+    _readSubscription?.cancel();
+    _signalRService.dispose();
+    super.onClose();
+  }
+}
 
-// class Conversation {
-//   final String id;
-//   final String participantId;
-//   final String participantName;
-//   final String? participantAvatar;
-//   final String? lastMessage;
-//   final DateTime? lastMessageTime;
-//   final int unreadCount;
-//   final bool isArchived;
+// ============ Conversation Model ============
 
-//   Conversation({
-//     required this.id,
-//     required this.participantId,
-//     required this.participantName,
-//     this.participantAvatar,
-//     this.lastMessage,
-//     this.lastMessageTime,
-//     required this.unreadCount,
-//     required this.isArchived,
-//   });
+class Conversation {
+  final String id;
+  final String participantId;
+  final String participantName;
+  final String? participantAvatar;
+  final String? lastMessage;
+  final DateTime? lastMessageTime;
+  final int unreadCount;
+  final bool isArchived;
 
-//   factory Conversation.fromJson(Map<String, dynamic> json) {
-//     return Conversation(
-//       id: json['id'] ?? '',
-//       participantId: json['participantId'] ?? '',
-//       participantName: json['participantName'] ?? 'Unknown',
-//       participantAvatar: json['participantAvatar'],
-//       lastMessage: json['lastMessage'],
-//       lastMessageTime:
-//           json['lastMessageTime'] != null
-//               ? DateTime.parse(json['lastMessageTime'])
-//               : null,
-//       unreadCount: json['unreadCount'] ?? 0,
-//       isArchived: json['isArchived'] ?? false,
-//     );
-//   }
-// }
+  Conversation({
+    required this.id,
+    required this.participantId,
+    required this.participantName,
+    this.participantAvatar,
+    this.lastMessage,
+    this.lastMessageTime,
+    required this.unreadCount,
+    required this.isArchived,
+  });
+
+  factory Conversation.fromJson(Map<String, dynamic> json) {
+    return Conversation(
+      id: json['id'] ?? '',
+      participantId: json['participantId'] ?? '',
+      participantName: json['participantName'] ?? 'Unknown',
+      participantAvatar: json['participantAvatar'],
+      lastMessage: json['lastMessage'],
+      lastMessageTime:
+          json['lastMessageTime'] != null
+              ? DateTime.parse(json['lastMessageTime'])
+              : null,
+      unreadCount: json['unreadCount'] ?? 0,
+      isArchived: json['isArchived'] ?? false,
+    );
+  }
+}

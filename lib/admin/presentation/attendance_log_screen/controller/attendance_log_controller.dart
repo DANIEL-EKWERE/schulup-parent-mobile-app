@@ -386,7 +386,7 @@ class AttendanceLogController extends GetxController {
       zipcode: log.cardUID.obs,
       twentythree: formattedDate.obs,
       time: formattedTime.obs,
-      pickup: log.eventTypeText.obs,
+      pickup: log.eventType.obs,
       id: log.attendanceLogID.toString().obs,
     );
   }

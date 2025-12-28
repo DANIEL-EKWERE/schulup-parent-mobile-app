@@ -355,9 +355,8 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                           placeholder: CircleAvatar(
                             backgroundColor: Color(0xFFFF8D2A).withOpacity(0.2),
                             child: Text(
-                              controller.selectedStudent1.firstName!
-                                      .toUpperCase() ??
-                                  '?',
+                              controller.selectedStudent1.firstName
+                                  .toUpperCase(),
                               style: TextStyle(
                                 color: Color(0xFFFF8D2A),
                                 fontWeight: FontWeight.bold,
@@ -368,9 +367,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                       ),
                     ),
                     AppbarSubtitleFive(
-                      text:
-                          controller.selectedStudent1.firstName ??
-                          "lbl_ogechi".tr,
+                      text: controller.selectedStudent1.firstName,
 
                       margin: EdgeInsets.only(left: 8.h, right: 9.h),
                     ),

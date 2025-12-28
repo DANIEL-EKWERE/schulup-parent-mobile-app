@@ -207,6 +207,8 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_one_modal_bottomsheet/academics_cbt_test_modal_one_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_cbt_test_test_result_screen/academics_cbt_test_test_result_screen.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_lesson_details_screen/academics_lesson_lesson_details_screen.dart';
 import 'package:schulupparent/student/student_presentation/academics_schular_ai_ongoing_screen/academics_schular_ai_ongoing_screen.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
@@ -240,9 +242,11 @@ class _AcademicsAssignmentStatusInitialPageState
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller.getAssignment();
-    controller.getCbt();
-    controller.allLessons();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.getAssignment();
+      controller.getCbt();
+      controller.allLessons();
+    });
   }
 
   @override
@@ -485,7 +489,7 @@ class _AcademicsAssignmentStatusInitialPageState
                                 context: context,
                                 builder: (context) {
                                   return AcademicsAssignmentModalOneBottomsheet(
-                                    AcademicsAssignmentModalOneController(),
+                                    AcademicsAssignmentModalOneController(),StudentAcademicsLessonAllLessonsController(StudentAcademicsLessonAllLessonsModel().obs)
                                   );
                                 },
                               );
@@ -609,6 +613,7 @@ class _AcademicsAssignmentStatusInitialPageState
                                   //cbt tab
                                   return AcademicsCbtTestModalOneBottomsheet(
                                     AcademicsCbtTestModalOneController(),
+                                    controller,
                                   );
                                 },
                               );
@@ -693,7 +698,7 @@ class _AcademicsAssignmentStatusInitialPageState
                                 context: context,
                                 builder: (context) {
                                   return AcademicsAssignmentModalOneBottomsheet(
-                                    AcademicsAssignmentModalOneController(),
+                                    AcademicsAssignmentModalOneController(),StudentAcademicsLessonAllLessonsController(StudentAcademicsLessonAllLessonsModel().obs),
                                   );
                                 },
                               );
@@ -759,7 +764,7 @@ class _AcademicsAssignmentStatusInitialPageState
                         },
                       ),
                     )
-                    : controller.assignmentData!.isEmpty &&
+                    : controller.assignmentData.isEmpty &&
                         !controller.isLoading.value
                     ? Center(
                       child: Column(
@@ -777,10 +782,10 @@ class _AcademicsAssignmentStatusInitialPageState
                       ),
                     )
                     : ListView.builder(
-                      itemCount: controller.assignmentData!.length,
+                      itemCount: controller.assignmentData.length,
                       itemBuilder: (context, index) {
                         AssignmentData listlineItemModelObj =
-                            controller.assignmentData![index];
+                            controller.assignmentData[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: GestureDetector(
@@ -862,9 +867,12 @@ class _AcademicsAssignmentStatusInitialPageState
                               controller.cbtType.value == 'Test Result '
                                   ? Get.to(
                                     () =>
-                                        StudentAcademicsCbtTestTestResultScreen(), arguments: {
-                                          'id': listlineItemModelObj.studentAttemptID.toString(),
-                                        }
+                                        StudentAcademicsCbtTestTestResultScreen(),
+                                    arguments: {
+                                      'id':
+                                          listlineItemModelObj.studentAttemptID
+                                              .toString(),
+                                    },
                                   )
                                   : controller.getCbtDetails(
                                     listlineItemModelObj.quizScheduleID

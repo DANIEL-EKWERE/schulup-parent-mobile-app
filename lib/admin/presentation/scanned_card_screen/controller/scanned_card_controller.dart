@@ -7,6 +7,7 @@ import 'package:schulupparent/admin/core/utils/storage.dart';
 import 'package:schulupparent/admin/data/apiClient/api_client.dart';
 
 import 'package:flutter/material.dart';
+import 'package:schulupparent/admin/presentation/success_modal_screen/success_modal_screen.dart';
 import '../../../core/app_export.dart';
 import '../models/scanned_card_model.dart';
 
@@ -22,7 +23,7 @@ class ScannedCardController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    studentoneoneController.dispose();
+    // studentoneoneController.dispose();
   }
 
   Future<void> registerCard(String cardId) async {
@@ -70,7 +71,8 @@ class ScannedCardController extends GetxController {
         //   backgroundColor: Colors.green,
         //   colorText: Colors.white,
         // );
-        Get.toNamed(AppRoutes.successModalScreen);
+        //Get.toNamed(AppRoutes.successModalScreen);
+        Get.to(() => SuccessModalScreen(), arguments: responseBody['data']);
       } else if (response.statusCode == 404) {
         var responseBody = jsonDecode(response.body);
         print(responseBody);

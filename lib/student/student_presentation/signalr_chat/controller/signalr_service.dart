@@ -74,7 +74,7 @@ class Conversation {
 }
 
 /// SignalR Chat Service
-class SignalRChatService extends GetxService {
+class StudentSignalRChatService1 extends GetxService {
   HubConnection? _hubConnection;
 
   // Observable state

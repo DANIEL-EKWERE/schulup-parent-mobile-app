@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:schulupparent/firebase_options.dart';
 //import 'package:schulupparent/parent/localization/app_localization.dart';
 import 'package:schulupparent/parent/parent_presentation/signalr_chat/controller/signalr_service.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -16,8 +18,12 @@ import 'dart:io' show Platform;
 // import 'parent/core/utils/size_utils.dart';
 // import 'parent/theme/theme_helper.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   // Initialize FFI for desktop platforms
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {

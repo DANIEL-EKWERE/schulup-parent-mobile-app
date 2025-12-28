@@ -89,14 +89,14 @@ class CbtData {
       timeLimit = json['timeLimit'],
       allowedAttempts = json['allowedAttempts'],
       attemptsMade = json['attemptsMade'],
-      startDate = json['startDate'],
+      startDate = json['startDate'] ?? DateTime.now().toIso8601String(),
       totalScore = json["totalScore"]?.toDouble() ?? 0.0,
       percentageScore = json['percentageScore']?.toDouble() ?? 0.0,
-      endDate = json['endDate'],
+      endDate = json['endDate'] ?? DateTime.now().toIso8601String(),
       showResult = json['showResult'],
       isTimed = json['isTimed'],
-      dateStarted = json['dateStarted'],
-      dateSubmitted = json["dateSubmitted"];
+      dateStarted = json['dateStarted'] ?? DateTime.now().toIso8601String(),
+      dateSubmitted = json["dateSubmitted"] ?? DateTime.now().toIso8601String();
 
   Map<String, dynamic> toJson() {
     return {

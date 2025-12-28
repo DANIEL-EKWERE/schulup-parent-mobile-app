@@ -6,12 +6,14 @@ import 'dart:convert';
 
 import 'package:schulupparent/student/student_presentation/signalr_chat/controller/signalr_service.dart';
 
-// Import your SignalRChatService here
+// Import your StudentSignalRChatService1 here
 // import 'signalr_chat_service.dart';
 
 /// Chat Controller
 class ChatController1 extends GetxController {
-  final SignalRChatService _chatService = Get.find<SignalRChatService>();
+  final StudentSignalRChatService1 _chatService = Get.put(
+    StudentSignalRChatService1(),
+  );
 
   final messageController = TextEditingController();
   final scrollController = ScrollController();
@@ -138,11 +140,25 @@ class ChatController1 extends GetxController {
         },
         body: json.encode({'messageText': messageText}),
       );
+      messages.value.add(
+        Message(
+          messageId: 0,
+          conversationId: conversationId,
+          senderUserId: 0,
+          senderType: 0,
+          senderName: '',
+          messageText: messageText,
+          sentAt: 'now',
+          attachments: [],
+        ),
+      );
       print(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('Message sent successfully');
         // Message will be received via SignalR
-        // loadMessages();
+        var responseData = jsonDecode(response.body);
+
+        loadMessages();
       } else {
         Get.snackbar(
           'Error',
@@ -152,6 +168,9 @@ class ChatController1 extends GetxController {
         // Restore the message text
         messageController.text = messageText;
         print(response.statusCode);
+        messages.value.removeWhere((element) {
+          return element.messageText == messageText;
+        });
       }
     } catch (e) {
       print('Error sending message: $e');

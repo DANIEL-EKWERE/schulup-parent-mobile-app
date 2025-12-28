@@ -241,11 +241,13 @@ class SigninController extends GetxController {
         var userType = responseData['data']['userType'] as int;
 
         // Save common data
+        var schoolCode = schoolCodeController.text;
 
         // Clear controllers
         usernameController.clear();
         passwordController.clear();
         schoolCodeController.clear();
+
 
         // Route based on user type
         if (userType == 4) {
@@ -304,7 +306,7 @@ class SigninController extends GetxController {
           await admin.adminDataBase.saveUserType(userType);
           await admin.adminDataBase.saveUserName(userName);
           await admin.adminDataBase.saveTransactionPin(passwordController.text);
-          await admin.adminDataBase.saveBrmCode(schoolCodeController.text);
+          await admin.adminDataBase.saveBrmCode(schoolCode);
           myLog.log('Routing to Admin dashboard');
           //Get.offAllNamed(admin.AppRoutes.homeScreen);
           Get.offAll(() => HomeScreen());

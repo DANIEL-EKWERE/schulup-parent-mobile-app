@@ -34,6 +34,7 @@ class StudentAcademicsAssignmentAnswerScreen extends StatelessWidget {
     print('building');
     controller.studentThread(model.data!.assignmentID.toString());
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: appTheme.whiteA700,
       appBar: _buildAppbar(),
       body: SafeArea(

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "108335505394",
+    "project_id": "schulup-app",
+    "storage_bucket": "schulup-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108335505394:android:9f51edad0192b0e407156b",
+        "android_client_info": {
+          "package_name": "com.schulup.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtyZ23Nhr-avhlEjloBcdRpXHxdqAn674"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

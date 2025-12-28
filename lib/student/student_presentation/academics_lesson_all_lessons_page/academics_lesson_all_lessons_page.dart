@@ -176,6 +176,7 @@ class _AcademicsLessonAllLessonsPageState
                       builder: (context) {
                         return AcademicsAssignmentModalOneBottomsheet(
                           AcademicsAssignmentModalOneController(),
+                          controller,
                         );
                       },
                     );
@@ -241,9 +242,9 @@ class _AcademicsLessonAllLessonsPageState
                         Text(
                           textAlign: TextAlign.center,
                           '🔍 No results found Try adjusting your search or filters',
-                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
-                          fontSize: 16.h,
-                        ),
+                          style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                            fontSize: 16.h,
+                          ),
                         ),
                       ],
                     ),

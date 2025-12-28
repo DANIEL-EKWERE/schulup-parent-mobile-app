@@ -159,6 +159,8 @@ class AcademicsCbtTestPage extends StatelessWidget {
                         //cbt tab
                         return AcademicsCbtTestModalOneBottomsheet(
                           AcademicsCbtTestModalOneController(),
+                          controllerx,
+                          controller,
                         );
                       },
                     );

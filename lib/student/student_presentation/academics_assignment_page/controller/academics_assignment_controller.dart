@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/student/data/apiClient/api_client.dart';
 import 'package:schulupparent/student/data/model/selectionPopupModel/selection_popup_model.dart';
+import 'package:schulupparent/student/student_presentation/academics_assignment_answer_screen/academics_assignment_answer_screen.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/assignment_details.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/models/assignment_model.dart';
@@ -358,18 +360,32 @@ class AcademicsAssignmentController extends GetxController {
     try {
       final response = await _apiService.getStudentAssignmentById(id);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Get.snackbar(
-          'Success',
-          'Assignemt Retrived',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
+        // Get.snackbar(
+        //   'Success',
+        //   'Assignemt Retrived',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        // );
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: "Assignemt Retrived successfully",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
         OverlayLoadingProgress.stop();
         // isDetailLoading.value = false;
         assignmentDetails = assignmentDetailsFromJson(response.body);
-        Get.toNamed(
-          AppRoutes.studentAcademicsAssignmentAnswerScreen,
+        // Get.toNamed(
+        //   AppRoutes.studentAcademicsAssignmentAnswerScreen,
+        //   arguments: {'model': assignmentDetails},
+        // );
+        Get.to(
+          () => StudentAcademicsAssignmentAnswerScreen(),
           arguments: {'model': assignmentDetails},
         );
         myLog.log(assignmentDetails!.data!.subjectName!);

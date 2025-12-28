@@ -284,9 +284,14 @@ import 'widgets/actiongrid_item_widget.dart';
 
 HomeController controller = Get.put(HomeController());
 
-class HomeScreen extends GetWidget<HomeController> {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(

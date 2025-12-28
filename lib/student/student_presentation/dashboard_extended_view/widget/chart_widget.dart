@@ -1,6 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/theme/theme_helper.dart';
+
+StudentDashboardExtendedViewController controller = Get.put(
+  StudentDashboardExtendedViewController(),
+);
 
 class AcademicProgressChart extends StatelessWidget {
   @override
@@ -33,9 +39,9 @@ class AcademicProgressChart extends StatelessWidget {
                   switch (value.toInt()) {
                     case 0:
                       return Padding(
-                        padding: const EdgeInsets.only(left: 68, bottom: 0),
+                        padding: const EdgeInsets.only(left: 200, bottom: 0),
                         child: Text(
-                          "Academic Progress",
+                          "Academic Progress: ${controller.dashboardStats.studentName}",
                           style: theme.textTheme.bodyMedium!.copyWith(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -44,7 +50,7 @@ class AcademicProgressChart extends StatelessWidget {
                       );
                     case 3:
                       return Padding(
-                        padding: const EdgeInsets.only(right: 98, top: 5),
+                        padding: const EdgeInsets.only(right: 58, top: 1),
                         child: Text(
                           "Details >",
                           style: theme.textTheme.bodyMedium!.copyWith(
@@ -115,12 +121,15 @@ class AcademicProgressChart extends StatelessWidget {
                     ),
               ),
               belowBarData: BarAreaData(show: false),
-              spots: const [
-                FlSpot(0, 70),
-                FlSpot(1, 35),
-                FlSpot(2, 60),
-                FlSpot(3, 95),
-              ],
+              spots:
+                  controller.dashboardDataList.asMap().entries.map((entry) {
+                    int idx = entry.key;
+                    var data = entry.value;
+                    return FlSpot(
+                      idx.toDouble(),
+                      data.studentAverage?.toDouble() ?? 0,
+                    );
+                  }).toList(),
             ),
           ],
         ),

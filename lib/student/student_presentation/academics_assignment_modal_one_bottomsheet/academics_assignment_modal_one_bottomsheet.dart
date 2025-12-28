@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_page/controller/academics_assignment_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_assignment_page/models/academics_assignment_model.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/controller/academics_assignment_status_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
@@ -13,8 +14,9 @@ import 'controller/academics_assignment_modal_one_controller.dart';
 // ignore_for_file: must_be_immutable
 StudentAcademicsAssignmentStatusController controller1 =
     Get.find<StudentAcademicsAssignmentStatusController>();
-AcademicsAssignmentController controllers =
-    Get.find<AcademicsAssignmentController>();
+AcademicsAssignmentController controllers = Get.put(
+  AcademicsAssignmentController(AcademicsAssignmentModel().obs),
+);
 StudentAcademicsLessonAllLessonsController lessonsController = Get.put(
   StudentAcademicsLessonAllLessonsController(
     StudentAcademicsLessonAllLessonsModel().obs,
@@ -22,10 +24,15 @@ StudentAcademicsLessonAllLessonsController lessonsController = Get.put(
 );
 
 class AcademicsAssignmentModalOneBottomsheet extends StatefulWidget {
-  AcademicsAssignmentModalOneBottomsheet(this.controller, {Key? key})
-    : super(key: key);
+  AcademicsAssignmentModalOneBottomsheet(
+    this.controller,
+    this.controllerx, {
+    Key? key,
+  }) : super(key: key);
 
   AcademicsAssignmentModalOneController controller;
+  //StudentAcademicsAssignmentStatusController
+  StudentAcademicsLessonAllLessonsController controllerx;
 
   @override
   State<AcademicsAssignmentModalOneBottomsheet> createState() =>
@@ -180,8 +187,10 @@ class _AcademicsAssignmentModalOneBottomsheetState
                 controller1.allLessons();
                 controller1.getAssignment();
                 controllers.getAssignment();
+
+                lessonsController.allLessons();
+                widget.controllerx.allLessons();
               });
-              lessonsController.allLessons();
             },
             height: 64.h,
             text: "lbl_confirm".tr,

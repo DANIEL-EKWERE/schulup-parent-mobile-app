@@ -13,7 +13,7 @@ class ActiongridItemWidget extends StatelessWidget {
 
   ActiongridItemModel actiongridItemModelObj;
 
-  var controller = Get.find<HomeController>();
+  var controller = Get.put(HomeController());
 
   VoidCallback? onTapRowdropoffone;
 
@@ -25,13 +25,15 @@ class ActiongridItemWidget extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),
-        decoration: actiongridItemModelObj.id!.value == '2' || actiongridItemModelObj.id!.value == '4' ? AppDecoration.fillPrimaryx.
-        copyWith(
-          
-          borderRadius: BorderRadiusStyle.roundedBorder6,
-        ) : AppDecoration.outlinePrimary.copyWith(
-          borderRadius: BorderRadiusStyle.roundedBorder6,
-        ) ,
+        decoration:
+            actiongridItemModelObj.id!.value == '2' ||
+                    actiongridItemModelObj.id!.value == '4'
+                ? AppDecoration.fillPrimaryx.copyWith(
+                  borderRadius: BorderRadiusStyle.roundedBorder6,
+                )
+                : AppDecoration.outlinePrimary.copyWith(
+                  borderRadius: BorderRadiusStyle.roundedBorder6,
+                ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -46,7 +48,11 @@ class ActiongridItemWidget extends StatelessWidget {
             Obx(
               () => Text(
                 actiongridItemModelObj.dropoff!.value,
-                style: actiongridItemModelObj.id!.value == '2' || actiongridItemModelObj.id!.value == '4' ? CustomTextStyles.titleSmallwhiteA700 : CustomTextStyles.titleSmallBlack900,
+                style:
+                    actiongridItemModelObj.id!.value == '2' ||
+                            actiongridItemModelObj.id!.value == '4'
+                        ? CustomTextStyles.titleSmallwhiteA700
+                        : CustomTextStyles.titleSmallBlack900,
               ),
             ),
           ],

@@ -6,6 +6,6 @@ class DirectMessageBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => ChatController1());
-    Get.lazyPut(() => SignalRChatService());
+    Get.lazyPut(() => StudentSignalRChatService1());
   }
 }

@@ -10,7 +10,7 @@ class AttendanceloglistItemWidget extends StatelessWidget {
 
   AttendanceloglistItemModel attendanceloglistItemModelObj;
 
-  var controller = Get.find<AttendanceLogController>();
+  var controller = Get.put(AttendanceLogController());
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +61,11 @@ class AttendanceloglistItemWidget extends StatelessWidget {
             () => Text(
               attendanceloglistItemModelObj.pickup!.value,
               style:
-                  attendanceloglistItemModelObj.pickup!.value == 'Drop Off'
+                  attendanceloglistItemModelObj.pickup!.value == 'DROPOFF'
                       ? CustomTextStyles.bodySmallBlue900
-                      : attendanceloglistItemModelObj.pickup!.value == 'Pick Up'
+                      : attendanceloglistItemModelObj.pickup!.value == 'PICKUP'
                       ? CustomTextStyles.bodySmallYellow900
-                      : attendanceloglistItemModelObj.pickup!.value ==
-                          'Check In'
+                      : attendanceloglistItemModelObj.pickup!.value == "CHECKIN"
                       ? CustomTextStyles.bodySmallGreen900
                       : CustomTextStyles.bodySmallRed900,
             ),

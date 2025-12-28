@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
@@ -7,7 +8,8 @@ import 'package:schulupparent/student/data/apiClient/api_client.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/student_presentation/direct_chat/models/models.dart';
 import 'package:schulupparent/student/student_presentation/direct_chat/models/ongoing_conversation_model.dart';
-import 'package:schulupparent/student/student_presentation/direct_message_screen/direct_message_screen.dart';
+import 'package:schulupparent/student/student_presentation/signalr_chat/signalr_chat_screen.dart';
+//import 'package:schulupparent/student/student_presentation/direct_message_screen/direct_message_screen.dart';
 
 class StudentDirectChatController extends GetxController {
   //students/47135/classteachers
@@ -173,6 +175,18 @@ class StudentDirectChatController extends GetxController {
       final response = await _apiService.startConversation(body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Get.to(() => ChatScreen());
+        var responseData = jsonDecode(response.body);
+        myLog.log(responseData['data']['conversationID'].toString());
+        Get.to(
+          () => ChatScreen(),
+          arguments: {
+            'conversationId': responseData['data']['conversationID'],
+            // 'userId':
+            //     conversation.,
+            'teacherName': 'Teacher',
+            'subject': subjectController.text,
+          },
+        );
         OverlayLoadingProgress.stop();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //isLoading.value = false;

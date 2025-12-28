@@ -5,6 +5,7 @@ import 'package:schulupparent/student/student_presentation/direct_chat/controlle
 import 'package:schulupparent/student/student_presentation/direct_chat/models/models.dart';
 import 'package:schulupparent/student/student_presentation/direct_chat/models/ongoing_conversation_model.dart';
 import 'package:schulupparent/student/student_presentation/direct_chat/widget/teacher_shimmer_widget.dart';
+import 'package:schulupparent/student/student_presentation/signalr_chat/signalr_chat_screen.dart';
 import 'package:schulupparent/student/widgets/custom_text_form_field.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
@@ -198,7 +199,32 @@ class StudentDirectChatScreen extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     Conversations conversation =
                                         controller.conversations![index];
-                                    return _buildTeacherCard1(conversation);
+                                    return GestureDetector(
+                                      onTap: () {
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder:
+                                        //         (context) => ChatScreen(
+                                        //           // conversation:
+                                        //           //     conversation,
+                                        //         ),
+                                        //   ),
+                                        // );
+                                        Get.to(
+                                          () => ChatScreen(),
+                                          arguments: {
+                                            'conversationId':
+                                                conversation.conversationID,
+                                            // 'userId':
+                                            //     conversation.,
+                                            'teacherName': 'Teacher',
+                                            'subject': conversation.subject,
+                                          },
+                                        );
+                                      },
+                                      child: _buildTeacherCard1(conversation),
+                                    );
                                   },
                                 );
                               }

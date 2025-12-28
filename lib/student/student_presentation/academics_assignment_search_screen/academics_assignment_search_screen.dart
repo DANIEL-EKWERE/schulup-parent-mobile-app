@@ -17,6 +17,8 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/widgets/listline_item_widget_lesson.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_three_bottomsheet/academics_assignment_three_bottomsheet.dart';
 import 'package:schulupparent/student/student_presentation/academics_assignment_three_bottomsheet/controller/academics_assignment_modal_three_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
+import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
 //import 'package:schulupparent/presentation/news_events_screen/widgets/listline_item_widget.dart';
 import 'package:schulupparent/student/student_presentation/signin_screen/shimmer_widget.dart';
 import '../../core/app_export.dart';
@@ -186,6 +188,9 @@ class StudentAcademicsAssignmentSearchScreen extends StatelessWidget {
 
                               return AcademicsAssignmentModalOneBottomsheet(
                                 AcademicsAssignmentModalOneController(),
+                                StudentAcademicsLessonAllLessonsController(
+                                  StudentAcademicsLessonAllLessonsModel().obs,
+                                ),
                               );
                             },
                           );

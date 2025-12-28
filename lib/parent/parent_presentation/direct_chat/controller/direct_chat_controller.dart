@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
@@ -9,6 +10,8 @@ import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view
 import 'package:schulupparent/parent/parent_presentation/direct_chat/models/models.dart';
 import 'package:schulupparent/parent/parent_presentation/direct_chat/models/ongoing_conversation_model.dart';
 import 'package:schulupparent/parent/parent_presentation/direct_message_screen/direct_message_screen.dart';
+
+import '../../../../student/student_presentation/signalr_chat/signalr_chat_screen.dart';
 
 class DirectChatController extends GetxController {
   //students/47135/classteachers
@@ -28,7 +31,7 @@ class DirectChatController extends GetxController {
   }
 
   ClassTeacher? classTeacher;
-  List<TeacherData>? teacherData;
+  List<TeacherData> teacherData = <TeacherData>[];
   Rx<bool> isLoading = false.obs;
 
   OngoingConversations? ongoingConversations;
@@ -53,7 +56,7 @@ class DirectChatController extends GetxController {
       final response = await _apiService.getTeachers(studentID!.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         classTeacher = classTeacherFromJson(response.body);
-        teacherData = classTeacher!.data;
+        teacherData = classTeacher!.data!;
         isLoading.value = false;
         // OverlayLoadingProgress.stop();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
@@ -182,6 +185,17 @@ class DirectChatController extends GetxController {
       final response = await _apiService.startConversation(body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Get.to(() => ChatScreen());
+        var responseData = jsonDecode(response.body);
+        Get.to(
+          () => ChatScreen(),
+          arguments: {
+            'conversationId': responseData['data']['conversationID'],
+            // 'userId':
+            //     conversation.,
+            'teacherName': 'Teacher',
+            'subject': subjectController.text,
+          },
+        );
         OverlayLoadingProgress.stop();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //isLoading.value = false;

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:schulupparent/admin/presentation/drop_off_scan_screen/models/card_model.dart';
 import 'package:schulupparent/admin/presentation/drop_off_scan_success_modal_dialog/controller/drop_off_scan_success_modal_controller.dart';
 import 'package:schulupparent/admin/presentation/drop_off_scan_success_modal_dialog/drop_off_scan_success_modal_dialog.dart';
+import 'package:schulupparent/admin/widgets/custom_elevated_button.dart';
 import '../../../core/app_export.dart';
 import '../models/drop_off_scan_model.dart';
 
@@ -1022,10 +1023,11 @@ class DropOffScanController extends GetxController {
       circularProgressColor: Color(0XFFFF8C42),
     );
     var schoolCode = await adminDataBase.getBrmCode();
+    myLog.log(schoolCode);
     final body = {
       "schoolCode": schoolCode,
       "cardUID": cardId,
-      "eventType": 3,
+      "eventType": 'CHECKIN',
       "eventDateTime": DateTime.now().toIso8601String(),
       "notes": "",
     };
@@ -1037,6 +1039,7 @@ class DropOffScanController extends GetxController {
           final response = await _apiService.attendance(body);
           if (response.statusCode == 200 || response.statusCode == 201) {
             myLog.log(response.body);
+            var responseBody = jsonDecode(response.body);
             Get.snackbar(
               'success',
               'Check-In successful',
@@ -1044,18 +1047,221 @@ class DropOffScanController extends GetxController {
               backgroundColor: Colors.green,
               colorText: Colors.white,
             );
+
+            showModalBottomSheet(
+              isScrollControlled: true,
+              showDragHandle: true,
+              context: Get.context!,
+              builder: (context) {
+                return Container(
+                  height: 700,
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        //assets/images/img_scanner_success.png
+                        Text(
+                          'Record Attendance',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+
+                          // TextStyle(
+                          //   fontSize: 18,
+
+                          //   // fontWeight: FontWeight.bold,
+                          // ),
+                        ),
+
+                        SizedBox(height: 40),
+                        Image.asset(
+                          'assets/images/img_scanner_success.png',
+                          width: 250,
+                          height: 280,
+                        ),
+                        SizedBox(height: 30),
+                        Text(
+                          '${responseBody['data']['displayName']}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          '${responseBody['data']['cardUID']}',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 20,
+                            //   fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          'Check In has been recorded',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: CustomElevatedButton(
+                            height: 70.h,
+                            buttonStyle: ButtonStyle(
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.h),
+                                ),
+                              ),
+                              backgroundColor: WidgetStateProperty.all(
+                                Color(0xFFFF8D2A),
+                              ),
+                            ),
+                            text: "Scan Another Card",
+                            margin: EdgeInsets.only(left: 12.h),
+                            // leftIcon: Container(
+                            //   margin: EdgeInsets.only(right: 16.h),
+                            //   child: CustomImageView(
+                            //     imagePath: ImageConstant.imgTelevision,
+                            //     height: 18.h,
+                            //     width: 18.h,
+                            //     fit: BoxFit.contain,
+                            //   ),
+                            // ),
+                            onPressed: () {
+                              Navigator.pop(Get.context!);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // Text(
+                    //   'Check-out successful',
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                  ),
+                );
+              },
+            );
           } else if (response.statusCode == 404) {
             OverlayLoadingProgress.stop();
             var responseBody = jsonDecode(response.body);
 
-            Get.snackbar(
-              responseBody['message'],
-              'Register this card before use',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.deepOrange,
-              colorText: Colors.white,
+            // Get.snackbar(
+            //   responseBody['message'],
+            //   'Register this card before use',
+            //   snackPosition: SnackPosition.BOTTOM,
+            //   backgroundColor: Colors.deepOrange,
+            //   colorText: Colors.white,
+            // );
+            //Navigator.pop(Get.context!);
+            showModalBottomSheet(
+              isScrollControlled: true,
+              showDragHandle: true,
+              context: Get.context!,
+              builder: (context) {
+                return Container(
+                  height: 700,
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        //assets/images/img_scanner_success.png
+                        Text(
+                          'Record Attendance',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+
+                          // TextStyle(
+                          //   fontSize: 18,
+
+                          //   // fontWeight: FontWeight.bold,
+                          // ),
+                        ),
+
+                        SizedBox(height: 40),
+                        Image.asset(
+                          'assets/images/img_scanner_register_card.png',
+                          width: 250,
+                          height: 280,
+                        ),
+                        SizedBox(height: 30),
+                        Text(
+                          'Card is not Linked',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        // SizedBox(height: 15),
+                        // Text(
+                        //   '${responsedBody['data']['cardUID']}',
+                        //   style: CustomTextStyles.bodyMedium15.copyWith(
+                        //     fontSize: 20,
+                        //     //   fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        SizedBox(height: 15),
+                        Text(
+                          'Please link this card to a student or staff to begin recording attendance.',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: CustomElevatedButton(
+                            height: 70.h,
+                            buttonStyle: ButtonStyle(
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.h),
+                                ),
+                              ),
+                              backgroundColor: WidgetStateProperty.all(
+                                Color(0xFFFF8D2A),
+                              ),
+                            ),
+                            text: "Try Again",
+                            margin: EdgeInsets.only(left: 12.h),
+                            // leftIcon: Container(
+                            //   margin: EdgeInsets.only(right: 16.h),
+                            //   child: CustomImageView(
+                            //     imagePath: ImageConstant.imgTelevision,
+                            //     height: 18.h,
+                            //     width: 18.h,
+                            //     fit: BoxFit.contain,
+                            //   ),
+                            // ),
+                            onPressed: () {
+                              Navigator.pop(Get.context!);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // Text(
+                    //   'Check-out successful',
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                  ),
+                );
+              },
             );
-            Navigator.pop(Get.context!);
           }
         } on SocketException {
           Get.snackbar(
@@ -1111,7 +1317,7 @@ class DropOffScanController extends GetxController {
     final body = {
       "schoolCode": schoolCode,
       "cardUID": cardId,
-      "eventType": 4,
+      "eventType": 'CHECKOUT',
       "eventDateTime": DateTime.now().toIso8601String(),
       "notes": "",
     };
@@ -1122,6 +1328,7 @@ class DropOffScanController extends GetxController {
           final response = await _apiService.attendance(body);
           if (response.statusCode == 200 || response.statusCode == 201) {
             myLog.log(response.body);
+            var responsedBody = jsonDecode(response.body);
             Get.snackbar(
               'success',
               'Check-out successful',
@@ -1129,16 +1336,219 @@ class DropOffScanController extends GetxController {
               backgroundColor: Colors.green,
               colorText: Colors.white,
             );
+
+            showModalBottomSheet(
+              isScrollControlled: true,
+              showDragHandle: true,
+              context: Get.context!,
+              builder: (context) {
+                return Container(
+                  height: 700,
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        //assets/images/img_scanner_success.png
+                        Text(
+                          'Record Attendance',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+
+                          // TextStyle(
+                          //   fontSize: 18,
+
+                          //   // fontWeight: FontWeight.bold,
+                          // ),
+                        ),
+
+                        SizedBox(height: 40),
+                        Image.asset(
+                          'assets/images/img_scanner_success.png',
+                          width: 250,
+                          height: 280,
+                        ),
+                        SizedBox(height: 30),
+                        Text(
+                          '${responsedBody['data']['displayName']}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          '${responsedBody['data']['cardUID']}',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 20,
+                            //   fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          'check out has been recorded',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: CustomElevatedButton(
+                            height: 70.h,
+                            buttonStyle: ButtonStyle(
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.h),
+                                ),
+                              ),
+                              backgroundColor: WidgetStateProperty.all(
+                                Color(0xFFFF8D2A),
+                              ),
+                            ),
+                            text: "Scan Another Card",
+                            margin: EdgeInsets.only(left: 12.h),
+                            // leftIcon: Container(
+                            //   margin: EdgeInsets.only(right: 16.h),
+                            //   child: CustomImageView(
+                            //     imagePath: ImageConstant.imgTelevision,
+                            //     height: 18.h,
+                            //     width: 18.h,
+                            //     fit: BoxFit.contain,
+                            //   ),
+                            // ),
+                            onPressed: () {
+                              Navigator.pop(Get.context!);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // Text(
+                    //   'Check-out successful',
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                  ),
+                );
+              },
+            );
           } else if (response.statusCode == 404) {
             OverlayLoadingProgress.stop();
             var responseBody = jsonDecode(response.body);
 
-            Get.snackbar(
-              responseBody['message'],
-              'Register this card before use',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.deepOrange,
-              colorText: Colors.white,
+            // Get.snackbar(
+            //   responseBody['message'],
+            //   'Register this card before use',
+            //   snackPosition: SnackPosition.BOTTOM,
+            //   backgroundColor: Colors.deepOrange,
+            //   colorText: Colors.white,
+            // );
+            showModalBottomSheet(
+              isScrollControlled: true,
+              showDragHandle: true,
+              context: Get.context!,
+              builder: (context) {
+                return Container(
+                  height: 700,
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        //assets/images/img_scanner_success.png
+                        Text(
+                          'Record Attendance',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+
+                          // TextStyle(
+                          //   fontSize: 18,
+
+                          //   // fontWeight: FontWeight.bold,
+                          // ),
+                        ),
+
+                        SizedBox(height: 40),
+                        Image.asset(
+                          'assets/images/img_scanner_register_card.png',
+                          width: 250,
+                          height: 280,
+                        ),
+                        SizedBox(height: 30),
+                        Text(
+                          'Card is not Linked',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        // SizedBox(height: 15),
+                        // Text(
+                        //   '${responsedBody['data']['cardUID']}',
+                        //   style: CustomTextStyles.bodyMedium15.copyWith(
+                        //     fontSize: 20,
+                        //     //   fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        SizedBox(height: 15),
+                        Text(
+                          'Please link this card to a student or staff to begin recording attendance.',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: CustomElevatedButton(
+                            height: 70.h,
+                            buttonStyle: ButtonStyle(
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.h),
+                                ),
+                              ),
+                              backgroundColor: WidgetStateProperty.all(
+                                Color(0xFFFF8D2A),
+                              ),
+                            ),
+                            text: "Try Again",
+                            margin: EdgeInsets.only(left: 12.h),
+                            // leftIcon: Container(
+                            //   margin: EdgeInsets.only(right: 16.h),
+                            //   child: CustomImageView(
+                            //     imagePath: ImageConstant.imgTelevision,
+                            //     height: 18.h,
+                            //     width: 18.h,
+                            //     fit: BoxFit.contain,
+                            //   ),
+                            // ),
+                            onPressed: () {
+                              Navigator.pop(Get.context!);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // Text(
+                    //   'Check-out successful',
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                  ),
+                );
+              },
             );
           }
         } on SocketException {
@@ -1196,7 +1606,7 @@ class DropOffScanController extends GetxController {
     final body = {
       "schoolCode": schoolCode,
       "cardUID": cardId,
-      "eventType": 1,
+      "eventType": 'DROPOFF',
       "eventDateTime": DateTime.now().toIso8601String(),
       "notes": "",
     };
@@ -1207,6 +1617,7 @@ class DropOffScanController extends GetxController {
           final response = await _apiService.attendance(body);
           if (response.statusCode == 200 || response.statusCode == 201) {
             myLog.log(response.body);
+            var responsedBody = jsonDecode(response.body);
             Get.snackbar(
               'success',
               'Drop-off successful',
@@ -1214,16 +1625,219 @@ class DropOffScanController extends GetxController {
               backgroundColor: Colors.green,
               colorText: Colors.white,
             );
+
+            showModalBottomSheet(
+              isScrollControlled: true,
+              showDragHandle: true,
+              context: Get.context!,
+              builder: (context) {
+                return Container(
+                  height: 700,
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        //assets/images/img_scanner_success.png
+                        Text(
+                          'Record Attendance',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+
+                          // TextStyle(
+                          //   fontSize: 18,
+
+                          //   // fontWeight: FontWeight.bold,
+                          // ),
+                        ),
+
+                        SizedBox(height: 40),
+                        Image.asset(
+                          'assets/images/img_scanner_success.png',
+                          width: 250,
+                          height: 280,
+                        ),
+                        SizedBox(height: 30),
+                        Text(
+                          '${responsedBody['data']['displayName']}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          '${responsedBody['data']['cardUID']}',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 20,
+                            //   fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          'Drop Off has been recorded',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: CustomElevatedButton(
+                            height: 70.h,
+                            buttonStyle: ButtonStyle(
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.h),
+                                ),
+                              ),
+                              backgroundColor: WidgetStateProperty.all(
+                                Color(0xFFFF8D2A),
+                              ),
+                            ),
+                            text: "Scan Another Card",
+                            margin: EdgeInsets.only(left: 12.h),
+                            // leftIcon: Container(
+                            //   margin: EdgeInsets.only(right: 16.h),
+                            //   child: CustomImageView(
+                            //     imagePath: ImageConstant.imgTelevision,
+                            //     height: 18.h,
+                            //     width: 18.h,
+                            //     fit: BoxFit.contain,
+                            //   ),
+                            // ),
+                            onPressed: () {
+                              Navigator.pop(Get.context!);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // Text(
+                    //   'Check-out successful',
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                  ),
+                );
+              },
+            );
           } else if (response.statusCode == 404) {
             OverlayLoadingProgress.stop();
             var responseBody = jsonDecode(response.body);
 
-            Get.snackbar(
-              responseBody['message'],
-              'Register this card before use',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.deepOrange,
-              colorText: Colors.white,
+            // Get.snackbar(
+            //   responseBody['message'],
+            //   'Register this card before use',
+            //   snackPosition: SnackPosition.BOTTOM,
+            //   backgroundColor: Colors.deepOrange,
+            //   colorText: Colors.white,
+            // );
+            showModalBottomSheet(
+              isScrollControlled: true,
+              showDragHandle: true,
+              context: Get.context!,
+              builder: (context) {
+                return Container(
+                  height: 700,
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        //assets/images/img_scanner_success.png
+                        Text(
+                          'Record Attendance',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+
+                          // TextStyle(
+                          //   fontSize: 18,
+
+                          //   // fontWeight: FontWeight.bold,
+                          // ),
+                        ),
+
+                        SizedBox(height: 40),
+                        Image.asset(
+                          'assets/images/img_scanner_register_card.png',
+                          width: 250,
+                          height: 280,
+                        ),
+                        SizedBox(height: 30),
+                        Text(
+                          'Card is not Linked',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        // SizedBox(height: 15),
+                        // Text(
+                        //   '${responsedBody['data']['cardUID']}',
+                        //   style: CustomTextStyles.bodyMedium15.copyWith(
+                        //     fontSize: 20,
+                        //     //   fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        SizedBox(height: 15),
+                        Text(
+                          'Please link this card to a student or staff to begin recording attendance.',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: CustomElevatedButton(
+                            height: 70.h,
+                            buttonStyle: ButtonStyle(
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.h),
+                                ),
+                              ),
+                              backgroundColor: WidgetStateProperty.all(
+                                Color(0xFFFF8D2A),
+                              ),
+                            ),
+                            text: "Try Again",
+                            margin: EdgeInsets.only(left: 12.h),
+                            // leftIcon: Container(
+                            //   margin: EdgeInsets.only(right: 16.h),
+                            //   child: CustomImageView(
+                            //     imagePath: ImageConstant.imgTelevision,
+                            //     height: 18.h,
+                            //     width: 18.h,
+                            //     fit: BoxFit.contain,
+                            //   ),
+                            // ),
+                            onPressed: () {
+                              Navigator.pop(Get.context!);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // Text(
+                    //   'Check-out successful',
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                  ),
+                );
+              },
             );
           }
         } on SocketException {
@@ -1280,7 +1894,7 @@ class DropOffScanController extends GetxController {
     final body = {
       "schoolCode": schoolCode,
       "cardUID": cardId,
-      "eventType": 2,
+      "eventType": 'PICKUP',
       "eventDateTime": DateTime.now().toIso8601String(),
       "notes": "",
     };
@@ -1291,6 +1905,7 @@ class DropOffScanController extends GetxController {
           final response = await _apiService.attendance(body);
           if (response.statusCode == 200 || response.statusCode == 201) {
             myLog.log(response.body);
+            var responsedBody = jsonDecode(response.body);
             Get.snackbar(
               'success',
               'Pick-up successful',
@@ -1298,16 +1913,219 @@ class DropOffScanController extends GetxController {
               backgroundColor: Colors.green,
               colorText: Colors.white,
             );
+
+            showModalBottomSheet(
+              isScrollControlled: true,
+              showDragHandle: true,
+              context: Get.context!,
+              builder: (context) {
+                return Container(
+                  height: 700,
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        //assets/images/img_scanner_success.png
+                        Text(
+                          'Record Attendance',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+
+                          // TextStyle(
+                          //   fontSize: 18,
+
+                          //   // fontWeight: FontWeight.bold,
+                          // ),
+                        ),
+
+                        SizedBox(height: 40),
+                        Image.asset(
+                          'assets/images/img_scanner_success.png',
+                          width: 250,
+                          height: 280,
+                        ),
+                        SizedBox(height: 30),
+                        Text(
+                          '${responsedBody['data']['displayName']}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          '${responsedBody['data']['cardUID']}',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 20,
+                            //   fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          'Pick Up has been recorded',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: CustomElevatedButton(
+                            height: 70.h,
+                            buttonStyle: ButtonStyle(
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.h),
+                                ),
+                              ),
+                              backgroundColor: WidgetStateProperty.all(
+                                Color(0xFFFF8D2A),
+                              ),
+                            ),
+                            text: "Scan Another Card",
+                            margin: EdgeInsets.only(left: 12.h),
+                            // leftIcon: Container(
+                            //   margin: EdgeInsets.only(right: 16.h),
+                            //   child: CustomImageView(
+                            //     imagePath: ImageConstant.imgTelevision,
+                            //     height: 18.h,
+                            //     width: 18.h,
+                            //     fit: BoxFit.contain,
+                            //   ),
+                            // ),
+                            onPressed: () {
+                              Navigator.pop(Get.context!);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // Text(
+                    //   'Check-out successful',
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                  ),
+                );
+              },
+            );
           } else if (response.statusCode == 404) {
             OverlayLoadingProgress.stop();
             var responseBody = jsonDecode(response.body);
+            //assets/images/img_scanner_register_card.png
+            // Get.snackbar(
+            //   responseBody['message'],
+            //   'Register this card before use',
+            //   snackPosition: SnackPosition.BOTTOM,
+            //   backgroundColor: Colors.deepOrange,
+            //   colorText: Colors.white,
+            // );
+            showModalBottomSheet(
+              isScrollControlled: true,
+              showDragHandle: true,
+              context: Get.context!,
+              builder: (context) {
+                return Container(
+                  height: 700,
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        //assets/images/img_scanner_success.png
+                        Text(
+                          'Record Attendance',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
 
-            Get.snackbar(
-              responseBody['message'],
-              'Register this card before use',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.deepOrange,
-              colorText: Colors.white,
+                          // TextStyle(
+                          //   fontSize: 18,
+
+                          //   // fontWeight: FontWeight.bold,
+                          // ),
+                        ),
+
+                        SizedBox(height: 40),
+                        Image.asset(
+                          'assets/images/img_scanner_register_card.png',
+                          width: 250,
+                          height: 280,
+                        ),
+                        SizedBox(height: 30),
+                        Text(
+                          'Card is not Linked',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        // SizedBox(height: 15),
+                        // Text(
+                        //   '${responsedBody['data']['cardUID']}',
+                        //   style: CustomTextStyles.bodyMedium15.copyWith(
+                        //     fontSize: 20,
+                        //     //   fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        SizedBox(height: 15),
+                        Text(
+                          'Please link this card to a student or staff to begin recording attendance.',
+                          style: CustomTextStyles.bodyMedium15.copyWith(
+                            fontSize: 18,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: CustomElevatedButton(
+                            height: 70.h,
+                            buttonStyle: ButtonStyle(
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.h),
+                                ),
+                              ),
+                              backgroundColor: WidgetStateProperty.all(
+                                Color(0xFFFF8D2A),
+                              ),
+                            ),
+                            text: "Try Again",
+                            margin: EdgeInsets.only(left: 12.h),
+                            // leftIcon: Container(
+                            //   margin: EdgeInsets.only(right: 16.h),
+                            //   child: CustomImageView(
+                            //     imagePath: ImageConstant.imgTelevision,
+                            //     height: 18.h,
+                            //     width: 18.h,
+                            //     fit: BoxFit.contain,
+                            //   ),
+                            // ),
+                            onPressed: () {
+                              Navigator.pop(Get.context!);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // Text(
+                    //   'Check-out successful',
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                  ),
+                );
+              },
             );
           }
         } on SocketException {

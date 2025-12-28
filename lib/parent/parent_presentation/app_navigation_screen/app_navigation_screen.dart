@@ -264,17 +264,17 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                                 ),
                               ),
                         ),
-                        _buildScreenTitle(
-                          screenTitle:
-                              "Academics - CBT test - Modal - One - BottomSheet",
-                          onTapScreenTitle:
-                              () => onTapBottomSheetTitle(
-                                context,
-                                AcademicsCbtTestModalOneBottomsheet(
-                                  Get.put(AcademicsCbtTestModalOneController()),
-                                ),
-                              ),
-                        ),
+                        // _buildScreenTitle(
+                        //   screenTitle:
+                        //       "Academics - CBT test - Modal - One - BottomSheet",
+                        //   onTapScreenTitle:
+                        //       () => onTapBottomSheetTitle(
+                        //         context,
+                        //         AcademicsCbtTestModalOneBottomsheet(
+                        //           Get.put(AcademicsCbtTestModalOneController(),AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs),
+                        //         ),
+                        //       ),
+                        // ),
                         _buildScreenTitle(
                           screenTitle: "Academics - CBT test - Search for",
                           onTapScreenTitle:

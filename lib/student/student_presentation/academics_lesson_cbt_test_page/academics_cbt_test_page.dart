@@ -81,12 +81,12 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
       body: SafeArea(
         child: SizedBox(
           width: double.maxFinite,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              // SizedBox(height: 10.h),
-              Expanded(
-                child: SizedBox(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                // SizedBox(height: 10.h),
+                SizedBox(
                   width: double.maxFinite,
                   child: Column(
                     spacing: 14,
@@ -98,8 +98,8 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -161,6 +161,7 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
                         //cbt tab
                         return AcademicsCbtTestModalOneBottomsheet(
                           AcademicsCbtTestModalOneController(),
+                          controllerx,
                         );
                       },
                     );
@@ -255,7 +256,7 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
                       );
                     },
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: BouncingScrollPhysics(),
                   ),
         ),
       ),
@@ -265,7 +266,8 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
   /// CBT Test Tab Content
   Widget _buildCBTTestTab() {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(20.h),
+      // physics: BouncingScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
           // Add your CBT test content here
@@ -308,6 +310,20 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: GestureDetector(
                             onTap: () {
+                              controllerx.cbtType.value == 'Test Result '
+                                  ? Get.to(
+                                    () =>
+                                        StudentAcademicsCbtTestTestResultScreen(),
+                                    arguments: {
+                                      'id':
+                                          listlineItemModelObj.studentAttemptID
+                                              .toString(),
+                                    },
+                                  )
+                                  : controller.getCbtDetails(
+                                    listlineItemModelObj.quizScheduleID
+                                        .toString(),
+                                  );
                               // Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
                               controller.getCbtDetails(
                                 listlineItemModelObj.quizScheduleID.toString(),

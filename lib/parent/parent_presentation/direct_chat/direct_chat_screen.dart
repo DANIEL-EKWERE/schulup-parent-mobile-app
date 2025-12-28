@@ -6,7 +6,9 @@ import 'package:schulupparent/parent/parent_presentation/direct_chat/controller/
 import 'package:schulupparent/parent/parent_presentation/direct_chat/models/models.dart';
 import 'package:schulupparent/parent/parent_presentation/direct_chat/models/ongoing_conversation_model.dart';
 import 'package:schulupparent/parent/parent_presentation/direct_chat/widget/teacher_shimmer_widget.dart';
+import 'package:schulupparent/parent/parent_presentation/signalr_chat/signalr_chat_screen.dart';
 import 'package:schulupparent/parent/widgets/custom_text_form_field.dart';
+//import 'package:schulupparent/student/student_presentation/signalr_chat/signalr_chat_screen.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/appbar_subtitle_five.dart';
@@ -84,7 +86,7 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
                                       return TeacherShimmerWidget();
                                     },
                                   );
-                                } else if (controller.teacherData!.isEmpty &&
+                                } else if (controller.teacherData.isEmpty &&
                                     !controller.isLoading.value) {
                                   return Center(
                                     child: Column(
@@ -106,14 +108,13 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
                                   );
                                 } else {
                                   return ListView.separated(
-                                    itemCount:
-                                        controller.teacherData?.length ?? 0,
+                                    itemCount: controller.teacherData.length,
                                     separatorBuilder:
                                         (context, index) =>
                                             SizedBox(height: 12.h),
                                     itemBuilder: (context, index) {
                                       TeacherData teacherData =
-                                          controller.teacherData![index];
+                                          controller.teacherData[index];
                                       return GestureDetector(
                                         onTap: () {
                                           showDialog(
@@ -220,7 +221,22 @@ class DirectChatScreen extends GetWidget<DirectChatController> {
                                     itemBuilder: (context, index) {
                                       Conversations conversation =
                                           controller.conversations![index];
-                                      return _buildTeacherCard1(conversation);
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Get.to(
+                                            () => ChatScreen(),
+                                            arguments: {
+                                              'conversationId':
+                                                  conversation.conversationID,
+                                              // 'userId':
+                                              //     conversation.,
+                                              'teacherName': 'Teacher',
+                                              'subject': conversation.subject,
+                                            },
+                                          );
+                                        },
+                                        child: _buildTeacherCard1(conversation),
+                                      );
                                     },
                                   );
                                 }

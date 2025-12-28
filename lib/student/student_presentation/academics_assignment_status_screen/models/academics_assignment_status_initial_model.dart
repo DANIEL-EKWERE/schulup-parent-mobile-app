@@ -43,7 +43,7 @@ class Student {
    int? studentID;
   final String? admissionNo;
   final String? lastName;
-   String? firstName;
+   String firstName;
   final String? middleName;
   final String? gender;
   final String? dateAdmitted;
@@ -65,7 +65,7 @@ class Student {
     this.studentID,
     this.admissionNo,
     this.lastName,
-    this.firstName,
+    this.firstName = 'N/A',
     this.middleName,
     this.gender,
     this.dateAdmitted,
