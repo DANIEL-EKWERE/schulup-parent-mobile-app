@@ -1,13 +1,57 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
+import 'dart:developer' as myLog;
 
 class SendTokenService extends GetxService {
   // This class is intentionally left empty as the token refresh listener
   // has been moved to main.dart for better lifecycle management.
-ApiClient apiClient = ApiClient(Duration(seconds: 60 * 5));
-  
+  ApiClient apiClient = ApiClient(Duration(seconds: 60 * 5));
 
-void registerToken(String token) async {
+  ///devicetokens/register
+
+  void registerToken(
+    String token,
+    String? deviceModel,
+    String? appVersion,
+  ) async {
+    myLog.log('Registering token: $token');
+
+    final deviceInfo = DeviceInfoPlugin();
+    if (deviceModel == null || appVersion == null) {
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        deviceModel ??= androidInfo.model;
+        appVersion ??= androidInfo.version.release;
+      } else if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        deviceModel ??= iosInfo.utsname.machine;
+        appVersion ??= iosInfo.systemVersion;
+      }
+    }
+    var body = {
+      "token": token,
+      "platform": Platform.isAndroid ? "Android" : "iOS", // "iOS" or "Android"
+      "deviceModel": deviceModel,
+      "appVersion": appVersion,
+    };
+
+    myLog.log('Request body: $body');
+
+    var response = await apiClient.sendFcmToken(body);
+
+    if (response.statusCode == 200) {
+      myLog.log('Token registered successfully');
+      var responseBody = jsonDecode(response.body);
+      myLog.log('Response body: $responseBody');
+      myLog.log('Message from server: ${responseBody['message']}');
+    } else {
+      myLog.log('Failed to register token: ${response.statusCode}');
+    }
+
     // try {
     //   var response = await apiClient.postData('/register-token', {'token': token});
     //   if (response.statusCode == 200) {
@@ -19,5 +63,4 @@ void registerToken(String token) async {
     //   print('Error registering token: $e');
     // }
   }
-
 }

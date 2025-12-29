@@ -9,6 +9,7 @@ import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/firebase_options.dart';
 //import 'package:schulupparent/parent/localization/app_localization.dart';
 import 'package:schulupparent/parent/parent_presentation/signalr_chat/controller/signalr_service.dart';
+import 'package:schulupparent/send_token_service.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 //import 'package:schulupparent/parent/routes/app_routes.dart';
 //import 'package:schulupparent/parent_presentation/signalr_chat/controller/signalr_service.dart';
@@ -80,7 +81,7 @@ void main() async {
     );
     // Handle the initial message here (e.g., navigate to specific screen)
   }
-
+SendTokenService sendTokenService = Get.put(SendTokenService());
   final fcm = FirebaseMessaging.instance;
   // NotificationSettings settings = await fcm.requestPermission(
   //   alert: true,
@@ -116,6 +117,7 @@ void main() async {
     var token = await fcm.getToken();
     if (token != null) {
       myLog.log('FCM Token: $token');
+      sendTokenService.registerToken(token, null, null);
     }
   } else if (notificationSettings.authorizationStatus ==
       AuthorizationStatus.provisional) {
@@ -173,6 +175,7 @@ void main() async {
 
   FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
     myLog.log('FCM Token refreshed: $newToken');
+    sendTokenService.registerToken(newToken, null, null);
   });
 
   // Initialize FFI for desktop platforms

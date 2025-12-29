@@ -829,6 +829,29 @@ class ApiClient extends GetConnect {
      });
   }
 
+
+  /// send fcm token to backend
+  Future<http.Response> sendFcmToken(
+    Map<String, dynamic> replyData,
+  ) async {
+     return await _makeAuthenticatedRequest(() async {
+    var token = await dataBase.getToken();
+    final url = Uri.parse('$baseUrl/devicetokens/register');
+    _logRequest('POST', url, body: replyData);
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(replyData),
+    );
+    _logResponse(response);
+    return response;
+     });
+  }
+
   /// student reply to an assignment
   Future<http.Response> studentAsk(
     Map<String, dynamic> askData,
