@@ -65,6 +65,7 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         OverlayLoadingProgress.stop();
         adminDataBase.logOut();
+        adminDataBase.clearCache();
         //Get.offAllNamed(AppRoutes.secondLoginScreen);
         Get.offAllNamed(parent_routes.AppRoutes.signinScreen);
       } else {

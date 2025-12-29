@@ -1056,5 +1056,15 @@ class DataBase extends GetxController {
     // return true;
   }
 
+  Future<void> clearCache() async {
+    // Reset in-memory variables to null or default values
+    _token = '';
+    _userId = 0;
+    _userName = '';
+    //_studentId = '';
+    //_guardianID = '';
+    // Add other cached fields here
+  }
+
   void status(status) {}
 }

@@ -39,6 +39,7 @@ class SettingsController extends GetxController {
         // passwordController.clear();
         // schoolCodeController.clear();
         dataBase.logOut();
+        dataBase.clearCache();
         Get.offAllNamed(AppRoutes.signinScreen);
         OverlayLoadingProgress.stop();
 

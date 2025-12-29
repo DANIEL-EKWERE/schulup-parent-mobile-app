@@ -200,6 +200,7 @@ import 'package:schulupparent/admin/core/utils/storage.dart' as admin;
 import 'dart:developer' as myLog;
 
 import 'package:schulupparent/student/student_presentation/academics_assignment_status_screen/academics_assignment_status_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SigninController extends GetxController {
   final ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
@@ -215,6 +216,10 @@ class SigninController extends GetxController {
       context: Get.context!,
       circularProgressColor: Color(0XFFFF8C42),
     );
+
+    final Future<SharedPreferences> _pref = SharedPreferences.getInstance();
+    final sharedPreferences = await _pref;
+    sharedPreferences.clear();
 
     try {
       final body = {
@@ -247,7 +252,6 @@ class SigninController extends GetxController {
         usernameController.clear();
         passwordController.clear();
         schoolCodeController.clear();
-
 
         // Route based on user type
         if (userType == 4) {
