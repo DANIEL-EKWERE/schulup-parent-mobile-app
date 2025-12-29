@@ -53,47 +53,52 @@ class _ReportsReportCardAllVariantsPageState
   DateTime datetime = DateTime.now();
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.getDailyReports();
+      controller.tabviewController.addListener(() {
+        controller.tabIndex.value = controller.tabviewController.index;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        backgroundColor: appTheme.whiteA700,
-        body: SafeArea(
-          child: Container(
-            width: double.maxFinite,
-            decoration: AppDecoration.grayC13,
-            child: Column(
-              children: [
-                _buildColumnreportcar(),
-                Expanded(
+    return Scaffold(
+      backgroundColor: appTheme.whiteA700,
+      body: SafeArea(
+        child: Container(
+          width: double.maxFinite,
+          decoration: AppDecoration.grayC13,
+          child: Column(
+            children: [
+              _buildColumnreportcar(),
+              Expanded(
+                child: Container(
+                  width: double.maxFinite,
+                  padding: EdgeInsets.symmetric(horizontal: 24.h),
                   child: Container(
-                    width: double.maxFinite,
-                    padding: EdgeInsets.symmetric(horizontal: 24.h),
-                    child: Container(
-                      child: TabBarView(
-                        physics: NeverScrollableScrollPhysics(),
-                        controller: controller.tabviewController,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              SizedBox(height: 14.h),
-                              _buildListline(),
-                            ],
-                          ),
-                          _buildListline1(),
-                          _buildListline2(),
-                        ],
-                      ),
+                    child: TabBarView(
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: controller.tabviewController,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [SizedBox(height: 14.h), _buildListline()],
+                        ),
+                        _buildListline1(),
+                        _buildListline2(),
+                      ],
                     ),
-                    // Column(
-                    //   mainAxisSize: MainAxisSize.max,
-                    //   children: [SizedBox(height: 14.h), _buildListline()],
-                    // ),
                   ),
+                  // Column(
+                  //   mainAxisSize: MainAxisSize.max,
+                  //   children: [SizedBox(height: 14.h), _buildListline()],
+                  // ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -395,7 +400,8 @@ class _ReportsReportCardAllVariantsPageState
                                         return Text(
                                           // "lbl_first_term".tr,
                                           "${controller.termType.value} Term",
-                                          style: theme.textTheme.labelLarge,
+                                          style: theme.textTheme.labelLarge!
+                                              .copyWith(fontSize: 16.h),
                                         );
                                       }),
                                       CustomImageView(
@@ -750,9 +756,8 @@ class _ReportsReportCardAllVariantsPageState
                           Text(
                             textAlign: TextAlign.center,
                             '🔍 No results found Try adjusting your search or filters',
-                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
-                          fontSize: 16.h,
-                        ),
+                            style: CustomTextStyles.bodyMediumOnPrimary
+                                .copyWith(fontSize: 16.h),
                           ),
                         ],
                       ),
@@ -813,9 +818,8 @@ class _ReportsReportCardAllVariantsPageState
                           Text(
                             textAlign: TextAlign.center,
                             '🔍 No results found Try adjusting your search or filters',
-                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
-                          fontSize: 16.h,
-                        ),
+                            style: CustomTextStyles.bodyMediumOnPrimary
+                                .copyWith(fontSize: 16.h),
                           ),
                         ],
                       ),

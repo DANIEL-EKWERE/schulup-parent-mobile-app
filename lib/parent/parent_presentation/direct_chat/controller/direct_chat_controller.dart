@@ -25,6 +25,7 @@ class DirectChatController extends GetxController {
   RefreshController refreshController = RefreshController(
     initialRefresh: false,
   );
+  
   void onrefresh() {
     getTeachers();
     getUserConversations();

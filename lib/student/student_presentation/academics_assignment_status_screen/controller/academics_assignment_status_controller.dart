@@ -49,6 +49,10 @@ class StudentAcademicsAssignmentStatusController extends GetxController
 
     setVAlue();
 
+    tabviewController.addListener(() {
+      tabIndex.value = tabviewController.index;
+    });
+
     termType.value =
         dashboardExtendedViewController.selectedTerm1.value!.termID == 1
             ? 'First'
@@ -735,5 +739,11 @@ class StudentAcademicsAssignmentStatusController extends GetxController
       isDetailLoading.value = false;
       OverlayLoadingProgress.stop();
     }
+  }
+
+  @override
+  void onClose() {
+    tabviewController.dispose();
+    super.onClose();
   }
 }

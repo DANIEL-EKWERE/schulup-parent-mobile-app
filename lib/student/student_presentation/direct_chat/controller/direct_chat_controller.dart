@@ -4,6 +4,7 @@ import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:schulupparent/student/data/apiClient/api_client.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/student_presentation/direct_chat/models/models.dart';
@@ -26,6 +27,16 @@ class StudentDirectChatController extends GetxController {
 
   OngoingConversations? ongoingConversations;
   List<Conversations>? conversations;
+
+
+  RefreshController refreshController = RefreshController(
+    initialRefresh: false,
+  );
+  
+  void onrefresh() {
+    getTeachers();
+    getUserConversations();
+  }
 
   @override
   onInit() {

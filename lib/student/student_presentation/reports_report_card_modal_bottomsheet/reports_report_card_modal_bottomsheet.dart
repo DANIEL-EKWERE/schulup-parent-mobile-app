@@ -8,6 +8,7 @@ import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/reports_report_card_modal_controller.dart';
+import 'dart:developer' as myLog;
 
 // ignore_for_file: must_be_immutable
 
@@ -114,11 +115,11 @@ class _ReportsReportCardModalBottomsheetState
                                   text,
                                   style: CustomTextStyles.bodyMediumOnPrimary,
                                 ),
-                                CustomImageView(
-                                  imagePath: ImageConstant.imgIconsTinyLock,
-                                  height: 16.h,
-                                  width: 16.h,
-                                ),
+                                // CustomImageView(
+                                //   imagePath: ImageConstant.imgIconsTinyLock,
+                                //   height: 16.h,
+                                //   width: 16.h,
+                                // ),
                               ],
                             ),
                           ),
@@ -176,13 +177,19 @@ class _ReportsReportCardModalBottomsheetState
               print(
                 'this is now the controller value ${controller1.termType.value}',
               );
+              myLog.log(
+                'this is now the controller value for daytime ${controller1.dayType.value} - ${controller1.tabIndex.value}',
+              );
               // Get.back();
               Navigator.pop(context);
-              if (controller1.dayType == 'Daily') {
-                controller1.getTermlyReports();
-              } else if (controller1.dayType == 'Weekly') {
+              if (controller1.tabIndex.value == 0) {
+                myLog.log('Getting daily reports');
+                controller1.getDailyReports();
+              } else if (controller1.tabIndex.value == 1) {
+                myLog.log('Getting weekly reports');
                 controller1.getWeeklyReports();
               } else {
+                myLog.log('Getting termly reports');
                 controller1.getTermlyReports();
               }
             },

@@ -246,6 +246,13 @@ class _AcademicsAssignmentStatusInitialPageState
       controller.getAssignment();
       controller.getCbt();
       controller.allLessons();
+      controller.tabviewController.addListener(() {
+        controller.tabIndex.value = controller.tabviewController.index;
+      });
+      //   WidgetsBinding.instance.addPostFrameCallback((_) {
+      //  // controller.getDailyReports();
+
+      // });
     });
   }
 
@@ -489,7 +496,11 @@ class _AcademicsAssignmentStatusInitialPageState
                                 context: context,
                                 builder: (context) {
                                   return AcademicsAssignmentModalOneBottomsheet(
-                                    AcademicsAssignmentModalOneController(),StudentAcademicsLessonAllLessonsController(StudentAcademicsLessonAllLessonsModel().obs)
+                                    AcademicsAssignmentModalOneController(),
+                                    StudentAcademicsLessonAllLessonsController(
+                                      StudentAcademicsLessonAllLessonsModel()
+                                          .obs,
+                                    ),
                                   );
                                 },
                               );
@@ -698,7 +709,11 @@ class _AcademicsAssignmentStatusInitialPageState
                                 context: context,
                                 builder: (context) {
                                   return AcademicsAssignmentModalOneBottomsheet(
-                                    AcademicsAssignmentModalOneController(),StudentAcademicsLessonAllLessonsController(StudentAcademicsLessonAllLessonsModel().obs),
+                                    AcademicsAssignmentModalOneController(),
+                                    StudentAcademicsLessonAllLessonsController(
+                                      StudentAcademicsLessonAllLessonsModel()
+                                          .obs,
+                                    ),
                                   );
                                 },
                               );

@@ -79,6 +79,9 @@ class ReportsReportCardAllVariantsController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    tabviewController.addListener(() {
+      tabIndex.value = tabviewController.index;
+    });
     getWeeklyReports();
     getTermlyReports();
     datex = DateTime.now();
@@ -598,5 +601,11 @@ class ReportsReportCardAllVariantsController extends GetxController
         colorText: Colors.white,
       );
     }
+  }
+
+  @override
+  void onClose() {
+    tabviewController.dispose();
+    super.onClose();
   }
 }
