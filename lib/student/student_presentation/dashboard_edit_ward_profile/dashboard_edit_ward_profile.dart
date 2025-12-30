@@ -1,7 +1,8 @@
 // TODO Implement this library.
 import 'package:alert_info/alert_info.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
+import 'dart:developer' as myLog;
 import 'package:schulupparent/student/student_presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/base64.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
@@ -1010,16 +1011,18 @@ class _DashboardEditWardProfileScreenState
         (studentController.lastNameController.text.isEmpty ||
                 studentController.firstNameController.text.isEmpty ||
                 studentController.middleNameController.text.isEmpty ||
-                studentController.selectedGender.value.isEmpty ||
-                studentController.dateOfBirthController.text.isEmpty ||
-                studentController.selectedBloodGroup.value.isEmpty ||
-                studentController.selectedGenotype.value.isEmpty ||
-                studentController.placeOfBirthNameController.text.isEmpty ||
-                studentController.stateController.text.isEmpty ||
-                studentController.cityController.text.isEmpty ||
-                studentController.addressController.text.isEmpty ||
-                studentController.phoneController.text.isEmpty ||
-                studentController.religionController.text.isEmpty)
+                studentController.selectedGender.value.isEmpty
+            //||
+            // studentController.dateOfBirthController.text.isEmpty ||
+            // studentController.selectedBloodGroup.value.isEmpty ||
+            // studentController.selectedGenotype.value.isEmpty ||
+            // studentController.placeOfBirthNameController.text.isEmpty ||
+            // studentController.stateController.text.isEmpty ||
+            // studentController.cityController.text.isEmpty ||
+            // studentController.addressController.text.isEmpty ||
+            // studentController.phoneController.text.isEmpty ||
+            // studentController.religionController.text.isEmpty
+            )
             ? SizedBox.shrink()
             : ElevatedButton(
               onPressed: () {
@@ -1214,4 +1217,42 @@ class _DashboardEditWardProfileScreenState
     // Get.back();
     Navigator.pop(context);
   }
+
+
+  // Date Picker
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      barrierLabel: 'Select date',
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              onSecondary: Colors.white38,
+              //   onBackground: Colors.amber,
+              primary: Color(0XFFFF8C42), // Your app color
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      print('Selected date: $picked');
+      // Use the picked date
+      myLog.log('picked date: $picked');
+      String formattedDate = DateFormat('yyyy-MM-dd').format(picked);
+      myLog.log('formatted date: $formattedDate');
+      setState(() {
+        studentController.dateOfBirthController.text = formattedDate;
+      });
+    }
+  }
+  
 }

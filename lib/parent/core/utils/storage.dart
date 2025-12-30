@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1052,8 +1053,15 @@ class DataBase extends GetxController {
 
     // Navigator.of(context!)
     //     .pushNamedAndRemoveUntil("/OnboardingPage", (route) => false);
-
+// Delete all GetX controllers
+  Get.deleteAll(force: true);
     // return true;
+  _userName = '';
+  _userId = 0;
+  _token = '';
+
+       // Restart the entire app
+  Phoenix.rebirth(Get.context!);
   }
 
   Future<void> clearCache() async {

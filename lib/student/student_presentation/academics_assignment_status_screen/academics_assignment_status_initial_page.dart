@@ -246,9 +246,9 @@ class _AcademicsAssignmentStatusInitialPageState
       controller.getAssignment();
       controller.getCbt();
       controller.allLessons();
-      controller.tabviewController.addListener(() {
-        controller.tabIndex.value = controller.tabviewController.index;
-      });
+      // controller.tabviewController.addListener(() {
+      //   controller.tabIndex.value = controller.tabviewController.index;
+      // });
       //   WidgetsBinding.instance.addPostFrameCallback((_) {
       //  // controller.getDailyReports();
 
@@ -472,11 +472,19 @@ class _AcademicsAssignmentStatusInitialPageState
                                   return Text(
                                     controller.classType.value == 'N/A'
                                         ? dashboardExtendedViewController
-                                            .selectedClass
-                                            .value
-                                        : controller.classType.value,
+                                                    .selectedClass
+                                                    .value
+                                                    .length <
+                                                10
+                                            ? dashboardExtendedViewController
+                                                .selectedClass
+                                                .value
+                                            : "${dashboardExtendedViewController.selectedClass.value.substring(0, 10)}..."
+                                        : controller.classType.value.length < 10
+                                        ? controller.classType.value
+                                        : "${controller.classType.value.substring(0, 10)}...",
                                     style: theme.textTheme.labelLarge!.copyWith(
-                                      fontSize: 14.h,
+                                      fontSize: 16.h,
                                     ),
                                   );
                                 }),
@@ -511,7 +519,7 @@ class _AcademicsAssignmentStatusInitialPageState
                                   return Text(
                                     "${controller.termType.value} Term",
                                     style: theme.textTheme.labelLarge!.copyWith(
-                                      fontSize: 14.h,
+                                      fontSize: 16.h,
                                     ),
                                   );
                                 }),
@@ -543,7 +551,7 @@ class _AcademicsAssignmentStatusInitialPageState
                                   return Text(
                                     controller.statusType.value,
                                     style: theme.textTheme.labelLarge!.copyWith(
-                                      fontSize: 14.h,
+                                      fontSize: 16.h,
                                     ),
                                   );
                                 }),
@@ -598,11 +606,19 @@ class _AcademicsAssignmentStatusInitialPageState
                                     // cbt tab
                                     controller.classType.value == 'N/A'
                                         ? dashboardExtendedViewController
-                                            .selectedClass
-                                            .value
-                                        : controller.classType.value,
+                                                    .selectedClass
+                                                    .value
+                                                    .length <
+                                                10
+                                            ? dashboardExtendedViewController
+                                                .selectedClass
+                                                .value
+                                            : "${dashboardExtendedViewController.selectedClass.value.substring(0, 10)}..."
+                                        : controller.classType.value.length < 10
+                                        ? controller.classType.value
+                                        : "${controller.classType.value.substring(0, 10)}...",
                                     style: theme.textTheme.labelLarge!.copyWith(
-                                      fontSize: 14.h,
+                                      fontSize: 16.h,
                                     ),
                                   );
                                 }),
@@ -635,7 +651,7 @@ class _AcademicsAssignmentStatusInitialPageState
                                   return Text(
                                     controller.cbtType.value,
                                     style: theme.textTheme.labelLarge!.copyWith(
-                                      fontSize: 14.h,
+                                      fontSize: 16.h,
                                     ),
                                   );
                                 }),
@@ -689,7 +705,7 @@ class _AcademicsAssignmentStatusInitialPageState
                                       .first
                                       .name!,
                                   style: theme.textTheme.labelLarge!.copyWith(
-                                    fontSize: 14.h,
+                                    fontSize: 16.h,
                                   ),
                                 ),
                                 //}),
@@ -724,7 +740,7 @@ class _AcademicsAssignmentStatusInitialPageState
                                   return Text(
                                     "${controller.termType.value} Term",
                                     style: theme.textTheme.labelLarge!.copyWith(
-                                      fontSize: 14.h,
+                                      fontSize: 16.h,
                                     ),
                                   );
                                 }),
@@ -853,7 +869,7 @@ class _AcademicsAssignmentStatusInitialPageState
                         },
                       ),
                     )
-                    : controller.cbtData!.isEmpty
+                    : controller.cbtData.isEmpty
                     ? Center(
                       child: Column(
                         spacing: 30,
@@ -870,10 +886,10 @@ class _AcademicsAssignmentStatusInitialPageState
                       ),
                     )
                     : ListView.builder(
-                      itemCount: controller.cbtData!.length,
+                      itemCount: controller.cbtData.length,
                       itemBuilder: (context, index) {
                         CbtData listlineItemModelObj =
-                            controller.cbtData![index];
+                            controller.cbtData[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: GestureDetector(

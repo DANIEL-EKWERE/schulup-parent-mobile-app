@@ -57,9 +57,9 @@ class _ReportsReportCardAllVariantsPageState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.getDailyReports();
-      controller.tabviewController.addListener(() {
-        controller.tabIndex.value = controller.tabviewController.index;
-      });
+      // controller.tabviewController.addListener(() {
+      //   controller.tabIndex.value = controller.tabviewController.index;
+      // });
     });
   }
 
@@ -123,8 +123,8 @@ class _ReportsReportCardAllVariantsPageState
                 AppbarSubtitleFive(
                   text:
                       dashboardExtendedViewController
-                          .selectedStudent1!
-                          .firstName!,
+                          .selectedStudent1
+                          .firstName,
                   margin: EdgeInsets.symmetric(horizontal: 33.h),
                 ),
               ],
@@ -399,7 +399,16 @@ class _ReportsReportCardAllVariantsPageState
                                       Obx(() {
                                         return Text(
                                           // "lbl_first_term".tr,
-                                          "${controller.termType.value} Term",
+                                          controller.termType.value ==
+                                                  '1st Term'
+                                              ? "First Term"
+                                              : controller.termType.value ==
+                                                  '2nd Term'
+                                              ? "Second Term"
+                                              : controller.termType.value ==
+                                                  "3rd Term"
+                                              ? "Third Term"
+                                              : "${controller.termType.value} Term",
                                           style: theme.textTheme.labelLarge!
                                               .copyWith(fontSize: 16.h),
                                         );

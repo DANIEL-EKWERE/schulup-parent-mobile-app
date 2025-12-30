@@ -13,9 +13,23 @@ class ReportsWardProgressSubjectTwoController extends GetxController
   Rx<ReportsWardProgressSubjectTwoModel> reportsWardProgressSubjectTwoModelObj =
       ReportsWardProgressSubjectTwoModel().obs;
 
-  late TabController tabviewController = Get.put(
-    TabController(vsync: this, length: 3),
-  );
+  late TabController tabviewController;
+  //  = Get.put(
+  //   TabController(vsync: this, length: 3),
+  // );
+
+  @override
+  void onInit() {
+    super.onInit();
+     tabviewController = TabController(vsync: this, length: 3);
+
+      // Add listener to sync tab changes
+      tabviewController.addListener(() {
+        if (!tabviewController.indexIsChanging) {
+          tabIndex.value = tabviewController.index;
+        }
+      });
+  }
 
   Rx<ReportswardModel> reportswardModelObj = ReportswardModel().obs;
 

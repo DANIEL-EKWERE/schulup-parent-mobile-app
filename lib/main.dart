@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/firebase_options.dart';
 //import 'package:schulupparent/parent/localization/app_localization.dart';
@@ -52,6 +53,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
         notification.body,
         const NotificationDetails(
           android: AndroidNotificationDetails(
+            playSound: true,
+            enableVibration: true,
+            // sound: RawResourceAndroidNotificationSound('notification'),
             'high_importance_channel',
             'High Importance Notifications',
             channelDescription:
@@ -81,7 +85,7 @@ void main() async {
     );
     // Handle the initial message here (e.g., navigate to specific screen)
   }
-SendTokenService sendTokenService = Get.put(SendTokenService());
+  SendTokenService sendTokenService = Get.put(SendTokenService());
   final fcm = FirebaseMessaging.instance;
   // NotificationSettings settings = await fcm.requestPermission(
   //   alert: true,
@@ -148,6 +152,9 @@ SendTokenService sendTokenService = Get.put(SendTokenService());
           notification.body,
           NotificationDetails(
             android: AndroidNotificationDetails(
+              playSound: true,
+              enableVibration: true,
+              // sound: RawResourceAndroidNotificationSound('notification'),
               'high_importance_channel', // id
               'High Importance Notifications', // title
               channelDescription:

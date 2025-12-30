@@ -65,7 +65,7 @@ class AcademicsFourPage extends StatelessWidget {
                                 controller
                                     .academicsFourModelObj
                                     .value
-                                    .dropdownItemList3!
+                                    .dropdownItemList3
                                     .value,
                             contentPadding: EdgeInsets.all(12.h),
                           ),

@@ -26,9 +26,16 @@ import 'models/listline_item_model.dart';
 import 'widgets/listline_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
-class StudentAcademicsCbtTestPage extends StatelessWidget {
+class StudentAcademicsCbtTestPage extends StatefulWidget {
   StudentAcademicsCbtTestPage({Key? key}) : super(key: key);
 
+  @override
+  State<StudentAcademicsCbtTestPage> createState() =>
+      _StudentAcademicsCbtTestPageState();
+}
+
+class _StudentAcademicsCbtTestPageState
+    extends State<StudentAcademicsCbtTestPage> {
   StudentAcademicsLessonCbtTestController controller = Get.put(
     StudentAcademicsLessonCbtTestController(
       StudentAcademicsLessonCbtTestModel().obs,
@@ -38,6 +45,12 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
   StudentAcademicsAssignmentStatusController controllerx = Get.put(
     StudentAcademicsAssignmentStatusController(),
   );
+
+  @override
+  void initState() {
+    super.initState();
+    controllerx.getCbt();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +153,9 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
                                   .selectedClass
                                   .value
                               : controllerx.classType.value,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -171,7 +186,9 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
                       Obx(() {
                         return Text(
                           controllerx.cbtType.value,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!.copyWith(
+                            fontSize: 16,
+                          ),
                         );
                       }),
                       CustomImageView(
@@ -274,7 +291,7 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
           //AcademicsCbtTestStatusModel
           Obx(
             () =>
-                controller.isLoading.value
+                controllerx.isLoading.value
                     ? SizedBox(
                       height: 650.h,
                       child: ListView.separated(
@@ -290,7 +307,8 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
                         },
                       ),
                     )
-                    : controller.cbtData!.isEmpty
+                    : controllerx.cbtData.isEmpty &&
+                        !controllerx.isLoading.value
                     ? Center(
                       child: Column(
                         spacing: 30,
@@ -302,10 +320,10 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
                       ),
                     )
                     : ListView.builder(
-                      itemCount: controller.cbtData!.length,
+                      itemCount: controllerx.cbtData.length,
                       itemBuilder: (context, index) {
                         CbtData listlineItemModelObj =
-                            controller.cbtData![index];
+                            controllerx.cbtData[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: GestureDetector(
@@ -320,12 +338,12 @@ class StudentAcademicsCbtTestPage extends StatelessWidget {
                                               .toString(),
                                     },
                                   )
-                                  : controller.getCbtDetails(
+                                  : controllerx.getCbtDetails(
                                     listlineItemModelObj.quizScheduleID
                                         .toString(),
                                   );
                               // Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
-                              controller.getCbtDetails(
+                              controllerx.getCbtDetails(
                                 listlineItemModelObj.quizScheduleID.toString(),
                               );
                             },

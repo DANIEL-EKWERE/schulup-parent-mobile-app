@@ -169,7 +169,7 @@ class StudentDashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-       Get.to(() => ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       // OverlayLoadingProgress.stop();
       isLoading.value = false;
@@ -259,7 +259,7 @@ class StudentDashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-       Get.to(() => ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -357,7 +357,7 @@ class StudentDashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-       Get.to(() => ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -466,7 +466,7 @@ class StudentDashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-       Get.to(() => ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       myLog.log(e.toString());
       isLoading.value = false;
@@ -646,7 +646,7 @@ class StudentDashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-       Get.to(() => ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -668,10 +668,10 @@ class StudentDashboardExtendedViewController extends GetxController {
   Future<void> getDashBoardStats() async {
     // getBatch();
     // getClass();
-    // OverlayLoadingProgress.start(
-    //   context: Get.context!,
-    //   circularProgressColor: Color(0XFFFF8C42),
-    // );
+    OverlayLoadingProgress.start(
+      context: Get.context!,
+      circularProgressColor: Color(0XFFFF8C42),
+    );
     isLoading.value = true;
     try {
       // var userId = await dataBase.getUserId();
@@ -680,7 +680,7 @@ class StudentDashboardExtendedViewController extends GetxController {
         // selectedStudent1!.studentID.toString(),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // // OverlayLoadingProgress.stop();
+        OverlayLoadingProgress.stop();
         // // myLog.log('Login successful: ${response.body}');
         // // schoolCodeInputController.dispose();
         // // usernameInputController.dispose();
@@ -695,7 +695,7 @@ class StudentDashboardExtendedViewController extends GetxController {
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         isLoading.value = false;
         //Get.offAllNamed(AppRoutes.signTwoScreen);
-        // OverlayLoadingProgress.stop();
+        OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -709,7 +709,7 @@ class StudentDashboardExtendedViewController extends GetxController {
         });
       } else {
         isLoading.value = false;
-        // OverlayLoadingProgress.stop();
+        OverlayLoadingProgress.stop();
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Get.snackbar(
             'Error',
@@ -721,7 +721,7 @@ class StudentDashboardExtendedViewController extends GetxController {
         });
       }
     } on SocketException {
-
+      OverlayLoadingProgress.stop();
       isLoading.value = false;
       Get.snackbar(
         'Opps!!!',
@@ -730,7 +730,7 @@ class StudentDashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-       Get.to(() => ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -742,11 +742,11 @@ class StudentDashboardExtendedViewController extends GetxController {
           colorText: Colors.white,
         );
       });
-      //OverlayLoadingProgress.stop();
+      OverlayLoadingProgress.stop();
       myLog.log('Error: ${e.toString()}');
     } finally {
       isLoading.value = false;
-      //OverlayLoadingProgress.stop();
+      OverlayLoadingProgress.stop();
     }
   }
 

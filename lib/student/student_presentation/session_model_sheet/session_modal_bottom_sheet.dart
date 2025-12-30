@@ -25,7 +25,9 @@ class SessionModalBottomSheet extends StatefulWidget {
 class _ReportsReportCardModalOneBottomsheetState
     extends State<SessionModalBottomSheet> {
   List<String> type = ["lbl_daily".tr, "lbl_weekly".tr, "lbl_termly".tr];
-  List<String> selectedType = ['Daily'];
+  List<String> selectedType = [
+    dashboardExtendedViewController.selectedSession.value,
+  ];
   ReportsReportCardAllVariantsController controller1 =
       Get.find<ReportsReportCardAllVariantsController>();
 

@@ -1,15 +1,22 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/admin/presentation/change_school_code_one_screen/change_school_code_one_screen.dart';
+import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_report_card_all_variants_page/controller/reports_report_card_all_variants_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_report_card_all_variants_page/models/reports_report_card_all_variants_model.dart';
 import 'package:schulupparent/signin_screen/signin_screen.dart';
 import 'package:schulupparent/parent/widgets/custom_elevated_button_sheet.dart';
+import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/reports_report_card_modal_controller.dart';
+import 'dart:developer' as myLog;
 
 // ignore_for_file: must_be_immutable
+
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
 class ReportsReportCardModalBottomsheet extends StatefulWidget {
   ReportsReportCardModalBottomsheet(this.controller, {Key? key})
@@ -31,6 +38,25 @@ class _ReportsReportCardModalBottomsheetState
   List<String> selectedType = [];
   ReportsReportCardAllVariantsController controller1 =
       Get.find<ReportsReportCardAllVariantsController>();
+
+  var selectedx;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedx =
+        controller1.termType.value == 'First'
+            ? "1st Term"
+            : controller1.termType.value == 'Second'
+            ? '2nd Term'
+            : controller1.termType.value == 'Second'
+            ? "Term"
+            : controller1.termType.value;
+    selectedType = [
+      //controller1.termType.value
+      selectedx,
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,23 +109,23 @@ class _ReportsReportCardModalBottomsheetState
             height: 90,
             child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
-              itemCount: type.length,
+              itemCount: dashboardExtendedViewController.terms.length,
               itemBuilder: (context, index) {
-                var text = type[index];
+                var text = dashboardExtendedViewController.terms[index];
                 return GestureDetector(
                   onTap: () {
-                    print(text);
+                    print(text.name);
                     selectedType.clear();
-                    selectedType.add(text);
+                    selectedType.add(text.name);
                     print('object: ${selectedType}');
                     setState(() {});
                   },
                   child:
-                      selectedType.contains(text)
+                      selectedType.contains(text.name)
                           ? SizedBox(
                             width: double.infinity,
                             child: CustomElevatedButtonSheet(
-                              text: text,
+                              text: text.name,
                               rightIcon: Icon(Icons.check),
                               //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
                             ),
@@ -111,14 +137,14 @@ class _ReportsReportCardModalBottomsheetState
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  text,
+                                  text.name,
                                   style: CustomTextStyles.bodyMediumOnPrimary,
                                 ),
-                                CustomImageView(
-                                  imagePath: ImageConstant.imgIconsTinyLock,
-                                  height: 16.h,
-                                  width: 16.h,
-                                ),
+                                // CustomImageView(
+                                //   imagePath: ImageConstant.imgIconsTinyLock,
+                                //   height: 16.h,
+                                //   width: 16.h,
+                                // ),
                               ],
                             ),
                           ),
@@ -164,12 +190,13 @@ class _ReportsReportCardModalBottomsheetState
             onPressed: () {
               print(selectedType.first);
               print(controller1.termType);
+              myLog.log('selected type: ${selectedType.first}');
               setState(() {
                 controller1.termType.value = selectedType.first;
                 controller1.selectedTermId.value =
-                    selectedType.first.contains('First')
+                    selectedType.first.contains('1st Term')
                         ? 1
-                        : selectedType.first.contains('Second')
+                        : selectedType.first.contains('2nd Term')
                         ? 2
                         : 3;
               });
@@ -178,12 +205,17 @@ class _ReportsReportCardModalBottomsheetState
               );
               // Get.back();
               Navigator.pop(context);
-              if (controller1.dayType == 'Daily') {
+              if (controller1.tabIndex.value == 0) {
+                myLog.log('calling daily report');
                 controller1.getTermlyReports();
-              } else if (controller1.dayType == 'Weekly') {
+              } else if (controller1.tabIndex.value == 1) {
+                myLog.log('calling weekly report');
                 controller1.getWeeklyReports();
-              } else {
                 controller1.getTermlyReports();
+              } else {
+                myLog.log('calling termly report');
+                controller1.getTermlyReports();
+                controller1.getWeeklyReports();
               }
             },
             height: 64.h,
@@ -199,6 +231,7 @@ class _ReportsReportCardModalBottomsheetState
 
   /// Navigates to the previous screen.
   onTapImgCloseone() {
-    Get.back();
+    //Get.back();
+    Navigator.pop(context);
   }
 }

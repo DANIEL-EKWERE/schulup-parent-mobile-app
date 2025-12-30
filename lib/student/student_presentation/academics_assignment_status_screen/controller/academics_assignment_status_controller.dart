@@ -32,9 +32,10 @@ class StudentAcademicsAssignmentStatusController extends GetxController
   Rx<AcademicsAssignmentStatusModel> academicsAssignmentStatusModelObj =
       AcademicsAssignmentStatusModel().obs;
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
-  late TabController tabviewController = Get.put(
-    TabController(vsync: this, length: 3),
-  );
+  late TabController tabviewController;
+  //  = Get.put(
+  //   TabController(vsync: this, length: 3),
+  // );
   Rx<bool> isLoading = false.obs;
 
   Rx<bool> isDetailLoading = false.obs;
@@ -49,9 +50,14 @@ class StudentAcademicsAssignmentStatusController extends GetxController
 
     setVAlue();
 
-    tabviewController.addListener(() {
-      tabIndex.value = tabviewController.index;
-    });
+      tabviewController = TabController(vsync: this, length: 3);
+
+      // Add listener to sync tab changes
+      tabviewController.addListener(() {
+        if (!tabviewController.indexIsChanging) {
+          tabIndex.value = tabviewController.index;
+        }
+      });
 
     termType.value =
         dashboardExtendedViewController.selectedTerm1.value!.termID == 1
@@ -100,7 +106,7 @@ class StudentAcademicsAssignmentStatusController extends GetxController
   List<AssignmentData> assignmentData = <AssignmentData>[];
 
   Cbt? cbt;
-  List<CbtData>? cbtData;
+  List<CbtData> cbtData = <CbtData>[];
 
   AssignmentDetails? assignmentDetails;
 
@@ -357,7 +363,7 @@ class StudentAcademicsAssignmentStatusController extends GetxController
         isLoading.value = false;
 
         cbt = cbtFromJson(response.body);
-        cbtData = cbt!.data;
+        cbtData = cbt!.data!;
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         // OverlayLoadingProgress.stop();
@@ -442,7 +448,7 @@ class StudentAcademicsAssignmentStatusController extends GetxController
         isLoading.value = false;
         myLog.log("controller1 ${response.body} ");
         cbt = cbtFromJson(response.body);
-        cbtData = cbt!.data;
+        cbtData = cbt!.data!;
         myLog.log(
           "${cbtData!.length} ========================================",
         );

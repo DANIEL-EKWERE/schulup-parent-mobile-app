@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'package:alert_info/alert_info.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:schulupparent/parent/data/model/selectionPopupModel/selection_popup_model.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_edit_ward_profile/controller/dashboard_edit_ward_profile_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/base64.dart';
@@ -13,6 +14,7 @@ import '../../widgets/app_bar/appbar_subtitle_five.dart';
 import '../../widgets/app_bar/appbar_subtitle_one.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
+import 'dart:developer' as myLog;
 
 DashboardExtendedViewController dashboardExtendedViewController =
     Get.find<DashboardExtendedViewController>();
@@ -383,6 +385,8 @@ class _DashboardEditWardProfileScreenState
                               ),
                               SizedBox(height: 10),
                               CustomTextFormField(
+                                onTap: () => _selectDate(context),
+                                readOnly: true,
                                 controller: controller.dateOfBirthController,
                                 onChanged: (value) {
                                   setState(() {});
@@ -410,6 +414,7 @@ class _DashboardEditWardProfileScreenState
                                     14.h,
                                   ),
                                   child: CustomImageView(
+                                    onTap: () => _selectDate(context),
                                     imagePath:
                                         'assets/images/img_icons_small_calender_outlined.svg',
                                     height: 16.h,
@@ -977,16 +982,18 @@ class _DashboardEditWardProfileScreenState
         (controller.lastNameController.text.isEmpty ||
                 controller.firstNameController.text.isEmpty ||
                 controller.middleNameController.text.isEmpty ||
-                controller.selectedGender.value.isEmpty ||
-                controller.dateOfBirthController.text.isEmpty ||
-                controller.selectedBloodGroup.value.isEmpty ||
-                controller.selectedGenotype.value.isEmpty ||
-                controller.placeOfBirthNameController.text.isEmpty ||
-                controller.stateController.text.isEmpty ||
-                controller.cityController.text.isEmpty ||
-                controller.addressController.text.isEmpty ||
-                controller.phoneController.text.isEmpty ||
-                controller.religionController.text.isEmpty)
+                controller.selectedGender.value.isEmpty
+            //||
+            //  controller.dateOfBirthController.text.isEmpty ||
+            //  controller.selectedBloodGroup.value.isEmpty ||
+            //  controller.selectedGenotype.value.isEmpty ||
+            // controller.placeOfBirthNameController.text.isEmpty ||
+            //  controller.stateController.text.isEmpty ||
+            // controller.cityController.text.isEmpty ||
+            // controller.addressController.text.isEmpty ||
+            // controller.phoneController.text.isEmpty ||
+            //controller.religionController.text.isEmpty
+            )
             ? SizedBox.shrink()
             : ElevatedButton(
               onPressed: () {
@@ -1180,5 +1187,41 @@ class _DashboardEditWardProfileScreenState
   onTapArrowleftone() {
     // Get.back();
     Navigator.pop(context);
+  }
+
+  // Date Picker
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      barrierLabel: 'Select date',
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              onSecondary: Colors.white38,
+              //   onBackground: Colors.amber,
+              primary: Color(0XFFFF8C42), // Your app color
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      print('Selected date: $picked');
+      // Use the picked date
+      myLog.log('picked date: $picked');
+      String formattedDate = DateFormat('yyyy-MM-dd').format(picked);
+      myLog.log('formatted date: $formattedDate');
+      setState(() {
+        controller.dateOfBirthController.text = formattedDate;
+      });
+    }
   }
 }

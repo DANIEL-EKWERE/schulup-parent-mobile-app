@@ -34,9 +34,11 @@ class ReportsReportCardAllVariantsController extends GetxController
   RxList<Messages> tempMessageList = <Messages>[].obs;
   Rx<String> date = ''.obs;
   DateTime? datex;
-  late TabController tabviewController = Get.put(
-    TabController(vsync: this, length: 3),
-  );
+
+  // late TabController tabviewController = Get.put(
+  //   TabController(vsync: this, length: 3),
+  // );
+
   RefreshController refreshController = RefreshController(
     initialRefresh: false,
   );
@@ -45,6 +47,8 @@ class ReportsReportCardAllVariantsController extends GetxController
     getDailyReports();
     getTermlyReports();
   }
+
+  late TabController tabviewControllerx;
 
   DashboardExtendedViewController dashboardExtendedViewController =
       Get.find<DashboardExtendedViewController>();
@@ -82,6 +86,19 @@ class ReportsReportCardAllVariantsController extends GetxController
     datex = DateTime.now();
     date.value = formatDate(datex.toString());
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // tabviewController.addListener(() {
+      //   tabIndex.value = tabviewController.index;
+      // });
+    });
+    tabviewControllerx = TabController(vsync: this, length: 3);
+
+    // Add listener to sync tab changes
+    tabviewControllerx.addListener(() {
+      if (!tabviewControllerx.indexIsChanging) {
+        tabIndex.value = tabviewControllerx.index;
+      }
+    });
     // termType.value =
     //     dashboardExtendedViewController.selectedTerm1.value!.termID == 1
     //         ? "First"
@@ -614,5 +631,12 @@ class ReportsReportCardAllVariantsController extends GetxController
         colorText: Colors.white,
       );
     }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+
+    // tabviewController.dispose();
   }
 }

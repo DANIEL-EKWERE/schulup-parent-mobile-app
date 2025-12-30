@@ -36,9 +36,10 @@ class ReportsReportCardAllVariantsController extends GetxController
   RxList<Messages> tempMessageList = <Messages>[].obs;
   Rx<String> date = ''.obs;
   DateTime? datex;
-  late TabController tabviewController = Get.put(
-    TabController(vsync: this, length: 3),
-  );
+  late TabController tabviewController;
+  //  = Get.put(
+  //   TabController(vsync: this, length: 3),
+  // );
   RefreshController refreshController = RefreshController(
     initialRefresh: false,
   );
@@ -79,9 +80,15 @@ class ReportsReportCardAllVariantsController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    tabviewController.addListener(() {
-      tabIndex.value = tabviewController.index;
-    });
+      tabviewController = TabController(vsync: this, length: 3);
+
+      // Add listener to sync tab changes
+      tabviewController.addListener(() {
+        if (!tabviewController.indexIsChanging) {
+          tabIndex.value = tabviewController.index;
+        }
+      });
+      
     getWeeklyReports();
     getTermlyReports();
     datex = DateTime.now();

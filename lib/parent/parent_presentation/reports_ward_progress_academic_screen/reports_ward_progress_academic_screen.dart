@@ -43,7 +43,7 @@ class _ReportsWardProgressAcademicScreenState
                 child: Container(
                   child: TabBarView(
                     physics: NeverScrollableScrollPhysics(),
-                    controller: controller.tabviewController,
+                    controller: controller.tabviewController1,
                     children: [
                       ScrollviewTabPage(),
                       ReportsWardProgressSubjectPage(),
@@ -86,7 +86,7 @@ class _ReportsWardProgressAcademicScreenState
                 AppbarSubtitleFive(
                   text:
                       dashboardExtendedViewController
-                          .selectedStudent1!
+                          .selectedStudent1
                           .firstName!,
                   margin: EdgeInsets.symmetric(horizontal: 43.h),
                 ),
@@ -98,7 +98,7 @@ class _ReportsWardProgressAcademicScreenState
               width: double.infinity,
               // margin: EdgeInsets.only(left: 24.h),
               child: TabBar(
-                controller: controller.tabviewController,
+                controller: controller.tabviewController1, 
                 isScrollable: true,
                 dividerColor: Colors.transparent,
                 labelPadding: EdgeInsets.symmetric(horizontal: 4.h),

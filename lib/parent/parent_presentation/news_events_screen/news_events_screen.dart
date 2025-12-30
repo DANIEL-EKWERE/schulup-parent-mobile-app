@@ -101,7 +101,7 @@ class _NewsEventsScreenState extends State<NewsEventsScreen> {
                 AppbarSubtitleFive(
                   text:
                       dashboardExtendedViewController
-                          .selectedStudent1!
+                          .selectedStudent1
                           .firstName!,
                   margin: EdgeInsets.symmetric(horizontal: 12.h),
                 ),
@@ -199,6 +199,24 @@ class _NewsEventsScreenState extends State<NewsEventsScreen> {
                     // }
                     // return ListlineItemWidget(newsItems[index]);
                   },
+                )
+                : controller.eventItems == null ||
+                    controller.eventItems!.isEmpty
+                ? Center(
+                  child: Column(
+                    spacing: 30,
+                    children: [
+                      SizedBox(height: 150.h),
+                      CustomImageView(imagePath: ImageConstant.imgObjects),
+                      Text(
+                        textAlign: TextAlign.center,
+                        '🔍 No results found Try adjusting your search or filters',
+                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                          fontSize: 16.h,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
                 : ListView.separated(
                   padding: EdgeInsets.zero,

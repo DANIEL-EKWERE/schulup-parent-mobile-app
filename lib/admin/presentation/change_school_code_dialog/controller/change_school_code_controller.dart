@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:schulupparent/admin/core/utils/storage.dart';
 import 'package:schulupparent/admin/data/apiClient/api_client.dart';
 import 'package:schulupparent/admin/presentation/change_school_code_dialog/model/change_school_code_model.dart';
+import 'package:schulupparent/signin_screen/signin_screen.dart';
 import '../../../core/app_export.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'dart:developer' as myLog;
@@ -96,7 +97,9 @@ class ChangeSchoolCodeController extends GetxController {
           circularProgressColor: Color(0XFFFF8C42),
         );
         adminDataBase.logOut();
-        Get.offAllNamed(AppRoutes.loginScreen);
+       // Get.offAllNamed(AppRoutes.loginScreen);
+       Get.to(()=> SigninScreen());
+        OverlayLoadingProgress.stop();
       } else {
         OverlayLoadingProgress.stop();
         Get.snackbar("Error", "Unable to logout");

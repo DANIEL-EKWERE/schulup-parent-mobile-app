@@ -4,7 +4,6 @@ import '../../../core/app_export.dart';
 import '../models/reports_ward_progress_academic_model.dart';
 import '../models/scrollview_tab_model.dart';
 
-
 /// A controller class for the ReportsWardProgressAcademicScreen.
 ///
 /// This class manages the state of the ReportsWardProgressAcademicScreen, including the
@@ -38,13 +37,32 @@ class StudentReportsWardProgressAcademicController extends GetxController
   Rx<ReportsWardProgressAcademicModel> reportsWardProgressAcademicModelObj =
       ReportsWardProgressAcademicModel().obs;
 
-  late TabController tabviewController = Get.put(
-    TabController(vsync: this, length: 3),
-  );
+  late TabController tabviewController;
+  //  = Get.put(
+  //   TabController(vsync: this, length: 3),
+  // );
 
   Rx<int> tabIndex = 0.obs;
 
   Rx<ScrollviewTabModel> scrollviewTabModelObj = ScrollviewTabModel().obs;
+
+  @override
+  onInit() {
+    super.onInit();
+    tabviewController = TabController(vsync: this, length: 3);
+
+    // Add listener to sync tab changes
+    tabviewController.addListener(() {
+      if (!tabviewController.indexIsChanging) {
+        tabIndex.value = tabviewController.index;
+      }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // tabviewController.addListener(() {
+      //   tabIndex.value = tabviewController.index;
+      // });
+    });
+  }
 
   @override
   void onClose() {
@@ -61,5 +79,7 @@ class StudentReportsWardProgressAcademicController extends GetxController
     frame427321478Controller.dispose();
     frame427321479Controller.dispose();
     frame427321480Controller.dispose();
+
+    // tabviewController.dispose();
   }
 }

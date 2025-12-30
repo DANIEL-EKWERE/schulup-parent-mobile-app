@@ -44,6 +44,12 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
     controller.byGuardian();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    //controller.byGuardian();
+  }
+
   int _currentIndex = 0;
   bool _isSelected = false;
   int _selectedStudentIndex = 0;

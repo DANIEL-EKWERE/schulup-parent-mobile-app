@@ -4,8 +4,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:schulupparent/signin_screen/signin_screen.dart';
 import 'package:schulupparent/student/core/utils/storage.dart';
 import 'package:schulupparent/student/data/apiClient/api_client.dart';
+import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
 import '../../../core/app_export.dart';
 
@@ -38,9 +40,16 @@ class StudentSettingsController extends GetxController {
         // usernameController.clear();
         // passwordController.clear();
         // schoolCodeController.clear();
+        var controller = Get.find<StudentDashboardExtendedViewController>(
+          tag: 'studentDashboardExtendedViewController',
+        );
+        Get.delete<StudentDashboardExtendedViewController>(
+          tag: 'studentDashboardExtendedViewController',
+        );
         studentDataBase.logOut();
         studentDataBase.clearCache();
-        Get.offAllNamed(AppRoutes.signinScreen);
+        //Get.offAllNamed(AppRoutes.signinScreen);
+        Get.offAll(() => SigninScreen());
         OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {

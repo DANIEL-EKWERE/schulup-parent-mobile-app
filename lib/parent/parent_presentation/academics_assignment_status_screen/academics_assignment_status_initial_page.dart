@@ -240,9 +240,16 @@ class _AcademicsAssignmentStatusInitialPageState
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller.getAssignment();
-    controller.getCbt();
-    controller.allLessons();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.getAssignment();
+      controller.getCbt();
+      controller.allLessons();
+
+      // controller.tabviewController.addListener(() {
+      //   controller.tabIndex.value = controller.tabviewController.index;
+      // });
+    });
   }
 
   @override
@@ -668,9 +675,12 @@ class _AcademicsAssignmentStatusInitialPageState
                                 //   return
                                 Text(
                                   dashboardExtendedViewController
-                                      .classDataList
-                                      .first
-                                      .name!,
+                                      .selectedClass
+                                      .value,
+
+                                  // .classDataList
+                                  // .first
+                                  // .name!,
                                   style: theme.textTheme.labelLarge!.copyWith(
                                     fontSize: 16.h,
                                   ),

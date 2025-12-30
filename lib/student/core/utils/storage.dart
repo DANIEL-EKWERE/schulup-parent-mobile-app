@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1062,10 +1063,16 @@ class StudentDataBase extends GetxController {
     // _isLoading = false;
     // _reqMessage = 'Log Out Successfull';
     // _color = _color = const Color.fromARGB(255, 15, 175, 20);
-
+  _userName = '';
+  _userId = 0;
+  _token = '';
     // Navigator.of(context!)
     //     .pushNamedAndRemoveUntil("/OnboardingPage", (route) => false);
+// Delete all GetX controllers
+  Get.deleteAll(force: true);
 
+  
+  
     // return true;
   }
 

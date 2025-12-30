@@ -7,15 +7,21 @@ import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/session_modal_controller.dart';
+import 'dart:developer' as myLog;
 
 DashboardExtendedViewController dashboardExtendedViewController =
     Get.find<DashboardExtendedViewController>();
 
 // ignore_for_file: must_be_immutable
 class SessionModalBottomSheet extends StatefulWidget {
-  SessionModalBottomSheet(this.controller, {Key? key}) : super(key: key);
+  SessionModalBottomSheet(
+    this.controller, {
+    //this.controller1,
+    Key? key,
+  }) : super(key: key);
 
   SessionModalController controller;
+  //ReportsReportCardAllVariantsController controller1;
 
   @override
   State<SessionModalBottomSheet> createState() =>
@@ -25,7 +31,9 @@ class SessionModalBottomSheet extends StatefulWidget {
 class _ReportsReportCardModalOneBottomsheetState
     extends State<SessionModalBottomSheet> {
   List<String> type = ["lbl_daily".tr, "lbl_weekly".tr, "lbl_termly".tr];
-  List<String> selectedType = ['Daily'];
+  List<String> selectedType = [
+    dashboardExtendedViewController.selectedSession.value,
+  ];
   ReportsReportCardAllVariantsController controller1 =
       Get.find<ReportsReportCardAllVariantsController>();
 
@@ -118,6 +126,7 @@ class _ReportsReportCardModalOneBottomsheetState
               setState(() {
                 controller1.session.value = selectedType.first;
               });
+              myLog.log(selectedType.first);
               controller1.getWeeklyReports();
               controller1.getTermlyReports();
               // if (controller1.dayType.value.contains('Daily')) {
@@ -144,6 +153,7 @@ class _ReportsReportCardModalOneBottomsheetState
 
   /// Navigates to the previous screen.
   onTapImgCloseone() {
-    Get.back();
+    //  Get.back();
+    Navigator.pop(context);
   }
 }

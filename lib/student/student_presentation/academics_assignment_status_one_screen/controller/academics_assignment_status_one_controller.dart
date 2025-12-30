@@ -14,9 +14,10 @@ class AcademicsAssignmentStatusOneController extends GetxController
   Rx<AcademicsAssignmentStatusOneModel> academicsAssignmentStatusOneModelObj =
       AcademicsAssignmentStatusOneModel().obs;
 
-  late TabController tabviewController = Get.put(
-    TabController(vsync: this, length: 3),
-  );
+  late TabController tabviewController;
+  //  = Get.put(
+  //   TabController(vsync: this, length: 3),
+  // );
 
   Rx<AcademicsFourModel> academicsFourModelObj = AcademicsFourModel().obs;
 
@@ -44,5 +45,18 @@ class AcademicsAssignmentStatusOneController extends GetxController
       }
     }
     academicsFourModelObj.value.dropdownItemList4.refresh();
+  }
+  
+  @override
+  void onInit() {
+    super.onInit();
+    tabviewController = TabController(vsync: this, length: 3);
+
+    // Add listener to sync tab changes
+    tabviewController.addListener(() {
+      if (!tabviewController.indexIsChanging) {
+        tabIndex.value = tabviewController.index;
+      }
+    });
   }
 }

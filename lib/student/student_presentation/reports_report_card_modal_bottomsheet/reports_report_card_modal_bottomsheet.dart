@@ -1,5 +1,6 @@
 // TODO Implement this library.
 import 'package:flutter/material.dart';
+import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_report_card_all_variants_page/controller/reports_report_card_all_variants_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_report_card_all_variants_page/models/reports_report_card_all_variants_model.dart';
 import 'package:schulupparent/student/student_presentation/signin_screen/signin_screen.dart';
@@ -11,6 +12,9 @@ import 'controller/reports_report_card_modal_controller.dart';
 import 'dart:developer' as myLog;
 
 // ignore_for_file: must_be_immutable
+
+StudentDashboardExtendedViewController studentashboardExtendedViewController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class ReportsReportCardModalBottomsheet extends StatefulWidget {
   ReportsReportCardModalBottomsheet(this.controller, {Key? key})
@@ -32,6 +36,25 @@ class _ReportsReportCardModalBottomsheetState
   List<String> selectedType = [];
   ReportsReportCardAllVariantsController controller1 =
       Get.find<ReportsReportCardAllVariantsController>();
+
+  var selectedx;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedx =
+        controller1.termType.value == 'First'
+            ? "1st Term"
+            : controller1.termType.value == 'Second'
+            ? '2nd Term'
+            : controller1.termType.value == 'Second'
+            ? "Term"
+            : controller1.termType.value;
+    selectedType = [
+      //controller1.termType.value
+      selectedx,
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,23 +107,23 @@ class _ReportsReportCardModalBottomsheetState
             height: 90,
             child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
-              itemCount: type.length,
+              itemCount: studentashboardExtendedViewController.terms.length,
               itemBuilder: (context, index) {
-                var text = type[index];
+                var text = studentashboardExtendedViewController.terms[index];
                 return GestureDetector(
                   onTap: () {
-                    print(text);
+                    print(text.name);
                     selectedType.clear();
-                    selectedType.add(text);
+                    selectedType.add(text.name);
                     print('object: ${selectedType}');
                     setState(() {});
                   },
                   child:
-                      selectedType.contains(text)
+                      selectedType.contains(text.name)
                           ? SizedBox(
                             width: double.infinity,
                             child: CustomElevatedButtonSheet(
-                              text: text,
+                              text: text.name,
                               rightIcon: Icon(Icons.check),
                               //   margin: EdgeInsets.only(left: 62.h, right: 60.h),
                             ),
@@ -112,7 +135,7 @@ class _ReportsReportCardModalBottomsheetState
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  text,
+                                  text.name,
                                   style: CustomTextStyles.bodyMediumOnPrimary,
                                 ),
                                 // CustomImageView(
@@ -168,9 +191,9 @@ class _ReportsReportCardModalBottomsheetState
               setState(() {
                 controller1.termType.value = selectedType.first;
                 controller1.selectedTermId.value =
-                    selectedType.first.contains('First')
+                    selectedType.first.contains('1st Term')
                         ? 1
-                        : selectedType.first.contains('Second')
+                        : selectedType.first.contains('2nd Term')
                         ? 2
                         : 3;
               });
@@ -183,14 +206,16 @@ class _ReportsReportCardModalBottomsheetState
               // Get.back();
               Navigator.pop(context);
               if (controller1.tabIndex.value == 0) {
-                myLog.log('Getting daily reports');
-                controller1.getDailyReports();
-              } else if (controller1.tabIndex.value == 1) {
-                myLog.log('Getting weekly reports');
-                controller1.getWeeklyReports();
-              } else {
-                myLog.log('Getting termly reports');
+                myLog.log('calling daily report');
                 controller1.getTermlyReports();
+              } else if (controller1.tabIndex.value == 1) {
+                myLog.log('calling weekly report');
+                controller1.getWeeklyReports();
+                controller1.getTermlyReports();
+              } else {
+                myLog.log('calling termly report');
+                controller1.getTermlyReports();
+                controller1.getWeeklyReports();
               }
             },
             height: 64.h,

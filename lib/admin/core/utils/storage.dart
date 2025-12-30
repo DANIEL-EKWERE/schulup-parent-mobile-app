@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1030,13 +1031,18 @@ class AdminDataBase extends GetxController {
     // _isLoading = false;
     // _reqMessage = 'Log Out Successfull';
     // _color = _color = const Color.fromARGB(255, 15, 175, 20);
+    // Delete all GetX controllers
+    Get.deleteAll(force: true);
 
+    //sharedPreferences.reload();
+    _userName = '';
+    _userId = '';
+    _token = '';
     // Navigator.of(context!)
     //     .pushNamedAndRemoveUntil("/OnboardingPage", (route) => false);
 
     // return true;
   }
-
 
   Future<void> clearCache() async {
     // Reset in-memory variables to null or default values
@@ -1046,5 +1052,6 @@ class AdminDataBase extends GetxController {
     //_studentId = 0;
     // Add other cached fields here
   }
+
   void status(status) {}
 }

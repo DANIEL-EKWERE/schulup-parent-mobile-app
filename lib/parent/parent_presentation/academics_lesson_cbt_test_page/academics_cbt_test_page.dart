@@ -12,7 +12,8 @@ import 'package:schulupparent/parent/parent_presentation/academics_assignment_st
 import 'package:schulupparent/parent/parent_presentation/academics_cbt_test_one_modal_bottomsheet/academics_cbt_test_modal_one_bottomsheet.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_cbt_test_one_modal_bottomsheet/controller/academics_cbt_test_modal_one_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/reports_report_card_modal_bottomsheet/controller/reports_report_card_modal_controller.dart';
-import 'package:schulupparent/parent/parent_presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart';
+import 'package:schulupparent/parent/parent_presentation/reports_report_card_modal_bottomsheet/reports_report_card_modal_bottomsheet.dart'
+    hide dashboardExtendedViewController;
 import 'package:schulupparent/signin_screen/shimmer_widget.dart';
 import 'package:schulupparent/parent/widgets/app_bar/appbar_leading_iconbutton.dart';
 import 'package:schulupparent/parent/widgets/app_bar/custom_app_bar.dart';
@@ -24,9 +25,14 @@ import 'models/listline_item_model.dart';
 import 'widgets/listline_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
-class AcademicsCbtTestPage extends StatelessWidget {
+class AcademicsCbtTestPage extends StatefulWidget {
   AcademicsCbtTestPage({Key? key}) : super(key: key);
 
+  @override
+  State<AcademicsCbtTestPage> createState() => _AcademicsCbtTestPageState();
+}
+
+class _AcademicsCbtTestPageState extends State<AcademicsCbtTestPage> {
   AcademicsLessonCbtTestController controller = Get.put(
     AcademicsLessonCbtTestController(AcademicsLessonCbtTestModel().obs),
   );
@@ -34,6 +40,13 @@ class AcademicsCbtTestPage extends StatelessWidget {
   AcademicsAssignmentStatusController controllerx = Get.put(
     AcademicsAssignmentStatusController(),
   );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controllerx.getCbt();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,14 +97,16 @@ class AcademicsCbtTestPage extends StatelessWidget {
               Expanded(
                 child: SizedBox(
                   width: double.maxFinite,
-                  child: Column(
-                    spacing: 14,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      _buildRowprimarycount(),
-                      //_buildListline()
-                      _buildCBTTestTab(),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      spacing: 14,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        _buildRowprimarycount(),
+                        //_buildListline()
+                        _buildCBTTestTab(),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -266,7 +281,7 @@ class AcademicsCbtTestPage extends StatelessWidget {
           //AcademicsCbtTestStatusModel
           Obx(
             () =>
-                controller.isLoading.value
+                controllerx.isLoading.value
                     ? SizedBox(
                       height: 650.h,
                       child: ListView.separated(
@@ -282,7 +297,7 @@ class AcademicsCbtTestPage extends StatelessWidget {
                         },
                       ),
                     )
-                    : controller.cbtData!.isEmpty
+                    : controllerx.cbtData.isEmpty
                     ? Center(
                       child: Column(
                         spacing: 30,
@@ -294,16 +309,16 @@ class AcademicsCbtTestPage extends StatelessWidget {
                       ),
                     )
                     : ListView.builder(
-                      itemCount: controller.cbtData!.length,
+                      itemCount: controllerx.cbtData.length,
                       itemBuilder: (context, index) {
                         CbtData listlineItemModelObj =
-                            controller.cbtData![index];
+                            controllerx.cbtData[index];
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: GestureDetector(
                             onTap: () {
                               // Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
-                              controller.getCbtDetails(
+                              controllerx.getCbtDetails(
                                 listlineItemModelObj.quizScheduleID.toString(),
                               );
                             },

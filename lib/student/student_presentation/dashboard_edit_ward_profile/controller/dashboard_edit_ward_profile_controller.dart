@@ -44,9 +44,12 @@ class StudentDashboardEditWardProfileController extends GetxController {
       firstNameController.text = selectedStudent.firstName ?? '';
       middleNameController.text = selectedStudent.middleName ?? '';
       genderController.text = selectedStudent.gender ?? '';
+      selectedGender.value = selectedStudent.gender ?? 'N/A';
       dateOfBirthController.text = selectedStudent.dateOfBirth ?? '';
       bloodGroupController.text = selectedStudent.bloodGroup ?? '';
+      selectedBloodGroup.value = selectedStudent.bloodGroup ?? 'N/A';
       genotypeController.text = selectedStudent.genotype ?? '';
+      selectedGenotype.value = selectedStudent.genotype ?? 'N/A';
       stateController.text = selectedStudent.state ?? '';
       cityController.text = selectedStudent.city ?? '';
       addressController.text = selectedStudent.address ?? '';
@@ -130,7 +133,7 @@ class StudentDashboardEditWardProfileController extends GetxController {
           );
         });
         //
-        Get.back(); // Go back after successful update
+        // Get.back(); // Go back after successful update
         Navigator.pop(Get.context!);
         myLog.log("profile updated successfully");
       } else if (response.statusCode == 404 || response.statusCode == 401) {

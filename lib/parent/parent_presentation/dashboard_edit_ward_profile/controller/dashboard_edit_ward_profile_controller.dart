@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:developer' as myLog;
 import 'package:alert_info/alert_info.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
@@ -42,9 +43,12 @@ class DashboardEditWardProfileController extends GetxController {
       firstNameController.text = selectedStudent.firstName ?? '';
       middleNameController.text = selectedStudent.middleName ?? '';
       genderController.text = selectedStudent.gender ?? '';
+      selectedGender.value = selectedStudent.gender ?? 'N/A';
       dateOfBirthController.text = selectedStudent.dateOfBirth ?? '';
       bloodGroupController.text = selectedStudent.bloodGroup ?? '';
+      selectedBloodGroup.value = selectedStudent.bloodGroup ?? 'N/A';
       genotypeController.text = selectedStudent.genotype ?? '';
+      selectedGenotype.value = selectedStudent.genotype ?? 'N/A';
       stateController.text = selectedStudent.state ?? '';
       cityController.text = selectedStudent.city ?? '';
       addressController.text = selectedStudent.address ?? '';
@@ -128,7 +132,7 @@ class DashboardEditWardProfileController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
-        Get.back(); // Go back after successful update
+        // Get.back(); // Go back after successful update
         Navigator.pop(Get.context!);
         myLog.log("profile updated successfully");
       } else if (response.statusCode == 404 || response.statusCode == 401) {
@@ -199,18 +203,31 @@ class DashboardEditWardProfileController extends GetxController {
         dateOfBirthController.text = studentProfile!.data!.dateOfBirth!;
         bloodGroupController.text = studentProfile!.data!.bloodGroup!;
         genotypeController.text = studentProfile!.data!.genotype!;
+        placeOfBirthNameController.text = studentProfile!.data!.birthPlace!;
         stateController.text = studentProfile!.data!.state!;
         cityController.text = studentProfile!.data!.city!;
         addressController.text = studentProfile!.data!.address!;
+        //phoneController.text = studentProfile!.data!.p!;
         religionController.text = studentProfile!.data!.religion!;
         languageController.text = studentProfile!.data!.language!;
         //   OverlayLoadingProgress.stop();
-        Get.snackbar(
-          'Success',
-          'Student information retrived successfully',
-          snackPosition: SnackPosition.BOTTOM,
+        // Get.snackbar(
+        //   'Success',
+        //   'Student information retrived successfully',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.green,
+        //   colorText: Colors.white,
+        // );
+
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: "Student information loaded successfully",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.green,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
         //Get.back(); // Go back after successful update
       } else if (response.statusCode == 404 || response.statusCode == 401) {
@@ -218,48 +235,56 @@ class DashboardEditWardProfileController extends GetxController {
         //OverlayLoadingProgress.stop();
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
-        });
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: message,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       } else {
         //  OverlayLoadingProgress.stop();
         isLoading.value = false;
-        Get.snackbar(
-          'Error',
-          'Update failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: "Update failed. Please try again.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       }
     } on SocketException {
       //  OverlayLoadingProgress.stop();
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Check your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       // OverlayLoadingProgress.stop();
       isLoading.value = false;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      });
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     } finally {
       isLoading.value = false;
     }

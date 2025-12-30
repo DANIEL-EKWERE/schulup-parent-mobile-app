@@ -30,9 +30,8 @@ class AcademicsAssignmentStatusController extends GetxController
   Rx<AcademicsAssignmentStatusModel> academicsAssignmentStatusModelObj =
       AcademicsAssignmentStatusModel().obs;
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
-  late TabController tabviewController = Get.put(
-    TabController(vsync: this, length: 3),
-  );
+  late TabController tabviewController;
+  //= TabController(vsync: this, length: 3);
   Rx<bool> isLoading = false.obs;
 
   Rx<bool> isDetailLoading = false.obs;
@@ -44,6 +43,24 @@ class AcademicsAssignmentStatusController extends GetxController
   void onInit() {
     super.onInit();
     byGuardian();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //  tabviewController.addListener(() {
+      //   tabIndex.value = tabviewController.index;
+      // });
+      // Initialize TabController properly
+    
+    });
+
+      tabviewController = TabController(vsync: this, length: 3);
+
+      // Add listener to sync tab changes
+      tabviewController.addListener(() {
+        if (!tabviewController.indexIsChanging) {
+          tabIndex.value = tabviewController.index;
+        }
+      });
+
     termType.value =
         dashboardExtendedViewController.selectedTerm1.value!.termID == 1
             ? 'First'
@@ -74,7 +91,7 @@ class AcademicsAssignmentStatusController extends GetxController
   List<AssignmentData> assignmentData = <AssignmentData>[];
 
   Cbt? cbt;
-  List<CbtData>? cbtData;
+  List<CbtData> cbtData = <CbtData>[];
 
   AssignmentDetails? assignmentDetails;
 
@@ -331,7 +348,7 @@ class AcademicsAssignmentStatusController extends GetxController
         isLoading.value = false;
 
         cbt = cbtFromJson(response.body);
-        cbtData = cbt!.data;
+        cbtData = cbt!.data!;
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         // OverlayLoadingProgress.stop();
@@ -413,7 +430,7 @@ class AcademicsAssignmentStatusController extends GetxController
         isLoading.value = false;
 
         cbt = cbtFromJson(response.body);
-        cbtData = cbt!.data;
+        cbtData = cbt!.data!;
 
         //Get.offAllNamed(AppRoutes.academicsAssignmentStatusScreen,);
         // OverlayLoadingProgress.stop();
@@ -696,5 +713,11 @@ class AcademicsAssignmentStatusController extends GetxController
       isDetailLoading.value = false;
       OverlayLoadingProgress.stop();
     }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    //tabviewController.dispose();
   }
 }

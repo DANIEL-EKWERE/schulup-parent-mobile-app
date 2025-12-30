@@ -27,7 +27,7 @@ class DashboardExtendedViewController extends GetxController {
   List<Student> students = [];
   AcademicsAssignmentStatusInitialModel? academicsAssignmentStatusInitialModel;
   Student? selectedStudent;
-  Student? selectedStudent1;
+  Student selectedStudent1 = Student();
   Rx<String> selectedClass = 'n/a'.obs;
   String? selectedStudentClass;
   Rx<String> selectedSession = 'n/a'.obs;
@@ -141,7 +141,7 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-      Get.to(()=> ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       OverlayLoadingProgress.stop();
       isLoading.value = false;
@@ -240,7 +240,7 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-      Get.to(()=> ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -324,7 +324,7 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-      Get.to(()=> ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -433,7 +433,7 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-      Get.to(()=> ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       myLog.log(e.toString());
       isLoading.value = false;
@@ -516,7 +516,7 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-      Get.to(()=> ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -610,7 +610,7 @@ class DashboardExtendedViewController extends GetxController {
         backgroundColor: Color(0XFFFF8C42),
         colorText: Colors.white,
       );
-      Get.to(()=> ErrorPage());
+      Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {

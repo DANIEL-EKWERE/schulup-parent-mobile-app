@@ -29,9 +29,15 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller1.academicPerformance();
-    controller1.classOverview();
     // controller.tabIndex.value = 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller1.academicPerformance();
+      controller1.classOverview();
+
+      // controller.tabviewController.addListener(() {
+      //   controller.tabIndex.value = controller.tabviewController.index;
+      // });
+    });
   }
 
   @override
@@ -58,9 +64,9 @@ class _ScrollviewTabPageState extends State<ScrollviewTabPage> {
                         Text(
                           textAlign: TextAlign.center,
                           '🔍 No results found Try adjusting your search or filters',
-                        style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
-                          fontSize: 16.h,
-                        ),
+                          style: CustomTextStyles.bodyMediumOnPrimary.copyWith(
+                            fontSize: 16.h,
+                          ),
                         ),
                       ],
                     ),

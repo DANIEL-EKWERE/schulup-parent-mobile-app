@@ -6,8 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/parent/core/utils/storage.dart';
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
+import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 
 import '../../../core/app_export.dart';
+
+DashboardExtendedViewController dashboardExtendedViewController =
+    Get.find<DashboardExtendedViewController>();
 
 class SettingsController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
@@ -38,6 +42,8 @@ class SettingsController extends GetxController {
         // usernameController.clear();
         // passwordController.clear();
         // schoolCodeController.clear();
+        var controller = Get.find<DashboardExtendedViewController>(tag: 'parentDashboardExtendedViewController');
+        Get.delete<DashboardExtendedViewController>(tag: 'parentDashboardExtendedViewController');
         dataBase.logOut();
         dataBase.clearCache();
         Get.offAllNamed(AppRoutes.signinScreen);
