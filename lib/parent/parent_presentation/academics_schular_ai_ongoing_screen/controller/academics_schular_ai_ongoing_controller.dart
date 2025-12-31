@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
 
@@ -105,25 +106,38 @@ class AcademicsSchularAiOngoingController extends GetxController {
         messageList.removeWhere((msg) => msg.id == userMessage.id);
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
         // Remove the user message on error
         messageList.removeWhere((msg) => msg.id == userMessage.id);
 
-        Get.snackbar(
-          'Error',
-          'Failed to send message. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        // Get.snackbar(
+        //   'Error',
+        //   'Failed to send message. Please try again.',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        // );
+        Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Failed to send message. Please try again.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
       }
     } on SocketException {
       // Hide typing indicator
@@ -132,12 +146,15 @@ class AcademicsSchularAiOngoingController extends GetxController {
       // Remove user message on network error
       messageList.removeWhere((msg) => msg.id.startsWith('user_'));
 
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'SCheck your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       print('Error sending message: $e');
@@ -146,12 +163,15 @@ class AcademicsSchularAiOngoingController extends GetxController {
       isAiTyping.value = false;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
     } finally {

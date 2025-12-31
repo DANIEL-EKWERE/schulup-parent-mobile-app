@@ -105,12 +105,15 @@ class StudentAcademicsSchularAiOngoingController extends GetxController {
         messageList.removeWhere((msg) => msg.id == userMessage.id);
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
@@ -132,12 +135,15 @@ class StudentAcademicsSchularAiOngoingController extends GetxController {
       // Remove user message on network error
       messageList.removeWhere((msg) => msg.id.startsWith('user_'));
 
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'SCheck your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       print('Error sending message: $e');
@@ -146,12 +152,15 @@ class StudentAcademicsSchularAiOngoingController extends GetxController {
       isAiTyping.value = false;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
     } finally {

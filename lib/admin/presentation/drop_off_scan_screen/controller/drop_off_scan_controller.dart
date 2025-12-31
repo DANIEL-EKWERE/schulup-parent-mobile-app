@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'dart:developer' as myLog;
 import 'package:nfc_manager/src/nfc_manager_android/pigeon.g.dart';
@@ -1295,12 +1296,15 @@ class DropOffScanController extends GetxController {
       }
     } catch (e) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       OverlayLoadingProgress.stop();
@@ -1329,13 +1333,13 @@ class DropOffScanController extends GetxController {
           if (response.statusCode == 200 || response.statusCode == 201) {
             myLog.log(response.body);
             var responsedBody = jsonDecode(response.body);
-            Get.snackbar(
-              'success',
-              'Check-out successful',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.green,
-              colorText: Colors.white,
-            );
+            // Get.snackbar(
+            //   'success',
+            //   'Check-out successful',
+            //   snackPosition: SnackPosition.BOTTOM,
+            //   backgroundColor: Colors.green,
+            //   colorText: Colors.white,
+            // );
 
             showModalBottomSheet(
               isScrollControlled: true,
@@ -1552,43 +1556,79 @@ class DropOffScanController extends GetxController {
             );
           }
         } on SocketException {
-          Get.snackbar(
-            'Opps!!!',
-            'Check your internet connection and try again.',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Color(0XFFFF8C42),
-            colorText: Colors.white,
-          );
+          // Get.snackbar(
+          //   'Opps!!!',
+          //   'Check your internet connection and try again.',
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   backgroundColor: Color(0XFFFF8C42),
+          //   colorText: Colors.white,
+          // );
+
+          Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Check your internet connection and try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         } catch (e) {
-          Get.snackbar(
-            'Error',
-            e.toString(),
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
+          // Get.snackbar(
+          //   'Error',
+          //   e.toString(),
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   backgroundColor: Colors.red,
+          //   colorText: Colors.white,
+          // );
+
+            Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         } finally {
           OverlayLoadingProgress.stop();
         }
       } else {
         await OfflineQueueDB().addRequest(body);
-        Get.snackbar(
-          'Offline',
-          'Request saved. Will sync when online.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.orange,
-          colorText: Colors.white,
+        // Get.snackbar(
+        //   'Offline',
+        //   'Request saved. Will sync when online.',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.orange,
+        //   colorText: Colors.white,
+        // );
+
+           Fluttertoast.showToast(
+          webShowClose: true,
+          msg:'Request saved. Will sync when online.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.yellow,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
         OverlayLoadingProgress.stop();
       }
     } catch (e) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       OverlayLoadingProgress.stop();
@@ -1618,13 +1658,13 @@ class DropOffScanController extends GetxController {
           if (response.statusCode == 200 || response.statusCode == 201) {
             myLog.log(response.body);
             var responsedBody = jsonDecode(response.body);
-            Get.snackbar(
-              'success',
-              'Drop-off successful',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.green,
-              colorText: Colors.white,
-            );
+            // Get.snackbar(
+            //   'success',
+            //   'Drop-off successful',
+            //   snackPosition: SnackPosition.BOTTOM,
+            //   backgroundColor: Colors.green,
+            //   colorText: Colors.white,
+            // );
 
             showModalBottomSheet(
               isScrollControlled: true,
@@ -1841,43 +1881,79 @@ class DropOffScanController extends GetxController {
             );
           }
         } on SocketException {
-          Get.snackbar(
-            'Opps!!!',
-            'Check your internet connection and try again.',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Color(0XFFFF8C42),
-            colorText: Colors.white,
-          );
+          // Get.snackbar(
+          //   'Opps!!!',
+          //   'Check your internet connection and try again.',
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   backgroundColor: Color(0XFFFF8C42),
+          //   colorText: Colors.white,
+          // );
+          Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Check your internet connection and try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+          
         } catch (e) {
-          Get.snackbar(
-            'Error',
-            e.toString(),
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
+          // Get.snackbar(
+          //   'Error',
+          //   e.toString(),
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   backgroundColor: Colors.red,
+          //   colorText: Colors.white,
+          // );
+
+               Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         } finally {
           OverlayLoadingProgress.stop();
         }
       } else {
         await OfflineQueueDB().addRequest(body);
-        Get.snackbar(
-          'Offline',
-          'Request saved. Will sync when online.',
-          snackPosition: SnackPosition.BOTTOM,
+        // Get.snackbar(
+        //   'Offline',
+        //   'Request saved. Will sync when online.',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.orange,
+        //   colorText: Colors.white,
+        // );
+          Fluttertoast.showToast(
+          webShowClose: true,
+          msg:'Request saved. Will sync when online.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.orange,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
+        
         OverlayLoadingProgress.stop();
       }
     } catch (e) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       OverlayLoadingProgress.stop();
@@ -1906,13 +1982,13 @@ class DropOffScanController extends GetxController {
           if (response.statusCode == 200 || response.statusCode == 201) {
             myLog.log(response.body);
             var responsedBody = jsonDecode(response.body);
-            Get.snackbar(
-              'success',
-              'Pick-up successful',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.green,
-              colorText: Colors.white,
-            );
+            // Get.snackbar(
+            //   'success',
+            //   'Pick-up successful',
+            //   snackPosition: SnackPosition.BOTTOM,
+            //   backgroundColor: Colors.green,
+            //   colorText: Colors.white,
+            // );
 
             showModalBottomSheet(
               isScrollControlled: true,
@@ -2129,43 +2205,79 @@ class DropOffScanController extends GetxController {
             );
           }
         } on SocketException {
-          Get.snackbar(
-            'Opps!!!',
-            'Check your internet connection and try again.',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Color(0XFFFF8C42),
-            colorText: Colors.white,
-          );
+          // Get.snackbar(
+          //   'Opps!!!',
+          //   'Check your internet connection and try again.',
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   backgroundColor: Color(0XFFFF8C42),
+          //   colorText: Colors.white,
+          // );
+
+           Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Check your internet connection and try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         } catch (e) {
-          Get.snackbar(
-            'Error',
-            e.toString(),
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
+          // Get.snackbar(
+          //   'Error',
+          //   e.toString(),
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   backgroundColor: Colors.red,
+          //   colorText: Colors.white,
+          // );
+
+                    Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         } finally {
           OverlayLoadingProgress.stop();
         }
       } else {
         await OfflineQueueDB().addRequest(body);
-        Get.snackbar(
-          'Offline',
-          'Request saved. Will sync when online.',
-          snackPosition: SnackPosition.BOTTOM,
+        // Get.snackbar(
+        //   'Offline',
+        //   'Request saved. Will sync when online.',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.orange,
+        //   colorText: Colors.white,
+        // );
+
+                        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Request saved. Will sync when online.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.orange,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
         OverlayLoadingProgress.stop();
       }
     } catch (e) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       OverlayLoadingProgress.stop();

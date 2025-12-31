@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer' as myLog;
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:schulupparent/admin/core/network/connectivity_service.dart';
 import 'package:schulupparent/admin/core/utils/storage.dart';
@@ -70,15 +71,28 @@ class HomeController extends GetxController {
         Get.offAllNamed(parent_routes.AppRoutes.signinScreen);
       } else {
         OverlayLoadingProgress.stop();
-        Get.snackbar("Error", "Unable to logout");
+        //Get.snackbar("Error", "Unable to logout");
+        Fluttertoast.showToast(
+        webShowClose: true,
+        msg: "Unable to logout",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
       }
     } on SocketException {
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Check your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       OverlayLoadingProgress.stop();

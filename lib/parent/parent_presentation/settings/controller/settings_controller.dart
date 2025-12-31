@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/parent/core/utils/storage.dart';
 import 'package:schulupparent/parent/data/apiClient/api_client.dart';
@@ -56,40 +57,52 @@ class SettingsController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
         OverlayLoadingProgress.stop();
-        Get.snackbar(
-          'Error',
-          'Log Out failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Log Out failed. Please try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       }
     } on SocketException {
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Check your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();

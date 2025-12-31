@@ -1010,23 +1010,24 @@ class _DashboardEditWardProfileScreenState
         ],
       ),
       actions: [
-        (studentController.lastNameController.text.isEmpty ||
-                studentController.firstNameController.text.isEmpty ||
-                studentController.middleNameController.text.isEmpty ||
-                studentController.selectedGender.value.isEmpty
-            //||
-            // studentController.dateOfBirthController.text.isEmpty ||
-            // studentController.selectedBloodGroup.value.isEmpty ||
-            // studentController.selectedGenotype.value.isEmpty ||
-            // studentController.placeOfBirthNameController.text.isEmpty ||
-            // studentController.stateController.text.isEmpty ||
-            // studentController.cityController.text.isEmpty ||
-            // studentController.addressController.text.isEmpty ||
-            // studentController.phoneController.text.isEmpty ||
-            // studentController.religionController.text.isEmpty
-            )
-            ? SizedBox.shrink()
-            : ElevatedButton(
+        // (studentController.lastNameController.text.isEmpty ||
+        //         studentController.firstNameController.text.isEmpty ||
+        //         studentController.middleNameController.text.isEmpty ||
+        //         studentController.selectedGender.value.isEmpty
+        //     //||
+        //     // studentController.dateOfBirthController.text.isEmpty ||
+        //     // studentController.selectedBloodGroup.value.isEmpty ||
+        //     // studentController.selectedGenotype.value.isEmpty ||
+        //     // studentController.placeOfBirthNameController.text.isEmpty ||
+        //     // studentController.stateController.text.isEmpty ||
+        //     // studentController.cityController.text.isEmpty ||
+        //     // studentController.addressController.text.isEmpty ||
+        //     // studentController.phoneController.text.isEmpty ||
+        //     // studentController.religionController.text.isEmpty
+        //     )
+        //     ? SizedBox.shrink()
+        //     : 
+            ElevatedButton(
               onPressed: () {
                 print(studentController.lastNameController.text);
                 print(studentController.firstNameController.text);

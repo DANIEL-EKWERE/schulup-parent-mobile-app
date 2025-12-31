@@ -377,6 +377,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                             backgroundColor: Color(0xFFFF8D2A).withOpacity(0.2),
                             child: Text(
                               controller.selectedStudent1.firstName
+                              
                                   .toUpperCase(),
                               style: TextStyle(
                                 color: Color(0xFFFF8D2A),

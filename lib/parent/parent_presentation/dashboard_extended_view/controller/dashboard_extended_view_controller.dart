@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/parent/core/utils/storage.dart';
@@ -111,18 +112,38 @@ class DashboardExtendedViewController extends GetxController {
           //   }
         }
       } else {
-        Get.snackbar(
-          'Error',
-          'Failed to load notifications',
-          snackPosition: SnackPosition.BOTTOM,
+        // Get.snackbar(
+        //   'Error',
+        //   'Failed to load notifications',
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Failed to load notifications',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       }
     } catch (e) {
       myLog.log('Error fetching notifications: $e');
-      Get.snackbar(
-        'Error',
-        'Something went wrong',
-        snackPosition: SnackPosition.BOTTOM,
+      // Get.snackbar(
+      //   'Error',
+      //   'Something went wrong',
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } finally {
       isLoading.value = false;
@@ -175,48 +196,60 @@ class DashboardExtendedViewController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
         isLoading.value = false;
         OverlayLoadingProgress.stop();
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            'Login failed. Please try again.',
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Something went wrong. Please try again.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       }
     } on SocketException {
       OverlayLoadingProgress.stop();
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'SCheck your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
       Get.to(() => ErrorPage());
     } catch (e) {
       OverlayLoadingProgress.stop();
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       OverlayLoadingProgress.stop();
@@ -239,7 +272,7 @@ class DashboardExtendedViewController extends GetxController {
       var userId = await dataBase.getUserId();
       myLog.log('User ID: $userId');
       final response = await _apiService.getAcademicSessions(
-        selectedStudent1!.studentID.toString(),
+        selectedStudent1.studentID.toString(),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         // // OverlayLoadingProgress.stop();
@@ -275,46 +308,58 @@ class DashboardExtendedViewController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
         isLoading.value = false;
         // OverlayLoadingProgress.stop();
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            'Login failed. Please try again.',
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Something went wrong. Please try again.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       }
     } on SocketException {
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'SCheck your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
       Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();
@@ -359,46 +404,58 @@ class DashboardExtendedViewController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
         isLoading.value = false;
         // OverlayLoadingProgress.stop();
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            'Login failed. Please try again.',
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Something went wrong. Please try again.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       }
     } on SocketException {
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Check your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
       Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();
@@ -418,7 +475,7 @@ class DashboardExtendedViewController extends GetxController {
     // );
     try {
       final response = await _apiService.getClass(
-        selectedStudent1!.studentID.toString(),
+        selectedStudent1.studentID.toString(),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
@@ -454,7 +511,7 @@ class DashboardExtendedViewController extends GetxController {
             break;
           } else {
             myLog.log('active class not found');
-            selectedClass!.value = 'No Active Class';
+            selectedClass.value = 'No Active Class';
           }
         }
 
@@ -468,47 +525,59 @@ class DashboardExtendedViewController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
         isLoading.value = false;
         // OverlayLoadingProgress.stop();
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            'Login failed. Please try again.',
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Something went wrong. Please try again.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       }
     } on SocketException {
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'SCheck your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
       Get.to(() => ErrorPage());
     } catch (e) {
       myLog.log(e.toString());
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();
@@ -526,7 +595,7 @@ class DashboardExtendedViewController extends GetxController {
     isLoading.value = true;
     try {
       final response = await _apiService.getBatch(
-        selectedStudent1!.studentID.toString(),
+        selectedStudent1.studentID.toString(),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         isLoading.value = false;
@@ -551,46 +620,58 @@ class DashboardExtendedViewController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
         // OverlayLoadingProgress.stop();
         isLoading.value = false;
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            'Login failed. Please try again.',
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Something went wrong. Please try again.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       }
     } on SocketException {
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'SCheck your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
       Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();
@@ -647,44 +728,56 @@ class DashboardExtendedViewController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
         // OverlayLoadingProgress.stop();
         isLoading.value = false;
-        Get.snackbar(
-          'Error',
-          'Fetching news failed. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Fetching news failed. Please try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       }
     } on SocketException {
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Check your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
       Get.to(() => ErrorPage());
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();
@@ -718,22 +811,43 @@ class DashboardExtendedViewController extends GetxController {
         isLoading.value = false;
       } else {
         isLoading.value = false;
-        Get.snackbar(
-          'Error',
-          'Failed to load terms',
-          snackPosition: SnackPosition.BOTTOM,
+        // Get.snackbar(
+        //   'Error',
+        //   'Failed to load terms',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        // );
+
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Failed to load terms',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar(
-        'Error',
-        'Failed to load terms: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
+      // Get.snackbar(
+      //   'Error',
+      //   'Failed to load terms: ${e.toString()}',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Failed to load terms: ${e.toString()}',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
         backgroundColor: Colors.red,
-        colorText: Colors.white,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     }
   }

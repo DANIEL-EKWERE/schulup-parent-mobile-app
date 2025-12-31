@@ -9,6 +9,7 @@ import 'package:schulupparent/student/core/utils/storage.dart';
 import 'package:schulupparent/student/data/apiClient/api_client.dart';
 import 'package:schulupparent/student/routes/app_routes.dart';
 import 'dart:developer' as myLog;
+import '../../../core/app_export.dart';
 
 class SigninController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
@@ -68,28 +69,34 @@ class SigninController extends GetxController {
         var message = responseData['message'];
         errorMessage.value = message;
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
         OverlayLoadingProgress.stop();
-        AlertInfo.show(
-          context: Get.context!,
-          text: 'Somehting went wrong',
-          typeInfo: TypeInfo.error,
-        );
+        // AlertInfo.show(
+        //   context: Get.context!,
+        //   text: 'Somehting went wrong',
+        //   typeInfo: TypeInfo.error,
+        // );
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            'Login failed. Please try again.',
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Something went wrong. Please try again.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       }
@@ -100,12 +107,15 @@ class SigninController extends GetxController {
         text: 'No internet connection',
         typeInfo: TypeInfo.error,
       );
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'SCheck your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       OverlayLoadingProgress.stop();
@@ -115,12 +125,15 @@ class SigninController extends GetxController {
       //   typeInfo: TypeInfo.error,
       // );
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();

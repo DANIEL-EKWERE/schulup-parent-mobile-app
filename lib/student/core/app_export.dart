@@ -10,4 +10,5 @@ export 'package:schulupparent/student/theme/app_decoration.dart';
 export 'package:schulupparent/student/theme/custom_text_style.dart';
 export 'package:schulupparent/student/theme/theme_helper.dart';
 export 'package:schulupparent/student/widgets/custom_image_view.dart';
+export 'package:fluttertoast/fluttertoast.dart';
 export 'package:get/get.dart';

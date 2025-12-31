@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -153,7 +154,7 @@ class ReportsReportCardAllVariantsController extends GetxController
         selectedTermId.value = 3;
       }
       final response = await _apiService.getTermlyReport(
-        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+        dashboardExtendedViewController.selectedStudent1.studentID.toString(),
         dashboardExtendedViewController
             .selectedAcademicSessionData!
             .academicSessionID
@@ -172,33 +173,42 @@ class ReportsReportCardAllVariantsController extends GetxController
         // OverlayLoadingProgress.stop();
         isLoading.value = false;
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            'Login failed. Please try again.',
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Something went wrong. Please try again.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       }
     } on SocketException {
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'SCheck your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();
@@ -220,7 +230,7 @@ class ReportsReportCardAllVariantsController extends GetxController
         selectedTermId.value = 3;
       }
       final response = await _apiService.getWeeklyReport(
-        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+        dashboardExtendedViewController.selectedStudent1.studentID.toString(),
         dashboardExtendedViewController
             .selectedAcademicSessionData!
             .academicSessionID
@@ -239,33 +249,42 @@ class ReportsReportCardAllVariantsController extends GetxController
         // OverlayLoadingProgress.stop();
         isLoading.value = false;
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            'Login failed. Please try again.',
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Something went wrong. Please try again.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       }
     } on SocketException {
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Check your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();
@@ -280,7 +299,7 @@ class ReportsReportCardAllVariantsController extends GetxController
     isLoading.value = true;
     try {
       final response = await _apiService.getDailyReport(
-        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+        dashboardExtendedViewController.selectedStudent1.studentID.toString(),
         formatDate1(datex.toString()),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -297,33 +316,42 @@ class ReportsReportCardAllVariantsController extends GetxController
         // OverlayLoadingProgress.stop();
         isLoading.value = false;
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            'Login failed. Please try again.',
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Something went wrong. Please try again.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       }
     } on SocketException {
       isLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'SCheck your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       isLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();
@@ -341,7 +369,7 @@ class ReportsReportCardAllVariantsController extends GetxController
     }
     try {
       final response = await _apiService.getCommets(
-        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+        dashboardExtendedViewController.selectedStudent1.studentID.toString(),
         formatDate1(datex.toString()),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -355,32 +383,41 @@ class ReportsReportCardAllVariantsController extends GetxController
       } else {
         // OverlayLoadingProgress.stop();
         isCommentsLoading.value = false;
-        Get.snackbar(
-          'Error',
-          'comments failed to fetch. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'comments failed to fetch. Please try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       }
     } on SocketException {
       isCommentsLoading.value = false;
-      Get.snackbar(
-        'Opps!!!',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Check your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       isCommentsLoading.value = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
       //OverlayLoadingProgress.stop();
@@ -412,7 +449,7 @@ class ReportsReportCardAllVariantsController extends GetxController
       Map<String, dynamic> body = {"messageText": messageText};
       final response = await _apiService.makeComment(
         body,
-        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+        dashboardExtendedViewController.selectedStudent1.studentID.toString(),
         formatDate1(datex.toString()),
       );
 
@@ -446,12 +483,15 @@ class ReportsReportCardAllVariantsController extends GetxController
     } on SocketException {
       // Remove optimistic message on network error
       tempMessageList.remove(optimisticMessage);
-      Get.snackbar(
-        'No Internet',
-        'Check your internet connection and try again.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Color(0XFFFF8C42),
-        colorText: Colors.white,
+      Fluttertoast.showToast(
+        webShowClose: true,
+        msg: 'Check your internet connection and try again.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     } catch (e) {
       // Remove optimistic message on unexpected error
@@ -507,7 +547,7 @@ class ReportsReportCardAllVariantsController extends GetxController
       // }
 
       myLog.log(
-        'student id ${dashboardExtendedViewController.selectedStudent1!.studentID.toString()}',
+        'student id ${dashboardExtendedViewController.selectedStudent1.studentID.toString()}',
       );
       myLog.log(
         'student batch id ${dashboardExtendedViewController.studentBatchObj.data!.first.batchID}',
@@ -516,7 +556,7 @@ class ReportsReportCardAllVariantsController extends GetxController
 
       // Download the PDF
       final response = await _apiService.downloadAndOpen(
-        dashboardExtendedViewController.selectedStudent1!.studentID.toString(),
+        dashboardExtendedViewController.selectedStudent1.studentID.toString(),
         dashboardExtendedViewController.studentBatchObj.data!.first.batchID
             .toString(),
         reportCardType,

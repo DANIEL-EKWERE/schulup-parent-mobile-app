@@ -312,8 +312,8 @@ class _AcademicsAssignmentStatusInitialPageState
                 AppbarSubtitleFive(
                   text:
                       dashboardExtendedViewController
-                          .selectedStudent1!
-                          .firstName!,
+                          .selectedStudent1
+                          .firstName,
                   margin: EdgeInsets.only(left: 28.h, right: 29.h),
                 ),
               ],

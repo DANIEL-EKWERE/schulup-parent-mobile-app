@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:schulupparent/admin/core/utils/storage.dart';
 import 'package:schulupparent/admin/data/apiClient/api_client.dart';
 import 'package:schulupparent/admin/presentation/change_school_code_dialog/model/change_school_code_model.dart';
@@ -50,32 +51,55 @@ class ChangeSchoolCodeController extends GetxController {
         var responseData = jsonDecode(response.body);
         var message = responseData['message'];
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Get.snackbar(
-            'Error',
-            message,
-            snackPosition: SnackPosition.BOTTOM,
+          // Get.snackbar(
+          //   'Error',
+          //   message,
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   backgroundColor: Colors.red,
+          //   colorText: Colors.white,
+          // );
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
             backgroundColor: Colors.red,
-            colorText: Colors.white,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         });
       } else {
-        Get.snackbar(
-          'Error',
-          'Something went wrong. Please try again.',
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Something went wrong. Please try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
+        // Get.snackbar(
+        //   'Error',
+        //   'Something went wrong. Please try again.',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        // );
       }
     } catch (e) {
       // OverlayLoadingProgress.stop();
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Get.snackbar(
-          'Error',
-          e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       });
     } finally {
@@ -97,8 +121,8 @@ class ChangeSchoolCodeController extends GetxController {
           circularProgressColor: Color(0XFFFF8C42),
         );
         adminDataBase.logOut();
-       // Get.offAllNamed(AppRoutes.loginScreen);
-       Get.to(()=> SigninScreen());
+        // Get.offAllNamed(AppRoutes.loginScreen);
+        Get.to(() => SigninScreen());
         OverlayLoadingProgress.stop();
       } else {
         OverlayLoadingProgress.stop();

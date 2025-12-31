@@ -979,23 +979,24 @@ class _DashboardEditWardProfileScreenState
         ],
       ),
       actions: [
-        (controller.lastNameController.text.isEmpty ||
-                controller.firstNameController.text.isEmpty ||
-                controller.middleNameController.text.isEmpty ||
-                controller.selectedGender.value.isEmpty
-            //||
-            //  controller.dateOfBirthController.text.isEmpty ||
-            //  controller.selectedBloodGroup.value.isEmpty ||
-            //  controller.selectedGenotype.value.isEmpty ||
-            // controller.placeOfBirthNameController.text.isEmpty ||
-            //  controller.stateController.text.isEmpty ||
-            // controller.cityController.text.isEmpty ||
-            // controller.addressController.text.isEmpty ||
-            // controller.phoneController.text.isEmpty ||
-            //controller.religionController.text.isEmpty
-            )
-            ? SizedBox.shrink()
-            : ElevatedButton(
+        // (controller.lastNameController.text.isEmpty ||
+        //         controller.firstNameController.text.isEmpty ||
+        //         controller.middleNameController.text.isEmpty ||
+        //         controller.selectedGender.value.isEmpty
+        //     //||
+        //     //  controller.dateOfBirthController.text.isEmpty ||
+        //     //  controller.selectedBloodGroup.value.isEmpty ||
+        //     //  controller.selectedGenotype.value.isEmpty ||
+        //     // controller.placeOfBirthNameController.text.isEmpty ||
+        //     //  controller.stateController.text.isEmpty ||
+        //     // controller.cityController.text.isEmpty ||
+        //     // controller.addressController.text.isEmpty ||
+        //     // controller.phoneController.text.isEmpty ||
+        //     //controller.religionController.text.isEmpty
+        //     )
+        //     ? SizedBox.shrink()
+        //     : 
+            ElevatedButton(
               onPressed: () {
                 print(controller.lastNameController.text);
                 print(controller.firstNameController.text);

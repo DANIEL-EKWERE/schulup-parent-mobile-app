@@ -1,6 +1,7 @@
 import 'dart:async';
 // import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:schulupparent/admin/core/network/network_info.dart';
 
 import 'package:schulupparent/admin/core/utils/database_helper.dart';
@@ -48,29 +49,62 @@ class ConnectivityService {
       final requests = await OfflineQueueDB().getAllRequests();
       requests.isEmpty
           ? SizedBox.shrink() //Get.snackbar('Up To date', 'nothing to sync.')
-          : Get.snackbar(
-            'found',
-            "Found ${requests.length.toString()} offline Operations,\nSynchronizing now!",
+          :
+          // Get.snackbar(
+          //   'found',
+          //   "Found ${requests.length.toString()} offline Operations,\nSynchronizing now!",
+          // );
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg:
+                "Found ${requests.length.toString()} offline Operations,\nSynchronizing now!",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
+            backgroundColor: Colors.yellow,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
       for (final req in requests) {
         try {
-          Get.snackbar(
-            'Info',
-            'This Operation will take place at the background.',
-            colorText: Colors.white,
-            backgroundColor: Colors.deepOrange,
-            snackPosition: SnackPosition.BOTTOM,
+          // Get.snackbar(
+          //   'Info',
+          //   'This Operation will take place at the background.',
+          //   colorText: Colors.white,
+          //   backgroundColor: Colors.deepOrange,
+          //   snackPosition: SnackPosition.BOTTOM,
+          // );
+
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'This Operation will take place at the background.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
+            backgroundColor: Colors.yellow,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
           // Replace with your actual API service
           await ApiClient(Duration(seconds: 60 * 5)).attendance(req);
         } catch (e) {
-          Get.snackbar(
-            'Oops!!!',
-            'Error while synchronizing \n $e.',
-            colorText: Colors.white,
-            backgroundColor: Colors.redAccent,
-            snackPosition: SnackPosition.BOTTOM,
+          Fluttertoast.showToast(
+            webShowClose: true,
+            msg: 'Error while synchronizing \n $e.',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 3,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
+          // Get.snackbar(
+          //   'Oops!!!',
+          //   'Error while synchronizing \n $e.',
+          //   colorText: Colors.white,
+          //   backgroundColor: Colors.redAccent,
+          //   snackPosition: SnackPosition.BOTTOM,
+          // );
         }
       }
       await OfflineQueueDB().clearQueue();
