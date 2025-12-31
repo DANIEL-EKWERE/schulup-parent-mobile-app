@@ -763,23 +763,22 @@ class ApiClient extends GetConnect {
 
   /// submit Test
   Future<http.Response> submitTest(Map<String, dynamic> testData) async {
-     return await _makeAuthenticatedRequest(() async {
-    final url = Uri.parse('$baseUrl/quiz/submit');
-    var token = await dataBase.getToken();
-    _logRequest('POST', url, body: testData);
-    final response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode(testData),
-    );
-    _logResponse(response);
-    return response;
-    
-     });
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse('$baseUrl/quiz/submit');
+      var token = await dataBase.getToken();
+      _logRequest('POST', url, body: testData);
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(testData),
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   /// start cbt test
@@ -787,23 +786,23 @@ class ApiClient extends GetConnect {
     String studentID,
     String quizScheduleID,
   ) async {
-     return await _makeAuthenticatedRequest(() async {
-    final url = Uri.parse(
-      '$baseUrl/quiz/students/$studentID/schedules/$quizScheduleID/attempt',
-    );
-    var token = await dataBase.getToken();
-    _logRequest('POST', url);
-    final response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
-     });
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse(
+        '$baseUrl/quiz/students/$studentID/schedules/$quizScheduleID/attempt',
+      );
+      var token = await dataBase.getToken();
+      _logRequest('POST', url);
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   /// student reply to an assignment
@@ -811,45 +810,42 @@ class ApiClient extends GetConnect {
     Map<String, dynamic> replyData,
     String studentId,
   ) async {
-     return await _makeAuthenticatedRequest(() async {
-    var token = await dataBase.getToken();
-    final url = Uri.parse('$baseUrl/assignments/student/$studentId/reply');
-    _logRequest('POST', url, body: replyData);
-    final response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode(replyData),
-    );
-    _logResponse(response);
-    return response;
-     });
+    return await _makeAuthenticatedRequest(() async {
+      var token = await dataBase.getToken();
+      final url = Uri.parse('$baseUrl/assignments/student/$studentId/reply');
+      _logRequest('POST', url, body: replyData);
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(replyData),
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
-
   /// send fcm token to backend
-  Future<http.Response> sendFcmToken(
-    Map<String, dynamic> replyData,
-  ) async {
-     return await _makeAuthenticatedRequest(() async {
-    var token = await dataBase.getToken();
-    final url = Uri.parse('$baseUrl/devicetokens/register');
-    _logRequest('POST', url, body: replyData);
-    final response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode(replyData),
-    );
-    _logResponse(response);
-    return response;
-     });
+  Future<http.Response> sendFcmToken(Map<String, dynamic> replyData) async {
+    return await _makeAuthenticatedRequest(() async {
+      var token = await dataBase.getToken();
+      final url = Uri.parse('$baseUrl/devicetokens/register');
+      _logRequest('POST', url, body: replyData);
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(replyData),
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   /// student reply to an assignment
@@ -857,141 +853,136 @@ class ApiClient extends GetConnect {
     Map<String, dynamic> askData,
     String studentId,
   ) async {
-     return await _makeAuthenticatedRequest(() async {
-
-    var token = await dataBase.getToken();
-    final url = Uri.parse('$baseUrl/aitutor/ask/students/$studentId');
-    _logRequest('POST', url, body: askData);
-    final response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode(askData),
-    );
-    _logResponse(response);
-    return response;
-     });
+    return await _makeAuthenticatedRequest(() async {
+      var token = await dataBase.getToken();
+      final url = Uri.parse('$baseUrl/aitutor/ask/students/$studentId');
+      _logRequest('POST', url, body: askData);
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(askData),
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
+  //TODO: refrresh
 
-//TODO: refrresh
-
-
-Future<bool> refreshToken() async {
-  if (_isRefreshing) {
-    // Wait for ongoing refresh to complete
-    await Future.delayed(Duration(milliseconds: 500));
-    return await dataBase.getToken() != null;
-  }
-
-  _isRefreshing = true;
-
-  try {
-    final refreshToken = await dataBase.getRefreshToken();
-    
-    if (refreshToken == null || refreshToken.isEmpty) {
-      if (kDebugMode) print('❌ No refresh token found');
-      return false;
+  Future<bool> refreshToken() async {
+    if (_isRefreshing) {
+      // Wait for ongoing refresh to complete
+      await Future.delayed(Duration(milliseconds: 500));
+      return await dataBase.getToken() != null;
     }
 
-    if (kDebugMode) print('🔄 Refreshing access token...');
+    _isRefreshing = true;
 
-    final response = await http.post(
-      Uri.parse('$baseUrl/auth/refresh-token'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: json.encode({'refresh_token': refreshToken}),
-    ).timeout(const Duration(seconds: 10));
+    try {
+      final refreshToken = await dataBase.getRefreshToken();
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      
-      await dataBase.saveToken(data['token'] ?? data['access_token']);
-      
-      if (data['refreshToken'] != null || data['refresh_token'] != null) {
-        await dataBase.saveRefreshToken(
-          data['refreshToken'] ?? data['refresh_token']
-        );
+      if (refreshToken == null || refreshToken.isEmpty) {
+        if (kDebugMode) print('❌ No refresh token found');
+        return false;
       }
-      
-      if (kDebugMode) print('✅ Tokens refreshed successfully');
-      return true;
-      
-    } else if (response.statusCode == 401 || response.statusCode == 403) {
-      if (kDebugMode) print('❌ Refresh token expired');
-      await _handleSessionExpired();
+
+      if (kDebugMode) print('🔄 Refreshing access token...');
+
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/auth/refresh-token'),
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: json.encode({'refresh_token': refreshToken}),
+          )
+          .timeout(const Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        await dataBase.saveToken(data['token'] ?? data['access_token']);
+
+        if (data['refreshToken'] != null || data['refresh_token'] != null) {
+          await dataBase.saveRefreshToken(
+            data['refreshToken'] ?? data['refresh_token'],
+          );
+        }
+
+        if (kDebugMode) print('✅ Tokens refreshed successfully');
+        return true;
+      } else if (response.statusCode == 401 || response.statusCode == 403) {
+        if (kDebugMode) print('❌ Refresh token expired');
+        await _handleSessionExpired();
+        return false;
+      }
+
       return false;
+    } catch (e) {
+      if (kDebugMode) print('❌ Refresh error: $e');
+      return false;
+    } finally {
+      _isRefreshing = false;
     }
-
-    return false;
-
-  } catch (e) {
-    if (kDebugMode) print('❌ Refresh error: $e');
-    return false;
-  } finally {
-    _isRefreshing = false;
   }
-}
 
-Future<void> _handleSessionExpired() async {
-  await dataBase.logOut();
-  Get.offAll(() => SigninScreen());
-  SnackbarUtils.showSnackbarError(
-    'Session Expired',
-    'Please login again to continue',
-  );
-}
+  Future<void> _handleSessionExpired() async {
+    await dataBase.logOut();
+    Get.offAll(() => SigninScreen());
+    SnackbarUtils.showSnackbarError(
+      'Session Expired',
+      'Please login again to continue',
+    );
+  }
 
-Future<http.Response> _makeAuthenticatedRequest(
-  Future<http.Response> Function() request,
-) async {
-  http.Response response = await request();
+  Future<http.Response> _makeAuthenticatedRequest(
+    Future<http.Response> Function() request,
+  ) async {
+    http.Response response = await request();
 
-  if (response.statusCode == 401) {
-    if (kDebugMode) print('🔄 Token expired, refreshing...');
-    
-    final refreshed = await refreshToken();
-    
-    if (refreshed) {
-      response = await request();
-      
-      if (response.statusCode == 401) {
+    if (response.statusCode == 401) {
+      if (kDebugMode) print('🔄 Token expired, refreshing...');
+
+      final refreshed = await refreshToken();
+
+      if (refreshed) {
+        response = await request();
+
+        if (response.statusCode == 401) {
+          await _handleSessionExpired();
+          throw Exception('Session expired');
+        }
+      } else {
         await _handleSessionExpired();
         throw Exception('Session expired');
       }
-    } else {
-      await _handleSessionExpired();
-      throw Exception('Session expired');
     }
+
+    return response;
   }
-
-  return response;
-}
-
-
 
   // get Students linked to a guardian
   Future<http.Response> byGuardian(String userId) async {
-     return await _makeAuthenticatedRequest(() async {
-    final url = Uri.parse('$baseUrl/students/by-guardian/$userId');
-    var token = await dataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
-     });
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse('$baseUrl/students/by-guardian/$userId');
+      var token = await dataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   // get Students assignments
@@ -1001,22 +992,23 @@ Future<http.Response> _makeAuthenticatedRequest(
     String termID,
     String submissionStatus,
   ) async {
-     return await _makeAuthenticatedRequest(() async {
-    final url = Uri.parse(
-      '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&submissionStatus=$submissionStatus&page=1&pageSize=10',
-    );
-    var token = await dataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;});
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse(
+        '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&submissionStatus=$submissionStatus&page=1&pageSize=10',
+      );
+      var token = await dataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   // get Students assignments
@@ -1027,66 +1019,65 @@ Future<http.Response> _makeAuthenticatedRequest(
     String submissionStatus,
     String searchTerm,
   ) async {
-     return await _makeAuthenticatedRequest(() async {
-    final url = Uri.parse(
-      '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&searchTerm=$searchTerm&submissionStatus=$submissionStatus&page=1&pageSize=10',
-    );
-    var token = await dataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
-     });
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse(
+        '$baseUrl/assignments/student/$studentId?classId=$classID&termId=$termID&searchTerm=$searchTerm&submissionStatus=$submissionStatus&page=1&pageSize=10',
+      );
+      var token = await dataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   // get ai conversations
   Future<http.Response> getAiConversations(String studentId) async {
-     return await _makeAuthenticatedRequest(() async {
-    final url = Uri.parse(
-
-      '$baseUrl/aitutor/conversations/students/$studentId?page=1&pageSize=20',
-    );
-    var token = await dataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
-     });
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse(
+        '$baseUrl/aitutor/conversations/students/$studentId?page=1&pageSize=20',
+      );
+      var token = await dataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   ///assignments/16429
 
   // get Students assignments by id
   Future<http.Response> getStudentAssignmentById(String assignmentID) async {
-     return await _makeAuthenticatedRequest(() async {
-    final url = Uri.parse('$baseUrl/assignments/$assignmentID');
-    var token = await dataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
-     });
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse('$baseUrl/assignments/$assignmentID');
+      var token = await dataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   // get Students linked to a guardian
@@ -1095,42 +1086,42 @@ Future<http.Response> _makeAuthenticatedRequest(
     String year,
     String month,
   ) async {
-     return await _makeAuthenticatedRequest(() async {
-    final url = Uri.parse(
-      '$baseUrl/attendance/student/$studentID/monthly?year=$year&month=$month',
-    );
-    var token = await dataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
-     });
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse(
+        '$baseUrl/attendance/student/$studentID/monthly?year=$year&month=$month',
+      );
+      var token = await dataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   // get teachesr linked to a student
   Future<http.Response> getTeachers(String studentId) async {
-     return await _makeAuthenticatedRequest(() async {
-    final url = Uri.parse('$baseUrl/students/$studentId/classteachers');
-    var token = await dataBase.getToken();
-    _logRequest('GET', url);
-    final response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    _logResponse(response);
-    return response;
-     });
+    return await _makeAuthenticatedRequest(() async {
+      final url = Uri.parse('$baseUrl/students/$studentId/classteachers');
+      var token = await dataBase.getToken();
+      _logRequest('GET', url);
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logResponse(response);
+      return response;
+    });
   }
 
   // get teachesr linked to a student
@@ -1299,7 +1290,6 @@ Future<http.Response> _makeAuthenticatedRequest(
     _logResponse(response);
     return response;
   }
-
 
   // get Student's subjects progress
   Future<http.Response> getDashboardStats() async {
@@ -2312,6 +2302,66 @@ Future<http.Response> _makeAuthenticatedRequest(
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+  // Get notifications
+  Future<http.Response> getNotifications(int page) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final url = Uri.parse(
+      '$baseUrl/devicetokens/my-notifications?page=$page&pageSize=20',
+    );
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+  Future<http.Response> markNotificationAsRead1(int notificationId) async {
+    var token = await dataBase.getToken();
+
+    final response = await http
+        .post(
+          Uri.parse(
+            '$baseUrl/devicetokens/notifications/$notificationId/mark-read',
+          ),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        )
+        .timeout(timeout);
+    //_logRequest('GET', url);
+    return response;
+  }
+
+  // Update a notification status to read
+  Future<http.Response> markNotificationAsRead(int notificationId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final url = Uri.parse(
+      '$baseUrl/devicetokens/notifications/$notificationId/mark-read',
+    );
+    //_logRequest('PUT', url, body: categoryData);
+    final response = await http.put(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      //  body: jsonEncode(categoryData),
     );
     _logResponse(response);
     return response;

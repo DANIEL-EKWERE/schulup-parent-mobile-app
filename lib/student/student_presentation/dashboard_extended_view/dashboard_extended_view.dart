@@ -29,6 +29,7 @@ import 'package:schulupparent/student/student_presentation/dashboard_extended_vi
 import 'package:schulupparent/student/student_presentation/direct_chat/direct_chat_screen.dart';
 import 'package:schulupparent/student/student_presentation/news_events_screen/controller/news_events_controller.dart';
 import 'package:schulupparent/student/student_presentation/news_events_screen/news_events_screen.dart';
+import 'package:schulupparent/student/student_presentation/notification/notification_screen.dart';
 import 'package:schulupparent/student/student_presentation/reports_ward_progress_academic_screen/controller/reports_ward_progress_academic_controller.dart';
 import 'package:schulupparent/student/student_presentation/reports_ward_progress_academic_screen/reports_ward_progress_academic_screen.dart';
 import 'package:schulupparent/student/student_presentation/settings/settings_screen.dart';
@@ -403,17 +404,43 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
 
             // ),
             actions: [
-              // AppbarTrailingIconbutton(
-              //   onTap: () async {
-              //     var token = await studentDataBase.getToken();
-              //     print('chat');
-              //     // Get.to(() => ChatScreen());
-              //     print(token);
-              //     //controller.getAcademicSessions();
-              //     controller.getClass();
-              //   },
-              //   imagePath: ImageConstant.imgNotification,
-              // ),
+              Stack(
+                clipBehavior: Clip.hardEdge,
+                // fit: StackFit.expand,
+                children: [
+                  AppbarTrailingIconbutton(
+                    onTap: () async {
+                      //   var token = await studentDataBase.getToken();
+                      //   print('chat');
+                      Get.to(() => NotificationScreen());
+                      //   print(token);
+                      //   //controller.getAcademicSessions();
+                      //   controller.getClass();
+                    },
+                    imagePath: ImageConstant.imgNotification,
+                  ),
+                  Positioned(
+                    left: 20.h,
+                    top: 10.h,
+                    child: Obx(() {
+                      return controller.hasUnreadNotifications.value
+                          ? Container(
+                            width: 10.h,
+                            height: 10.h,
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1.5,
+                              ),
+                            ),
+                          )
+                          : SizedBox.shrink();
+                    }),
+                  ),
+                ],
+              ),
               AppbarTrailingIconbutton(
                 onTap: () {
                   //Get.toNamed(AppRoutes.directChatScreen);

@@ -11,6 +11,7 @@ import 'package:schulupparent/parent/parent_presentation/dashboard_edit_ward_pro
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/base64.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/models/models.dart';
+import 'package:schulupparent/parent/parent_presentation/notification/notification_screen.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/widget/chart_widget.dart';
 import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/widget/widget.dart';
 import 'package:schulupparent/parent/theme/app_decoration.dart';
@@ -535,16 +536,42 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
 
             // ),
             actions: [
-              AppbarTrailingIconbutton(
-                onTap: () async {
-                  var token = await dataBase.getToken();
-                  print('chat');
-                  // Get.to(() => ChatScreen());
-                  print(token);
-                  //controller.getAcademicSessions();
-                  controller.getClass();
-                },
-                imagePath: ImageConstant.imgNotification,
+              Stack(
+                clipBehavior: Clip.hardEdge,
+                // fit: StackFit.expand,
+                children: [
+                  AppbarTrailingIconbutton(
+                    onTap: () async {
+                      //   var token = await studentDataBase.getToken();
+                      //   print('chat');
+                      Get.to(() => NotificationScreen());
+                      //   print(token);
+                      //   //controller.getAcademicSessions();
+                      //   controller.getClass();
+                    },
+                    imagePath: ImageConstant.imgNotification,
+                  ),
+                  Positioned(
+                    left: 20.h,
+                    top: 10.h,
+                    child: Obx(() {
+                      return controller.hasUnreadNotifications.value
+                          ? Container(
+                            width: 10.h,
+                            height: 10.h,
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1.5,
+                              ),
+                            ),
+                          )
+                          : SizedBox.shrink();
+                    }),
+                  ),
+                ],
               ),
               AppbarTrailingIconbutton(
                 onTap: () {

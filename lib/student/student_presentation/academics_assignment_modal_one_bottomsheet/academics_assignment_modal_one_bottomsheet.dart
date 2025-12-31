@@ -197,7 +197,7 @@ class _AcademicsAssignmentModalOneBottomsheetState
 
                 controller1.termTypeId.value = selectedTypeId.first;
                 controller1.lessonList.clear();
-                  controller1.allLessons().then((value) {
+                controller1.allLessons().then((value) {
                   //myLog.log("${value}");
                   controller1.allLessons();
                 });
@@ -206,11 +206,13 @@ class _AcademicsAssignmentModalOneBottomsheetState
                 controllers.assignmentData!.clear();
                 controllers.getAssignment();
 
+                lessonsController.allLessons().then((value) {
+                  lessonsController.allLessons();
 
-
-                    lessonsController.allLessons().then((value) {
-                lessonsController.allLessons();
-              });
+                  widget.controllerx.allLessons().then((value) {
+                    widget.controllerx.allLessons();
+                  });
+                });
                 widget.controllerx.allLessons();
               });
             },

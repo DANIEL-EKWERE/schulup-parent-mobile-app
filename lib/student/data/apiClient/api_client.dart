@@ -525,6 +525,69 @@ class ApiClient extends GetConnect {
     return response;
   }
 
+
+
+  // Get notifications
+  Future<http.Response> getNotifications(int page) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final url = Uri.parse(
+      '$baseUrl/devicetokens/my-notifications?page=$page&pageSize=20',
+    );
+    _logRequest('GET', url);
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    _logResponse(response);
+    return response;
+  }
+
+  Future<http.Response> markNotificationAsRead1(int notificationId) async {
+    var token = await studentDataBase.getToken();
+
+    final response = await http
+        .post(
+          Uri.parse(
+            '$baseUrl/devicetokens/notifications/$notificationId/mark-read',
+          ),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        )
+        .timeout(timeout);
+    //_logRequest('GET', url);
+    return response;
+  }
+
+  // Update a notification status to read
+  Future<http.Response> markNotificationAsRead(int notificationId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final url = Uri.parse(
+      '$baseUrl/devicetokens/notifications/$notificationId/mark-read',
+    );
+    //_logRequest('PUT', url, body: categoryData);
+    final response = await http.put(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      //  body: jsonEncode(categoryData),
+    );
+    _logResponse(response);
+    return response;
+  }
+
+
   Future<http.Response> updateCheckoutAddress(
     Map<String, dynamic> addressData,
   ) async {

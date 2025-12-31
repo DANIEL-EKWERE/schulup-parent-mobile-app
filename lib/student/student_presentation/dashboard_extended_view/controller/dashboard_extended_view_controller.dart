@@ -20,6 +20,7 @@ import 'package:schulupparent/student/student_presentation/dashboard_extended_vi
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/models/student_class_model.dart';
 import 'package:schulupparent/student/student_presentation/dashboard_extended_view/models/term_model.dart';
 import 'package:schulupparent/student/student_presentation/news_all_variants_page/models/news_model.dart';
+import 'package:schulupparent/student/student_presentation/notification/model/notification_model.dart';
 
 class StudentDashboardExtendedViewController extends GetxController {
   ApiClient _apiService = ApiClient(Duration(seconds: 60 * 5));
@@ -89,7 +90,71 @@ class StudentDashboardExtendedViewController extends GetxController {
     await getStudentInfo();
     await fetchTerms();
     await getDashBoardStats();
+    await fetchNotifications();
     OverlayLoadingProgress.stop();
+  }
+
+  var unreadCount = 0.obs;
+  var hasUnreadNotifications = false.obs;
+
+  var notifications = <NotificationItem>[].obs;
+
+  // Grouped notifications
+  var todayNotifications = <NotificationItem>[].obs;
+  var last7DaysNotifications = <NotificationItem>[].obs;
+  var last30DaysNotifications = <NotificationItem>[].obs;
+
+  // Pagination
+  var currentPage = 1.obs;
+  var totalPages = 1.obs;
+  var totalCount = 0.obs;
+
+  // Fetch notifications from API
+  Future<void> fetchNotifications({int page = 1}) async {
+    try {
+      isLoading.value = true;
+
+      final response = await _apiService.getNotifications(page);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var responseData = jsonDecode(response.body);
+        NotificationResponse notificationResponse =
+            NotificationResponse.fromJson(responseData);
+
+        if (notificationResponse.data != null) {
+          notifications.value = notificationResponse.data!.notifications ?? [];
+          // totalCount.value = notificationResponse.data!.totalCount ?? 0;
+          // totalPages.value = notificationResponse.data!.totalPages ?? 1;
+          // currentPage.value = page;
+          if (notifications.isNotEmpty) {
+            unreadCount.value =
+                notifications.where((n) => n.readAt == null).length;
+            hasUnreadNotifications.value = unreadCount.value > 0;
+          }
+
+          //  // Add this method to calculate unread notifications
+          //   void _calculateUnreadCount() {
+          //     unreadCount.value = notifications.where((n) => n.readAt == null).length;
+          //     hasUnreadNotifications.value = unreadCount.value > 0;
+          //   }
+        }
+      } else {
+        Get.snackbar(
+          'Error',
+          'Failed to load notifications',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      myLog.log('Error fetching notifications: $e');
+      Get.snackbar(
+        'Error',
+        'Something went wrong',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> getStudentInfo() async {

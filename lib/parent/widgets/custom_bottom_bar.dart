@@ -12,32 +12,34 @@ class CustomBottomBar extends StatelessWidget {
   List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
       icon: ImageConstant.imgNavHome,
-      activeIcon: ImageConstant.imgNavHome,
+      activeIcon: 'assets/images/active_home.svg', //ImageConstant.imgNavHome,
       title: "lbl_home".tr,
       type: BottomBarEnum.Home,
     ),
     //"lbl_academics".tr
     BottomMenuModel(
-      icon: ImageConstant.imgNavAcademics,
+      icon: 'assets/images/class_work.svg', //ImageConstant.imgNavAcademics,
       activeIcon: ImageConstant.imgNavAcademics,
       title: "Class Work",
       type: BottomBarEnum.Academics,
     ),
     BottomMenuModel(
       icon: ImageConstant.imgNavAttendance,
-      activeIcon: ImageConstant.imgNavAttendance,
+      activeIcon:
+          'assets/images/active_attendance.svg', //ImageConstant.imgNavAttendance,
       title: "lbl_attendance".tr,
       type: BottomBarEnum.Attendance,
     ),
     BottomMenuModel(
       icon: ImageConstant.imgNavReports,
-      activeIcon: ImageConstant.imgNavReports,
+      activeIcon:
+          'assets/images/active_report.svg', //ImageConstant.imgNavReports,
       title: "lbl_reports".tr,
       type: BottomBarEnum.Reports,
     ),
     BottomMenuModel(
       icon: ImageConstant.imgNavNews,
-      activeIcon: ImageConstant.imgNavNews,
+      activeIcon: 'assets/images/active_news.svg', //ImageConstant.imgNavNews,
       title: "lbl_news".tr,
       type: BottomBarEnum.News,
     ),
