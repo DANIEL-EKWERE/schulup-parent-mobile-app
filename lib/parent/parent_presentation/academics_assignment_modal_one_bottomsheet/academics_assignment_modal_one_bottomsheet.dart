@@ -5,27 +5,45 @@ import 'package:schulupparent/parent/parent_presentation/academics_assignment_st
 import 'package:schulupparent/parent/parent_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
 import 'package:schulupparent/parent/parent_presentation/attendance_all_variants_page/controller/attendance_all_variants_controller.dart';
+import 'package:schulupparent/parent/parent_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/parent/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_assignment_modal_one_controller.dart';
+import 'dart:developer' as myLog;
 
 // ignore_for_file: must_be_immutable
+//AcademicsAssignmentController
 AcademicsAssignmentStatusController controller1 =
     Get.find<AcademicsAssignmentStatusController>();
+
+AcademicsAssignmentStatusController control = Get.put(
+  AcademicsAssignmentStatusController(),
+);
+
 AcademicsAssignmentController controllers = Get.put(
   AcademicsAssignmentController(AcademicsAssignmentModel().obs),
 );
+//AcademicsAssignmentController(AcademicsAssignmentModel().obs),
+//);
+
 AcademicsLessonAllLessonsController lessonsController = Get.put(
   AcademicsLessonAllLessonsController(AcademicsLessonAllLessonsModel().obs),
 );
 
+DashboardExtendedViewController dashboardExrendedController =
+    Get.find<DashboardExtendedViewController>();
+
 class AcademicsAssignmentModalOneBottomsheet extends StatefulWidget {
-  AcademicsAssignmentModalOneBottomsheet(this.controller, {Key? key})
-    : super(key: key);
+  AcademicsAssignmentModalOneBottomsheet(
+    this.controller,
+    this.controllerx, {
+    Key? key,
+  }) : super(key: key);
 
   AcademicsAssignmentModalOneController controller;
+  AcademicsAssignmentStatusController controllerx;
 
   @override
   State<AcademicsAssignmentModalOneBottomsheet> createState() =>
@@ -163,25 +181,47 @@ class _AcademicsAssignmentModalOneBottomsheetState
           CustomElevatedButton(
             onPressed: () {
               Navigator.pop(context);
+              // controllers.getAssignment();
+              myLog.log(
+                'Selected Term: ${selectedType.first}, ID: ${selectedTypeId.first}',
+              );
               setState(() {
                 controller1.termType.value = selectedType.first;
                 if (controller1.termType.value.contains('First Term')) {
                   controller1.termType.value = '1';
+                  //  controllers.getAssignment();
                   dashboardExtendedViewController.selectedTerm = 1;
                 } else if (controller1.termType.value.contains('Second Term')) {
                   controller1.termType.value = '2';
                   dashboardExtendedViewController.selectedTerm = 2;
+                  //controllers.getAssignment();
                 } else if (controller1.termType.value.contains('Third Term')) {
                   controller1.termType.value = '3';
                   dashboardExtendedViewController.selectedTerm = 3;
+                  //  controllers.getAssignment();
                 }
 
                 controller1.termTypeId.value = selectedTypeId.first;
-                controller1.allLessons();
+                controller1.allLessons().then((value) {
+                  //myLog.log("${value}");
+                  controller1.allLessons();
+                });
+                //  controller1.allLessons();
+
+                // controller1.allLessons();
+                //  control.allLessons();
                 controller1.getAssignment();
                 controllers.getAssignment();
+                widget.controllerx.getAssignment();
               });
-              lessonsController.allLessons();
+              widget.controllerx.getAssignment();
+              // lessonsController.allLessons();
+
+              lessonsController.allLessons().then((value) {
+                lessonsController.allLessons();
+              });
+
+              myLog.log('+++++++++++++++++++++++++++++++++');
             },
             height: 64.h,
             text: "lbl_confirm".tr,

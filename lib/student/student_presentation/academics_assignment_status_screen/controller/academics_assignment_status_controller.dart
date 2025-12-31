@@ -85,9 +85,9 @@ class StudentAcademicsAssignmentStatusController extends GetxController
     int studentId = await studentDataBase.getStudentId();
     String studentName = await studentDataBase.getUserName();
     myLog.log('setting $studentId');
-    dashboardExtendedViewController.selectedStudent1!.studentID = studentId;
+    dashboardExtendedViewController.selectedStudent1.studentID = studentId;
 
-    dashboardExtendedViewController.selectedStudent1!.firstName = studentName;
+    dashboardExtendedViewController.selectedStudent1.firstName = studentName;
     myLog.log('value set');
 
     await dashboardExtendedViewController.getBatch();

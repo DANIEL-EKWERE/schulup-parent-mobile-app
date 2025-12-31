@@ -138,19 +138,19 @@ class AppNavigationScreen extends GetWidget<AppNavigationController> {
                                 ),
                               ),
                         ),
-                        _buildScreenTitle(
-                          screenTitle:
-                              "Academics - Assignment - Modal One - BottomSheet",
-                          onTapScreenTitle:
-                              () => onTapBottomSheetTitle(
-                                context,
-                                AcademicsAssignmentModalOneBottomsheet(
-                                  Get.put(
-                                    AcademicsAssignmentModalOneController(),
-                                  ),
-                                ),
-                              ),
-                        ),
+                        // _buildScreenTitle(
+                        //   screenTitle:
+                        //       "Academics - Assignment - Modal One - BottomSheet",
+                        //   onTapScreenTitle:
+                        //       () => onTapBottomSheetTitle(
+                        //         context,
+                        //         AcademicsAssignmentModalOneBottomsheet(
+                        //           Get.put(
+                        //             AcademicsAssignmentModalOneController(),
+                        //           ),
+                        //         ),
+                        //       ),
+                        // ),
                         _buildScreenTitle(
                           screenTitle:
                               "Academics - Assignment - Modal Two - BottomSheet",

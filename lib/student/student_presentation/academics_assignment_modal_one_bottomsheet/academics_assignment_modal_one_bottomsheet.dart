@@ -5,11 +5,13 @@ import 'package:schulupparent/student/student_presentation/academics_assignment_
 import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/controller/academics_lesson_all_lessons_controller.dart';
 import 'package:schulupparent/student/student_presentation/academics_lesson_all_lessons_page/models/academics_lesson_all_lessons_model.dart';
 import 'package:schulupparent/student/student_presentation/attendance_all_variants_page/controller/attendance_all_variants_controller.dart';
+import 'package:schulupparent/student/student_presentation/dashboard_extended_view/controller/dashboard_extended_view_controller.dart';
 import 'package:schulupparent/student/widgets/custom_elevated_button_sheet.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_assignment_modal_one_controller.dart';
+import 'dart:developer' as myLog;
 
 // ignore_for_file: must_be_immutable
 StudentAcademicsAssignmentStatusController controller1 =
@@ -22,6 +24,9 @@ StudentAcademicsLessonAllLessonsController lessonsController = Get.put(
     StudentAcademicsLessonAllLessonsModel().obs,
   ),
 );
+
+StudentDashboardExtendedViewController dashboardExrendedController =
+    Get.find<StudentDashboardExtendedViewController>();
 
 class AcademicsAssignmentModalOneBottomsheet extends StatefulWidget {
   AcademicsAssignmentModalOneBottomsheet(
@@ -45,6 +50,11 @@ class _AcademicsAssignmentModalOneBottomsheetState
   List<String> selectedType = [controller1.termType.value];
 
   List<String> selectedTypeId = ['0'];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,8 +180,10 @@ class _AcademicsAssignmentModalOneBottomsheetState
           CustomElevatedButton(
             onPressed: () {
               Navigator.pop(context);
+              myLog.log('calling this method');
               setState(() {
                 controller1.termType.value = selectedType.first;
+                myLog.log(" ${controller1.termType.value}");
                 if (controller1.termType.value.contains('First Term')) {
                   controller1.termType.value = '1';
                   dashboardExtendedViewController.selectedTerm = 1;
@@ -184,11 +196,21 @@ class _AcademicsAssignmentModalOneBottomsheetState
                 }
 
                 controller1.termTypeId.value = selectedTypeId.first;
-                controller1.allLessons();
+                controller1.lessonList.clear();
+                  controller1.allLessons().then((value) {
+                  //myLog.log("${value}");
+                  controller1.allLessons();
+                });
+                controller1.assignmentData.clear();
                 controller1.getAssignment();
+                controllers.assignmentData!.clear();
                 controllers.getAssignment();
 
+
+
+                    lessonsController.allLessons().then((value) {
                 lessonsController.allLessons();
+              });
                 widget.controllerx.allLessons();
               });
             },

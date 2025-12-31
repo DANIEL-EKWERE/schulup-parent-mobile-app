@@ -28,8 +28,8 @@ class AcademicsAssignmentController extends GetxController {
 
   Rx<AcademicsAssignmentModel> academicsLessonAllLessonsModelObj;
 
-  StudentAcademicsAssignmentStatusController controllerx =
-      Get.find<StudentAcademicsAssignmentStatusController>();
+  // StudentAcademicsAssignmentStatusController controllerx =
+  //     Get.find<StudentAcademicsAssignmentStatusController>();
   @override
   onInit() {
     super.onInit();

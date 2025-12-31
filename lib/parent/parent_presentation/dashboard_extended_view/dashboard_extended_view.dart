@@ -47,7 +47,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
   @override
   void initState() {
     super.initState();
-    //controller.byGuardian();
+    controller.students.isEmpty ? controller.byGuardian() : null;
   }
 
   int _currentIndex = 0;
@@ -121,152 +121,182 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                                         ),
                                       ),
                                     )
-                                    : SizedBox(
-                                      height: 106,
-                                      width: double.infinity,
-                                      child: CarouselSlider(
-                                        items:
-                                            controller.newsItems.map((news) {
-                                              return Container(
-                                                margin: EdgeInsets.all(4),
-                                                padding: EdgeInsets.only(
-                                                  left: 10,
-                                                ),
-                                                decoration: AppDecoration
-                                                    .primaryC11
-                                                    .copyWith(
-                                                      borderRadius:
-                                                          BorderRadiusStyle
-                                                              .roundedBorder8,
-                                                      border: Border.all(
-                                                        color: Color(
-                                                          0xffFF8D2A,
-                                                        ).withValues(alpha: .1),
-                                                      ),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color:
-                                                              Colors.grey[100]!,
-                                                          offset: Offset(
-                                                            0.2,
-                                                            0.2,
-                                                          ),
-                                                          blurRadius: 20,
-                                                          spreadRadius: 2,
-                                                        ),
-                                                      ], //BoxShadow(offset: Offset(1, 1),)
+                                    : Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 106,
+                                          width: double.infinity,
+                                          child: CarouselSlider(
+                                            items:
+                                                controller.newsItems.map((
+                                                  news,
+                                                ) {
+                                                  return Container(
+                                                    margin: EdgeInsets.all(4),
+                                                    padding: EdgeInsets.only(
+                                                      left: 10,
                                                     ),
-                                                height: 120,
-                                                width: double.infinity,
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      height: 40,
-                                                      width: 40,
-                                                      padding: EdgeInsets.all(
-                                                        8.h,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        color: Color(
-                                                          0xffFFEED4,
-                                                        ),
-
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      child: CustomImageView(
-                                                        imagePath:
-                                                            'assets/images/img_icons_small_news.png',
-                                                      ),
-                                                    ),
-                                                    Spacer(),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                            top: 20,
-                                                            bottom: 20,
-                                                            left: 4,
-                                                          ),
-                                                      child: Column(
-                                                        spacing: 5,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 250,
-                                                            child: Text(
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              maxLines: 2,
-                                                              // 'GraceLand PTA Meeting Scheduled for November 15',
-                                                              news.title,
-                                                              style: theme
-                                                                  .textTheme
-                                                                  .bodyMedium!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700,
-                                                                  ),
+                                                    decoration: AppDecoration
+                                                        .primaryC11
+                                                        .copyWith(
+                                                          borderRadius:
+                                                              BorderRadiusStyle
+                                                                  .roundedBorder8,
+                                                          border: Border.all(
+                                                            color: Color(
+                                                              0xffFF8D2A,
+                                                            ).withValues(
+                                                              alpha: .1,
                                                             ),
                                                           ),
-                                                          //Spacer(),
-                                                          //SizedBox(height: 10,)
-                                                          Row(
-                                                            children: [
-                                                              CustomImageView(
-                                                                imagePath:
-                                                                    ImageConstant
-                                                                        .imgIconsTinyAttachment,
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color:
+                                                                  Colors
+                                                                      .grey[100]!,
+                                                              offset: Offset(
+                                                                0.2,
+                                                                0.2,
                                                               ),
-                                                              Text(
-                                                                //'1 attachment • Monday, Nov. 3, 2025',
-                                                                "${news.attachments.length} • ${news.formattedDatePosted}",
-                                                                style:
-                                                                    CustomTextStyles
-                                                                        .bodySmallGray700_1,
+                                                              blurRadius: 20,
+                                                              spreadRadius: 2,
+                                                            ),
+                                                          ], //BoxShadow(offset: Offset(1, 1),)
+                                                        ),
+                                                    height: 120,
+                                                    width: double.infinity,
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                          height: 40,
+                                                          width: 40,
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                8.h,
+                                                              ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                color: Color(
+                                                                  0xffFFEED4,
+                                                                ),
+
+                                                                shape:
+                                                                    BoxShape
+                                                                        .circle,
+                                                              ),
+                                                          child: CustomImageView(
+                                                            imagePath:
+                                                                'assets/images/img_icons_small_news.png',
+                                                          ),
+                                                        ),
+                                                        Spacer(),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets.only(
+                                                                top: 20,
+                                                                bottom: 20,
+                                                                left: 4,
+                                                              ),
+                                                          child: Column(
+                                                            spacing: 5,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 250,
+                                                                child: Text(
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  maxLines: 2,
+                                                                  // 'GraceLand PTA Meeting Scheduled for November 15',
+                                                                  news.title,
+                                                                  style: theme
+                                                                      .textTheme
+                                                                      .bodyMedium!
+                                                                      .copyWith(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.w700,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                              //Spacer(),
+                                                              //SizedBox(height: 10,)
+                                                              Row(
+                                                                children: [
+                                                                  CustomImageView(
+                                                                    imagePath:
+                                                                        ImageConstant
+                                                                            .imgIconsTinyAttachment,
+                                                                  ),
+                                                                  Text(
+                                                                    //'1 attachment • Monday, Nov. 3, 2025',
+                                                                    "${news.attachments.length} • ${news.formattedDatePosted}",
+                                                                    style:
+                                                                        CustomTextStyles
+                                                                            .bodySmallGray700_1,
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ],
                                                           ),
-                                                        ],
-                                                      ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
-                                              );
-                                            }).toList(),
+                                                  );
+                                                }).toList(),
 
-                                        options: CarouselOptions(
-                                          onPageChanged: (index, reason) {
-                                            setState(() {
-                                              _currentIndex = index;
-                                            });
-                                          },
-                                          enlargeCenterPage: true,
-                                          aspectRatio: 16 / 5,
-                                          height: 150,
-                                          viewportFraction: 0.9,
-                                          autoPlay: true,
+                                            options: CarouselOptions(
+                                              onPageChanged: (index, reason) {
+                                                setState(() {
+                                                  _currentIndex = index;
+                                                });
+                                              },
+                                              enlargeCenterPage: true,
+                                              aspectRatio: 16 / 5,
+                                              height: 150,
+                                              viewportFraction: 0.9,
+                                              autoPlay: true,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     );
                               }),
                               const SizedBox(height: 8),
 
-                              AnimatedSmoothIndicator(
-                                activeIndex: _currentIndex,
-                                count: 3,
-                                effect: ExpandingDotsEffect(
-                                  dotHeight: 8,
-                                  dotWidth: 8,
-                                  activeDotColor: Color(0xffEF5A07),
-                                  dotColor: Colors.grey.shade300,
+                              GestureDetector(
+                                onTap: () {
+                                  print(
+                                    "lenht is this: ${controller.newsItems.length}",
+                                  );
+                                },
+                                child: AnimatedSmoothIndicator(
+                                  onDotClicked: (index) {
+                                    print(
+                                      "lenht is this: ${controller.newsItems.length}",
+                                    );
+                                    setState(() {
+                                      _currentIndex = index;
+                                    });
+                                  },
+                                  activeIndex: _currentIndex,
+                                  count:
+                                      controller
+                                          .newsItems
+                                          .length, // Dynamic count
+                                  effect: ExpandingDotsEffect(
+                                    dotHeight: 8,
+                                    dotWidth: 8,
+                                    activeDotColor: Color(0xffEF5A07),
+                                    dotColor: Colors.grey.shade300,
+                                  ),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -467,7 +497,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                         borderRadius: BorderRadius.circular(25),
                         child: Base64Image(
                           base64String:
-                              controller.selectedStudent1?.profilePicBase64 ??
+                              controller.selectedStudent1.profilePicBase64 ??
                               '',
                           width: 30,
                           height: 30,
@@ -475,7 +505,7 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                           placeholder: CircleAvatar(
                             backgroundColor: Color(0xFFFF8D2A).withOpacity(0.2),
                             child: Text(
-                              controller.selectedStudent1?.firstName?[0]
+                              controller.selectedStudent1.firstName?[0]
                                       .toUpperCase() ??
                                   '?',
                               style: TextStyle(
@@ -505,17 +535,17 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
 
             // ),
             actions: [
-              // AppbarTrailingIconbutton(
-              //   onTap: () async {
-              //     var token = await dataBase.getToken();
-              //     print('chat');
-              //     // Get.to(() => ChatScreen());
-              //     print(token);
-              //     //controller.getAcademicSessions();
-              //     controller.getClass();
-              //   },
-              //   imagePath: ImageConstant.imgNotification,
-              // ),
+              AppbarTrailingIconbutton(
+                onTap: () async {
+                  var token = await dataBase.getToken();
+                  print('chat');
+                  // Get.to(() => ChatScreen());
+                  print(token);
+                  //controller.getAcademicSessions();
+                  controller.getClass();
+                },
+                imagePath: ImageConstant.imgNotification,
+              ),
               AppbarTrailingIconbutton(
                 onTap: () {
                   Get.toNamed(AppRoutes.directChatScreen);
@@ -580,7 +610,40 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                         Get.toNamed(model.route!);
                       }
                     },
-                    child: DashboardItemWidget(model),
+                    child:
+                        index ==
+                                DashboardExtendedViewModel.getSampleList()
+                                        .length -
+                                    1
+                            ? Stack(
+                              fit: StackFit.expand,
+                              clipBehavior: Clip.hardEdge,
+                              children: [
+                                DashboardItemWidget(model),
+                                Positioned(
+                                  top: 4.h,
+                                  right: 4.h,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 6.h,
+                                      vertical: 2.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange,
+                                      borderRadius: BorderRadius.circular(10.h),
+                                    ),
+                                    child: Text(
+                                      'Coming Soon',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10.h,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                            : DashboardItemWidget(model),
                   );
                 },
               ),

@@ -188,6 +188,7 @@
 //     );
 //   }
 // }
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:schulupparent/student/student_presentation/academics_assignment_modal_buttomsheet/academics_assignment_modal_buttomsheet.dart';
@@ -242,18 +243,25 @@ class _AcademicsAssignmentStatusInitialPageState
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.getAssignment();
-      controller.getCbt();
-      controller.allLessons();
-      // controller.tabviewController.addListener(() {
-      //   controller.tabIndex.value = controller.tabviewController.index;
-      // });
-      //   WidgetsBinding.instance.addPostFrameCallback((_) {
-      //  // controller.getDailyReports();
-
-      // });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    controller.getAssignment();
+    controller.getCbt();
+    controller.allLessons();
+    Timer(Duration(seconds: 2), () {
+      setState(() {
+        controller.getAssignment();
+        controller.getCbt();
+        controller.allLessons();
+      });
     });
+    // controller.tabviewController.addListener(() {
+    //   controller.tabIndex.value = controller.tabviewController.index;
+    // });
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //  // controller.getDailyReports();
+
+    // });
+    // });
   }
 
   @override

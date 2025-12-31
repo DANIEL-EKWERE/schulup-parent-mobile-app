@@ -42,8 +42,8 @@ class SettingsController extends GetxController {
         // usernameController.clear();
         // passwordController.clear();
         // schoolCodeController.clear();
-        var controller = Get.find<DashboardExtendedViewController>(tag: 'parentDashboardExtendedViewController');
-        Get.delete<DashboardExtendedViewController>(tag: 'parentDashboardExtendedViewController');
+        // var controller = Get.find<DashboardExtendedViewController>(tag: 'parentDashboardExtendedViewController');
+        // Get.delete<DashboardExtendedViewController>(tag: 'parentDashboardExtendedViewController');
         dataBase.logOut();
         dataBase.clearCache();
         Get.offAllNamed(AppRoutes.signinScreen);

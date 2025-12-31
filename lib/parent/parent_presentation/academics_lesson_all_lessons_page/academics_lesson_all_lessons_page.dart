@@ -167,7 +167,7 @@ class _AcademicsLessonAllLessonsPageState
                       context: Get.context!,
                       builder: (context) {
                         return AcademicsAssignmentModalOneBottomsheet(
-                          AcademicsAssignmentModalOneController(),
+                          AcademicsAssignmentModalOneController(),controllerx
                         );
                       },
                     );

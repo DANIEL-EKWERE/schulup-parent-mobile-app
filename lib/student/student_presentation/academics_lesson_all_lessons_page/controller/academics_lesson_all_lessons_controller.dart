@@ -70,6 +70,7 @@ class StudentAcademicsLessonAllLessonsController extends GetxController {
       } else if (controllerx.termType.value == 'Third') {
         termId = '3';
       }
+      myLog.log(' Selected Term ID: $termId ');
       final response = await _apiService.allLessons(
         dashboardExtendedViewController.selectedClassID.toString(),
         termId,

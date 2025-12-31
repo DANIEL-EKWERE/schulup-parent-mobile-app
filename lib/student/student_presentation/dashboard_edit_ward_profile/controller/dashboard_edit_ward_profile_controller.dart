@@ -126,13 +126,23 @@ class StudentDashboardEditWardProfileController extends GetxController {
         //   context: Get.context!,
         //   text: 'Profile updated successfully!!!',
         // );
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          AlertInfo.show(
-            context: Get.context!,
-            text: 'Profile updated successfully!!!',
-          );
-        });
+        // WidgetsBinding.instance.addPostFrameCallback((_) {
+        //   AlertInfo.show(
+        //     context: Get.context!,
+        //     text: 'Profile updated successfully!!!',
+        //   );
+        // });
         //
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: "Student information updated successfully",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         // Get.back(); // Go back after successful update
         Navigator.pop(Get.context!);
         myLog.log("profile updated successfully");

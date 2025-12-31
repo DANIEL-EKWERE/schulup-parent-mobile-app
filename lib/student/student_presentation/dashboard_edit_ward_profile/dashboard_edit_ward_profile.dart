@@ -389,6 +389,8 @@ class _DashboardEditWardProfileScreenState
                               ),
                               SizedBox(height: 10),
                               CustomTextFormField(
+                                readOnly: true,
+                                onTap: () => _selectDate(context),
                                 controller:
                                     studentController.dateOfBirthController,
                                 onChanged: (value) {
@@ -1218,7 +1220,6 @@ class _DashboardEditWardProfileScreenState
     Navigator.pop(context);
   }
 
-
   // Date Picker
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -1254,5 +1255,4 @@ class _DashboardEditWardProfileScreenState
       });
     }
   }
-  
 }

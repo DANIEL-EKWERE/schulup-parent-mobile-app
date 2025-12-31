@@ -70,7 +70,20 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
   void initState() {
     super.initState();
     //controller.byGuardian();
-    controller.setVAlue();
+    // condition();
+  }
+
+  void condition() async {
+    myLog.log('calling condition method');
+    int studentId = await studentDataBase.getStudentId();
+    if (studentId == 0) {
+      print(studentId);
+      myLog.log(
+        'student id is $studentId ==================xxxxxxxxxxxxxxxxxxxxxxxxxxxxx====',
+      );
+      controller.setVAlue();
+      return;
+    }
   }
 
   int _currentIndex = 0;
@@ -544,7 +557,40 @@ class _DashboardExtendedViewState extends State<DashboardExtendedView> {
                         Get.toNamed(model.route!);
                       }
                     },
-                    child: DashboardItemWidget(model),
+                    child:
+                        index ==
+                                DashboardExtendedViewModel.getSampleList()
+                                        .length -
+                                    1
+                            ? Stack(
+                              fit: StackFit.expand,
+                              clipBehavior: Clip.hardEdge,
+                              children: [
+                                DashboardItemWidget(model),
+                                Positioned(
+                                  top: 4.h,
+                                  right: 4.h,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 6.h,
+                                      vertical: 2.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange,
+                                      borderRadius: BorderRadius.circular(10.h),
+                                    ),
+                                    child: Text(
+                                      'Coming Soon',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10.h,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                            : DashboardItemWidget(model),
                   );
                 },
               ),

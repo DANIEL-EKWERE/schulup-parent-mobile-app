@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
-
+import 'dart:developer' as myLog;
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:schulupparent/signin_screen/signin_screen.dart';
@@ -40,16 +40,16 @@ class StudentSettingsController extends GetxController {
         // usernameController.clear();
         // passwordController.clear();
         // schoolCodeController.clear();
-        var controller = Get.find<StudentDashboardExtendedViewController>(
-          tag: 'studentDashboardExtendedViewController',
-        );
-        Get.delete<StudentDashboardExtendedViewController>(
-          tag: 'studentDashboardExtendedViewController',
-        );
+        // var controller = Get.find<StudentDashboardExtendedViewController>(
+        //   tag: 'studentDashboardExtendedViewController',
+        // );
+        // Get.delete<StudentDashboardExtendedViewController>(
+        //   tag: 'studentDashboardExtendedViewController',
+        // );
         studentDataBase.logOut();
         studentDataBase.clearCache();
-        //Get.offAllNamed(AppRoutes.signinScreen);
-        Get.offAll(() => SigninScreen());
+        Get.offAllNamed(AppRoutes.signinScreen);
+        // Get.offAll(() => SigninScreen());
         OverlayLoadingProgress.stop();
         //   Get.toNamed(AppRoutes.signFourScreen);
       } else if (response.statusCode == 404 || response.statusCode == 401) {
@@ -85,6 +85,7 @@ class StudentSettingsController extends GetxController {
         colorText: Colors.white,
       );
     } catch (e) {
+      myLog.log('Error during logout: $e');
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Get.snackbar(
           'Error',

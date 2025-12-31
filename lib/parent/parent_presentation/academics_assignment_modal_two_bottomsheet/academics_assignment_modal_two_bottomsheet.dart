@@ -7,6 +7,7 @@ import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'controller/academics_assignment_modal_two_controller.dart';
+import 'dart:developer' as myLog;
 
 // ignore_for_file: must_be_immutable
 
@@ -129,6 +130,8 @@ class _AcademicsAssignmentModalTwoBottomsheetState
               Navigator.pop(context);
               controller1.getAssignment();
               controllers.getAssignment();
+
+              myLog.log('calling this method');
             },
 
             height: 64.h,

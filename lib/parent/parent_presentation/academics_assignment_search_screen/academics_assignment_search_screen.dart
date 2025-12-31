@@ -180,7 +180,7 @@ class AcademicsAssignmentSearchScreen
                               // );
 
                               return AcademicsAssignmentModalOneBottomsheet(
-                                AcademicsAssignmentModalOneController(),
+                                AcademicsAssignmentModalOneController(),controller1
                               );
                             },
                           );

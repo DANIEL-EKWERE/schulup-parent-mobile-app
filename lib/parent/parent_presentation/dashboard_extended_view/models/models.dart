@@ -15,9 +15,9 @@ class DashboardExtendedViewModel {
   static List<DashboardExtendedViewModel> getSampleList() {
     return [
       DashboardExtendedViewModel(
-        title: "Fees",
-        imagePath: ImageConstant.imgFees,
-        route: '',
+        title: "Ward Profile",
+        imagePath: ImageConstant.imgWardprofile,
+        route: '/dashboard_editWard_profile_screen',
       ),
       DashboardExtendedViewModel(
         title: "Assignments",
@@ -49,10 +49,11 @@ class DashboardExtendedViewModel {
         imagePath: ImageConstant.imgWardprogress,
         route: '/reports_ward_progress_academic_screen',
       ),
+
       DashboardExtendedViewModel(
-        title: "Ward Profile",
-        imagePath: ImageConstant.imgWardprofile,
-        route: '/dashboard_editWard_profile_screen',
+        title: "Fees",
+        imagePath: ImageConstant.imgFees,
+        route: '',
       ),
     ];
   }

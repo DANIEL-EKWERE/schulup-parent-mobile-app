@@ -488,6 +488,7 @@ class _AcademicsAssignmentStatusInitialPageState
                                 builder: (context) {
                                   return AcademicsAssignmentModalOneBottomsheet(
                                     AcademicsAssignmentModalOneController(),
+                                    controller,
                                   );
                                 },
                               );
@@ -702,7 +703,7 @@ class _AcademicsAssignmentStatusInitialPageState
                                 context: context,
                                 builder: (context) {
                                   return AcademicsAssignmentModalOneBottomsheet(
-                                    AcademicsAssignmentModalOneController(),
+                                    AcademicsAssignmentModalOneController(),controller
                                   );
                                 },
                               );

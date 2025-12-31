@@ -27,9 +27,14 @@ import 'models/listline_item_model.dart';
 import 'package:schulupparent/parent/parent_presentation/academics_assignment_status_screen/widgets/listline_item_widget.dart';
 
 // ignore_for_file: must_be_immutable
-class AcademicsAssignmentPage extends StatelessWidget {
+class AcademicsAssignmentPage extends StatefulWidget {
   AcademicsAssignmentPage({Key? key}) : super(key: key);
 
+  @override
+  State<AcademicsAssignmentPage> createState() => _AcademicsAssignmentPageState();
+}
+
+class _AcademicsAssignmentPageState extends State<AcademicsAssignmentPage> {
   AcademicsAssignmentController controller = Get.put(
     AcademicsAssignmentController(AcademicsAssignmentModel().obs),
   );
@@ -37,6 +42,14 @@ class AcademicsAssignmentPage extends StatelessWidget {
   AcademicsAssignmentStatusController controllerx = Get.put(
     AcademicsAssignmentStatusController(),
   );
+
+@override
+ void initState(){
+super.initState();
+
+//controllerx.termType.addListener();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +173,7 @@ class AcademicsAssignmentPage extends StatelessWidget {
                       context: Get.context!,
                       builder: (context) {
                         return AcademicsAssignmentModalOneBottomsheet(
-                          AcademicsAssignmentModalOneController(),
+                          AcademicsAssignmentModalOneController(), controllerx
                         );
                       },
                     );
@@ -301,68 +314,4 @@ class AcademicsAssignmentPage extends StatelessWidget {
       ),
     );
   }
-
-  // /// CBT Test Tab Content
-  // Widget _buildCBTTestTab() {
-  //   return SingleChildScrollView(
-  //     padding: EdgeInsets.all(20.h),
-  //     child: Column(
-  //       children: [
-  //         // Add your CBT test content here
-  //         //AcademicsCbtTestStatusModel
-  //         Obx(
-  //           () =>
-  //               controller.isLoading.value
-  //                   ? SizedBox(
-  //                     height: 650.h,
-  //                     child: ListView.separated(
-  //                       itemCount: 5,
-  //                       //isLoading ? 5 : newsItems.length,
-  //                       separatorBuilder:
-  //                           (context, index) => SizedBox(height: 12.h),
-  //                       itemBuilder: (context, index) {
-  //                         // if (isLoading) {
-  //                         return ListlineShimmerWidget();
-  //                         // }
-  //                         // return ListlineItemWidget(newsItems[index]);
-  //                       },
-  //                     ),
-  //                   )
-  //                   : controller.cbtData!.isEmpty
-  //                   ? Center(
-  //                     child: Column(
-  //                       spacing: 30,
-  //                       children: [
-  //                         SizedBox(height: 150.h),
-  //                         CustomImageView(imagePath: ImageConstant.imgObjects),
-  //                         Text('No cbt test for the selected filter condition'),
-  //                       ],
-  //                     ),
-  //                   )
-  //                   : ListView.builder(
-  //                     itemCount: controller.cbtData!.length,
-  //                     itemBuilder: (context, index) {
-  //                       CbtData listlineItemModelObj =
-  //                           controller.cbtData![index];
-  //                       return Padding(
-  //                         padding: const EdgeInsets.symmetric(vertical: 8),
-  //                         child: GestureDetector(
-  //                           onTap: () {
-  //                             // Get.toNamed(AppRoutes.academicsCbtTestTestDetailsScreen);
-  //                             controller.getCbtDetails(
-  //                               listlineItemModelObj.quizScheduleID.toString(),
-  //                             );
-  //                           },
-  //                           child: ListlineItemCbtWidget(listlineItemModelObj),
-  //                         ),
-  //                       );
-  //                     },
-  //                     shrinkWrap: true,
-  //                     physics: NeverScrollableScrollPhysics(),
-  //                   ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }
