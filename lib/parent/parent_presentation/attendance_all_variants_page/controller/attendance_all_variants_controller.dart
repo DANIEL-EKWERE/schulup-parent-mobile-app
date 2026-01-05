@@ -141,22 +141,22 @@ class AttendanceAllVariantsController extends GetxController {
         //   backgroundColor: Colors.red,
         //   colorText: Colors.white,
         // );
-         Fluttertoast.showToast(
-            webShowClose: true,
-            msg: 'Loading Attendance Failed failed. Please try again.',
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 3,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Loading Attendance Failed failed. Please try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
     } on SocketException {
       isLoading.value = false;
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,

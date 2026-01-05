@@ -137,7 +137,7 @@ class StudentAcademicsSchularAiOngoingController extends GetxController {
 
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,

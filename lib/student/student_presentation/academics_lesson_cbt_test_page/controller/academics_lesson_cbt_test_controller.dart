@@ -112,15 +112,15 @@ class StudentAcademicsLessonCbtTestController extends GetxController {
         // );
 
         Fluttertoast.showToast(
-        webShowClose: true,
-        msg: 'cbt fetch failed. Please try again.',
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 3,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+          webShowClose: true,
+          msg: 'cbt fetch failed. Please try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
     } on SocketException {
       isLoading.value = false;
@@ -210,7 +210,7 @@ class StudentAcademicsLessonCbtTestController extends GetxController {
     } on SocketException {
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,
@@ -300,7 +300,7 @@ class StudentAcademicsLessonCbtTestController extends GetxController {
     } on SocketException {
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,

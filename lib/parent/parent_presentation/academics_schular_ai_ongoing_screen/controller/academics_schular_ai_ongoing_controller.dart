@@ -129,15 +129,15 @@ class AcademicsSchularAiOngoingController extends GetxController {
         //   colorText: Colors.white,
         // );
         Fluttertoast.showToast(
-            webShowClose: true,
-            msg: 'Failed to send message. Please try again.',
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 3,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
+          webShowClose: true,
+          msg: 'Failed to send message. Please try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
     } on SocketException {
       // Hide typing indicator
@@ -148,7 +148,7 @@ class AcademicsSchularAiOngoingController extends GetxController {
 
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,

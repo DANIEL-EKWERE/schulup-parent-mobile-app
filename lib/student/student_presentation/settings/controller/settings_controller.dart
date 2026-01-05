@@ -49,7 +49,7 @@ class StudentSettingsController extends GetxController {
         // );
         studentDataBase.logOut();
         studentDataBase.clearCache();
-        
+
         // Clean initialization of controller
         if (Get.isRegistered<StudentDashboardExtendedViewController>()) {
           Get.delete<StudentDashboardExtendedViewController>();
@@ -96,7 +96,7 @@ class StudentSettingsController extends GetxController {
     } on SocketException {
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,

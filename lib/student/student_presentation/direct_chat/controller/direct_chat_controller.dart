@@ -92,7 +92,7 @@ class StudentDirectChatController extends GetxController {
       isLoading.value = false;
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,
@@ -164,7 +164,7 @@ class StudentDirectChatController extends GetxController {
       isLoading.value = false;
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,
@@ -222,7 +222,7 @@ class StudentDirectChatController extends GetxController {
             'subject': subjectController.text,
           },
         );
-        
+
         OverlayLoadingProgress.stop();
       } else if (response.statusCode == 404 || response.statusCode == 401) {
         //isLoading.value = false;

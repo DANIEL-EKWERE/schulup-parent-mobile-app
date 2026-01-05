@@ -82,6 +82,7 @@ class StudentDashboardExtendedViewController extends GetxController {
     myLog.log('setting $studentId');
     selectedStudent1.studentID = studentId;
     selectedStudent1.firstName = await studentDataBase.getUserName();
+    myLog.log('value set username: ${selectedStudent1.firstName}');
     myLog.log('value set');
 
     await getBatch();
@@ -233,7 +234,7 @@ class StudentDashboardExtendedViewController extends GetxController {
       isLoading.value = false;
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,
@@ -335,7 +336,7 @@ class StudentDashboardExtendedViewController extends GetxController {
       isLoading.value = false;
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,
@@ -445,7 +446,7 @@ class StudentDashboardExtendedViewController extends GetxController {
       isLoading.value = false;
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,
@@ -566,7 +567,7 @@ class StudentDashboardExtendedViewController extends GetxController {
       isLoading.value = false;
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,
@@ -764,7 +765,7 @@ class StudentDashboardExtendedViewController extends GetxController {
       isLoading.value = false;
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,
@@ -860,7 +861,7 @@ class StudentDashboardExtendedViewController extends GetxController {
       isLoading.value = false;
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,

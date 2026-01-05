@@ -73,16 +73,16 @@ class StudentAcademicsCbtTestTestDetailsController extends GetxController {
       } else {
         OverlayLoadingProgress.stop();
 
-         Fluttertoast.showToast(
-            webShowClose: true,
-            msg: 'Start Test failed. Please try again.',
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 3,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
+        Fluttertoast.showToast(
+          webShowClose: true,
+          msg: 'Start Test failed. Please try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
 
         Get.snackbar(
           'Error',
@@ -95,7 +95,7 @@ class StudentAcademicsCbtTestTestDetailsController extends GetxController {
     } on SocketException {
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,

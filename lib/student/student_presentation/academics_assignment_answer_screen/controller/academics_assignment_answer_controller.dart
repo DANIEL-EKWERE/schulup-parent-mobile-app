@@ -114,15 +114,15 @@ class StudentAcademicsAssignmentAnswerController extends GetxController {
         // );
 
         Fluttertoast.showToast(
-        webShowClose: true,
-        msg: 'Reply failed. Please try again.',
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 3,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+          webShowClose: true,
+          msg: 'Reply failed. Please try again.',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
     } on SocketException {
       Fluttertoast.showToast(
@@ -210,7 +210,7 @@ class StudentAcademicsAssignmentAnswerController extends GetxController {
     } on SocketException {
       Fluttertoast.showToast(
         webShowClose: true,
-        msg: 'SCheck your internet connection and try again.',
+        msg: 'Check your internet connection and try again.',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 3,
